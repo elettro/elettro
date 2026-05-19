@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elettro AI Services Section Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07101f;
+      --panel: #0d172b;
+      --panel-2: #101d35;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(129,236,255,0.22);
+      --text: #eef4ff;
+      --muted: #a9b4cd;
+      --primary: #81ecff;
+      --primary-2: #4fdfff;
+      --green: #7dffaf;
+      --purple: #a591ff;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --max: 1380px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #050c18 0%, #081223 100%);
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+    }
+
+    body {
+      line-height: 1.45;
+    }
+
+    .page-shell {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      padding: 72px 24px 36px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background:
+        radial-gradient(circle at top center, rgba(129,236,255,0.12), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+    }
+
+    .hero .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 auto 16px;
+      max-width: 980px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(42px, 6vw, 82px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+    }
+
+    .hero h1 .accent {
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    .hero p {
+      max-width: 860px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .concept {
+      padding: 72px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .concept-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+
+    .label-row .kicker {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .label-row .tag {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      margin: 0 0 14px;
+    }
+
+    .section-desc {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0 0 32px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(17,28,49,0.92), rgba(10,18,33,0.96));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .mini-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(129,236,255,0.1);
+      border: 1px solid rgba(129,236,255,0.14);
+      color: var(--primary);
+      font-size: 20px;
+      font-weight: 800;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bullet-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--muted);
+    }
+
+    .bullet-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      margin-top: 10px;
+      box-shadow: 0 0 12px rgba(125,255,175,0.5);
+      flex: 0 0 auto;
+    }
+
+    .service-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .service-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.84);
+    }
+
+    .muted-box {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .stat {
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      font-family: "Space Grotesk", sans-serif;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .option-1-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .option-1-main {
+      padding: 34px;
+    }
+
+    .option-1-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .option-1-stack {
+      padding: 24px;
+      min-height: 150px;
+    }
+
+    .option-1-stack h4 {
+      margin: 14px 0 10px;
+      font-size: 20px;
+    }
+
+    .option-1-stack p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .option-2-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .option-2-card {
+      padding: 24px;
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-2-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -30px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(129,236,255,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .option-2-card h4 {
+      margin: 18px 0 10px;
+      font-size: 20px;
+    }
+
+    .option-2-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .option-3-shell {
+      overflow: hidden;
+    }
+
+    .option-3-header {
+      padding: 34px 34px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .option-3-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 500px;
+    }
+
+    .option-3-nav {
+      border-right: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      padding: 20px;
+    }
+
+    .option-3-nav .nav-item {
+      padding: 16px 18px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      color: rgba(255,255,255,0.78);
+      font-weight: 700;
+      background: transparent;
+    }
+
+    .option-3-nav .nav-item.active {
+      background: rgba(129,236,255,0.08);
+      border-color: rgba(129,236,255,0.18);
+      color: #fff;
+    }
+
+    .option-3-body {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      align-content: start;
+    }
+
+    .option-3-panel {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      min-height: 170px;
+    }
+
+    .option-3-panel h5 {
+      margin: 12px 0 10px;
+      font-size: 18px;
+    }
+
+    .option-3-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .option-4-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .option-4-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-4-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(129,236,255,0.04), transparent 45%);
+      pointer-events: none;
+    }
+
+    .option-4-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .option-4-card h4 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .option-4-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .option-5-shell {
+      padding: 34px;
+    }
+
+    .option-5-top {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .option-5-left {
+      padding: 28px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(129,236,255,0.12), transparent 42%),
+        rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .option-5-left h4 {
+      margin: 18px 0 12px;
+      font-size: 28px;
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 0.95;
+    }
+
+    .option-5-left p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .option-5-right {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .option-5-mini {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .option-5-mini h5 {
+      margin: 12px 0 8px;
+      font-size: 18px;
+    }
+
+    .option-5-mini p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .option-5-bottom {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .footer-note {
+      padding: 40px 24px 60px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .option-1-grid,
+      .option-5-top,
+      .option-3-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .option-2-grid,
+      .option-5-bottom {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .option-4-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .option-3-body {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 54px 18px 26px;
+      }
+
+      .concept {
+        padding: 52px 18px;
+      }
+
+      .option-2-grid,
+      .option-5-bottom,
+      .option-5-right,
+      .option-3-body {
+        grid-template-columns: 1fr;
+      }
+
+      .option-1-main,
+      .option-1-stack,
+      .option-5-shell,
+      .option-3-header,
+      .option-4-card {
+        padding: 24px;
+      }
+
+      .section-desc {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <section class="hero">
+      <div class="eyebrow">AI Capability Section Concepts</div>
+      <h1>Five ways to present <span class="accent">AI Prompting</span>, content build-up, file systems, and project management.</h1>
+      <p>These are five different visual directions for the missing Elettro section. Each one frames the same services in a different way so you can decide what fits the homepage best.</p>
+    </section>
+
+    <section class="concept">
+      <div class="concept-inner">
+        <div class="label-row">
+          <div class="kicker">Option 01</div>
+          <div class="tag">Executive split layout</div>
+        </div>
+        <h2 class="section-title">Clear service story with one large message and four focused capability blocks.</h2>
+        <p class="section-desc">This version feels premium and direct. Strong for a homepage where you want one clean explanation and supporting tiles beside it.</p>
+
+        <div class="option-1-grid">
+          <div class="card option-1-main">
+            <div class="mini-icon">AI</div>
+            <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 38px; line-height: 0.95; margin: 18px 0 16px;">AI systems that make creative production more organized, more scalable, and more consistent.</h3>
+            <p style="font-size: 17px; color: var(--muted); margin: 0 0 24px;">
+              We do more than generate assets. We structure the process around prompting systems, branded content build-up, organized creative files, and project flow so output stays sharp as volume increases.
+            </p>
+            <ul class="bullet-list">
+              <li>AI Prompting systems for repeatable high-quality outputs</li>
+              <li>Branded Content Build-Up for campaigns, launches, and ongoing social drops</li>
+              <li>Creative File Organization so teams can find and reuse assets fast</li>
+              <li>Project Management that keeps strategy, approvals, and deliverables aligned</li>
+            </ul>
+            <div class="service-chip-row">
+              <div class="service-chip">Systemized prompting</div>
+              <div class="service-chip">Content frameworks</div>
+              <div class="service-chip">Asset organization</div>
+              <div class="service-chip">Project coordination</div>
+            </div>
+          </div>
+
+          <div class="option-1-side">
+            <div class="card option-1-stack">
+              <div class="mini-icon">P</div>
+              <h4>AI Prompting</h4>
+              <p>Prompt structures designed to consistently generate stronger graphics, video concepts, content variations, and campaign-ready creative.</p>
+            </div>
+            <div class="card option-1-stack">
+              <div class="mini-icon">B</div>
+              <h4>Branded Content Build-Up</h4>
+              <p>We help brands stack assets around one topic so your message grows into a full content system, not one isolated post.</p>
+            </div>
+            <div class="card option-1-stack">
+              <div class="mini-icon">F</div>
+              <h4>Creative File Organization</h4>
+              <p>Folder logic, naming structures, asset grouping, and retrieval systems that make your creative library usable at scale.</p>
+            </div>
+            <div class="card option-1-stack">
+              <div class="mini-icon">PM</div>
+              <h4>Project Management</h4>
+              <p>Direction, timeline control, task movement, and production oversight that keep output moving without chaos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="concept">
+      <div class="concept-inner">
+        <div class="label-row">
+          <div class="kicker">Option 02</div>
+          <div class="tag">Four premium feature cards</div>
+        </div>
+        <h2 class="section-title">A straightforward grid that makes each capability feel like a major service line.</h2>
+        <p class="section-desc">This is the easiest option to integrate. It is clean, modular, and easy to reorder later.</p>
+
+        <div class="option-2-grid">
+          <div class="card option-2-card">
+            <div class="mini-icon">AI</div>
+            <h4>AI Prompting</h4>
+            <p>Prompt strategy built for consistency, direction, and better outputs across graphics, video, copy, and creative ideation.</p>
+            <ul class="bullet-list">
+              <li>Prompt architecture</li>
+              <li>Style consistency</li>
+              <li>Variant generation</li>
+            </ul>
+          </div>
+
+          <div class="card option-2-card">
+            <div class="mini-icon">BC</div>
+            <h4>Branded Content Build-Up</h4>
+            <p>We expand one strong brand idea into a larger bank of coordinated assets built for reuse, testing, and momentum.</p>
+            <ul class="bullet-list">
+              <li>Campaign ecosystems</li>
+              <li>Topic expansion</li>
+              <li>Multi-format content</li>
+            </ul>
+          </div>
+
+          <div class="card option-2-card">
+            <div class="mini-icon">FO</div>
+            <h4>Creative File Organization</h4>
+            <p>Well-structured folders, asset naming, tagging logic, and storage systems that save time and cut production friction.</p>
+            <ul class="bullet-list">
+              <li>Folder logic</li>
+              <li>Asset grouping</li>
+              <li>Retrieval efficiency</li>
+            </ul>
+          </div>
+
+          <div class="card option-2-card">
+            <div class="mini-icon">PM</div>
+            <h4>Project Management</h4>
+            <p>Production oversight that helps projects move from concept to delivery with better visibility and fewer bottlenecks.</p>
+            <ul class="bullet-list">
+              <li>Timeline control</li>
+              <li>Deliverable tracking</li>
+              <li>Approval flow</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="concept">
+      <div class="concept-inner">
+        <div class="label-row">
+          <div class="kicker">Option 03</div>
+          <div class="tag">Dashboard / systems UI look</div>
+        </div>
+        <h2 class="section-title">Make the section feel like a live creative operations dashboard.</h2>
+        <p class="section-desc">This direction leans harder into process, systems, and AI infrastructure. Strong if you want Elettro to look more technical and high-control.</p>
+
+        <div class="card option-3-shell">
+          <div class="option-3-header">
+            <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 34px; margin: 0 0 10px;">Creative Operations Layer</h3>
+            <p style="margin: 0; color: var(--muted); max-width: 820px;">Elettro helps brands structure not only the output, but the machinery behind the output. These systems help teams move faster while keeping visual quality and brand control intact.</p>
+          </div>
+
+          <div class="option-3-grid">
+            <div class="option-3-nav">
+              <div class="nav-item active">AI Prompting</div>
+              <div class="nav-item">Branded Content Build-Up</div>
+              <div class="nav-item">File Organization</div>
+              <div class="nav-item">Project Management</div>
+            </div>
+
+            <div class="option-3-body">
+              <div class="option-3-panel">
+                <div class="mini-icon">01</div>
+                <h5>Prompt systems</h5>
+                <p>Frameworks that reduce randomness and improve consistency across creative generations.</p>
+              </div>
+              <div class="option-3-panel">
+                <div class="mini-icon">02</div>
+                <h5>Content scaling</h5>
+                <p>Turn one campaign idea into many usable branded outputs without losing direction.</p>
+              </div>
+              <div class="option-3-panel">
+                <div class="mini-icon">03</div>
+                <h5>Asset organization</h5>
+                <p>Folders, naming, categories, and structure that support long-term reuse and retrieval.</p>
+              </div>
+              <div class="option-3-panel">
+                <div class="mini-icon">04</div>
+                <h5>Managed delivery</h5>
+                <p>Task clarity, approval structure, and project motion that keep teams aligned.</p>
+              </div>
+              <div class="stat">
+                <strong>Higher output</strong>
+                <span>More creative volume without the same level of confusion and duplication.</span>
+              </div>
+              <div class="stat">
+                <strong>Better reuse</strong>
+                <span>Creative libraries and prompts become assets, not loose files lost in folders.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="concept">
+      <div class="concept-inner">
+        <div class="label-row">
+          <div class="kicker">Option 04</div>
+          <div class="tag">Editorial / luxury service layout</div>
+        </div>
+        <h2 class="section-title">A more polished editorial presentation with slightly warmer service language.</h2>
+        <p class="section-desc">This version feels more agency-like and less software-like. Good if you want it elegant and brand-facing.</p>
+
+        <div class="option-4-grid">
+          <div class="card option-4-card">
+            <div class="option-4-head">
+              <div class="mini-icon">AI</div>
+              <h4>AI Prompting</h4>
+            </div>
+            <p>We help build smarter prompt direction so creative generation becomes more deliberate, more repeatable, and more aligned with brand style.</p>
+            <ul class="bullet-list">
+              <li>Prompt direction built around your visual identity</li>
+              <li>Higher consistency across styles and outputs</li>
+              <li>Faster ideation without sacrificing quality</li>
+            </ul>
+          </div>
+
+          <div class="card option-4-card">
+            <div class="option-4-head">
+              <div class="mini-icon">BC</div>
+              <h4>Branded Content Build-Up</h4>
+            </div>
+            <p>Instead of creating one-off pieces, we help brands build a fuller content foundation around key themes, offers, and narratives.</p>
+            <ul class="bullet-list">
+              <li>Stack campaigns around one strong topic</li>
+              <li>Build more options around the same brand message</li>
+              <li>Support social, web, paid, and ongoing use</li>
+            </ul>
+          </div>
+
+          <div class="card option-4-card">
+            <div class="option-4-head">
+              <div class="mini-icon">FO</div>
+              <h4>Creative File Organization</h4>
+            </div>
+            <p>Well-managed assets save time, improve team clarity, and make your production environment more usable as content volume grows.</p>
+            <ul class="bullet-list">
+              <li>Clear folder systems</li>
+              <li>Better naming and categorization</li>
+              <li>Less searching, less duplication, less waste</li>
+            </ul>
+          </div>
+
+          <div class="card option-4-card">
+            <div class="option-4-head">
+              <div class="mini-icon">PM</div>
+              <h4>Project Management</h4>
+            </div>
+            <p>We help keep creative projects moving through structured communication, timeline control, and stronger production visibility.</p>
+            <ul class="bullet-list">
+              <li>Better organization from kickoff to delivery</li>
+              <li>More visibility into status and next steps</li>
+              <li>Cleaner coordination across moving parts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="concept">
+      <div class="concept-inner">
+        <div class="label-row">
+          <div class="kicker">Option 05</div>
+          <div class="tag">Hybrid hero plus supporting grid</div>
+        </div>
+        <h2 class="section-title">One feature-driven hero block followed by compact capability cards.</h2>
+        <p class="section-desc">This is strong if you want one main statement first, then smaller proof points underneath. It feels premium and homepage-ready.</p>
+
+        <div class="card option-5-shell">
+          <div class="option-5-top">
+            <div class="option-5-left">
+              <div class="mini-icon">AI</div>
+              <h4>Beyond output. We help structure the creative machine.</h4>
+              <p>Elettro supports the systems around modern content production. That includes AI prompting, content build-up around core themes, smarter organization of creative assets, and project flow that helps work move cleaner from concept to completion.</p>
+              <div class="service-chip-row">
+                <div class="service-chip">AI Prompting</div>
+                <div class="service-chip">Content Build-Up</div>
+                <div class="service-chip">File Organization</div>
+                <div class="service-chip">Project Management</div>
+              </div>
+            </div>
+
+            <div class="option-5-right">
+              <div class="option-5-mini">
+                <div class="mini-icon">P</div>
+                <h5>Prompting Systems</h5>
+                <p>More controlled AI-driven output.</p>
+              </div>
+              <div class="option-5-mini">
+                <div class="mini-icon">C</div>
+                <h5>Content Build-Up</h5>
+                <p>More assets around one idea.</p>
+              </div>
+              <div class="option-5-mini">
+                <div class="mini-icon">F</div>
+                <h5>File Structure</h5>
+                <p>Better storage and faster retrieval.</p>
+              </div>
+              <div class="option-5-mini">
+                <div class="mini-icon">M</div>
+                <h5>Managed Production</h5>
+                <p>Cleaner movement and coordination.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-5-bottom">
+            <div class="stat">
+              <strong>Less chaos</strong>
+              <span>Production becomes easier to manage as volume grows.</span>
+            </div>
+            <div class="stat">
+              <strong>More output</strong>
+              <span>One idea can expand into many coordinated brand assets.</span>
+            </div>
+            <div class="stat">
+              <strong>Better reuse</strong>
+              <span>Prompts and files become usable systems, not loose pieces.</span>
+            </div>
+            <div class="stat">
+              <strong>Stronger flow</strong>
+              <span>Projects move cleaner from planning to final delivery.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Pick the option you like best and I’ll turn that one into a polished Elettro-ready section for the main site.
+    </div>
+  </div>
+</body>
+</html>
