@@ -1097,6 +1097,30 @@
   outline: none;
 }
 
+.back-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(129, 236, 255, 0.6);
+  background: rgba(129, 236, 255, 0.18);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(129, 236, 255, 0.26);
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.back-to-top-btn:hover,
+.back-to-top-btn:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(129, 236, 255, 0.3);
+  box-shadow: 0 0 24px rgba(129, 236, 255, 0.35);
+}
+
 
 .ew-section {
   background: #0a0a0a;
