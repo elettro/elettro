@@ -5,8 +5,7 @@ const { useState, useEffect, useMemo, useRef } = React;
 // "Elettro — Portfolio Data" — drives the grid below.
 // Sheet must be shared "Anyone with the link: Viewer" (or File ▸ Share ▸
 // Publish to web). Columns: id,title,categories,year,url,reportUrl,blurb,role,stack
-const SHEET_ID  = "17WjQBgzG1GFkVMULFzR_vOG0xisjk_fbf0jLgCmlu_A";
-const SHEET_CSV = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSaAEHrD3n5O42KWP3OcM2OwYmV_24CIWSjl41Pz__mQqY0opH14_VDb-F47M63Wn7bhlevfLldj7v5/pub?gid=837156076&single=true&output=csv";
 
 // Tiny RFC-4180 CSV parser (handles quoted fields, embedded quotes, newlines)
 function parseCSV(text) {
@@ -37,6 +36,30 @@ function parseCSV(text) {
   });
 }
 
+function normalizeSheetRow(raw) {
+  const out = {};
+  Object.entries(raw || {}).forEach(([k, v]) => {
+    const key = String(k || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
+    out[key] = v;
+  });
+  return {
+    id: out.id || out.slug || "",
+    title: out.title || out.project || out.name || "",
+    categories: out.categories || out.category || out.tags || "",
+    year: out.year || out.date || "",
+    url: out.url || out.link || out.website || "",
+    reportUrl: out.reporturl || out.report || "",
+    blurb: out.blurb || out.description || out.summary || "",
+    role: out.role || "",
+    stack: out.stack || out.tools || "",
+    media: out.media || out.thumbnail || out.image || "",
+    client: out.client || "",
+    overview: out.overview || "",
+    approach: out.approach || "",
+    results: out.results || "",
+  };
+}
+
 function rowToProject(r) {
   const splitList = (v) => v ? v.split(/\s*[;,]\s*/).filter(Boolean) : [];
   const cats = splitList(r.categories);
@@ -47,7 +70,7 @@ function rowToProject(r) {
   else if (cats.includes("Music") && !cats.includes("Web")) kind = "music";
   else if (cats.length > 1) kind = "product";
   return {
-    id: r.id,
+    id: r.id || (r.title || "project").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     title: r.title,
     cats,
     kind,
@@ -382,7 +405,7 @@ function App() {
       .then(r => r.ok ? r.text() : Promise.reject(new Error("HTTP " + r.status)))
       .then(text => {
         if (cancelled) return;
-        const rows = parseCSV(text).map(rowToProject).filter(p => p.id && p.title);
+        const rows = parseCSV(text).map(normalizeSheetRow).map(rowToProject).filter(p => p.title);
         if (rows.length) { setProjects(rows); setSource("sheet"); }
         else setSource("local");
       })
@@ -461,7 +484,7 @@ function App() {
         </div>
         <div className="count-line">
           <span className="count-num">{pad2(filtered.length)}</span>
-          <span className="count-lbl">of {pad2(PROJECTS.length)} shown</span>
+          <span className="count-lbl">of {pad2(projects.length)} shown</span>
         </div>
       </section>
 
