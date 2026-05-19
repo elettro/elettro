@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#000000",
+              "on-tertiary-fixed": "#180058",
+              "on-primary-container": "#004d57",
+              "inverse-surface": "#faf8ff",
+              "secondary-fixed-dim": "#00ee70",
+              "on-secondary": "#005b26",
+              "outline-variant": "#40485d",
+              "surface-bright": "#1f2b49",
+              "error-container": "#9f0519",
+              "primary-container": "#00e3fd",
+              "surface-container-high": "#141f38",
+              "error": "#ff716c",
+              "on-secondary-fixed-variant": "#00662c",
+              "on-tertiary": "#20006e",
+              "inverse-primary": "#006976",
+              "surface-container-low": "#091328",
+              "surface-container-highest": "#192540",
+              "primary-fixed": "#00e3fd",
+              "on-tertiary-fixed-variant": "#3900b3",
+              "tertiary-container": "#7152f3",
+              "on-primary": "#005762",
+              "on-primary-fixed-variant": "#005762",
+              "on-error-container": "#ffa8a3",
+              "tertiary": "#a18eff",
+              "secondary-container": "#006d2f",
+              "tertiary-fixed-dim": "#a694ff",
+              "secondary-dim": "#00ee70",
+              "on-secondary-fixed": "#00461c",
+              "secondary": "#2efd7c",
+              "on-secondary-container": "#e4ffe2",
+              "primary-fixed-dim": "#00d4ec",
+              "tertiary-fixed": "#b4a5ff",
+              "on-error": "#490006",
+              "surface-container": "#0f1930",
+              "inverse-on-surface": "#4d556b",
+              "on-surface": "#dee5ff",
+              "on-primary-fixed": "#003840",
+              "surface-variant": "#192540",
+              "on-background": "#dee5ff",
+              "error-dim": "#d7383b",
+              "primary-dim": "#00d4ec",
+              "outline": "#6d758c",
+              "surface": "#060e20",
+              "primary": "#81ecff",
+              "background": "#060e20",
+              "on-tertiary-container": "#ffffff",
+              "on-surface-variant": "#a3aac4",
+              "tertiary-dim": "#7658f8",
+              "secondary-fixed": "#2efd7c",
+              "surface-tint": "#81ecff",
+              "surface-dim": "#060e20"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-surface font-body text-on-surface overflow-x-hidden selection:bg-secondary selection:text-on-secondary">
+<div id="top"></div>
+<!-- Shared Navigation -->
+<header class="fixed top-0 w-full z-50 px-6 py-4 lg:px-20">
+<nav class="glass-nav flex items-center justify-between px-8 py-4 rounded-xl border border-outline-variant/15">
+<div class="flex flex-1 items-center gap-3 elettro-brand-wrap">
+<a href="#top" class="logo-link" aria-label="Elettro home">
+<div class="size-7 text-white">
+<svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+</svg>
+</div>
+<img class="brand-logo elettro-nav-logo" src="../images/Elettro-logo-white.png" alt="Elettro" />
+</a>
+</div>
+<button class="mobile-nav-toggle md:hidden inline-flex items-center justify-center" id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Toggle navigation menu">
+<span class="material-symbols-outlined text-[20px]" aria-hidden="true">menu</span>
+</button>
+<div class="hidden md:flex flex-1 items-center justify-center px-4">
+<a href="#contact" class="availability-pill" aria-label="Available for work">
+<span class="availability-dot"></span>
+<span class="availability-text">AVAILABLE FOR WORK</span>
+</a>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-end gap-8">
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#services">Services</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/dev/portfolio/index.html">Portfolio</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#process">Process</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#about">About</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#contact">Contact</a>
+<div class="h-6 w-px bg-outline-variant/30 mx-2"></div>
+<button class="group flex items-center justify-center size-10 rounded-full bg-surface-container-highest/40 hover:bg-surface-container-highest transition-all text-on-surface-variant hover:text-white" id="mute-toggle">
+<span class="material-symbols-outlined text-xl" data-icon="volume_off" id="mute-icon">volume_off</span>
+</button>
+<button class="contact-cta bg-primary px-6 py-2.5 rounded-lg text-on-primary-fixed font-bold text-sm hover:shadow-[0_0_20px_rgba(129,236,255,0.4)] transition-all">
+                    Contact Us
+                </button>
+</div>
+<div class="mobile-menu-panel md:hidden" id="mobile-menu-panel" hidden>
+<a class="mobile-menu-link" href="#services">Services</a>
+<a class="mobile-menu-link" href="/dev/portfolio/index.html">Portfolio</a>
+<a class="mobile-menu-link" href="#process">Process</a>
+<a class="mobile-menu-link" href="#about">About</a>
+<a class="mobile-menu-link" href="#contact">Contact</a>
+<a class="mobile-menu-cta" href="#contact">Start Your Project</a>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
+<!-- Full-screen Video Background -->
+<div class="video-background z-0">
+<div id="player"></div>
+</div>
+<!-- Dark Gradient Scrim -->
+<div class="absolute inset-0 z-10 bg-gradient-to-b from-surface/80 via-surface/40 to-surface"></div>
+<div class="absolute inset-0 z-10 bg-black/40"></div>
+<div class="relative z-20 max-w-7xl mx-auto px-6 text-center lg:text-left grid lg:grid-cols-12 gap-12 items-center pt-20">
+<div class="lg:col-span-8">
+<h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter text-white mb-8 mt-4 md:mt-0">
+                        WE <span class="text-primary italic">DESIGN.</span><br/>
+                        WE BRAND.<br/>
+                        WE <span class="text-secondary">PRODUCE.</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-light">
+                        Elettro is a cutting-edge digital production agency. We blend cinematic storytelling with high-performance code to focus your brand's energy.
+                    </p>
+<div class="flex md:hidden flex-col sm:flex-row items-center gap-4">
+<button class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-primary to-primary-dim text-on-primary-fixed font-bold text-base rounded-lg hover:shadow-[0_0_30px_rgba(129,236,255,0.3)] transition-all flex items-center justify-center gap-2">
+                            Start Your Journey
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="w-full sm:w-auto px-10 py-5 bg-surface-container-highest/60 backdrop-blur-md border border-outline-variant/20 text-on-surface font-bold text-base rounded-lg transition-all hover:bg-surface-container-highest">
+                            View Showreel
+                        </button>
+</div>
+<a href="#contact" class="availability-pill lg:hidden" aria-label="Available for work">
+<span class="availability-dot"></span>
+<span class="availability-text">AVAILABLE FOR WORK</span>
+</a>
+</div>
+<div class="w-full lg:col-span-4 relative flex justify-center lg:block">
+<div class="aspect-[3/4] rounded-2xl bg-surface-container border border-outline-variant/10 p-2 floating-video-card" id="floating-video-card" role="button" aria-label="Enable sound for hero video card" tabindex="0">
+<div class="floating-video-shell">
+<video id="floating-video-a" playsinline preload="metadata" muted></video>
+<video id="floating-video-b" playsinline preload="metadata" muted></video>
+<button class="video-audio-mini-toggle" id="video-audio-mini-toggle" type="button" aria-label="Toggle sound for floating hero video">
+<span class="material-symbols-outlined" id="video-audio-mini-icon">volume_off</span>
+</button>
+<div class="video-audio-indicator" id="video-audio-indicator" aria-live="polite">
+<span class="video-audio-dot" aria-hidden="true"></span>
+<span id="video-audio-label">Tap for sound</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Services -->
+<section id="services-section" class="py-24 relative overflow-hidden" style="background: radial-gradient(120% 140% at 20% 20%, #112750 0%, #08142d 45%, #040b1c 100%);">
+<canvas aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
+<div style="position: relative; z-index: 1;">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
+<div class="max-w-2xl">
+<div class="flex items-center gap-3 mb-6">
+<div class="h-px w-12 bg-secondary"></div>
+<span class="text-secondary font-headline font-bold tracking-widest text-xs uppercase">The Kinetic Aperture</span>
+</div>
+<div id="services" class="anchor-point"></div>
+<h2 class="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-none">High-Frequency <br/>Specialization</h2>
+</div>
+<p class="text-on-surface-variant max-w-sm mb-2 text-sm leading-relaxed">
+                        Moving beyond the template. We leverage intentional asymmetry to create digital experiences that pulsate with brand narrative.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Service 1 -->
+<div class="group p-8 rounded-2xl bg-surface-container-low hover:bg-surface-container transition-all duration-500 border-b-2 border-transparent hover:border-primary">
+<div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="Monitor">monitor</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-white mb-4">Custom Websites</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">High-performance digital experiences built on clean architecture and motion design.</p>
+<div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                            Explore
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Service 2 -->
+<div class="group p-8 rounded-2xl bg-surface-container-low hover:bg-surface-container transition-all duration-500 border-b-2 border-transparent hover:border-secondary">
+<div class="size-14 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="Palette">palette</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-white mb-4">Graphic Design</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Bold visual identities that slice through the noise with editorial precision.</p>
+<div class="flex items-center gap-2 text-secondary font-bold text-xs uppercase tracking-widest">
+                            Explore
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Service 3 -->
+<div class="group p-8 rounded-2xl bg-surface-container-low hover:bg-surface-container transition-all duration-500 border-b-2 border-transparent hover:border-tertiary">
+<div class="size-14 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="VideoCamera">videocam</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-white mb-4">Video Production</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Cinematic storytelling and high-energy motion graphics for the social age.</p>
+<div class="flex items-center gap-2 text-tertiary font-bold text-xs uppercase tracking-widest">
+                            Explore
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Service 4 -->
+<div class="group p-8 rounded-2xl bg-surface-container-low hover:bg-surface-container transition-all duration-500 border-b-2 border-transparent hover:border-white">
+<div class="size-14 rounded-xl bg-white/10 flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="MusicNote">music_note</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-white mb-4">Music &amp; Audio</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Immersive soundscapes and original scores that elevate the sensory experience.</p>
+<div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-widest">
+                            Explore
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio Highlights -->
+<section class="portfolio-section py-32 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex items-center justify-between mb-16">
+<div id="portfolio" class="anchor-point"></div>
+<h2 class="font-headline text-3xl md:text-5xl font-bold text-white">Work Highlights</h2>
+<a class="text-sm font-bold text-primary flex items-center gap-2 hover:gap-4 transition-all" href="/dev/portfolio/index.html">
+                        Full Portfolio
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+<!-- City of West Palm Beach -->
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card video-card-16x9">
+<div class="relative w-full aspect-square overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
+<video id="west-palm-beach-video" class="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-300 pointer-events-none" autoplay muted playsinline preload="auto"></video>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/90 to-transparent opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy">
+<span class="text-primary font-bold text-xs mb-2">Website Development, SEO, &amp; AI Schema</span>
+<h4 class="font-headline text-xl font-bold text-white">City of West Palm Beach, Florida - VisitWPB.org</h4>
+<div class="project-link-row pointer-events-auto">
+<a class="project-pill-link" href="https://VisitWPB.org" target="_blank" rel="noopener noreferrer">
+WEBSITE
+</a>
+</div>
+</div>
+<button aria-label="Turn City of West Palm Beach video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary pointer-events-auto video-mute" id="west-palm-beach-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="west-palm-beach-audio-icon">volume_off</span>
+</button>
+</div>
+<!-- WeightLossDavie.com -->
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card">
+<div class="relative w-full aspect-[9/16] overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
+<iframe
+id="weightloss-youtube-player"
+class="absolute inset-0 h-full w-full pointer-events-none"
+src="https://www.youtube.com/embed/Uf0iSlZ1jkw?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=Uf0iSlZ1jkw&amp;modestbranding=1&amp;playsinline=1&amp;rel=0&amp;enablejsapi=1"
+title="WeightLossDavie visual"
+loading="lazy"
+allow="autoplay; encrypted-media; picture-in-picture"
+referrerpolicy="strict-origin-when-cross-origin"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end mobile-video-copy">
+<span class="text-primary font-bold text-xs mb-2">BRANDING AND WEBSITE DESIGN</span>
+<h4 class="font-headline text-xl font-bold text-white">WeightLossDavie.com</h4>
+<div class="project-link-row">
+<a class="project-pill-link" href="https://weightlossdavie.com" target="_blank" rel="noopener noreferrer">
+WEBSITE
+</a>
+</div>
+</div>
+<button aria-label="Turn WeightLossDavie video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary" id="weightloss-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="weightloss-audio-icon">volume_off</span>
+</button>
+</div>
+<!-- Other items -->
+<!-- Seascape Resort & Marina -->
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl portfolio-horizontal-card mobile-video-card">
+<div class="relative w-full aspect-[16/10] bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale portfolio-card-media mobile-video-media">
+<iframe
+id="seascape-youtube-player"
+class="absolute inset-0 h-full w-full pointer-events-none"
+src="https://www.youtube.com/embed/j_kc6PbybHI?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=j_kc6PbybHI&amp;modestbranding=1&amp;playsinline=1&amp;rel=0&amp;enablejsapi=1"
+title="Seascape Resort &amp; Marina visual"
+loading="lazy"
+allow="autoplay; encrypted-media; picture-in-picture"
+referrerpolicy="strict-origin-when-cross-origin"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none portfolio-card-copy mobile-video-copy">
+<span class="text-primary font-bold text-xs mb-2">WEBSITE REDESIGN</span>
+<h4 class="font-headline text-xl font-bold text-white mb-4">Seascape Resort &amp; Marina</h4>
+<a class="text-white text-xs font-bold underline decoration-primary underline-offset-4 hover:text-primary transition-colors pointer-events-auto" href="https://elettro.github.io/seascaperesortmarina/report" target="_blank">View Report</a>
+</div>
+<button aria-label="Turn Seascape video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary" id="seascape-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="seascape-audio-icon">volume_off</span>
+</button>
+</div>
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card">
+<div class="relative w-full aspect-[9/16] overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
+<iframe
+id="stashbox-youtube-player"
+class="absolute inset-0 h-full w-full pointer-events-none opacity-100 transition-opacity duration-500"
+src="https://www.youtube.com/embed/ojycs1vu48M?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=ojycs1vu48M&amp;modestbranding=1&amp;playsinline=1&amp;rel=0&amp;enablejsapi=1"
+title="Stashbox YouTube Growth visual"
+loading="lazy"
+allow="autoplay; encrypted-media; picture-in-picture"
+referrerpolicy="strict-origin-when-cross-origin"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy video-text-overlay-bg">
+<span class="text-secondary font-bold text-xs mb-2">Branding, Web Dev, Video Production</span>
+<h4 class="font-headline text-xl font-bold text-white">Stashbox YouTube Growth</h4>
+<div class="mt-4 flex flex-wrap gap-2 pointer-events-auto">
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://Youtube.com/@stashboxband" target="_blank" rel="noopener noreferrer">YouTube</a>
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://stashbox.com" target="_blank" rel="noopener noreferrer">Website</a>
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://Stashbox.ai" target="_blank" rel="noopener noreferrer">Merch</a>
+</div>
+</div>
+<button aria-label="Turn Stashbox YouTube Growth video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary" id="stashbox-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="stashbox-audio-icon">volume_off</span>
+</button>
+</div>
+<div class="break-inside-avoid group relative rounded-2xl overflow-hidden portfolio-horizontal-card mobile-video-card jon-phillips-card video-card-16x9">
+
+  <!-- Video -->
+  <div class="relative w-full aspect-video bg-black portfolio-card-media mobile-video-media">
+    <iframe
+      id="silverback-video"
+      class="absolute inset-0 w-full h-full object-cover"
+      src="https://www.youtube.com/embed/L_wCyky9fuM?autoplay=1&mute=1&loop=1&playlist=L_wCyky9fuM&controls=0&showinfo=0&modestbranding=1&playsinline=1&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+
+    <!-- Overlay Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent video-text-overlay-bg jon-phillips-gradient"></div>
+
+    <!-- Mute Toggle -->
+    <button
+      aria-label="Toggle video audio"
+      class="absolute bottom-3 right-3 z-20 h-8 w-8 rounded-full border border-white/30 bg-black/60 text-white backdrop-blur-sm flex items-center justify-center video-mute"
+      onclick="toggleYTVideo('silverback-video', this)">
+      <span class="material-symbols-outlined text-sm">volume_off</span>
+    </button>
+
+  </div>
+
+  <!-- Text -->
+  <div class="absolute bottom-0 left-0 p-6 z-10 portfolio-card-copy mobile-video-copy jon-phillips-copy">
+    <span class="text-primary text-xs font-bold block mb-2">
+      Video Production, Graphics, Tech Consulting
+    </span>
+    <h4 class="text-white text-xl font-bold">
+      Jon Phillips, Owner - Silverback Management
+    </h4>
+    <div class="project-link-row jon-phillips-cta-row">
+<a class="project-pill-link project-pill-link-wide" href="https://www.youtube.com/watch?v=twa-yI5loAQ" target="_blank" rel="noopener noreferrer">
+FESTIVAL CONCERT LED VIDEO
+</a>
+</div>
+  </div>
+</div>
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card">
+<div class="relative w-full aspect-square overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
+<video id="maxi-priest-video-a" class="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline preload="auto">
+<source src="videos/Maxi-Preist-Elettro-Testimonial.mp4" type="video/mp4"/>
+</video>
+<video id="maxi-priest-video-b" class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline preload="auto">
+<source src="videos/Maxi-Preist-Elettro-Testimonial.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy video-text-overlay-bg">
+<span class="text-primary font-bold text-xs mb-2">Video Production, Website Production, Graphics</span>
+<h4 class="font-headline text-xl font-bold text-white">Maxi Priest</h4>
+<div class="project-link-row pointer-events-auto">
+<a class="project-pill-link" href="https://MaxiPriest.com" target="_blank" rel="noopener noreferrer">
+WEBSITE
+</a>
+</div>
+</div>
+<button aria-label="Turn Maxi Priest video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary pointer-events-auto" id="maxi-priest-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="maxi-priest-audio-icon">volume_off</span>
+</button>
+</div>
+<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card">
+<div class="relative w-full aspect-[9/16] overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
+<iframe
+id="darcey-youtube-player"
+class="absolute inset-0 h-full w-full pointer-events-none opacity-100 transition-opacity duration-500"
+src="https://www.youtube.com/embed/lh_k2ulBlcQ?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=lh_k2ulBlcQ&amp;modestbranding=1&amp;playsinline=1&amp;rel=0&amp;enablejsapi=1"
+title="Darcey &amp; Stacey Silva visual"
+loading="lazy"
+allow="autoplay; encrypted-media; picture-in-picture"
+referrerpolicy="strict-origin-when-cross-origin"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy video-text-overlay-bg">
+<span class="text-secondary font-bold text-xs mb-2">YouTube, Video &amp; Music Production</span>
+<h4 class="font-headline text-xl font-bold text-white">Darcey &amp; Stacey Silva</h4>
+<div class="mt-4 flex flex-wrap gap-2 pointer-events-auto">
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://www.youtube.com/@DarceyStaceySilva" target="_blank" rel="noopener noreferrer">YouTube</a>
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://open.spotify.com/artist/4xvbBkUM1l0Z8F897TgExb" target="_blank" rel="noopener noreferrer">Spotify</a>
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://www.instagram.com/darceysilva/" target="_blank" rel="noopener noreferrer">Darcey IG</a>
+<a class="text-white/95 text-[11px] font-bold uppercase tracking-wide border border-white/30 bg-surface/55 hover:bg-surface/75 hover:border-primary hover:text-primary transition-colors rounded-full px-3 py-1.5 backdrop-blur-sm" href="https://www.instagram.com/staceysilvatv/" target="_blank" rel="noopener noreferrer">Stacey IG</a>
+</div>
+</div>
+<button aria-label="Turn Darcey &amp; Stacey Silva video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary" id="darcey-audio-toggle" type="button">
+<span class="material-symbols-outlined text-base leading-none" id="darcey-audio-icon">volume_off</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- AI + Systems Layer -->
+<section class="py-24 px-6 bg-transparent">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16">
+<div id="about" class="anchor-point"></div>
+<h2 class="font-headline text-4xl font-bold text-white mb-4">AI + Systems Layer</h2>
+<p class="text-on-surface-variant max-w-2xl">Beyond output. We help structure the creative machine.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="rounded-2xl p-6 bg-white/5 backdrop-blur border border-primary/20 shadow-[0_0_24px_rgba(129,236,255,0.12)]">
+<h3 class="text-white font-semibold mb-2">AI Prompt Engineering</h3>
+<p class="text-white/60 text-sm">Structured prompting systems for more controlled, consistent AI-driven output.</p>
+</div>
+<div class="rounded-2xl p-6 bg-white/5 backdrop-blur border border-secondary/20 shadow-[0_0_24px_rgba(46,253,124,0.1)]">
+<h3 class="text-white font-semibold mb-2">Branded Content Systems</h3>
+<p class="text-white/60 text-sm">Content build-up frameworks that expand one idea into coordinated brand assets.</p>
+</div>
+<div class="rounded-2xl p-6 bg-white/5 backdrop-blur border border-tertiary/20 shadow-[0_0_24px_rgba(161,142,255,0.12)]">
+<h3 class="text-white font-semibold mb-2">Creative File Organization</h3>
+<p class="text-white/60 text-sm">Clean file structure for better storage, reuse, and faster retrieval across teams.</p>
+</div>
+<div class="rounded-2xl p-6 bg-white/5 backdrop-blur border border-white/15 shadow-[0_0_24px_rgba(255,255,255,0.08)]">
+<h3 class="text-white font-semibold mb-2">Project Management Systems</h3>
+<p class="text-white/60 text-sm">Managed production flow that keeps delivery aligned from concept to completion.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Process -->
+<section id="process" class="process-section py-24 relative">
+<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
+<div>
+<div id="process" class="anchor-point"></div>
+<h2 class="font-headline text-4xl md:text-5xl font-bold text-white mb-8">Concept to <span class="text-primary italic">Creation</span></h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12">Our workflow is a focused linear acceleration from deep research to cinematic delivery.</p>
+<div class="space-y-12">
+<div class="flex gap-8 group">
+<div class="font-headline text-4xl font-bold text-outline-variant/30 group-hover:text-primary transition-colors">01</div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Discovery &amp; Strategy</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Mapping your brand's unique energy and identifying the visual targets for high-impact resonance.</p>
+</div>
+</div>
+<div class="flex gap-8 group">
+<div class="font-headline text-4xl font-bold text-outline-variant/30 group-hover:text-secondary transition-colors">02</div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Visual Production</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Crafting the core assets—websites, videos, and graphics—with absolute attention to cinematic detail.</p>
+</div>
+</div>
+<div class="flex gap-8 group">
+<div class="font-headline text-4xl font-bold text-outline-variant/30 group-hover:text-tertiary transition-colors">03</div>
+<div>
+<h4 class="text-xl font-bold text-white mb-2">Final Calibration</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Rigorous testing and fine-tuning audio-visual balance before launching into the global marketplace.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-[100px] animate-pulse"></div>
+<div class="relative w-full aspect-square border border-outline-variant/10 rounded-full flex items-center justify-center p-12">
+<div class="w-full h-full border border-outline-variant/20 rounded-full flex items-center justify-center p-12">
+<div class="w-full h-full border-2 border-primary/40 rounded-full flex items-center justify-center relative">
+<span class="material-symbols-outlined text-primary text-6xl animate-bounce" data-icon="rocket_launch">rocket_launch</span>
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-surface px-4 py-1 flex items-center gap-2 rounded-full border border-outline-variant/40">
+<div class="size-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-[10px] font-bold tracking-[0.2em] uppercase text-on-surface-variant">Live Production</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- What Makes Us Different -->
+<section class="ew-section" id="what-makes-us-different">
+  <div class="ew-inner">
+    <p class="ew-kicker">Elettro® Advantage</p>
+    <h2 class="ew-heading">What makes us different</h2>
+    <p class="ew-intro">
+      Elettro combines senior-level digital experience, AI-powered strategy, disciplined project management, and deep creative production to help brands build stronger digital presence.
+    </p>
+
+    <div class="ew-grid">
+      <article class="ew-card">
+        <div class="ew-graphic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="22" stroke="#00E5FF" stroke-width="2"/><path d="M32 18V32L41 37" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"/><path d="M22 10h20" stroke="#fff" stroke-opacity=".35"/></svg>
+        </div>
+        <div class="ew-text">
+          <span class="ew-label">Experience</span>
+          <h3 class="ew-title">20+ Years Building Digital Presence</h3>
+          <p class="ew-body">Two decades of hands-on execution across brand strategy, web, video, and digital campaigns gives clients a practical system that balances speed, quality, and outcomes.</p>
+        </div>
+      </article>
+
+      <article class="ew-card">
+        <div class="ew-graphic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="44" height="44" rx="10" stroke="#00E5FF" stroke-width="2"/><path d="M22 34h20M22 26h14M22 42h12" stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round"/><circle cx="44" cy="24" r="5" fill="#00E5FF"/></svg>
+        </div>
+        <div class="ew-text">
+          <span class="ew-label">Innovation</span>
+          <h3 class="ew-title">Advanced Use of AI</h3>
+          <p class="ew-body">We apply AI where it adds real leverage—speeding production, improving iteration cycles, and expanding creative possibilities while maintaining brand control and human oversight.</p>
+        </div>
+      </article>
+
+      <article class="ew-card">
+        <div class="ew-graphic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18h40v28H12z" stroke="#00E5FF" stroke-width="2"/><path d="M20 14v8M32 14v8M44 14v8" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/><path d="M20 30h8M20 38h16" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="ew-text">
+          <span class="ew-label">Operations</span>
+          <h3 class="ew-title">Client &amp; Project Management Excellence</h3>
+          <p class="ew-body">Clear timelines, scoped deliverables, and consistent communication keep projects moving. Our management discipline helps teams avoid bottlenecks and stay aligned from kickoff to launch.</p>
+        </div>
+      </article>
+
+      <article class="ew-card">
+        <div class="ew-graphic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 46l18-28 18 28H14z" stroke="#00E5FF" stroke-width="2"/><circle cx="32" cy="34" r="6" stroke="#00E5FF" stroke-width="2"/><path d="M32 10v6" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="ew-text">
+          <span class="ew-label">Creative</span>
+          <h3 class="ew-title">Deep Creative Production</h3>
+          <p class="ew-body">From concept to final assets, we produce high-quality visuals and content systems that elevate perception, improve consistency, and help brands stand out in crowded markets.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="subscription-section py-24 px-6 max-[480px]:px-4">
+<div class="max-w-7xl mx-auto rounded-[2rem] bg-surface-container-highest border border-outline-variant/20 overflow-hidden relative">
+<div class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&amp;w=2070')] bg-cover bg-center opacity-5 mix-blend-overlay" data-alt="Textured technological background"></div>
+<div class="relative z-10 px-8 py-20 max-[480px]:px-4 max-[480px]:py-12 lg:px-20 lg:py-32 grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(340px,560px)] lg:gap-16 items-center">
+<div class="text-center lg:text-left">
+<p class="text-primary font-headline font-bold tracking-[0.3em] text-xs uppercase mb-5">Newsletter</p>
+<h2 class="font-headline text-5xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter mb-7">
+                            Stay Connected<br/><span class="text-primary italic">Elevate Your Brand.</span>
+</h2>
+<p class="text-on-surface-variant text-lg max-w-xl mx-auto lg:mx-0 mb-10">
+                            Subscribe for Elettro updates, new work, creative drops, and marketing ideas delivered with cinematic clarity.
+                        </p>
+<p class="text-on-surface-variant/80 text-sm uppercase tracking-[0.22em] font-bold">Premium insights. No noise.</p>
+</div>
+<div class="w-full right-form-container">
+<div class="w-full beehiiv-form-shell">
+<script async="" src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+<div class="newsletter-form-shell">
+<div class="newsletter-form-card">
+<div class="newsletter-form-inner">
+<div class="beehiiv-embed-wrap">
+<iframe src="https://subscribe-forms.beehiiv.com/2179cf81-b441-4c14-960e-45e6cb87ffd7" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+    <section class="contact-showcase py-24 px-6 max-[480px]:px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_30px_90px_rgba(3,10,30,0.55)] overflow-hidden">
+          <div class="pointer-events-none absolute -top-28 -left-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-32 -right-20 h-72 w-72 rounded-full bg-secondary/10 blur-3xl"></div>
+          <div class="relative z-10 grid gap-8 p-6 md:p-8 lg:grid-cols-2 lg:gap-10 lg:p-10">
+            <div class="rounded-3xl border border-white/10 bg-surface/45 p-6 shadow-[0_12px_40px_rgba(2,8,24,0.45)] backdrop-blur-xl md:p-8">
+              <div id="contact" class="anchor-point"></div>
+              <h2 class="font-headline text-3xl font-extrabold tracking-tight text-white md:text-4xl">Let’s Start Your Project</h2>
+              <p class="mt-4 text-sm leading-relaxed text-on-surface-variant md:text-base">
+                Elettro delivers high-impact Websites, Graphics, Video, Music, Automation, and AI Marketing tailored for modern brands.
+              </p>
+              <div class="mt-8 space-y-4">
+                <a href="mailto:contact@elettrocom" class="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-on-surface transition hover:border-primary/50 hover:bg-primary/10 hover:text-white">
+                  <span class="material-symbols-outlined text-primary">mail</span>
+                  <span class="font-semibold tracking-wide">contact@elettrocom</span>
+                </a>
+                <a href="tel:13104086687" class="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-on-surface transition hover:border-primary/50 hover:bg-primary/10 hover:text-white">
+                  <span class="material-symbols-outlined text-primary">call</span>
+                  <span class="font-semibold tracking-wide">310.408.6687</span>
+                </a>
+              </div>
+              <a href="https://maps.app.goo.gl/q5dWaW8WR59F82Up9" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/15 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] text-secondary transition hover:border-secondary hover:bg-secondary/25 hover:text-white">
+                Leave a Google Review
+                <span class="material-symbols-outlined text-base">north_east</span>
+              </a>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-surface/55 p-6 shadow-[0_12px_40px_rgba(2,8,24,0.55)] backdrop-blur-xl md:p-8">
+              <form action="https://formspree.io/f/mpqkzdbw" method="POST" class="space-y-5">
+                <input type="hidden" name="_subject" value="New Elettro Contact Form Submission" />
+                <div>
+                  <label for="contact-name" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant">Full Name</label>
+                  <input id="contact-name" name="name" type="text" required class="w-full rounded-2xl border border-white/15 bg-surface-container-low/90 px-4 py-3 text-sm text-white placeholder:text-on-surface-variant/70 outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/35" placeholder="Jordan Lee" />
+                </div>
+                <div>
+                  <label for="contact-email" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant">Business Email</label>
+                  <input id="contact-email" name="email" type="email" required class="w-full rounded-2xl border border-white/15 bg-surface-container-low/90 px-4 py-3 text-sm text-white placeholder:text-on-surface-variant/70 outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/35" placeholder="jordan@company.com" />
+                </div>
+                <div>
+                  <label for="contact-phone" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant">Phone Number</label>
+                  <input id="contact-phone" name="phone" type="tel" class="w-full rounded-2xl border border-white/15 bg-surface-container-low/90 px-4 py-3 text-sm text-white placeholder:text-on-surface-variant/70 outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/35" placeholder="(310) 408-6687" />
+                </div>
+                <div>
+                  <label for="contact-service" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant">Primary Service Needed</label>
+                  <select id="contact-service" name="service" required class="w-full rounded-2xl border border-white/15 bg-surface-container-low/90 px-4 py-3 text-sm text-white outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/35">
+                    <option value="" disabled selected>Select a service</option>
+                    <option>Websites</option>
+                    <option>Graphics</option>
+                    <option>Video</option>
+                    <option>Music</option>
+                    <option>Automation</option>
+                    <option>AI Marketing</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="contact-message" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant">Project Overview</label>
+                  <textarea id="contact-message" name="message" required rows="5" class="w-full rounded-2xl border border-white/15 bg-surface-container-low/90 px-4 py-3 text-sm text-white placeholder:text-on-surface-variant/70 outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/35" placeholder="Tell us about your goals, timeline, and what success looks like."></textarea>
+                </div>
+                <button type="submit" class="inline-flex w-full items-center justify-center rounded-2xl border border-primary/40 bg-primary/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-primary transition hover:border-primary hover:bg-primary/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+<footer class="py-12 border-t border-outline-variant/10 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3 elettro-footer-wrap">
+<div class="size-5 text-white/50">
+<svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+</svg>
+</div>
+<img class="footer-brand-logo elettro-footer-logo" src="../images/Elettro-logo-white.png" alt="Elettro" />
+</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.3em]">© 2026 Elettro Digital Production. Built for the kinetic era.</div>
+<div class="flex gap-6">
+<a class="footer-social-icon" href="https://youtube.com/@Elettrotv" target="_blank" rel="noopener noreferrer" aria-label="Elettro YouTube">
+<svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.5 7.2a2.9 2.9 0 0 0-2-2C19.8 4.7 12 4.7 12 4.7s-7.8 0-9.5.5a2.9 2.9 0 0 0-2 2A30.2 30.2 0 0 0 0 12a30.2 30.2 0 0 0 .5 4.8 2.9 2.9 0 0 0 2 2c1.7.5 9.5.5 9.5.5s7.8 0 9.5-.5a2.9 2.9 0 0 0 2-2A30.2 30.2 0 0 0 24 12a30.2 30.2 0 0 0-.5-4.8ZM9.5 15.3V8.7l6 3.3-6 3.3Z"/>
+</svg>
+</a>
+<a class="footer-social-icon" href="https://stashbox.ai" target="_blank" rel="noopener noreferrer" aria-label="Stashbox Store">
+<svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 8V7a5 5 0 0 1 10 0v1h1.7c.9 0 1.6.8 1.5 1.7l-1 10a1.7 1.7 0 0 1-1.7 1.5H6.5a1.7 1.7 0 0 1-1.7-1.5l-1-10C3.7 8.8 4.4 8 5.3 8H7Zm2 0h6V7a3 3 0 1 0-6 0v1Zm1.2 4.1a1 1 0 1 0-2 0v1.8a1 1 0 1 0 2 0v-1.8Zm5.8-1a1 1 0 0 0-1 1v1.8a1 1 0 1 0 2 0v-1.8a1 1 0 0 0-1-1Z"/>
+</svg>
+</a>
+<a class="footer-social-icon footer-icon-music" href="https://youtube.com/@Stashboxband" target="_blank" rel="noopener noreferrer" aria-label="Stashbox Music">
+<svg class="footer-music-icon-svg" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <path class="music-note" d="M36 14v27.5c0 5.2-4.6 9.5-10.2 9.5S15.6 46.7 15.6 41.5 20.2 32 25.8 32c2.4 0 4.6.8 6.2 2.1V18.8l18-4.8v7.2l-14 3.7z"/>
+  <path class="wave wave-left-1" d="M11 25c-3 4-3 10 0 14"/>
+  <path class="wave wave-left-2" d="M6 20c-5 7-5 17 0 24"/>
+  <path class="wave wave-right-1" d="M51 25c3 4 3 10 0 14"/>
+  <path class="wave wave-right-2" d="M56 20c5 7 5 17 0 24"/>
+</svg>
+</a>
+<a class="footer-social-icon" href="https://linkedin.com/in/deanpalermo" target="_blank" rel="noopener noreferrer" aria-label="Dean Palermo LinkedIn">
+<svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.4 8.3a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8ZM3.7 9.9h3.4V20H3.7V9.9Zm5.3 0h3.2v1.4h.1c.4-.8 1.5-1.7 3.2-1.7 3.4 0 4 2.2 4 5.2V20H16v-4.6c0-1.1 0-2.5-1.6-2.5s-1.8 1.2-1.8 2.4V20H9V9.9Z"/>
+</svg>
+</a>
+</div>
+</div>
+</footer>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+        let player;
+        let seascapePlayer;
+        let weightlossPlayer;
+        let stashboxPlayer;
+        let darceyPlayer;
+        let isPlayerReady = false;
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const mobileMenuLinks = mobileMenuPanel ? Array.from(mobileMenuPanel.querySelectorAll('a')) : [];
+        const muteToggle = document.getElementById('mute-toggle');
+        const muteIcon = document.getElementById('mute-icon');
+        const seascapeAudioToggle = document.getElementById('seascape-audio-toggle');
+        const seascapeAudioIcon = document.getElementById('seascape-audio-icon');
+        const weightlossAudioToggle = document.getElementById('weightloss-audio-toggle');
+        const weightlossAudioIcon = document.getElementById('weightloss-audio-icon');
+        const stashboxAudioToggle = document.getElementById('stashbox-audio-toggle');
+        const stashboxAudioIcon = document.getElementById('stashbox-audio-icon');
+        const stashboxPlayerFrame = document.getElementById('stashbox-youtube-player');
+        const darceyAudioToggle = document.getElementById('darcey-audio-toggle');
+        const darceyAudioIcon = document.getElementById('darcey-audio-icon');
+        const darceyPlayerFrame = document.getElementById('darcey-youtube-player');
+        const silverbackAudioToggle = document.querySelector("button[onclick*=\"toggleYTVideo('silverback-video'\"]");
+        const silverbackAudioIcon = silverbackAudioToggle?.querySelector('.material-symbols-outlined');
+        const maxiPriestAudioToggle = document.getElementById('maxi-priest-audio-toggle');
+        const maxiPriestAudioIcon = document.getElementById('maxi-priest-audio-icon');
+        const maxiPriestVideoA = document.getElementById('maxi-priest-video-a');
+        const maxiPriestVideoB = document.getElementById('maxi-priest-video-b');
+        const westPalmBeachVideo = document.getElementById('west-palm-beach-video');
+        const westPalmBeachAudioToggle = document.getElementById('west-palm-beach-audio-toggle');
+        const westPalmBeachAudioIcon = document.getElementById('west-palm-beach-audio-icon');
+        let isSeascapePlayerReady = false;
+        let isWeightlossPlayerReady = false;
+        let isStashboxPlayerReady = false;
+        let isDarceyPlayerReady = false;
+        const stashboxVideoIds = ['ojycs1vu48M', '6DmxgBdUDmA', 'VvBB3fPY0b0', '3hGuST68C2Y', '30EvQVtQoa8', '8Apv0NyGMsE', 'pWiojoLw1KM'];
+        let stashboxVideoIndex = 0;
+        let stashboxCycleTimer = null;
+        const darceyVideoIds = ['lh_k2ulBlcQ', 'ZVcIll8Vc9M', 'RAJ7Hko4eWg', '_SdOOWpJlrM', '1au1_EBMVok'];
+        let darceyVideoIndex = 0;
+        let darceyCycleTimer = null;
+        const maxiPriestVideos = [
+            'videos/Maxi-Preist-Elettro-Testimonial.mp4',
+            'videos/Maxi-Preist-Elettro-Testimonial.mp4'
+        ];
+        const maxiPriestLayers = [maxiPriestVideoA, maxiPriestVideoB].filter(Boolean);
+        let maxiPriestActiveLayerIndex = 0;
+        let maxiPriestVideoIndex = 0;
+        let maxiPriestCycleTimer = null;
+        let isMaxiPriestAudioEnabled = false;
+        const westPalmBeachVideos = [
+            'videos/west-palm-beach-thank-you-2.mp4',
+            'videos/west-palm-beach-thank-you-3.mp4'
+        ];
+        let westPalmBeachVideoIndex = 0;
+
+        const mediaAudioRegistry = [];
+
+        function setMobileMenuOpen(isOpen) {
+            if (!mobileMenuToggle || !mobileMenuPanel) return;
+            mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+            mobileMenuPanel.hidden = !isOpen;
+        }
+
+        if (mobileMenuToggle && mobileMenuPanel) {
+            mobileMenuToggle.addEventListener('click', () => {
+                const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                setMobileMenuOpen(!isExpanded);
+            });
+
+            mobileMenuLinks.forEach((link) => {
+                link.addEventListener('click', () => setMobileMenuOpen(false));
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key !== 'Escape') return;
+                if (mobileMenuToggle.getAttribute('aria-expanded') !== 'true') return;
+                setMobileMenuOpen(false);
+                mobileMenuToggle.focus();
+            });
+        }
+
+        function registerYouTubeAudioSource({ id, playerGetter, button, icon, labels }) {
+            mediaAudioRegistry.push({
+                type: 'youtube',
+                id,
+                playerGetter,
+                button,
+                icon,
+                labels
+            });
+        }
+
+        function registerHtml5AudioSource({ id, element, button, icon, labels, onMute }) {
+            mediaAudioRegistry.push({
+                type: 'html5',
+                id,
+                element,
+                button,
+                icon,
+                labels,
+                onMute
+            });
+        }
+
+        function muteAllOtherMedia(exceptId) {
+            mediaAudioRegistry.forEach((entry) => {
+                if (entry.id === exceptId) return;
+
+                if (entry.type === 'youtube') {
+                    const playerInstance = entry.playerGetter?.();
+                    if (playerInstance?.mute) playerInstance.mute();
+                }
+
+                if (entry.type === 'html5' && entry.element) {
+                    entry.element.muted = true;
+                    entry.element.volume = 1;
+                }
+
+                if (typeof entry.onMute === 'function') {
+                    entry.onMute();
+                }
+
+                if (entry.button?.dataset) {
+                    entry.button.dataset.muted = 'true';
+                }
+
+                if (entry.button) {
+                    entry.button.setAttribute('aria-label', entry.labels?.on ?? 'Turn video audio on');
+                }
+
+                if (entry.icon) {
+                    entry.icon.textContent = 'volume_off';
+                }
+            });
+        }
+
+        function toggleYTVideo(id, btn) {
+            const iframe = document.getElementById(id);
+            if (!iframe?.contentWindow) return;
+
+            const isMuted = btn.dataset.muted !== 'false';
+            const icon = btn.querySelector('.material-symbols-outlined');
+            const source = mediaAudioRegistry.find((entry) => entry.id === id);
+            const labels = source?.labels ?? {
+                on: 'Turn video audio on',
+                off: 'Turn video audio off'
+            };
+
+            if (isMuted) {
+                muteAllOtherMedia(id);
+            }
+
+            iframe.contentWindow.postMessage(JSON.stringify({
+                event: "command",
+                func: isMuted ? "unMute" : "mute"
+            }), "*");
+
+            btn.dataset.muted = isMuted ? 'false' : 'true';
+            btn.setAttribute('aria-label', isMuted ? labels.off : labels.on);
+            if (icon) {
+                icon.textContent = isMuted ? 'volume_up' : 'volume_off';
+            }
+        }
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                videoId: 'Mc6SdHHh2po',
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    mute: 1,
+                    loop: 1,
+                    playlist: 'Mc6SdHHh2po',
+                    rel: 0,
+                    modestbranding: 1,
+                    iv_load_policy: 3,
+                    disablekb: 1,
+                    playsinline: 1
+                },
+                events: {
+                    onReady: onPlayerReady
+                }
+            });
+
+            seascapePlayer = new YT.Player('seascape-youtube-player', {
+                events: {
+                    onReady: (event) => {
+                        isSeascapePlayerReady = true;
+                        event.target.mute();
+                        event.target.playVideo();
+                    }
+                }
+            });
+
+            weightlossPlayer = new YT.Player('weightloss-youtube-player', {
+                events: {
+                    onReady: (event) => {
+                        isWeightlossPlayerReady = true;
+                        event.target.mute();
+                        event.target.playVideo();
+                    }
+                }
+            });
+
+            stashboxPlayer = new YT.Player('stashbox-youtube-player', {
+                events: {
+                    onReady: (event) => {
+                        isStashboxPlayerReady = true;
+                        event.target.mute();
+                        event.target.playVideo();
+                        startStashboxVideoCycle();
+                    }
+                }
+            });
+
+            darceyPlayer = new YT.Player('darcey-youtube-player', {
+                events: {
+                    onReady: (event) => {
+                        isDarceyPlayerReady = true;
+                        event.target.mute();
+                        event.target.playVideo();
+                        startDarceyVideoCycle();
+                    }
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            event.target.playVideo();
+        }
+
+        muteToggle.addEventListener('click', () => {
+            if (!isPlayerReady || !player) return;
+
+            if (player.isMuted()) {
+                muteAllOtherMedia('hero-background-youtube');
+                player.unMute();
+                muteIcon.textContent = 'volume_up';
+                muteToggle.dataset.muted = 'false';
+                muteToggle.setAttribute('aria-label', 'Turn hero background video audio off');
+            } else {
+                player.mute();
+                muteIcon.textContent = 'volume_off';
+                muteToggle.dataset.muted = 'true';
+                muteToggle.setAttribute('aria-label', 'Turn hero background video audio on');
+            }
+        });
+
+        seascapeAudioToggle?.addEventListener('click', () => {
+            if (!isSeascapePlayerReady || !seascapePlayer) return;
+
+            if (seascapePlayer.isMuted()) {
+                muteAllOtherMedia('seascape-youtube');
+                seascapePlayer.unMute();
+                seascapeAudioIcon.textContent = 'volume_up';
+                seascapeAudioToggle.dataset.muted = 'false';
+                seascapeAudioToggle.setAttribute('aria-label', 'Turn Seascape video audio off');
+            } else {
+                seascapePlayer.mute();
+                seascapeAudioIcon.textContent = 'volume_off';
+                seascapeAudioToggle.dataset.muted = 'true';
+                seascapeAudioToggle.setAttribute('aria-label', 'Turn Seascape video audio on');
+            }
+        });
+
+        weightlossAudioToggle?.addEventListener('click', () => {
+            if (!isWeightlossPlayerReady || !weightlossPlayer) return;
+
+            if (weightlossPlayer.isMuted()) {
+                muteAllOtherMedia('weightloss-youtube');
+                weightlossPlayer.unMute();
+                weightlossAudioIcon.textContent = 'volume_up';
+                weightlossAudioToggle.dataset.muted = 'false';
+                weightlossAudioToggle.setAttribute('aria-label', 'Turn WeightLossDavie video audio off');
+            } else {
+                weightlossPlayer.mute();
+                weightlossAudioIcon.textContent = 'volume_off';
+                weightlossAudioToggle.dataset.muted = 'true';
+                weightlossAudioToggle.setAttribute('aria-label', 'Turn WeightLossDavie video audio on');
+            }
+        });
+
+        function playNextStashboxVideo() {
+            if (!isStashboxPlayerReady || !stashboxPlayer) return;
+            stashboxVideoIndex = (stashboxVideoIndex + 1) % stashboxVideoIds.length;
+            stashboxPlayerFrame?.classList.add('opacity-0');
+
+            window.setTimeout(() => {
+                stashboxPlayer.loadVideoById({
+                    videoId: stashboxVideoIds[stashboxVideoIndex],
+                    startSeconds: 0
+                });
+                stashboxPlayerFrame?.classList.remove('opacity-0');
+            }, 220);
+        }
+
+        function startStashboxVideoCycle() {
+            if (stashboxCycleTimer) {
+                window.clearInterval(stashboxCycleTimer);
+            }
+            stashboxCycleTimer = window.setInterval(playNextStashboxVideo, 12000);
+        }
+
+        stashboxAudioToggle?.addEventListener('click', () => {
+            if (!isStashboxPlayerReady || !stashboxPlayer) return;
+
+            if (stashboxPlayer.isMuted()) {
+                muteAllOtherMedia('stashbox-youtube');
+                stashboxPlayer.unMute();
+                stashboxAudioIcon.textContent = 'volume_up';
+                stashboxAudioToggle.dataset.muted = 'false';
+                stashboxAudioToggle.setAttribute('aria-label', 'Turn Stashbox YouTube Growth video audio off');
+            } else {
+                stashboxPlayer.mute();
+                stashboxAudioIcon.textContent = 'volume_off';
+                stashboxAudioToggle.dataset.muted = 'true';
+                stashboxAudioToggle.setAttribute('aria-label', 'Turn Stashbox YouTube Growth video audio on');
+            }
+        });
+
+        function playNextDarceyVideo() {
+            if (!isDarceyPlayerReady || !darceyPlayer) return;
+            darceyVideoIndex = (darceyVideoIndex + 1) % darceyVideoIds.length;
+            darceyPlayerFrame?.classList.add('opacity-0');
+
+            window.setTimeout(() => {
+                darceyPlayer.loadVideoById({
+                    videoId: darceyVideoIds[darceyVideoIndex],
+                    startSeconds: 0
+                });
+                darceyPlayerFrame?.classList.remove('opacity-0');
+            }, 220);
+        }
+
+        function startDarceyVideoCycle() {
+            if (darceyCycleTimer) {
+                window.clearInterval(darceyCycleTimer);
+            }
+            darceyCycleTimer = window.setInterval(playNextDarceyVideo, 12000);
+        }
+
+        darceyAudioToggle?.addEventListener('click', () => {
+            if (!isDarceyPlayerReady || !darceyPlayer) return;
+
+            if (darceyPlayer.isMuted()) {
+                muteAllOtherMedia('darcey-youtube');
+                darceyPlayer.unMute();
+                darceyAudioIcon.textContent = 'volume_up';
+                darceyAudioToggle.dataset.muted = 'false';
+                darceyAudioToggle.setAttribute('aria-label', 'Turn Darcey & Stacey Silva video audio off');
+            } else {
+                darceyPlayer.mute();
+                darceyAudioIcon.textContent = 'volume_off';
+                darceyAudioToggle.dataset.muted = 'true';
+                darceyAudioToggle.setAttribute('aria-label', 'Turn Darcey & Stacey Silva video audio on');
+            }
+        });
+
+        function playMaxiPriestLayer(layer, source) {
+            if (!layer) return;
+            if (layer.querySelector('source')?.getAttribute('src') !== source) {
+                layer.querySelector('source')?.setAttribute('src', source);
+                layer.load();
+            }
+            layer.play().catch(() => {});
+        }
+
+        function syncMaxiPriestLayerAudio() {
+            maxiPriestLayers.forEach((layer, index) => {
+                const shouldBeMuted = !isMaxiPriestAudioEnabled || index !== maxiPriestActiveLayerIndex;
+                layer.muted = shouldBeMuted;
+                layer.volume = 1;
+            });
+        }
+
+        function cycleMaxiPriestVideo() {
+            if (maxiPriestLayers.length < 2) return;
+            const currentLayer = maxiPriestLayers[maxiPriestActiveLayerIndex];
+            const nextLayerIndex = (maxiPriestActiveLayerIndex + 1) % maxiPriestLayers.length;
+            const nextLayer = maxiPriestLayers[nextLayerIndex];
+
+            maxiPriestVideoIndex = (maxiPriestVideoIndex + 1) % maxiPriestVideos.length;
+            playMaxiPriestLayer(nextLayer, maxiPriestVideos[maxiPriestVideoIndex]);
+            nextLayer.currentTime = 0;
+            nextLayer.classList.remove('opacity-0');
+            nextLayer.classList.add('opacity-100');
+            currentLayer.classList.remove('opacity-100');
+            currentLayer.classList.add('opacity-0');
+            maxiPriestActiveLayerIndex = nextLayerIndex;
+            syncMaxiPriestLayerAudio();
+        }
+
+        function startMaxiPriestCycle() {
+            if (maxiPriestLayers.length < 2) return;
+            playMaxiPriestLayer(maxiPriestLayers[0], maxiPriestVideos[0]);
+            maxiPriestLayers[0].classList.add('opacity-100');
+            maxiPriestLayers[0].classList.remove('opacity-0');
+            playMaxiPriestLayer(maxiPriestLayers[1], maxiPriestVideos[1]);
+            maxiPriestLayers[1].classList.remove('opacity-100');
+            maxiPriestLayers[1].classList.add('opacity-0');
+            syncMaxiPriestLayerAudio();
+
+            if (maxiPriestCycleTimer) {
+                window.clearInterval(maxiPriestCycleTimer);
+            }
+            maxiPriestCycleTimer = window.setInterval(cycleMaxiPriestVideo, 8000);
+        }
+
+        maxiPriestAudioToggle?.addEventListener('click', () => {
+            if (!maxiPriestLayers.length) return;
+            const shouldEnableAudio = !isMaxiPriestAudioEnabled;
+            if (shouldEnableAudio) {
+                muteAllOtherMedia('maxi-priest-html5');
+            }
+            isMaxiPriestAudioEnabled = shouldEnableAudio;
+            syncMaxiPriestLayerAudio();
+            maxiPriestAudioIcon.textContent = isMaxiPriestAudioEnabled ? 'volume_up' : 'volume_off';
+            maxiPriestAudioToggle.dataset.muted = isMaxiPriestAudioEnabled ? 'false' : 'true';
+            maxiPriestAudioToggle.setAttribute('aria-label', isMaxiPriestAudioEnabled ? 'Turn Maxi Priest video audio off' : 'Turn Maxi Priest video audio on');
+        });
+
+        startMaxiPriestCycle();
+
+        function playWestPalmBeachVideo(index) {
+            if (!westPalmBeachVideo || !westPalmBeachVideos.length) return;
+            westPalmBeachVideo.classList.add('opacity-0');
+            westPalmBeachVideo.src = westPalmBeachVideos[index];
+            westPalmBeachVideo.load();
+            westPalmBeachVideo.play().then(() => {
+                requestAnimationFrame(() => westPalmBeachVideo.classList.remove('opacity-0'));
+            }).catch(() => {
+                westPalmBeachVideo.muted = true;
+                westPalmBeachVideo.play().then(() => {
+                    requestAnimationFrame(() => westPalmBeachVideo.classList.remove('opacity-0'));
+                }).catch(() => {});
+            });
+        }
+
+        westPalmBeachVideo?.addEventListener('ended', () => {
+            westPalmBeachVideoIndex = (westPalmBeachVideoIndex + 1) % westPalmBeachVideos.length;
+            playWestPalmBeachVideo(westPalmBeachVideoIndex);
+        });
+
+        westPalmBeachVideo?.addEventListener('error', () => {
+            westPalmBeachVideoIndex = (westPalmBeachVideoIndex + 1) % westPalmBeachVideos.length;
+            playWestPalmBeachVideo(westPalmBeachVideoIndex);
+        });
+
+        westPalmBeachAudioToggle?.addEventListener('click', () => {
+            if (!westPalmBeachVideo) return;
+            const shouldUnmute = westPalmBeachVideo.muted;
+            if (shouldUnmute) {
+                muteAllOtherMedia('west-palm-beach-html5');
+            }
+            westPalmBeachVideo.muted = !shouldUnmute;
+            westPalmBeachVideo.volume = 1;
+            westPalmBeachAudioIcon.textContent = shouldUnmute ? 'volume_up' : 'volume_off';
+            westPalmBeachAudioToggle.dataset.muted = shouldUnmute ? 'false' : 'true';
+            westPalmBeachAudioToggle.setAttribute('aria-label', shouldUnmute ? 'Turn City of West Palm Beach video audio off' : 'Turn City of West Palm Beach video audio on');
+            westPalmBeachVideo.play().catch(() => {});
+        });
+
+        playWestPalmBeachVideo(westPalmBeachVideoIndex);
+
+        function syncBeehiivMobileEmbed() {
+            const wrap = document.querySelector('.beehiiv-embed-wrap');
+            const frame = wrap?.querySelector('iframe');
+            if (!wrap || !frame) return;
+
+            const baseWidth = 560;
+            const baseHeight = 488;
+            const isMobile = window.innerWidth <= 640;
+
+            if (!isMobile) {
+                wrap.style.setProperty('--beehiiv-scale', '1');
+                wrap.style.setProperty('--beehiiv-height', `${baseHeight}px`);
+                frame.style.width = '100%';
+                frame.style.minWidth = '0';
+                frame.style.height = `${baseHeight}px`;
+                frame.style.transform = 'none';
+                return;
+            }
+
+            const availableWidth = wrap.clientWidth;
+            const scale = Math.min(1, availableWidth / baseWidth);
+            const scaledHeight = Math.ceil(baseHeight * scale);
+
+            wrap.style.setProperty('--beehiiv-scale', String(scale));
+            wrap.style.setProperty('--beehiiv-height', `${scaledHeight}px`);
+
+            frame.style.width = `${baseWidth}px`;
+            frame.style.minWidth = `${baseWidth}px`;
+            frame.style.height = `${baseHeight}px`;
+            frame.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('load', syncBeehiivMobileEmbed);
+        window.addEventListener('resize', syncBeehiivMobileEmbed);
+
+        // Manual fallback for static hosting where folder listing is not available.
+        // Add/remove files from /vidtest/videos/ here when you update the folder.
+        const declaredVideoFiles = [
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs.mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (1).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (2).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (3).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (5).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (6).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (7).mp4',
+            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker  No st.mp4'
+        ];
+
+        const floatingCard = document.getElementById('floating-video-card');
+        const indicator = document.getElementById('video-audio-indicator');
+        const indicatorLabel = document.getElementById('video-audio-label');
+        const miniToggle = document.getElementById('video-audio-mini-toggle');
+        const miniToggleIcon = document.getElementById('video-audio-mini-icon');
+        const layers = [
+            document.getElementById('floating-video-a'),
+            document.getElementById('floating-video-b')
+        ];
+
+        const supportedExtensions = new Set(['mp4', 'webm', 'ogg', 'mov']);
+        const videoPlaylist = declaredVideoFiles
+            .filter((fileName) => supportedExtensions.has(fileName.split('.').pop().toLowerCase()))
+            .map((fileName) => `videos/${encodeURIComponent(fileName).replace(/%2F/g, '/')}`);
+
+        let activeLayerIndex = 0;
+        let activeVideoIndex = -1;
+        let hasAudioBeenActivated = false;
+        let hasCardInteracted = false;
+
+        registerYouTubeAudioSource({
+            id: 'hero-background-youtube',
+            playerGetter: () => (isPlayerReady ? player : null),
+            button: muteToggle,
+            icon: muteIcon,
+            labels: {
+                on: 'Turn hero background video audio on',
+                off: 'Turn hero background video audio off'
+            }
+        });
+
+        registerYouTubeAudioSource({
+            id: 'seascape-youtube',
+            playerGetter: () => (isSeascapePlayerReady ? seascapePlayer : null),
+            button: seascapeAudioToggle,
+            icon: seascapeAudioIcon,
+            labels: {
+                on: 'Turn Seascape video audio on',
+                off: 'Turn Seascape video audio off'
+            }
+        });
+
+        registerYouTubeAudioSource({
+            id: 'weightloss-youtube',
+            playerGetter: () => (isWeightlossPlayerReady ? weightlossPlayer : null),
+            button: weightlossAudioToggle,
+            icon: weightlossAudioIcon,
+            labels: {
+                on: 'Turn WeightLossDavie video audio on',
+                off: 'Turn WeightLossDavie video audio off'
+            }
+        });
+
+        registerYouTubeAudioSource({
+            id: 'stashbox-youtube',
+            playerGetter: () => (isStashboxPlayerReady ? stashboxPlayer : null),
+            button: stashboxAudioToggle,
+            icon: stashboxAudioIcon,
+            labels: {
+                on: 'Turn Stashbox YouTube Growth video audio on',
+                off: 'Turn Stashbox YouTube Growth video audio off'
+            }
+        });
+
+        registerYouTubeAudioSource({
+            id: 'darcey-youtube',
+            playerGetter: () => (isDarceyPlayerReady ? darceyPlayer : null),
+            button: darceyAudioToggle,
+            icon: darceyAudioIcon,
+            labels: {
+                on: 'Turn Darcey & Stacey Silva video audio on',
+                off: 'Turn Darcey & Stacey Silva video audio off'
+            }
+        });
+
+        registerYouTubeAudioSource({
+            id: 'silverback-video',
+            playerGetter: null,
+            button: silverbackAudioToggle,
+            icon: silverbackAudioIcon,
+            labels: {
+                on: 'Turn Silverback video audio on',
+                off: 'Turn Silverback video audio off'
+            }
+        });
+
+        registerHtml5AudioSource({
+            id: 'west-palm-beach-html5',
+            element: westPalmBeachVideo,
+            button: westPalmBeachAudioToggle,
+            icon: westPalmBeachAudioIcon,
+            labels: {
+                on: 'Turn City of West Palm Beach video audio on',
+                off: 'Turn City of West Palm Beach video audio off'
+            }
+        });
+
+        registerHtml5AudioSource({
+            id: 'maxi-priest-html5',
+            element: maxiPriestLayers[0] ?? null,
+            button: maxiPriestAudioToggle,
+            icon: maxiPriestAudioIcon,
+            labels: {
+                on: 'Turn Maxi Priest video audio on',
+                off: 'Turn Maxi Priest video audio off'
+            },
+            onMute: () => {
+                isMaxiPriestAudioEnabled = false;
+                syncMaxiPriestLayerAudio();
+            }
+        });
+
+        registerHtml5AudioSource({
+            id: 'floating-hero-card-html5',
+            element: layers[0] ?? null,
+            button: miniToggle,
+            icon: miniToggleIcon,
+            labels: {
+                on: 'Turn floating hero video audio on',
+                off: 'Turn floating hero video audio off'
+            },
+            onMute: () => {
+                hasAudioBeenActivated = false;
+                for (const layer of layers) {
+                    layer.muted = true;
+                    layer.volume = 1;
+                }
+                updateAudioIndicator();
+            }
+        });
+
+        mediaAudioRegistry.forEach((entry) => {
+            if (entry.button?.dataset) {
+                entry.button.dataset.muted = 'true';
+            }
+            if (entry.button) {
+                entry.button.setAttribute('aria-label', entry.labels?.on ?? 'Turn video audio on');
+            }
+            if (entry.icon) {
+                entry.icon.textContent = 'volume_off';
+            }
+        });
+
+        function pickNextRandomIndex() {
+            if (!videoPlaylist.length) return -1;
+            if (videoPlaylist.length === 1) return 0;
+
+            let nextIndex = Math.floor(Math.random() * videoPlaylist.length);
+            while (nextIndex === activeVideoIndex) {
+                nextIndex = Math.floor(Math.random() * videoPlaylist.length);
+            }
+            return nextIndex;
+        }
+
+        // Card-wide mute/unmute state renderer (shared by card click + mini button click).
+        function updateAudioIndicator() {
+            const isMuted = !hasAudioBeenActivated;
+            indicatorLabel.textContent = hasAudioBeenActivated ? 'Sound on' : (hasCardInteracted ? 'Muted' : 'Tap for sound');
+            indicator.classList.toggle('is-live', hasAudioBeenActivated);
+            floatingCard.classList.toggle('is-active', hasAudioBeenActivated);
+            miniToggleIcon.textContent = isMuted ? 'volume_off' : 'volume_up';
+            floatingCard.setAttribute('aria-label', isMuted ? 'Unmute floating hero video' : 'Mute floating hero video');
+        }
+
+        // Card-wide mute/unmute controller: toggles audio without restarting playback.
+        async function toggleCardAudio() {
+            hasCardInteracted = true;
+            const shouldEnableAudio = !hasAudioBeenActivated;
+            if (shouldEnableAudio) {
+                muteAllOtherMedia('floating-hero-card-html5');
+            }
+            hasAudioBeenActivated = shouldEnableAudio;
+
+            for (const layer of layers) {
+                layer.muted = !hasAudioBeenActivated;
+                layer.volume = 1;
+            }
+
+            const activeLayer = layers[activeLayerIndex];
+            try {
+                await activeLayer.play();
+            } catch (error) {
+                hasAudioBeenActivated = false; // Preserve autoplay compliance if browser blocks unmute play.
+                for (const layer of layers) {
+                    layer.muted = true;
+                }
+            }
+            updateAudioIndicator();
+        }
+
+        function waitForVideoReady(video) {
+            return new Promise((resolve) => {
+                if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+                    resolve();
+                    return;
+                }
+
+                const onReady = () => {
+                    cleanup();
+                    resolve();
+                };
+
+                const onTimeout = () => {
+                    cleanup();
+                    resolve();
+                };
+
+                const cleanup = () => {
+                    video.removeEventListener('loadedmetadata', onReady);
+                    video.removeEventListener('canplay', onReady);
+                    clearTimeout(timeoutId);
+                };
+
+                video.addEventListener('loadedmetadata', onReady, { once: true });
+                video.addEventListener('canplay', onReady, { once: true });
+                const timeoutId = window.setTimeout(onTimeout, 1200);
+            });
+        }
+
+        async function swapToVideo(index) {
+            if (index < 0 || index >= videoPlaylist.length) return;
+            const incomingLayerIndex = activeLayerIndex === 0 ? 1 : 0;
+            const incomingLayer = layers[incomingLayerIndex];
+            const outgoingLayer = layers[activeLayerIndex];
+
+            incomingLayer.pause();
+            incomingLayer.classList.remove('is-visible');
+            incomingLayer.removeAttribute('src');
+            incomingLayer.load();
+
+            incomingLayer.src = videoPlaylist[index];
+            incomingLayer.muted = !hasAudioBeenActivated;
+            incomingLayer.loop = false;
+            incomingLayer.playsInline = true;
+            incomingLayer.preload = 'auto';
+            incomingLayer.currentTime = 0;
+            incomingLayer.load();
+
+            await waitForVideoReady(incomingLayer);
+            incomingLayer.classList.add('is-visible');
+
+            try {
+                await incomingLayer.play();
+            } catch (error) {
+                incomingLayer.muted = true;
+                await incomingLayer.play().catch(() => {});
+            }
+
+            outgoingLayer.classList.remove('is-visible');
+            outgoingLayer.pause();
+            if (outgoingLayer.readyState > 0) {
+                try {
+                    outgoingLayer.currentTime = 0;
+                } catch (error) {
+                    // Ignore currentTime reset failures on partially loaded iOS layers.
+                }
+            }
+            outgoingLayer.muted = true;
+
+            activeLayerIndex = incomingLayerIndex;
+            activeVideoIndex = index;
+        }
+
+        function playNextRandomVideo() {
+            const nextIndex = pickNextRandomIndex();
+            if (nextIndex === -1) return;
+            swapToVideo(nextIndex);
+        }
+
+        layers.forEach((layer) => {
+            layer.addEventListener('ended', playNextRandomVideo);
+            layer.addEventListener('error', playNextRandomVideo);
+        });
+
+        floatingCard.addEventListener('click', (event) => {
+            if (event.target.closest('#video-audio-mini-toggle')) return;
+            event.preventDefault();
+            toggleCardAudio();
+        });
+
+        miniToggle.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleCardAudio();
+        });
+
+        floatingCard.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleCardAudio();
+            }
+        });
+
+        updateAudioIndicator();
+        playNextRandomVideo();
+
+
+const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+anchorLinks.forEach((link) => {
+  link.addEventListener('click', function (event) {
+    const targetId = this.getAttribute('href');
+
+    if (!targetId || targetId === '#') return;
+
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    event.preventDefault();
+
+    const nav =
+      document.querySelector('header') ||
+      document.querySelector('.site-header') ||
+      document.querySelector('.navbar') ||
+      document.querySelector('.nav-shell') ||
+      document.querySelector('.nav-wrap');
+
+    const navHeight = nav ? nav.getBoundingClientRect().height : 96;
+    const visualGap = 28;
+
+    const targetTop = target.getBoundingClientRect().top + window.scrollY;
+    const finalY = targetTop - navHeight - visualGap;
+
+    window.scrollTo({
+      top: finalY,
+      behavior: 'smooth'
+    });
+
+    history.pushState(null, '', targetId);
+  });
+});
+
+    </script>
+
+<script>
+const servicesCanvas = document.querySelector('#services-section canvas');
+if (servicesCanvas) {
+  const ctx = servicesCanvas.getContext('2d');
+  const section = servicesCanvas.parentElement;
+  function resize() { servicesCanvas.width = section.offsetWidth; servicesCanvas.height = section.offsetHeight; }
+  resize();
+  let mouse = { x: -9999, y: -9999 };
+  section.addEventListener('mousemove', e => {
+    const r = servicesCanvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  window.addEventListener('resize', resize);
+  const nodes = Array.from({length: 55}, () => ({ x: Math.random()*servicesCanvas.width, y: Math.random()*servicesCanvas.height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, r: 1.5+Math.random()*1.5 }));
+  function draw() {
+    ctx.clearRect(0,0,servicesCanvas.width,servicesCanvas.height);
+    nodes.forEach((n,i) => {
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>servicesCanvas.width) n.vx*=-1;
+      if(n.y<0||n.y>servicesCanvas.height) n.vy*=-1;
+      const dm = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+      if (dm < 80) {
+        n.x += (n.x - mouse.x) * 0.02;
+        n.y += (n.y - mouse.y) * 0.02;
+      }
+      nodes.forEach((m,j) => {
+        if(j<=i) return;
+        const d=Math.hypot(n.x-m.x,n.y-m.y);
+        if(d<110){
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(127,119,221,${(1-d/110)*0.35})`;
+          ctx.lineWidth=0.5;
+          ctx.moveTo(n.x,n.y);
+          ctx.lineTo(m.x,m.y);
+          ctx.stroke();
+        }
+      });
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(127,119,221,0.7)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+</script>
+</body></html>
