@@ -5,8 +5,7 @@ const { useState, useEffect, useMemo, useRef } = React;
 // "Elettro — Portfolio Data" — drives the grid below.
 // Sheet must be shared "Anyone with the link: Viewer" (or File ▸ Share ▸
 // Publish to web). Columns: id,title,categories,year,url,reportUrl,blurb,role,stack
-const SHEET_ID  = "17WjQBgzG1GFkVMULFzR_vOG0xisjk_fbf0jLgCmlu_A";
-const SHEET_CSV = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSaAEHrD3n5O42KWP3OcM2OwYmV_24CIWSjl41Pz__mQqY0opH14_VDb-F47M63Wn7bhlevfLldj7v5/pub?gid=837156076&single=true&output=csv";
 
 // Tiny RFC-4180 CSV parser (handles quoted fields, embedded quotes, newlines)
 function parseCSV(text) {
