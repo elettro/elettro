@@ -169,8 +169,33 @@ const hostname = (u) => { try { return new URL(u).hostname.replace(/^www\./,"");
 const initials = (t) => t.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 const pad2 = (n) => String(n).padStart(2,"0");
 const getCaseStudyUrl = (projectId) => {
-  const base = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+  const url = new URL(window.location.href);
+  url.hash = "";
+  const base = url.toString();
   return projectId ? `${base}#project-${projectId}` : base;
+};
+
+const copyTextToClipboard = async (text) => {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.setAttribute("readonly", "");
+  textArea.style.position = "fixed";
+  textArea.style.top = "-9999px";
+  textArea.style.left = "-9999px";
+  document.body.appendChild(textArea);
+  textArea.select();
+
+  const copied = document.execCommand("copy");
+  document.body.removeChild(textArea);
+
+  if (!copied) {
+    throw new Error("Clipboard copy failed");
+  }
 };
 
 // Build a deterministic-ish background per project using its categories.
@@ -326,7 +351,7 @@ function CasePanel({ project, onClose, thumbStyle }) {
   const onShareProject = async () => {
     const shareUrl = getCaseStudyUrl(project.id);
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await copyTextToClipboard(shareUrl);
       setShareState("copied");
     } catch {
       setShareState("error");
