@@ -509,18 +509,6 @@ function App() {
   return (
     <div className="app">
       <header className="hero">
-        <div className="hero-top">
-          <div className="brand">
-            <span className="brand-mark">e<span className="brand-dot">·</span></span>
-            <span className="brand-word">elettro</span>
-          </div>
-          <nav className="hero-nav">
-            <span className="now">Selected works</span>
-            <span className="now-sep">/</span>
-            <span className="now">{new Date().getFullYear()} index</span>
-          </nav>
-        </div>
-
         <div className="hero-stage">
           <h1 className="hero-h">
             A field of <em>built</em> things —<br/>
