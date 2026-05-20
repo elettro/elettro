@@ -197,7 +197,6 @@ function Thumb({ project, style: thumbStyle, accent }) {
           </div>
         )}
         <div className="thumb-meta">
-          <span>{hostname(project.url)}</span>
           <span>{project.year}</span>
         </div>
       </div>
@@ -223,7 +222,6 @@ function Thumb({ project, style: thumbStyle, accent }) {
         <div className="thumb-stripes-fill" aria-hidden="true"></div>
         <div className="thumb-letters">{initials(project.title)}</div>
         <div className="thumb-meta">
-          <span>{hostname(project.url)}</span>
           <span>{project.year}</span>
         </div>
       </div>
@@ -238,7 +236,6 @@ function Thumb({ project, style: thumbStyle, accent }) {
       <div className="thumb-grad-orb" aria-hidden="true"></div>
       <div className="thumb-letters">{initials(project.title)}</div>
       <div className="thumb-meta">
-        <span>{hostname(project.url)}</span>
         <span>{project.year}</span>
       </div>
     </div>
