@@ -383,6 +383,14 @@ kbd {
 .thumb-media {
   background: oklch(0.16 0.03 var(--hue));
 }
+.portfolio-card__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #0b1220;
+  margin-bottom: 18px;
+}
 .thumb-media-img {
   position: absolute;
   inset: 0;
@@ -393,7 +401,27 @@ kbd {
   z-index: 0;
   transition: transform .8s cubic-bezier(.2,.7,.2,1);
 }
+.portfolio-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
 .card-thumb:hover .thumb-media-img { transform: scale(1.04); }
+.portfolio-card:hover .portfolio-card__media img {
+  transform: scale(1.045);
+  filter: brightness(1.06) contrast(1.04);
+}
+.portfolio-card__media--fallback {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 24px;
+}
 .thumb-media-veil {
   position: absolute;
   inset: 0;

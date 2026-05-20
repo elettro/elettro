@@ -52,12 +52,30 @@ function normalizeSheetRow(raw) {
     blurb: out.blurb || out.description || out.summary || "",
     role: out.role || "",
     stack: out.stack || out.tools || "",
+    Background: out.background || out.thumbnail || out.image || "",
     media: out.media || out.thumbnail || out.image || "",
     client: out.client || "",
     overview: out.overview || "",
     approach: out.approach || "",
     results: out.results || "",
   };
+}
+
+function normalizeImageUrl(url) {
+  if (!url) return "";
+
+  const clean = String(url).trim();
+
+  if (clean.includes("dropbox.com")) {
+    return clean
+      .replace("www.dropbox.com", "dl.dropboxusercontent.com")
+      .replace("?dl=0", "")
+      .replace("?dl=1", "")
+      .replace("&dl=0", "")
+      .replace("&dl=1", "");
+  }
+
+  return clean;
 }
 
 function rowToProject(r) {
@@ -80,6 +98,7 @@ function rowToProject(r) {
     blurb: r.blurb,
     role: r.role || "—",
     stack: splitList(r.stack),
+    Background: r.Background || r.background || r.thumbnail || r.image || "",
     media: (r.media || "").trim(),
     client:   (r.client   || "").trim(),
     overview: (r.overview || "").trim(),
@@ -158,12 +177,14 @@ function Thumb({ project, style: thumbStyle, accent }) {
 
   // If the row has a media URL (image or YouTube), use it as the thumbnail.
   // Convenience: fall back to project.url when it's already a YouTube link.
-  const mediaRaw = project.media || (/youtu\.?be/i.test(project.url || "") ? project.url : "");
+  const background = project.Background || project.background || project.thumbnail || project.image || "";
+  const backgroundUrl = normalizeImageUrl(background);
+  const mediaRaw = backgroundUrl || project.media || (/youtu\.?be/i.test(project.url || "") ? project.url : "");
   const media = resolveMedia(mediaRaw);
   if (media.kind !== "none") {
     return (
-      <div className="thumb thumb-media" style={{ "--hue": hue }}>
-        <img className="thumb-media-img" src={media.src} alt="" loading="lazy"
+      <div className="thumb thumb-media portfolio-card__media" style={{ "--hue": hue }}>
+        <img className="thumb-media-img" src={media.src} alt={project.title || "Portfolio project thumbnail"} loading="lazy"
           onError={(e) => { e.currentTarget.style.display = "none"; }} />
         <div className="thumb-media-veil" aria-hidden="true"></div>
         {media.kind === "youtube" && (
@@ -181,7 +202,7 @@ function Thumb({ project, style: thumbStyle, accent }) {
 
   if (thumbStyle === "mono") {
     return (
-      <div className="thumb thumb-mono">
+      <div className="thumb thumb-mono portfolio-card__media portfolio-card__media--fallback">
         <div className="thumb-mono-grid" aria-hidden="true"></div>
         <div className="thumb-letters">{initials(project.title)}</div>
         <div className="thumb-meta">
@@ -194,7 +215,7 @@ function Thumb({ project, style: thumbStyle, accent }) {
 
   if (thumbStyle === "stripes") {
     return (
-      <div className="thumb thumb-stripes" style={{ "--hue": hue }}>
+      <div className="thumb thumb-stripes portfolio-card__media portfolio-card__media--fallback" style={{ "--hue": hue }}>
         <div className="thumb-stripes-fill" aria-hidden="true"></div>
         <div className="thumb-letters">{initials(project.title)}</div>
         <div className="thumb-meta">
@@ -208,7 +229,7 @@ function Thumb({ project, style: thumbStyle, accent }) {
   // gradient (default) — uses category hue + accent flourish
   const angle = (seed * 47) % 180;
   return (
-    <div className="thumb thumb-grad" style={{ "--hue": hue, "--angle": `${angle}deg` }}>
+    <div className="thumb thumb-grad portfolio-card__media portfolio-card__media--fallback" style={{ "--hue": hue, "--angle": `${angle}deg` }}>
       <div className="thumb-grad-fill" aria-hidden="true"></div>
       <div className="thumb-grad-orb" aria-hidden="true"></div>
       <div className="thumb-letters">{initials(project.title)}</div>
@@ -223,7 +244,7 @@ function Thumb({ project, style: thumbStyle, accent }) {
 // ─────────────────────────── CARD ──────────────────────────────────────────
 function Card({ project, index, onOpen, thumbStyle }) {
   return (
-    <article className="card" data-cats={project.cats.join(" ")}>
+    <article className="card portfolio-card" data-cats={project.cats.join(" ")}>
       <button className="card-thumb" onClick={() => onOpen(project)} aria-label={`Open case study for ${project.title}`}>
         <Thumb project={project} thumbStyle={thumbStyle} />
         <span className="card-thumb-hint">Case study →</span>
