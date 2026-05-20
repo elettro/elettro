@@ -165,7 +165,6 @@ const FILTERS = ["ALL","Web","Video","Music","Branding","App","Other"];
 const CAT_HUE = { Web: 215, App: 295, Video: 22, Music: 88, Branding: 155, Other: 60 };
 
 // ─────────────────────────── HELPERS ───────────────────────────────────────
-const hostname = (u) => { try { return new URL(u).hostname.replace(/^www\./,""); } catch { return u; }};
 const initials = (t) => t.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 const pad2 = (n) => String(n).padStart(2,"0");
 const getCaseStudyUrl = (projectId) => {
@@ -387,7 +386,6 @@ function CasePanel({ project, onClose, thumbStyle }) {
               <div><span className="k">Client</span><span className="v">{project.client}</span></div>
             )}
             <div><span className="k">Category</span><span className="v">{project.cats.join(" · ")}</span></div>
-            <div><span className="k">Domain</span><span className="v">{hostname(project.url)}</span></div>
           </div>
 
           <section className="panel-sect">
