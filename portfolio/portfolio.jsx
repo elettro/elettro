@@ -168,6 +168,10 @@ const CAT_HUE = { Web: 215, App: 295, Video: 22, Music: 88, Branding: 155, Other
 const hostname = (u) => { try { return new URL(u).hostname.replace(/^www\./,""); } catch { return u; }};
 const initials = (t) => t.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 const pad2 = (n) => String(n).padStart(2,"0");
+const getCaseStudyUrl = (projectId) => {
+  const base = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+  return projectId ? `${base}#project-${projectId}` : base;
+};
 
 // Build a deterministic-ish background per project using its categories.
 function Thumb({ project, style: thumbStyle, accent }) {
@@ -306,8 +310,11 @@ function FilterRail({ active, onChange, counts }) {
 // ─────────────────────────── CASE STUDY PANEL ─────────────────────────────
 function CasePanel({ project, onClose, thumbStyle }) {
   const closeRef = useRef(null);
+  const shareResetTimerRef = useRef(null);
+  const [shareState, setShareState] = useState("idle");
   useEffect(() => {
     if (!project) return;
+    setShareState("idle");
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
     closeRef.current?.focus();
@@ -315,8 +322,21 @@ function CasePanel({ project, onClose, thumbStyle }) {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      window.clearTimeout(shareResetTimerRef.current);
     };
   }, [project]);
+
+  const onShareProject = async () => {
+    const shareUrl = getCaseStudyUrl(project.id);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShareState("copied");
+    } catch {
+      setShareState("error");
+    }
+    window.clearTimeout(shareResetTimerRef.current);
+    shareResetTimerRef.current = window.setTimeout(() => setShareState("idle"), 1800);
+  };
 
   if (!project) return null;
 
@@ -381,10 +401,12 @@ function CasePanel({ project, onClose, thumbStyle }) {
               Open live site
               <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M5.5 3h7.5v7.5M13 3 3.5 12.5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/></svg>
             </a>
-            {project.reportUrl
-              ? <a className="btn btn-ghost btn-lg" href={project.reportUrl} target="_blank" rel="noopener noreferrer">Download report</a>
-              : <button className="btn btn-ghost btn-lg" disabled style={{opacity:.5, cursor:"not-allowed"}} title="Add a reportUrl in the Google Sheet to enable">Report — coming soon</button>
-            }
+            {project.reportUrl && (
+              <a className="btn btn-ghost btn-lg" href={project.reportUrl} target="_blank" rel="noopener noreferrer">Download report</a>
+            )}
+            <button className="btn btn-ghost btn-lg" onClick={onShareProject}>
+              {shareState === "copied" ? "Project link copied" : shareState === "error" ? "Copy failed" : "Share project"}
+            </button>
           </div>
 
           <p className="panel-note">Edit any project in the <b>“Elettro — Portfolio Data”</b> Google Sheet. Columns: title, categories, year, url, reportUrl, blurb, role, stack, media, client, overview, approach, results.</p>
@@ -413,6 +435,14 @@ function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [filter, setFilter] = useState("ALL");
   const [open, setOpen] = useState(null);
+  const openCaseStudy = (project) => {
+    setOpen(project);
+    if (project?.id) window.history.replaceState(null, "", `#project-${project.id}`);
+  };
+  const closeCaseStudy = () => {
+    setOpen(null);
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  };
   const [query, setQuery] = useState("");
   const [projects, setProjects] = useState(PROJECTS);
   const [source, setSource] = useState("local"); // 'local' | 'sheet' | 'fetching'
@@ -461,6 +491,20 @@ function App() {
       return p.title.toLowerCase().includes(q) || p.blurb.toLowerCase().includes(q) || p.cats.join(" ").toLowerCase().includes(q);
     });
   }, [filter, query, projects]);
+
+  useEffect(() => {
+    if (!projects.length) return;
+    const openFromHash = () => {
+      const m = window.location.hash.match(/^#project-(.+)$/);
+      if (!m) return;
+      const id = decodeURIComponent(m[1]);
+      const match = projects.find((project) => project.id === id);
+      if (match) setOpen(match);
+    };
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, [projects]);
 
   return (
     <div className="app">
@@ -511,7 +555,7 @@ function App() {
 
       <main className="grid" data-density={t.density}>
         {filtered.map((p, i) => (
-          <Card key={p.id} project={p} index={i} onOpen={setOpen} thumbStyle={t.thumb}/>
+          <Card key={p.id} project={p} index={i} onOpen={openCaseStudy} thumbStyle={t.thumb}/>
         ))}
         {source === "fetching" && filtered.length === 0 && (
           <div className="empty"><span>Loading from Google Sheet…</span></div>
@@ -541,7 +585,7 @@ function App() {
         </div>
       </footer>
 
-      <CasePanel project={open} onClose={() => setOpen(null)} thumbStyle={t.thumb}/>
+      <CasePanel project={open} onClose={closeCaseStudy} thumbStyle={t.thumb}/>
 
       <TweaksPanel>
         <TweakSection label="Layout"/>
