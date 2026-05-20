@@ -220,9 +220,8 @@ function Thumb({ project, style: thumbStyle, accent }) {
             <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
           </div>
         )}
-        <div className="thumb-meta">
-          <span>{project.year}</span>
-        </div>
+        <div className="thumb-meta"></div>
+        <span className="thumb-year">{project.year}</span>
       </div>
     );
   }
@@ -234,8 +233,8 @@ function Thumb({ project, style: thumbStyle, accent }) {
         <div className="thumb-letters">{initials(project.title)}</div>
         <div className="thumb-meta">
           <span>{cat.toLowerCase()}</span>
-          <span>{project.year}</span>
         </div>
+        <span className="thumb-year">{project.year}</span>
       </div>
     );
   }
@@ -245,9 +244,8 @@ function Thumb({ project, style: thumbStyle, accent }) {
       <div className="thumb thumb-stripes portfolio-card__media portfolio-card__media--fallback" style={{ "--hue": hue }}>
         <div className="thumb-stripes-fill" aria-hidden="true"></div>
         <div className="thumb-letters">{initials(project.title)}</div>
-        <div className="thumb-meta">
-          <span>{project.year}</span>
-        </div>
+        <div className="thumb-meta"></div>
+        <span className="thumb-year">{project.year}</span>
       </div>
     );
   }
@@ -259,9 +257,8 @@ function Thumb({ project, style: thumbStyle, accent }) {
       <div className="thumb-grad-fill" aria-hidden="true"></div>
       <div className="thumb-grad-orb" aria-hidden="true"></div>
       <div className="thumb-letters">{initials(project.title)}</div>
-      <div className="thumb-meta">
-        <span>{project.year}</span>
-      </div>
+      <div className="thumb-meta"></div>
+      <span className="thumb-year">{project.year}</span>
     </div>
   );
 }
