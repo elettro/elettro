@@ -1246,8 +1246,25 @@ Your browser does not support the video tag.
         ];
 
         const supportedExtensions = new Set(['mp4', 'webm', 'ogg', 'mov']);
+        const hasSupportedVideoExtension = (fileName) => {
+            if (!fileName) return false;
+
+            if (fileName.startsWith('http')) {
+                try {
+                    const parsedUrl = new URL(fileName);
+                    const ext = parsedUrl.pathname.split('.').pop()?.toLowerCase();
+                    return Boolean(ext && supportedExtensions.has(ext));
+                } catch (error) {
+                    return false;
+                }
+            }
+
+            const ext = fileName.split('.').pop()?.toLowerCase();
+            return Boolean(ext && supportedExtensions.has(ext));
+        };
+
         const videoPlaylist = declaredVideoFiles
-            .filter((fileName) => supportedExtensions.has(fileName.split('.').pop().toLowerCase()))
+            .filter(hasSupportedVideoExtension)
             .map((fileName) => fileName.startsWith('http') ? fileName : `videos/${encodeURIComponent(fileName).replace(/%2F/g, '/')}`);
 
         let activeLayerIndex = 0;
