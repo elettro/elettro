@@ -163,19 +163,21 @@
 </a>
 </div>
 <div class="w-full lg:col-span-4 relative flex justify-center lg:block">
-<div class="aspect-[3/4] rounded-2xl bg-surface-container border border-outline-variant/10 p-2 floating-video-card" id="floating-video-card" role="button" aria-label="Enable sound for hero video card" tabindex="0">
+<a href="/portfolio/" id="floating-video-card-link" aria-label="Open portfolio">
+<div class="aspect-[3/4] rounded-2xl bg-surface-container border border-outline-variant/10 p-2 floating-video-card" id="floating-video-card">
 <div class="floating-video-shell">
-<video id="floating-video-a" playsinline preload="metadata" muted></video>
-<video id="floating-video-b" playsinline preload="metadata" muted></video>
+<video id="floating-video-a" playsinline preload="auto" muted autoplay loop src="https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=a0zv2to9&raw=1"></video>
+<video id="floating-video-b" playsinline preload="auto" muted autoplay loop src="https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=a0zv2to9&raw=1"></video>
 <button class="video-audio-mini-toggle" id="video-audio-mini-toggle" type="button" aria-label="Toggle sound for floating hero video">
 <span class="material-symbols-outlined" id="video-audio-mini-icon">volume_off</span>
 </button>
 <div class="video-audio-indicator" id="video-audio-indicator" aria-live="polite">
 <span class="video-audio-dot" aria-hidden="true"></span>
-<span id="video-audio-label">Tap for sound</span>
+<span id="video-audio-label">Live preview</span>
 </div>
 </div>
 </div>
+</a>
 </div>
 </div>
 </section>
@@ -1235,17 +1237,11 @@ allowfullscreen>
         // Manual fallback for static hosting where folder listing is not available.
         // Add/remove files from /vidtest/videos/ here when you update the folder.
         const declaredVideoFiles = [
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs.mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (1).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (2).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (3).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (5).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (6).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker No abs (7).mp4',
-            'Seedance 20 - Professional commercial video Clean corporate style Realistic human speaker  No st.mp4'
+            'https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=a0zv2to9&raw=1'
         ];
 
         const floatingCard = document.getElementById('floating-video-card');
+        const floatingCardLink = document.getElementById('floating-video-card-link');
         const indicator = document.getElementById('video-audio-indicator');
         const indicatorLabel = document.getElementById('video-audio-label');
         const miniToggle = document.getElementById('video-audio-mini-toggle');
@@ -1258,7 +1254,7 @@ allowfullscreen>
         const supportedExtensions = new Set(['mp4', 'webm', 'ogg', 'mov']);
         const videoPlaylist = declaredVideoFiles
             .filter((fileName) => supportedExtensions.has(fileName.split('.').pop().toLowerCase()))
-            .map((fileName) => `videos/${encodeURIComponent(fileName).replace(/%2F/g, '/')}`);
+            .map((fileName) => fileName.startsWith('http') ? fileName : `videos/${encodeURIComponent(fileName).replace(/%2F/g, '/')}`);
 
         let activeLayerIndex = 0;
         let activeVideoIndex = -1;
@@ -1477,7 +1473,7 @@ allowfullscreen>
 
             incomingLayer.src = videoPlaylist[index];
             incomingLayer.muted = !hasAudioBeenActivated;
-            incomingLayer.loop = false;
+            incomingLayer.loop = true;
             incomingLayer.playsInline = true;
             incomingLayer.preload = 'auto';
             incomingLayer.currentTime = 0;
@@ -1521,6 +1517,7 @@ allowfullscreen>
 
         floatingCard.addEventListener('click', (event) => {
             if (event.target.closest('#video-audio-mini-toggle')) return;
+            if (floatingCardLink) return;
             event.preventDefault();
             toggleCardAudio();
         });
@@ -1533,8 +1530,10 @@ allowfullscreen>
 
         floatingCard.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                toggleCardAudio();
+                if (!floatingCardLink) {
+                    event.preventDefault();
+                    toggleCardAudio();
+                }
             }
         });
 
