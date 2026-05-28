@@ -1067,5 +1067,25 @@ if (servicesCanvas) {
   playIdx(0);
 }());
 
+// ── Hero card video — retry until loaded ────────────────────────────────────
+(function () {
+  const heroVid = document.querySelector('.floating-video-shell video');
+  if (!heroVid) return;
+  const SRC = 'https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=c01d3ws0&raw=1';
+  let retries = 0;
+  const MAX = 10;
+  function attempt() {
+    heroVid.src = SRC;
+    heroVid.load();
+    heroVid.play().catch(() => {});
+  }
+  heroVid.addEventListener('error', function onErr() {
+    if (retries >= MAX) return;
+    retries++;
+    setTimeout(attempt, 2000 * retries);
+  });
+  attempt();
+}());
+
 </script>
 </body></html>
