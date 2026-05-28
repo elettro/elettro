@@ -166,7 +166,9 @@
 <a href="/portfolio/" id="floating-video-card-link" aria-label="Open portfolio">
 <div class="aspect-[3/4] rounded-2xl bg-surface-container border border-outline-variant/10 p-2 floating-video-card" id="floating-video-card">
 <div class="floating-video-shell">
-<video playsinline preload="auto" muted autoplay loop src="https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=c01d3ws0&raw=1"></video>
+<video id="hero-card-video" autoplay loop muted playsinline preload="auto">
+<source src="https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=c01d3ws0&raw=1" type="video/mp4"/>
+</video>
 </div>
 </div>
 </a>
@@ -1067,24 +1069,35 @@ if (servicesCanvas) {
   playIdx(0);
 }());
 
-// ── Hero card video — retry until loaded ────────────────────────────────────
+// ── Hero card video — play + retry on network error ─────────────────────────
 (function () {
-  const heroVid = document.querySelector('.floating-video-shell video');
+  const heroVid = document.getElementById('hero-card-video');
   if (!heroVid) return;
   const SRC = 'https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=c01d3ws0&raw=1';
   let retries = 0;
   const MAX = 10;
+
   function attempt() {
-    heroVid.src = SRC;
+    const src = heroVid.querySelector('source');
+    if (src) src.src = SRC;
     heroVid.load();
-    heroVid.play().catch(() => {});
+    heroVid.addEventListener('canplay', function onCan() {
+      heroVid.removeEventListener('canplay', onCan);
+      heroVid.play().catch(() => {});
+    }, { once: true });
   }
-  heroVid.addEventListener('error', function onErr() {
+
+  heroVid.addEventListener('error', function () {
     if (retries >= MAX) return;
     retries++;
     setTimeout(attempt, 2000 * retries);
   });
-  attempt();
+
+  // Nudge play after canplay fires (covers cases where autoplay attr alone stalls)
+  heroVid.addEventListener('canplay', function onFirstCan() {
+    heroVid.removeEventListener('canplay', onFirstCan);
+    heroVid.play().catch(() => {});
+  }, { once: true });
 }());
 
 </script>
