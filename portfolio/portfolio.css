@@ -222,10 +222,12 @@ kbd {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   padding: 12px;
-  display: flex;
-  flex-direction: column;
   gap: 2px;
   z-index: 100;
+}
+.pf-mobile-panel:not([hidden]) {
+  display: flex;
+  flex-direction: column;
 }
 .pf-mobile-link {
   display: block;
