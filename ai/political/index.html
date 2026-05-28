@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Political Video Production Packages | Elettro</title>
+  <meta name="description" content="Elettro offers AI political video production packages for campaign messaging, PACs, advocacy groups, issue campaigns, and rapid-response social media content.">
+  <link rel="canonical" href="https://elettro.com/elettro/ai/political/">
+  <meta property="og:title" content="AI Political Video Production Packages | Elettro">
+  <meta property="og:description" content="AI political video production packages for campaign messaging, PACs, advocacy groups, issue campaigns, and rapid-response social media content.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://elettro.com/elettro/ai/political/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;700;800&amp;family=Barlow+Condensed:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest": "#000000",
+            "on-tertiary-fixed": "#180058",
+            "on-primary-container": "#004d57",
+            "inverse-surface": "#faf8ff",
+            "secondary-fixed-dim": "#00ee70",
+            "on-secondary": "#005b26",
+            "outline-variant": "#40485d",
+            "surface-bright": "#1f2b49",
+            "error-container": "#9f0519",
+            "primary-container": "#00e3fd",
+            "surface-container-high": "#141f38",
+            "error": "#ff716c",
+            "on-secondary-fixed-variant": "#00662c",
+            "on-tertiary": "#20006e",
+            "inverse-primary": "#006976",
+            "surface-container-low": "#091328",
+            "surface-container-highest": "#192540",
+            "primary-fixed": "#00e3fd",
+            "on-tertiary-fixed-variant": "#3900b3",
+            "tertiary-container": "#7152f3",
+            "on-primary": "#005762",
+            "on-primary-fixed-variant": "#005762",
+            "on-error-container": "#ffa8a3",
+            "tertiary": "#a18eff",
+            "secondary-container": "#006d2f",
+            "tertiary-fixed-dim": "#a694ff",
+            "secondary-dim": "#00ee70",
+            "on-secondary-fixed": "#00461c",
+            "secondary": "#2efd7c",
+            "on-secondary-container": "#e4ffe2",
+            "primary-fixed-dim": "#00d4ec",
+            "tertiary-fixed": "#b4a5ff",
+            "on-error": "#490006",
+            "surface-container": "#0f1930",
+            "inverse-on-surface": "#4d556b",
+            "on-surface": "#dee5ff",
+            "on-primary-fixed": "#003840",
+            "surface-variant": "#192540",
+            "on-background": "#dee5ff",
+            "error-dim": "#d7383b",
+            "primary-dim": "#00d4ec",
+            "outline": "#6d758c",
+            "surface": "#060e20",
+            "primary": "#81ecff",
+            "background": "#060e20",
+            "on-tertiary-container": "#ffffff",
+            "on-surface-variant": "#a3aac4",
+            "tertiary-dim": "#7658f8",
+            "secondary-fixed": "#2efd7c",
+            "surface-tint": "#81ecff",
+            "surface-dim": "#060e20"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"}
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    :root {
+      --political-bg: #040916;
+      --political-panel: rgba(11, 22, 43, 0.74);
+      --political-panel-strong: rgba(15, 32, 62, 0.88);
+      --political-line: rgba(129, 236, 255, 0.18);
+      --political-line-soft: rgba(255, 255, 255, 0.10);
+      --political-text: #f6fbff;
+      --political-muted: rgba(222, 229, 255, 0.74);
+      --political-primary: #81ecff;
+      --political-blue: #00a3ff;
+      --political-green: #2efd7c;
+      --political-radius: 28px;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 18% 8%, rgba(0, 163, 255, 0.26), transparent 34rem),
+        radial-gradient(circle at 86% 18%, rgba(113, 82, 243, 0.20), transparent 30rem),
+        radial-gradient(circle at 52% 95%, rgba(46, 253, 124, 0.10), transparent 34rem),
+        linear-gradient(145deg, #02050d 0%, #071226 42%, #02040a 100%);
+      color: var(--political-text);
+    }
+
+    .political-page {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .political-page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(129, 236, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(129, 236, 255, 0.035) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 78%);
+    }
+
+    .political-page::after {
+      content: "";
+      position: fixed;
+      inset: auto -18vw -24vw -18vw;
+      height: 42vw;
+      pointer-events: none;
+      z-index: -1;
+      background: radial-gradient(ellipse at center, rgba(0, 163, 255, 0.16), transparent 68%);
+      filter: blur(8px);
+    }
+
+    .political-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .political-hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 160px 0 80px;
+    }
+
+    .hero-frame {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(129, 236, 255, 0.20);
+      border-radius: clamp(28px, 4vw, 54px);
+      background:
+        linear-gradient(135deg, rgba(129, 236, 255, 0.13), transparent 34%),
+        linear-gradient(180deg, rgba(14, 29, 58, 0.82), rgba(5, 11, 25, 0.94));
+      box-shadow: 0 40px 140px rgba(0, 0, 0, 0.56), 0 0 80px rgba(0, 163, 255, 0.16);
+      padding: clamp(28px, 6vw, 72px);
+    }
+
+    .hero-frame::before,
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border-radius: 999px;
+      filter: blur(2px);
+    }
+
+    .hero-frame::before {
+      width: 420px;
+      height: 420px;
+      right: -160px;
+      top: -170px;
+      background: radial-gradient(circle, rgba(0, 163, 255, 0.34), transparent 68%);
+    }
+
+    .hero-frame::after {
+      width: 340px;
+      height: 340px;
+      left: -160px;
+      bottom: -180px;
+      background: radial-gradient(circle, rgba(46, 253, 124, 0.16), transparent 70%);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 42px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      border: 1px solid rgba(129, 236, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(129, 236, 255, 0.08);
+      padding: 9px 13px;
+      color: var(--political-primary);
+      font: 800 0.72rem/1 Manrope, sans-serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--political-green);
+      box-shadow: 0 0 18px var(--political-green);
+    }
+
+    .hero-title {
+      max-width: 880px;
+      margin: 22px 0 18px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(3.1rem, 10vw, 7.9rem);
+      font-weight: 800;
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      text-wrap: balance;
+    }
+
+    .hero-title span {
+      display: block;
+      background: linear-gradient(90deg, #ffffff 0%, #d9f8ff 42%, #81ecff 72%, #7fb4ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 44px rgba(129, 236, 255, 0.16);
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      color: var(--political-muted);
+      font-size: clamp(1.06rem, 2.1vw, 1.42rem);
+      line-height: 1.65;
+    }
+
+    .hero-actions,
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .political-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      border-radius: 999px;
+      padding: 0 22px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .political-btn:hover,
+    .political-btn:focus-visible {
+      transform: translateY(-2px);
+    }
+
+    .political-btn-primary {
+      color: #002c38;
+      background: linear-gradient(135deg, #81ecff, #2efd7c);
+      box-shadow: 0 0 34px rgba(129, 236, 255, 0.28);
+    }
+
+    .political-btn-secondary {
+      color: #ffffff;
+      border: 1px solid rgba(129, 236, 255, 0.32);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 720px;
+    }
+
+    .metric-card,
+    .glass-card,
+    .service-pill,
+    .pricing-card,
+    .term-card,
+    .standards-box,
+    .closing-cta {
+      border: 1px solid var(--political-line-soft);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035));
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(20px);
+    }
+
+    .metric-card {
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .metric-card strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.15rem);
+      line-height: 1;
+      color: var(--political-primary);
+    }
+
+    .metric-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--political-muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .section-block {
+      padding: clamp(44px, 8vw, 92px) 0;
+    }
+
+    .section-kicker {
+      color: var(--political-primary);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-heading {
+      max-width: 870px;
+      margin: 0 0 18px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.15rem, 5vw, 4.55rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      text-wrap: balance;
+    }
+
+    .section-lede {
+      max-width: 860px;
+      color: var(--political-muted);
+      font-size: clamp(1rem, 1.7vw, 1.22rem);
+      line-height: 1.78;
+    }
+
+    .intro-panel {
+      display: grid;
+      gap: 24px;
+      border-radius: var(--political-radius);
+      padding: clamp(24px, 5vw, 48px);
+    }
+
+    .intro-panel p {
+      margin: 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .service-pill {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      padding: 18px 18px 18px 48px;
+      color: rgba(255, 255, 255, 0.91);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .service-pill::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 22px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--political-primary);
+      box-shadow: 0 0 22px rgba(129, 236, 255, 0.72);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .pricing-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 26px;
+    }
+
+    .pricing-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at top right, rgba(129, 236, 255, 0.12), transparent 44%);
+    }
+
+    .pricing-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(129, 236, 255, 0.62);
+      background:
+        linear-gradient(135deg, rgba(129, 236, 255, 0.15), transparent 36%),
+        linear-gradient(180deg, rgba(16, 38, 74, 0.95), rgba(8, 15, 35, 0.96));
+      box-shadow: 0 28px 90px rgba(0, 163, 255, 0.22), 0 0 0 1px rgba(129, 236, 255, 0.18) inset;
+    }
+
+    .package-badge {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 8px 11px;
+      margin-bottom: 18px;
+      background: rgba(46, 253, 124, 0.12);
+      border: 1px solid rgba(46, 253, 124, 0.34);
+      color: #bffff1;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .package-title {
+      min-height: 3.1em;
+      margin: 0 0 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .package-price {
+      margin: 0 0 14px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      color: var(--political-primary);
+    }
+
+    .package-desc,
+    .recommended-use {
+      color: var(--political-muted);
+      line-height: 1.62;
+      font-size: 0.96rem;
+    }
+
+    .package-includes {
+      display: grid;
+      gap: 10px;
+      margin: 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .package-includes li {
+      position: relative;
+      padding-left: 24px;
+      color: rgba(246, 251, 255, 0.86);
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+
+    .package-includes li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--political-green);
+      font-weight: 900;
+    }
+
+    .recommended-use {
+      margin-top: auto;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 18px;
+    }
+
+    .recommended-use strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ffffff;
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .term-card {
+      border-radius: 20px;
+      padding: 18px;
+      color: rgba(246, 251, 255, 0.88);
+      line-height: 1.52;
+    }
+
+    .standards-box {
+      border-color: rgba(255, 205, 86, 0.34);
+      border-radius: 30px;
+      padding: clamp(24px, 5vw, 44px);
+      background:
+        linear-gradient(135deg, rgba(255, 205, 86, 0.10), transparent 42%),
+        linear-gradient(180deg, rgba(22, 30, 50, 0.90), rgba(8, 14, 27, 0.95));
+    }
+
+    .standards-box h2,
+    .closing-cta h2 {
+      margin: 0 0 16px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .standards-box p,
+    .closing-cta p {
+      max-width: 900px;
+      margin: 0;
+      color: var(--political-muted);
+      font-size: clamp(1rem, 1.6vw, 1.16rem);
+      line-height: 1.78;
+    }
+
+    .standards-box p + p {
+      margin-top: 18px;
+    }
+
+    .closing-cta {
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(129, 236, 255, 0.32);
+      border-radius: clamp(28px, 4vw, 46px);
+      padding: clamp(28px, 6vw, 60px);
+      background:
+        radial-gradient(circle at right, rgba(0, 163, 255, 0.20), transparent 42%),
+        linear-gradient(135deg, rgba(129, 236, 255, 0.13), rgba(255, 255, 255, 0.04));
+    }
+
+    @media (min-width: 700px) {
+      .intro-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1120px) {
+      .hero-grid {
+        grid-template-columns: 1fr 320px;
+        align-items: end;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1.035);
+        z-index: 2;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .political-hero {
+        min-height: auto;
+        padding-top: 120px;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+      }
+
+      .political-btn {
+        width: 100%;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://elettro.com/#organization",
+          "name": "Elettro",
+          "url": "https://elettro.com/",
+          "email": "dpalermo@elettro.com"
+        },
+        {
+          "@type": "Service",
+          "@id": "https://elettro.com/elettro/ai/political/#service",
+          "name": "AI Political Video Production",
+          "serviceType": "AI political video production",
+          "provider": {"@id": "https://elettro.com/#organization"},
+          "url": "https://elettro.com/elettro/ai/political/",
+          "description": "Fast-turn AI political video production for campaign messaging, advocacy, PACs, issue campaigns, and rapid-response social content.",
+          "areaServed": "United States",
+          "offers": {
+            "@type": "OfferCatalog",
+            "name": "Political AI Video Packages",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "name": "AI Political Video Pilot",
+                "price": "3500",
+                "priceCurrency": "USD",
+                "url": "https://elettro.com/elettro/ai/political/#packages"
+              },
+              {
+                "@type": "Offer",
+                "name": "Campaign Message Test Package",
+                "price": "7500",
+                "priceCurrency": "USD",
+                "url": "https://elettro.com/elettro/ai/political/#packages"
+              },
+              {
+                "@type": "Offer",
+                "name": "Monthly Rapid Response Political Video Desk",
+                "price": "12500",
+                "priceCurrency": "USD",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "12500",
+                  "priceCurrency": "USD",
+                  "billingDuration": "P1M"
+                },
+                "url": "https://elettro.com/elettro/ai/political/#packages"
+              },
+              {
+                "@type": "Offer",
+                "name": "Premium Political Content Engine",
+                "price": "25000",
+                "priceCurrency": "USD",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "25000",
+                  "priceCurrency": "USD",
+                  "billingDuration": "P1M"
+                },
+                "url": "https://elettro.com/elettro/ai/political/#packages"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-x-hidden selection:bg-secondary selection:text-on-secondary">
+  <div id="top"></div>
+  <!-- Shared Navigation -->
+  <header class="fixed top-0 w-full z-50 px-6 py-4 lg:px-20">
+    <nav class="glass-nav flex items-center justify-between px-8 py-4 rounded-xl border border-outline-variant/15">
+      <div class="flex flex-1 items-center gap-3 elettro-brand-wrap">
+        <a href="/" class="logo-link" aria-label="Elettro home">
+          <div class="size-7 text-white">
+            <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+          <img class="brand-logo elettro-nav-logo" src="../../images/Elettro-logo-white.png" alt="Elettro">
+        </a>
+      </div>
+      <button class="mobile-nav-toggle md:hidden inline-flex items-center justify-center" id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Toggle navigation menu">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">menu</span>
+      </button>
+      <div class="hidden md:flex flex-1 items-center justify-center px-4">
+        <a href="mailto:dpalermo@elettro.com?subject=AI%20Political%20Video%20Production%20Inquiry" class="availability-pill" aria-label="Available for work">
+          <span class="availability-dot"></span>
+          <span class="availability-text">AVAILABLE FOR WORK</span>
+        </a>
+      </div>
+      <div class="hidden md:flex flex-1 items-center justify-end gap-8">
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#services">Services</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#portfolio">Highlights</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/portfolio/">Portfolio</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#process">Process</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#about">About</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap" href="/#seo-reports">SEO &amp; AIO Reports</a>
+        <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="mailto:dpalermo@elettro.com?subject=AI%20Political%20Video%20Production%20Inquiry">Contact</a>
+        <a class="elettro-org-pill" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Elettro.org</a>
+        <div class="h-6 w-px bg-outline-variant/30 mx-2"></div>
+        <button class="group flex items-center justify-center size-10 rounded-full bg-surface-container-highest/40 hover:bg-surface-container-highest transition-all text-on-surface-variant hover:text-white" id="mute-toggle" type="button" aria-label="Page audio unavailable">
+          <span class="material-symbols-outlined text-xl" data-icon="volume_off" id="mute-icon">volume_off</span>
+        </button>
+        <a class="contact-cta bg-primary px-6 py-2.5 rounded-lg text-on-primary-fixed font-bold text-sm hover:shadow-[0_0_20px_rgba(129,236,255,0.4)] transition-all" href="mailto:dpalermo@elettro.com?subject=AI%20Political%20Video%20Production%20Inquiry">
+          Contact Us
+        </a>
+      </div>
+      <div class="mobile-menu-panel md:hidden" id="mobile-menu-panel" hidden>
+        <a class="mobile-menu-link" href="/#services">Services</a>
+        <a class="mobile-menu-link" href="/#portfolio">Highlights</a>
+        <a class="mobile-menu-link" href="/portfolio/">Portfolio</a>
+        <a class="mobile-menu-link" href="/#process">Process</a>
+        <a class="mobile-menu-link" href="/#about">About</a>
+        <a class="mobile-menu-link" href="/#seo-reports">SEO &amp; AIO Reports</a>
+        <a class="mobile-menu-link" href="mailto:dpalermo@elettro.com?subject=AI%20Political%20Video%20Production%20Inquiry">Contact</a>
+        <a class="mobile-menu-cta" href="#packages">Start Your Project</a>
+        <a class="mobile-menu-link" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Visit Elettro.org</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="political-page">
+    <section class="political-hero" aria-labelledby="hero-title">
+      <div class="political-shell">
+        <div class="hero-frame">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Elettro® Political Content Studio</div>
+              <h1 class="hero-title" id="hero-title"><span>AI Political Video Production</span></h1>
+              <p class="hero-copy">Fast-turn, viral-style campaign videos for political messaging, advocacy, PACs, issue campaigns, and rapid-response social content.</p>
+              <div class="hero-actions" aria-label="Primary actions">
+                <a class="political-btn political-btn-primary" href="#packages">Start With a $7,500 Pilot</a>
+                <a class="political-btn political-btn-secondary" href="#packages">View Packages</a>
+              </div>
+            </div>
+            <div class="hero-metrics" aria-label="Production focus areas">
+              <div class="metric-card">
+                <strong>5–20</strong>
+                <span>Platform-ready videos per engagement, depending on package.</span>
+              </div>
+              <div class="metric-card">
+                <strong>15s/30s</strong>
+                <span>Short ad-ready edits built for rapid message testing.</span>
+              </div>
+              <div class="metric-card">
+                <strong>3x</strong>
+                <span>Vertical, square, and wide exports for campaign channels.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="intro-heading">
+      <div class="political-shell">
+        <div class="glass-card intro-panel">
+          <div>
+            <div class="section-kicker">Political video systems</div>
+            <h2 class="section-heading" id="intro-heading">Built for repeatable campaign content, not one-off assets.</h2>
+          </div>
+          <div class="section-lede">
+            <p>Elettro creates high-impact AI video content designed for political persuasion, social media reach, issue awareness, and fast-moving campaign communication.</p>
+            <p class="mt-6">This service is built for clients who need more than a single video. The goal is to create a repeatable political content system that turns voter concerns, local issues, campaign messages, and breaking developments into platform-ready video assets.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="services-heading">
+      <div class="political-shell">
+        <div class="section-kicker">Scope</div>
+        <h2 class="section-heading" id="services-heading">Core Services Include</h2>
+        <p class="section-lede">Strategy, scripting, AI-assisted production, review support, and platform formatting are packaged into a clear production workflow.</p>
+        <div class="services-grid">
+          <div class="service-pill">Political message strategy</div>
+          <div class="service-pill">Short-form video scripting</div>
+          <div class="service-pill">AI-generated visual production</div>
+          <div class="service-pill">Voiceover direction</div>
+          <div class="service-pill">Captions and subtitles</div>
+          <div class="service-pill">Vertical, square, and wide video exports</div>
+          <div class="service-pill">Message-angle testing</div>
+          <div class="service-pill">Rapid-response content production</div>
+          <div class="service-pill">Social media and ad-ready formatting</div>
+          <div class="service-pill">Approval workflow for factual claims and compliance review</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="packages" aria-labelledby="packages-heading">
+      <div class="political-shell">
+        <div class="section-kicker">Packages</div>
+        <h2 class="section-heading" id="packages-heading">Political AI Video Packages</h2>
+        <p class="section-lede">Choose a controlled pilot, a message-testing sprint, or a recurring production desk for active political communications.</p>
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <h3 class="package-title">AI Political Video Pilot</h3>
+            <p class="package-price">$3,500</p>
+            <p class="package-desc">Best for testing one clear message or issue before scaling.</p>
+            <ul class="package-includes" aria-label="AI Political Video Pilot includes">
+              <li>1 strategy call</li>
+              <li>3 short political video scripts</li>
+              <li>3 AI video concepts</li>
+              <li>3 finished vertical videos</li>
+              <li>Captions included</li>
+              <li>1 revision round</li>
+              <li>Watermarked drafts for review</li>
+              <li>Final MP4 files delivered after final payment</li>
+            </ul>
+            <p class="recommended-use"><strong>Recommended use</strong>Initial campaign test, candidate introduction, issue awareness, social media launch, local voter engagement.</p>
+          </article>
+
+          <article class="pricing-card featured">
+            <div class="package-badge">Recommended Starting Point</div>
+            <h3 class="package-title">Campaign Message Test Package</h3>
+            <p class="package-price">$7,500</p>
+            <p class="package-desc">Best for testing multiple message angles and identifying the strongest content direction.</p>
+            <ul class="package-includes" aria-label="Campaign Message Test Package includes">
+              <li>5 to 7 short-form AI political videos</li>
+              <li>3 campaign message angles</li>
+              <li>15-second and 30-second versions</li>
+              <li>Vertical and square formats</li>
+              <li>Captions included</li>
+              <li>Basic disclosure and compliance review support</li>
+              <li>2 revision rounds</li>
+              <li>Organized review and approval process</li>
+            </ul>
+            <p class="recommended-use"><strong>Recommended use</strong>Political ad testing, issue contrast messaging, candidate positioning, social media content rollout, paid ad creative testing.</p>
+          </article>
+
+          <article class="pricing-card">
+            <h3 class="package-title">Monthly Rapid Response Political Video Desk</h3>
+            <p class="package-price">$12,500/month</p>
+            <p class="package-desc">Best for campaigns, PACs, and advocacy groups needing ongoing video output.</p>
+            <ul class="package-includes" aria-label="Monthly Rapid Response Political Video Desk includes">
+              <li>12 to 20 videos per month</li>
+              <li>Weekly message planning</li>
+              <li>Fast-turn issue videos</li>
+              <li>Local news reaction videos</li>
+              <li>Candidate contrast videos</li>
+              <li>Advocacy and voter education videos</li>
+              <li>Captions and platform-ready exports</li>
+              <li>Vertical, square, and wide formats</li>
+              <li>Organized approval workflow</li>
+              <li>Paid ad cutdowns</li>
+            </ul>
+            <p class="recommended-use"><strong>Recommended use</strong>Active campaign content, PAC messaging, local issue campaigns, advocacy movements, high-frequency social media publishing.</p>
+          </article>
+
+          <article class="pricing-card">
+            <h3 class="package-title">Premium Political Content Engine</h3>
+            <p class="package-price">Starting at $25,000/month</p>
+            <p class="package-desc">Best for larger campaigns, PACs, and organizations with aggressive content needs.</p>
+            <ul class="package-includes" aria-label="Premium Political Content Engine includes">
+              <li>High-volume video production</li>
+              <li>Multiple campaign themes</li>
+              <li>Rapid-response creative production</li>
+              <li>Multi-platform video adaptation</li>
+              <li>Message testing and iteration</li>
+              <li>Team coordination</li>
+              <li>Priority turnaround</li>
+              <li>Expanded revision and approval workflow</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="payment-heading">
+      <div class="political-shell">
+        <div class="section-kicker">Terms</div>
+        <h2 class="section-heading" id="payment-heading">Payment Terms</h2>
+        <div class="terms-grid">
+          <div class="term-card">50% deposit required before production begins</div>
+          <div class="term-card">50% balance due before clean final files are released</div>
+          <div class="term-card">Drafts are watermarked until final payment</div>
+          <div class="term-card">Rush turnaround is billed separately</div>
+          <div class="term-card">Raw project files are not included unless purchased separately</div>
+          <div class="term-card">Client must approve all factual claims before publication</div>
+          <div class="term-card">Political disclaimers, disclosures, and legal compliance remain the responsibility of the client or campaign counsel</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="standards-heading">
+      <div class="political-shell">
+        <div class="standards-box">
+          <div class="section-kicker">Standards</div>
+          <h2 id="standards-heading">Important Production Standard</h2>
+          <p>Elettro does not produce deceptive political deepfakes, fake endorsements, fake candidate voice clones, fabricated quotes, or misleading footage of real people saying or doing things they did not say or do.</p>
+          <p>AI visuals can be used for dramatization, satire, explainer content, issue framing, and creative political storytelling when properly reviewed and approved.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="closing-heading">
+      <div class="political-shell">
+        <div class="closing-cta">
+          <div class="section-kicker">Recommended first move</div>
+          <h2 id="closing-heading">Start With a Controlled Political Video Pilot</h2>
+          <p>The strongest first move is the $7,500 Campaign Message Test Package. It gives the client enough creative volume to test different message angles, identify what feels strongest, and decide whether to expand into a monthly rapid-response content program.</p>
+          <div class="cta-actions">
+            <a class="political-btn political-btn-primary" href="mailto:dpalermo@elettro.com?subject=AI%20Political%20Video%20Production%20Inquiry">Discuss This Package</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-12 border-t border-outline-variant/10 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="flex items-center gap-3 elettro-footer-wrap">
+        <div class="size-5 text-white/50">
+          <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+        </div>
+        <img class="footer-brand-logo elettro-footer-logo" src="../../images/Elettro-logo-white.png" alt="Elettro">
+      </div>
+      <div class="flex flex-col items-center gap-1">
+        <a class="elettro-org-footer-link" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Also visit Elettro.org</a>
+        <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.3em]">© 2026 Elettro Digital Production. Built for the kinetic era.</div>
+      </div>
+      <div class="flex gap-6">
+        <a class="footer-social-icon" href="https://youtube.com/@Elettrotv" target="_blank" rel="noopener noreferrer" aria-label="Elettro YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.5 7.2a2.9 2.9 0 0 0-2-2C19.8 4.7 12 4.7 12 4.7s-7.8 0-9.5.5a2.9 2.9 0 0 0-2 2A30.2 30.2 0 0 0 0 12a30.2 30.2 0 0 0 .5 4.8 2.9 2.9 0 0 0 2 2c1.7.5 9.5.5 9.5.5s7.8 0 9.5-.5a2.9 2.9 0 0 0 2-2A30.2 30.2 0 0 0 24 12a30.2 30.2 0 0 0-.5-4.8ZM9.5 15.3V8.7l6 3.3-6 3.3Z"></path>
+          </svg>
+        </a>
+        <a class="footer-social-icon" href="https://stashbox.ai" target="_blank" rel="noopener noreferrer" aria-label="Stashbox Store">
+          <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 8V7a5 5 0 0 1 10 0v1h1.7c.9 0 1.6.8 1.5 1.7l-1 10a1.7 1.7 0 0 1-1.7 1.5H6.5a1.7 1.7 0 0 1-1.7-1.5l-1-10C3.7 8.8 4.4 8 5.3 8H7Zm2 0h6V7a3 3 0 1 0-6 0v1Zm1.2 4.1a1 1 0 1 0-2 0v1.8a1 1 0 1 0 2 0v-1.8Zm5.8-1a1 1 0 0 0-1 1v1.8a1 1 0 1 0 2 0v-1.8a1 1 0 0 0-1-1Z"></path>
+          </svg>
+        </a>
+        <a class="footer-social-icon footer-icon-music" href="https://youtube.com/@Stashboxband" target="_blank" rel="noopener noreferrer" aria-label="Stashbox Music">
+          <svg class="footer-music-icon-svg" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <path class="music-note" d="M36 14v27.5c0 5.2-4.6 9.5-10.2 9.5S15.6 46.7 15.6 41.5 20.2 32 25.8 32c2.4 0 4.6.8 6.2 2.1V18.8l18-4.8v7.2l-14 3.7z"></path>
+            <path class="wave wave-left-1" d="M11 25c-3 4-3 10 0 14"></path>
+            <path class="wave wave-left-2" d="M6 20c-5 7-5 17 0 24"></path>
+            <path class="wave wave-right-1" d="M51 25c3 4 3 10 0 14"></path>
+            <path class="wave wave-right-2" d="M56 20c5 7 5 17 0 24"></path>
+          </svg>
+        </a>
+        <a class="footer-social-icon" href="https://linkedin.com/in/deanpalermo" target="_blank" rel="noopener noreferrer" aria-label="Dean Palermo LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.4 8.3a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8ZM3.7 9.9h3.4V20H3.7V9.9Zm5.3 0h3.2v1.4h.1c.4-.8 1.5-1.7 3.2-1.7 3.4 0 4 2.2 4 5.2V20H16v-4.6c0-1.1 0-2.5-1.6-2.5s-1.8 1.2-1.8 2.4V20H9V9.9Z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="w-full flex justify-end">
+      <a href="#top" class="back-to-top-btn" aria-label="Back to top">
+        <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_up</span>
+        <span>Back to Top</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+    const mobileMenuLinks = mobileMenuPanel ? Array.from(mobileMenuPanel.querySelectorAll('a')) : [];
+    const muteToggle = document.getElementById('mute-toggle');
+
+    function setMobileMenuOpen(isOpen) {
+      if (!mobileMenuToggle || !mobileMenuPanel) return;
+      mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+      mobileMenuPanel.hidden = !isOpen;
+    }
+
+    if (mobileMenuToggle && mobileMenuPanel) {
+      mobileMenuToggle.addEventListener('click', () => {
+        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+        setMobileMenuOpen(!isExpanded);
+      });
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener('click', () => setMobileMenuOpen(false));
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        if (mobileMenuToggle.getAttribute('aria-expanded') !== 'true') return;
+        setMobileMenuOpen(false);
+        mobileMenuToggle.focus();
+      });
+    }
+
+    if (muteToggle) {
+      muteToggle.addEventListener('click', () => {
+        muteToggle.setAttribute('aria-label', 'This page does not include background audio');
+      });
+    }
+  </script>
+</body>
+</html>
