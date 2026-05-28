@@ -265,22 +265,19 @@
 </div>
 <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
 <!-- City of West Palm Beach -->
-<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card video-card-16x9">
-<div class="relative w-full aspect-square overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
-<video id="west-palm-beach-video" class="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-300 pointer-events-none" autoplay muted playsinline preload="auto"></video>
+<div class="break-inside-avoid rounded-xl overflow-hidden mobile-video-card portfolio-horizontal-card">
+<div class="relative w-full aspect-square overflow-hidden mobile-video-media portfolio-card-media">
+<video class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline>
+<source src="videos/west-palm-beach-thank-you-2.mp4" type="video/mp4"/>
+</video>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/90 to-transparent opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy">
-<span class="text-primary font-bold text-xs mb-2">Website Development, SEO, &amp; AI Schema</span>
-<h4 class="font-headline text-xl font-bold text-white">City of West Palm Beach, Florida - VisitWPB.org</h4>
-<div class="project-link-row pointer-events-auto">
-<a class="project-pill-link" href="https://VisitWPB.org" target="_blank" rel="noopener noreferrer">
-WEBSITE
-</a>
+<div class="p-5 mobile-video-copy portfolio-card-copy">
+<span class="text-primary font-bold text-xs">WEBSITE DEVELOPMENT, SEO, &amp; AI SCHEMA</span>
+<h4 class="font-headline text-xl font-bold text-white mt-1 mb-3">City of West Palm Beach — VisitWPB.org</h4>
+<div class="project-link-row">
+<a class="project-pill-link" href="https://VisitWPB.org" target="_blank" rel="noopener noreferrer">WEBSITE</a>
 </div>
 </div>
-<button aria-label="Turn City of West Palm Beach video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary pointer-events-auto video-mute" id="west-palm-beach-audio-toggle" type="button">
-<span class="material-symbols-outlined text-base leading-none" id="west-palm-beach-audio-icon">volume_off</span>
-</button>
 </div>
 <!-- WeightLossDavie.com -->
 <div class="break-inside-avoid rounded-xl overflow-hidden mobile-video-card portfolio-horizontal-card">
@@ -373,27 +370,19 @@ allowfullscreen>
 </div>
 </div>
 </div>
-<div class="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl mobile-video-card">
-<div class="relative w-full aspect-square overflow-hidden rounded-xl bg-surface-container-low transition-all duration-700 grayscale-0 group-hover:grayscale mobile-video-media">
-<video id="maxi-priest-video-a" class="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline preload="auto">
-<source src="videos/maxi-preist-elettro-testimonial-1.mp4" type="video/mp4"/>
-</video>
-<video id="maxi-priest-video-b" class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline preload="auto">
+<div class="break-inside-avoid rounded-xl overflow-hidden mobile-video-card portfolio-horizontal-card">
+<div class="relative w-full aspect-square overflow-hidden mobile-video-media portfolio-card-media">
+<video class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline>
 <source src="videos/maxi-preist-elettro-testimonial-1.mp4" type="video/mp4"/>
 </video>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end pointer-events-none mobile-video-copy video-text-overlay-bg">
-<span class="text-primary font-bold text-xs mb-2">Video Production, Website Production, Graphics</span>
-<h4 class="font-headline text-xl font-bold text-white">Maxi Priest</h4>
-<div class="project-link-row pointer-events-auto">
-<a class="project-pill-link" href="https://MaxiPriest.com" target="_blank" rel="noopener noreferrer">
-WEBSITE
-</a>
+<div class="p-5 mobile-video-copy portfolio-card-copy">
+<span class="text-primary font-bold text-xs">VIDEO PRODUCTION, WEBSITE PRODUCTION, GRAPHICS</span>
+<h4 class="font-headline text-xl font-bold text-white mt-1 mb-3">Maxi Priest</h4>
+<div class="project-link-row">
+<a class="project-pill-link" href="https://MaxiPriest.com" target="_blank" rel="noopener noreferrer">WEBSITE</a>
 </div>
 </div>
-<button aria-label="Turn Maxi Priest video audio on" class="absolute bottom-2 right-2 z-10 h-8 w-8 rounded-full border border-white/30 bg-surface/65 text-white backdrop-blur-sm transition-all hover:border-primary hover:text-primary pointer-events-auto" id="maxi-priest-audio-toggle" type="button">
-<span class="material-symbols-outlined text-base leading-none" id="maxi-priest-audio-icon">volume_off</span>
-</button>
 </div>
 <div class="break-inside-avoid rounded-xl overflow-hidden mobile-video-card portfolio-horizontal-card">
 <div class="relative w-full aspect-[9/16] overflow-hidden mobile-video-media portfolio-card-media">
@@ -714,27 +703,7 @@ Your browser does not support the video tag.
         const darceyPlayerFrame = document.getElementById('darcey-youtube-player');
         const silverbackAudioToggle = document.querySelector("button[onclick*=\"toggleYTVideo('silverback-video'\"]");
         const silverbackAudioIcon = silverbackAudioToggle?.querySelector('.material-symbols-outlined');
-        const maxiPriestAudioToggle = document.getElementById('maxi-priest-audio-toggle');
-        const maxiPriestAudioIcon = document.getElementById('maxi-priest-audio-icon');
-        const maxiPriestVideoA = document.getElementById('maxi-priest-video-a');
-        const maxiPriestVideoB = document.getElementById('maxi-priest-video-b');
-        const westPalmBeachVideo = document.getElementById('west-palm-beach-video');
-        const westPalmBeachAudioToggle = document.getElementById('west-palm-beach-audio-toggle');
-        const westPalmBeachAudioIcon = document.getElementById('west-palm-beach-audio-icon');
-        const maxiPriestVideos = [
-            'videos/maxi-preist-elettro-testimonial-1.mp4',
-            'videos/maxi-preist-elettro-testimonial-1.mp4'
-        ];
-        const maxiPriestLayers = [maxiPriestVideoA, maxiPriestVideoB].filter(Boolean);
-        let maxiPriestActiveLayerIndex = 0;
-        let maxiPriestVideoIndex = 0;
-        let maxiPriestCycleTimer = null;
-        let isMaxiPriestAudioEnabled = false;
-        const westPalmBeachVideos = [
-            'videos/west-palm-beach-thank-you-2.mp4',
-            'videos/west-palm-beach-thank-you-3.mp4'
-        ];
-        let westPalmBeachVideoIndex = 0;
+
 
         const mediaAudioRegistry = [];
 
@@ -874,221 +843,6 @@ Your browser does not support the video tag.
             }
             layer.play().catch(() => {});
         }
-
-        function syncMaxiPriestLayerAudio() {
-            maxiPriestLayers.forEach((layer, index) => {
-                const shouldBeMuted = !isMaxiPriestAudioEnabled || index !== maxiPriestActiveLayerIndex;
-                layer.muted = shouldBeMuted;
-                layer.volume = 1;
-            });
-        }
-
-        function cycleMaxiPriestVideo() {
-            if (maxiPriestLayers.length < 2) return;
-            const currentLayer = maxiPriestLayers[maxiPriestActiveLayerIndex];
-            const nextLayerIndex = (maxiPriestActiveLayerIndex + 1) % maxiPriestLayers.length;
-            const nextLayer = maxiPriestLayers[nextLayerIndex];
-
-            maxiPriestVideoIndex = (maxiPriestVideoIndex + 1) % maxiPriestVideos.length;
-            playMaxiPriestLayer(nextLayer, maxiPriestVideos[maxiPriestVideoIndex]);
-            nextLayer.currentTime = 0;
-            nextLayer.classList.remove('opacity-0');
-            nextLayer.classList.add('opacity-100');
-            currentLayer.classList.remove('opacity-100');
-            currentLayer.classList.add('opacity-0');
-            maxiPriestActiveLayerIndex = nextLayerIndex;
-            syncMaxiPriestLayerAudio();
-        }
-
-        function startMaxiPriestCycle() {
-            if (maxiPriestLayers.length < 2) return;
-            playMaxiPriestLayer(maxiPriestLayers[0], maxiPriestVideos[0]);
-            maxiPriestLayers[0].classList.add('opacity-100');
-            maxiPriestLayers[0].classList.remove('opacity-0');
-            playMaxiPriestLayer(maxiPriestLayers[1], maxiPriestVideos[1]);
-            maxiPriestLayers[1].classList.remove('opacity-100');
-            maxiPriestLayers[1].classList.add('opacity-0');
-            syncMaxiPriestLayerAudio();
-
-            if (maxiPriestCycleTimer) {
-                window.clearInterval(maxiPriestCycleTimer);
-            }
-            maxiPriestCycleTimer = window.setInterval(cycleMaxiPriestVideo, 8000);
-        }
-
-        maxiPriestAudioToggle?.addEventListener('click', () => {
-            if (!maxiPriestLayers.length) return;
-            const shouldEnableAudio = !isMaxiPriestAudioEnabled;
-            if (shouldEnableAudio) {
-                muteAllOtherMedia('maxi-priest-html5');
-            }
-            isMaxiPriestAudioEnabled = shouldEnableAudio;
-            syncMaxiPriestLayerAudio();
-            maxiPriestAudioIcon.textContent = isMaxiPriestAudioEnabled ? 'volume_up' : 'volume_off';
-            maxiPriestAudioToggle.dataset.muted = isMaxiPriestAudioEnabled ? 'false' : 'true';
-            maxiPriestAudioToggle.setAttribute('aria-label', isMaxiPriestAudioEnabled ? 'Turn Maxi Priest video audio off' : 'Turn Maxi Priest video audio on');
-        });
-
-        startMaxiPriestCycle();
-
-        function playWestPalmBeachVideo(index) {
-            if (!westPalmBeachVideo || !westPalmBeachVideos.length) return;
-            westPalmBeachVideo.classList.add('opacity-0');
-            westPalmBeachVideo.src = westPalmBeachVideos[index];
-            westPalmBeachVideo.load();
-            westPalmBeachVideo.play().then(() => {
-                requestAnimationFrame(() => westPalmBeachVideo.classList.remove('opacity-0'));
-            }).catch(() => {
-                westPalmBeachVideo.muted = true;
-                westPalmBeachVideo.play().then(() => {
-                    requestAnimationFrame(() => westPalmBeachVideo.classList.remove('opacity-0'));
-                }).catch(() => {});
-            });
-        }
-
-        westPalmBeachVideo?.addEventListener('ended', () => {
-            westPalmBeachVideoIndex = (westPalmBeachVideoIndex + 1) % westPalmBeachVideos.length;
-            playWestPalmBeachVideo(westPalmBeachVideoIndex);
-        });
-
-        westPalmBeachVideo?.addEventListener('error', () => {
-            westPalmBeachVideoIndex = (westPalmBeachVideoIndex + 1) % westPalmBeachVideos.length;
-            playWestPalmBeachVideo(westPalmBeachVideoIndex);
-        });
-
-        westPalmBeachAudioToggle?.addEventListener('click', () => {
-            if (!westPalmBeachVideo) return;
-            const shouldUnmute = westPalmBeachVideo.muted;
-            if (shouldUnmute) {
-                muteAllOtherMedia('west-palm-beach-html5');
-            }
-            westPalmBeachVideo.muted = !shouldUnmute;
-            westPalmBeachVideo.volume = 1;
-            westPalmBeachAudioIcon.textContent = shouldUnmute ? 'volume_up' : 'volume_off';
-            westPalmBeachAudioToggle.dataset.muted = shouldUnmute ? 'false' : 'true';
-            westPalmBeachAudioToggle.setAttribute('aria-label', shouldUnmute ? 'Turn City of West Palm Beach video audio off' : 'Turn City of West Palm Beach video audio on');
-            westPalmBeachVideo.play().catch(() => {});
-        });
-
-        playWestPalmBeachVideo(westPalmBeachVideoIndex);
-
-        function syncBeehiivMobileEmbed() {
-            const wrap = document.querySelector('.beehiiv-embed-wrap');
-            const frame = wrap?.querySelector('iframe');
-            if (!wrap || !frame) return;
-
-            const baseWidth = 560;
-            const baseHeight = 488;
-            const isMobile = window.innerWidth <= 640;
-
-            if (!isMobile) {
-                wrap.style.setProperty('--beehiiv-scale', '1');
-                wrap.style.setProperty('--beehiiv-height', `${baseHeight}px`);
-                frame.style.width = '100%';
-                frame.style.minWidth = '0';
-                frame.style.height = `${baseHeight}px`;
-                frame.style.transform = 'none';
-                return;
-            }
-
-            const availableWidth = wrap.clientWidth;
-            const scale = Math.min(1, availableWidth / baseWidth);
-            const scaledHeight = Math.ceil(baseHeight * scale);
-
-            wrap.style.setProperty('--beehiiv-scale', String(scale));
-            wrap.style.setProperty('--beehiiv-height', `${scaledHeight}px`);
-
-            frame.style.width = `${baseWidth}px`;
-            frame.style.minWidth = `${baseWidth}px`;
-            frame.style.height = `${baseHeight}px`;
-            frame.style.transform = `scale(${scale})`;
-        }
-
-        window.addEventListener('load', syncBeehiivMobileEmbed);
-        window.addEventListener('resize', syncBeehiivMobileEmbed);
-
-        // Manual fallback for static hosting where folder listing is not available.
-        // Add/remove files from /vidtest/videos/ here when you update the folder.
-        const declaredVideoFiles = [
-            'https://www.dropbox.com/scl/fi/rdy505tqsheg2ki0tu2ke/project-thumbs-animation-16x9.mp4?rlkey=m7glpywcfbpxalwvj6ddtk67c&st=a0zv2to9&raw=1'
-        ];
-
-        const floatingCard = document.getElementById('floating-video-card');
-        const floatingCardLink = document.getElementById('floating-video-card-link');
-        const indicator = document.getElementById('video-audio-indicator');
-        const indicatorLabel = document.getElementById('video-audio-label');
-        const miniToggle = document.getElementById('video-audio-mini-toggle');
-        const miniToggleIcon = document.getElementById('video-audio-mini-icon');
-        const layers = [
-            document.getElementById('floating-video-a'),
-            document.getElementById('floating-video-b')
-        ];
-
-        const supportedExtensions = new Set(['mp4', 'webm', 'ogg', 'mov']);
-        const hasSupportedVideoExtension = (fileName) => {
-            if (!fileName) return false;
-
-            if (fileName.startsWith('http')) {
-                try {
-                    const parsedUrl = new URL(fileName);
-                    const ext = parsedUrl.pathname.split('.').pop()?.toLowerCase();
-                    return Boolean(ext && supportedExtensions.has(ext));
-                } catch (error) {
-                    return false;
-                }
-            }
-
-            const ext = fileName.split('.').pop()?.toLowerCase();
-            return Boolean(ext && supportedExtensions.has(ext));
-        };
-
-        const videoPlaylist = declaredVideoFiles
-            .filter(hasSupportedVideoExtension)
-            .map((fileName) => fileName.startsWith('http') ? fileName : `videos/${encodeURIComponent(fileName).replace(/%2F/g, '/')}`);
-
-        let activeLayerIndex = 0;
-        let activeVideoIndex = -1;
-        let hasAudioBeenActivated = false;
-        let hasCardInteracted = false;
-
-        registerYouTubeAudioSource({
-            id: 'hero-background-youtube',
-            playerGetter: () => (isPlayerReady ? player : null),
-            button: muteToggle,
-            icon: muteIcon,
-            labels: {
-                on: 'Turn hero background video audio on',
-                off: 'Turn hero background video audio off'
-            }
-        });
-
-
-
-        registerHtml5AudioSource({
-            id: 'west-palm-beach-html5',
-            element: westPalmBeachVideo,
-            button: westPalmBeachAudioToggle,
-            icon: westPalmBeachAudioIcon,
-            labels: {
-                on: 'Turn City of West Palm Beach video audio on',
-                off: 'Turn City of West Palm Beach video audio off'
-            }
-        });
-
-        registerHtml5AudioSource({
-            id: 'maxi-priest-html5',
-            element: maxiPriestLayers[0] ?? null,
-            button: maxiPriestAudioToggle,
-            icon: maxiPriestAudioIcon,
-            labels: {
-                on: 'Turn Maxi Priest video audio on',
-                off: 'Turn Maxi Priest video audio off'
-            },
-            onMute: () => {
-                isMaxiPriestAudioEnabled = false;
-                syncMaxiPriestLayerAudio();
-            }
-        });
 
         registerHtml5AudioSource({
             id: 'floating-hero-card-html5',
