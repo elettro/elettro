@@ -1370,3 +1370,179 @@
     z-index: 5;
   }
 }
+
+
+/* ════════════════════════════════════════════════════
+   About Dean Palermo section
+════════════════════════════════════════════════════ */
+.about-dean-section {
+  background: #060f1e;
+}
+.about-dean-bg-glow {
+  position: absolute;
+  top: 50%;
+  right: -8%;
+  transform: translateY(-50%);
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,137,255,0.055) 0%, transparent 65%);
+  pointer-events: none;
+}
+.about-dean-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--primary, #74a9ff);
+  white-space: nowrap;
+}
+.about-dean-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 34px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--primary, #74a9ff);
+  color: #060f1e;
+  transition: background 0.25s ease, gap 0.25s ease;
+}
+.about-dean-cta:hover {
+  background: var(--primary-strong, #4e8dff);
+  gap: 16px;
+}
+
+/* Dean video player card */
+.dean-player-wrap {
+  perspective: 1200px;
+}
+.dean-player-card {
+  position: relative;
+  width: 296px;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #070f20;
+  border: 1px solid rgba(100, 155, 255, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.04),
+    0 0 70px rgba(74,137,255,0.07),
+    0 48px 96px rgba(0,0,0,0.65);
+  transform: perspective(1200px) rotateY(-10deg) rotateX(5deg);
+  transition: transform 0.55s cubic-bezier(0.23,1,0.32,1),
+              box-shadow 0.55s ease;
+  will-change: transform;
+  cursor: default;
+}
+.dean-player-wrap:hover .dean-player-card {
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.07),
+    0 0 90px rgba(74,137,255,0.13),
+    0 56px 110px rgba(0,0,0,0.6);
+}
+.dean-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dean-dots {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+.dean-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  border: none;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: width 0.35s ease, background 0.35s ease;
+  flex-shrink: 0;
+}
+.dean-dot.active {
+  width: 22px;
+  background: var(--primary, #74a9ff);
+}
+.dean-mute-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(7,15,32,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255,255,255,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.dean-mute-btn:hover {
+  border-color: rgba(116,169,255,0.5);
+  background: rgba(74,137,255,0.2);
+}
+.dean-mute-btn .material-symbols-outlined {
+  font-size: 15px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+.dean-live-pill {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: rgba(7,15,32,0.76);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(145,170,220,0.18);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.dean-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  animation: deanLivePulse 2.4s ease-in-out infinite;
+}
+@keyframes deanLivePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
+  50%       { opacity: 0.55; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+}
+@media (max-width: 767px) {
+  .dean-player-card {
+    width: 230px;
+    border-radius: 22px;
+    transform: none !important;
+  }
+}
