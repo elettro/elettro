@@ -8,19 +8,64 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
   <link rel="stylesheet" href="portfolio.css" />
 </head>
 <body>
   <header class="global-header">
-    <a class="global-brand" href="http://elettro.com/">
-      <img src="../images/Elettro-logo-white.png" alt="Elettro" />
-    </a>
-    <nav class="global-nav" aria-label="Global">
-      <a href="https://elettro.com/#services">Services</a>
-      <a href="/portfolio/" aria-current="page">Portfolio</a>
-      <a href="https://elettro.com/#about">About</a>
-      <a href="https://elettro.com/#contact">Contact</a>
+    <nav class="pf-nav" aria-label="Global">
+
+      <!-- Brand -->
+      <div class="pf-nav-brand">
+        <a href="https://elettro.com/" class="pf-logo-link" aria-label="Elettro home">
+          <svg class="pf-logo-bolt" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+          <img src="../images/Elettro-logo-white.png" alt="Elettro" class="pf-logo-img" />
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="pf-mobile-toggle" id="pf-menu-toggle" type="button" aria-expanded="false" aria-controls="pf-menu-panel" aria-label="Toggle navigation menu">
+        <span class="material-symbols-outlined" style="font-size:20px">menu</span>
+      </button>
+
+      <!-- Centre pill -->
+      <div class="pf-nav-center">
+        <a href="https://elettro.com/#contact" class="pf-avail-pill" aria-label="Available for work">
+          <span class="pf-avail-dot"></span>
+          <span class="pf-avail-text">AVAILABLE FOR WORK</span>
+        </a>
+      </div>
+
+      <!-- Desktop links -->
+      <div class="pf-nav-links" id="pf-nav-links">
+        <a class="pf-link" href="https://elettro.com/#services">Services</a>
+        <a class="pf-link" href="https://elettro.com/#portfolio">Highlights</a>
+        <a class="pf-link pf-link--active" href="/portfolio/" aria-current="page">Portfolio</a>
+        <a class="pf-link" href="https://elettro.com/#process">Process</a>
+        <a class="pf-link" href="https://elettro.com/#about">About</a>
+        <a class="pf-link" href="https://elettro.com/#seo-reports">SEO &amp; AIO Reports</a>
+        <a class="pf-link" href="https://elettro.com/#contact">Contact</a>
+        <div class="pf-divider" aria-hidden="true"></div>
+        <a class="pf-org-pill" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Elettro.org</a>
+        <a class="pf-cta" href="https://elettro.com/#contact">Contact Us</a>
+      </div>
+
+      <!-- Mobile menu panel -->
+      <div class="pf-mobile-panel" id="pf-menu-panel" hidden>
+        <a class="pf-mobile-link" href="https://elettro.com/#services">Services</a>
+        <a class="pf-mobile-link" href="https://elettro.com/#portfolio">Highlights</a>
+        <a class="pf-mobile-link pf-mobile-link--active" href="/portfolio/" aria-current="page">Portfolio</a>
+        <a class="pf-mobile-link" href="https://elettro.com/#process">Process</a>
+        <a class="pf-mobile-link" href="https://elettro.com/#about">About</a>
+        <a class="pf-mobile-link" href="https://elettro.com/#seo-reports">SEO &amp; AIO Reports</a>
+        <a class="pf-mobile-link" href="https://elettro.com/#contact">Contact</a>
+        <a class="pf-mobile-cta" href="https://elettro.com/#contact">Start Your Project</a>
+        <a class="pf-mobile-link" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Visit Elettro.org</a>
+      </div>
+
     </nav>
   </header>
 
@@ -39,6 +84,20 @@
   <script type="text/babel" src="portfolio.jsx"></script>
   <script>
     document.getElementById("global-year").textContent = new Date().getFullYear();
+    // Mobile nav
+    const pfToggle = document.getElementById('pf-menu-toggle');
+    const pfPanel  = document.getElementById('pf-menu-panel');
+    if (pfToggle && pfPanel) {
+      pfToggle.addEventListener('click', () => {
+        const open = pfToggle.getAttribute('aria-expanded') === 'true';
+        pfToggle.setAttribute('aria-expanded', String(!open));
+        pfPanel.hidden = open;
+      });
+      pfPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        pfToggle.setAttribute('aria-expanded', 'false');
+        pfPanel.hidden = true;
+      }));
+    }
   </script>
 </body>
 </html>
