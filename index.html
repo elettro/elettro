@@ -1217,7 +1217,7 @@ if (servicesCanvas) {
   const VIDEOS = [
     'videos/dean-introduction-9x16-video.mp4',
     'videos/dean-introduction-9x16-video-no2.mp4',
-    'videos/dean-introduction-9x16-video-no3-seascape.mp4',
+    'videos/dean-introduction-9x16-video-no3.mp4',
   ];
   let cur = 0;
   let muted = true;
@@ -1236,17 +1236,20 @@ if (servicesCanvas) {
 
   function playIdx(i) {
     cur = ((i % VIDEOS.length) + VIDEOS.length) % VIDEOS.length;
-    vid.src = VIDEOS[cur];
-    vid.muted = muted;
-    vid.load();
-    vid.play().catch(() => {
-      muted = true; syncMuteUI();
-      vid.play().catch(() => {});
-    });
     dots.forEach((d, j) => d.classList.toggle('active', j === cur));
+    vid.muted = muted;
+    vid.src = VIDEOS[cur];
+    vid.addEventListener('canplay', function onCan() {
+      vid.removeEventListener('canplay', onCan);
+      vid.play().catch(() => {
+        muted = true; syncMuteUI();
+        vid.play().catch(() => {});
+      });
+    }, { once: true });
   }
 
   vid.addEventListener('ended', () => playIdx(cur + 1));
+  vid.addEventListener('error',  () => { setTimeout(() => playIdx(cur + 1), 150); });
 
   muteBtn.addEventListener('click', () => { muted = !muted; syncMuteUI(); });
 
