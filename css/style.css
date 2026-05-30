@@ -1858,3 +1858,118 @@
 .seo-rc--green  .seo-rc-glow { background: radial-gradient(circle at 50% 100%, rgba(52,211,153,.1) 0%, transparent 65%); }
 .seo-rc--amber  .seo-rc-glow { background: radial-gradient(circle at 50% 100%, rgba(251,191,36,.1) 0%, transparent 65%); }
 .seo-rc--rose   .seo-rc-glow { background: radial-gradient(circle at 50% 100%, rgba(251,113,133,.1) 0%, transparent 65%); }
+
+      @keyframes client-scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      @keyframes client-scroll-right {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+      }
+      .client-marquee-mask {
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      }
+      .client-marquee-row {
+        display: flex;
+        width: max-content;
+      }
+      .client-marquee-left {
+        animation: client-scroll-left 40s linear infinite;
+      }
+      .client-marquee-right {
+        animation: client-scroll-right 45s linear infinite;
+      }
+      .client-category-pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.5rem 1rem;
+        color: #a3aac4;
+        font-family: Manrope, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        line-height: 1.25;
+        text-transform: uppercase;
+        backdrop-filter: blur(12px);
+        transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+      }
+      .client-category-pill:hover {
+        border-color: rgba(129, 236, 255, 0.5);
+        background: rgba(255, 255, 255, 0.1);
+        color: #81ecff;
+      }
+      .client-name-card {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 0.75rem;
+        background: rgba(6, 14, 32, 0.42);
+        padding: 1rem 1.5rem;
+        color: #f8fafc;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 700;
+        line-height: 1.15;
+        white-space: nowrap;
+        backdrop-filter: blur(16px);
+        transition: transform 300ms ease, box-shadow 300ms ease;
+      }
+      .client-name-card:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: 0 0 30px rgba(129, 236, 255, 0.2);
+      }
+      .client-outline-cta,
+      .client-primary-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3.375rem;
+        border-radius: 0.75rem;
+        padding: 0.85rem 1.75rem;
+        font-family: Manrope, sans-serif;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        line-height: 1.2;
+        text-transform: uppercase;
+        transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+      }
+      .client-outline-cta {
+        gap: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #f8fafc;
+      }
+      .client-outline-cta:hover {
+        border-color: rgba(129, 236, 255, 0.75);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 15px rgba(129, 236, 255, 0.3);
+      }
+      .client-primary-cta {
+        min-width: min(20rem, 100%);
+        background: linear-gradient(90deg, #81ecff, #006976);
+        color: #f8fafc;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+      }
+      .client-primary-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 20px rgba(129, 236, 255, 0.4);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .client-marquee-left,
+        .client-marquee-right {
+          animation-play-state: paused;
+        }
+      }
+      @media (max-width: 767px) {
+        .client-marquee-mask {
+          mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        }
+        .client-outline-cta,
+        .client-primary-cta {
+          width: 100%;
+        }
+      }
