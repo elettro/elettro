@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elettro - Past Clients</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Space+Grotesk:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#e6deff",
+                      "tertiary-container": "#e0d7ff",
+                      "surface": "#0b1325",
+                      "inverse-primary": "#006875",
+                      "on-background": "#dae2fc",
+                      "on-primary-container": "#006b78",
+                      "on-secondary-container": "#00662c",
+                      "on-secondary-fixed": "#002109",
+                      "text-muted": "#A3AAC4",
+                      "primary-container": "#81ecff",
+                      "on-primary-fixed": "#001f24",
+                      "glass-border": "rgba(255, 255, 255, 0.12)",
+                      "surface-variant": "#2d3448",
+                      "surface-container-lowest": "#060e20",
+                      "secondary-fixed": "#66ff8e",
+                      "outline": "#879395",
+                      "secondary": "#a7ffb3",
+                      "secondary-fixed-dim": "#00e46b",
+                      "on-tertiary-container": "#624fbb",
+                      "surface-dim": "#0b1325",
+                      "on-primary-fixed-variant": "#004f59",
+                      "outline-variant": "#3d494b",
+                      "text-primary": "#F8FAFC",
+                      "surface-tint": "#69d5e8",
+                      "portfolio-gold": "#E2B13C",
+                      "inverse-surface": "#dae2fc",
+                      "surface-container-high": "#222a3d",
+                      "surface-container-highest": "#2d3448",
+                      "primary-fixed": "#9defff",
+                      "on-surface-variant": "#bdc9cb",
+                      "on-tertiary-fixed-variant": "#4833a0",
+                      "on-tertiary-fixed": "#1c0062",
+                      "background": "#0b1325",
+                      "surface-container-low": "#131b2e",
+                      "deep-canvas": "#05070D",
+                      "on-primary": "#00363d",
+                      "surface-container": "#0F1930",
+                      "primary": "#edfcff",
+                      "portfolio-obsidian": "#0B0B0D",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#cabeff",
+                      "secondary-container": "#00ee6f",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#311589",
+                      "on-secondary": "#003915",
+                      "on-secondary-fixed-variant": "#005322",
+                      "tertiary": "#fcf7ff",
+                      "inverse-on-surface": "#283044",
+                      "primary-fixed-dim": "#69d5e8",
+                      "error": "#ffb4ab",
+                      "on-surface": "#dae2fc",
+                      "surface-bright": "#31394d",
+                      "on-error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "section-gap": "128px",
+                      "margin-desktop": "80px",
+                      "gutter-desktop": "24px",
+                      "margin-mobile": "20px",
+                      "gutter-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Space Grotesk"],
+                      "label-caps": ["Manrope"],
+                      "body-base": ["Manrope"],
+                      "display-lg": ["Space Grotesk"],
+                      "display-xl-mobile": ["Space Grotesk"],
+                      "headline-lg": ["Space Grotesk"],
+                      "body-bold": ["Manrope"],
+                      "display-xl": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "headline-md": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                      "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.22em", "fontWeight": "800" }],
+                      "body-base": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+                      "display-lg": ["72px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                      "display-xl-mobile": ["48px", { "lineHeight": "44px", "letterSpacing": "-0.05em", "fontWeight": "900" }],
+                      "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "body-bold": ["16px", { "lineHeight": "26px", "fontWeight": "700" }],
+                      "display-xl": ["96px", { "lineHeight": "88px", "letterSpacing": "-0.05em", "fontWeight": "900" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Marquee Animation */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .animate-marquee-left {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 40s linear infinite;
+        }
+        
+        .animate-marquee-right {
+            display: flex;
+            width: max-content;
+            animation: scroll-right 45s linear infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-marquee-left, .animate-marquee-right {
+                animation-play-state: paused;
+            }
+        }
+
+        .marquee-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-text-primary antialiased min-h-screen flex flex-col font-body-base text-body-base overflow-x-hidden selection:bg-surface-tint selection:text-surface-container-lowest">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-glass-border shadow-[0_0_30px_rgba(129,236,255,0.1)] transition-transform">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-[1180px] mx-auto max-md:px-margin-mobile">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary scale-95 active:scale-90 transition-transform hover:opacity-80" href="/">
+                ELETTRO
+            </a>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps uppercase hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">Portfolio</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps uppercase hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">Services</a>
+<a aria-current="page" class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps uppercase hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">Clients</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps uppercase hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">About</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<a class="hidden md:flex items-center justify-center bg-gradient-to-r from-surface-tint to-inverse-primary text-text-primary font-label-caps text-label-caps uppercase px-6 py-3 rounded-lg shadow-lg hover:shadow-[0_0_20px_rgba(129,236,255,0.4)] transition-all scale-95 active:scale-90" href="/contact/">
+                    Work With Elettro
+                </a>
+<button aria-label="Menu" class="md:hidden text-primary p-2 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[100px]">
+<!-- Past Clients Section -->
+<section class="elettro-clients-section relative w-full py-section-gap max-md:py-[80px] overflow-hidden bg-deep-canvas flex flex-col justify-center min-h-[650px]">
+<!-- Cinematic Background Glows -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vh] bg-surface-tint/5 rounded-full blur-[120px] opacity-50"></div>
+</div>
+<div class="relative z-10 max-w-[1180px] mx-auto px-margin-desktop max-md:px-margin-mobile w-full flex flex-col gap-16">
+<!-- Section Header (Asymmetric Layout) -->
+<div class="grid grid-cols-12 gap-gutter-desktop items-end">
+<div class="col-span-12 md:col-span-8 flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-[1px] bg-primary-container"></div>
+<span class="font-label-caps text-label-caps text-primary-container uppercase tracking-[0.22em]">Elettro Past Client Experience</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg max-md:font-display-xl-mobile max-md:text-display-xl-mobile text-text-primary">
+                            Past Clients.<br/>
+<span class="text-surface-tint">Proven Creative Range.</span>
+</h2>
+</div>
+<div class="col-span-12 md:col-span-4 flex flex-col gap-6 mt-6 md:mt-0">
+<p class="font-body-base text-body-base text-on-surface-variant leading-relaxed">
+                            Elettro has supported brands, organizations, artists, agencies, legal teams, healthcare providers, municipalities, hospitality groups, entertainment companies, and product businesses across a wide range of creative and digital production needs.
+                        </p>
+</div>
+</div>
+<!-- Industry Category Pills -->
+<div class="flex flex-wrap gap-3 mt-4">
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Media &amp; Entertainment</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Consumer Brands</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Music &amp; Artists</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Municipal &amp; Civic</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Legal &amp; Healthcare</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Hospitality &amp; Tourism</span>
+<span class="px-4 py-2 rounded-full border border-glass-border bg-white/5 backdrop-blur-md font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-default">Ecommerce &amp; Technology</span>
+</div>
+<!-- Animated Marquee Area -->
+<div aria-label="Client Marquees" class="w-full overflow-hidden marquee-mask py-8 -mx-margin-desktop md:-mx-margin-desktop px-margin-desktop md:px-margin-desktop flex flex-col gap-6">
+<!-- Row 1 (Left) -->
+<div class="animate-marquee-left gap-6 group hover:[animation-play-state:paused]">
+<!-- Original Content -->
+<div class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Audible</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Universal Music Group</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Playboy</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Piaget</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">SC Johnson</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Glade</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">T-Mobile</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Payless Shoes</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">City of West Palm Beach</div>
+</div>
+<!-- Duplicated for Loop -->
+<div aria-hidden="true" class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Audible</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Universal Music Group</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Playboy</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Piaget</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">SC Johnson</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Glade</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">T-Mobile</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Payless Shoes</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">City of West Palm Beach</div>
+</div>
+</div>
+<!-- Row 2 (Right) -->
+<div class="animate-marquee-right gap-6 group hover:[animation-play-state:paused] ml-[-50%]">
+<!-- Original Content -->
+<div class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">FIU</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">University of Miami Bascom Palmer</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Don Pablo Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">The Blue Card</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Navy SEAL Foundation Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Never Thirst Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Stephen Speaks Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Rosenberg Injury Law</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Weight Loss Davie</div>
+</div>
+<!-- Duplicated for Loop -->
+<div aria-hidden="true" class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">FIU</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">University of Miami Bascom Palmer</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Don Pablo Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">The Blue Card</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Navy SEAL Foundation Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Never Thirst Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Stephen Speaks Coffee</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Rosenberg Injury Law</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Weight Loss Davie</div>
+</div>
+</div>
+<!-- Row 3 (Left) -->
+<div class="animate-marquee-left gap-6 group hover:[animation-play-state:paused] ml-[5%]">
+<!-- Original Content -->
+<div class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Stashbox</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Tahiti Cora</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">The Ras Box</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Darcey &amp; Stacey Silva</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Flamingo Gardens</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Kari Nautique</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Golf Village</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Neurology Scottsdale</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Fresh Coffee Market</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">AIO Authority</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Nadja Atwal PR</div>
+</div>
+<!-- Duplicated for Loop -->
+<div aria-hidden="true" class="flex gap-6 items-center">
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Stashbox</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Tahiti Cora</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">The Ras Box</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Darcey &amp; Stacey Silva</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Flamingo Gardens</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Kari Nautique</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Golf Village</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Neurology Scottsdale</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Fresh Coffee Market</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">AIO Authority</div>
+<div class="px-6 py-4 rounded-xl border border-glass-border bg-surface/40 backdrop-blur-lg font-headline-md text-headline-md max-md:text-[24px] text-text-primary whitespace-nowrap hover:shadow-[0_0_30px_rgba(129,236,255,0.2)] hover:-translate-y-1 transition-all duration-300">Nadja Atwal PR</div>
+</div>
+</div>
+</div>
+<!-- CTAs Area -->
+<div class="flex flex-col md:flex-row items-center gap-4 mt-8 w-full border-t border-glass-border pt-8 justify-between">
+<a class="flex items-center gap-2 group px-6 py-3 rounded-lg border border-glass-border bg-transparent text-text-primary font-label-caps text-label-caps uppercase hover:bg-white/5 hover:border-surface-tint hover:shadow-[0_0_15px_rgba(105,213,232,0.3)] transition-all max-md:w-full justify-center" href="/dev/past-clients/">
+                        View Full Client Directory
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="flex items-center justify-center bg-gradient-to-r from-surface-tint to-inverse-primary text-text-primary font-label-caps text-label-caps uppercase px-8 py-3 rounded-lg shadow-lg hover:shadow-[0_0_20px_rgba(129,236,255,0.4)] transition-all max-md:w-full" href="/contact/">
+                        Work With Elettro
+                    </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="w-full py-margin-desktop bg-deep-canvas bg-gradient-to-t from-surface-container-lowest to-transparent relative z-10 border-t border-glass-border/30">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter-desktop max-w-[1180px] mx-auto max-md:px-margin-mobile">
+<div class="font-headline-md text-headline-md text-primary opacity-80 hover:opacity-100 transition-opacity">
+                ELETTRO
+            </div>
+<div class="flex flex-wrap items-center justify-center gap-6">
+<a class="font-label-caps text-label-caps text-text-muted hover:text-secondary transition-colors uppercase" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-secondary transition-colors uppercase" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-secondary transition-colors uppercase" href="#">Instagram</a>
+<a class="font-label-caps text-label-caps text-text-muted hover:text-secondary transition-colors uppercase" href="#">LinkedIn</a>
+</div>
+<div class="font-label-caps text-label-caps text-text-muted text-center md:text-right">
+                © 2024 ELETTRO STUDIO. ALL RIGHTS RESERVED.
+            </div>
+</div>
+</footer>
+</body></html>
