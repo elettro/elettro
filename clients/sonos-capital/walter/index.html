@@ -5,6 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walter Johnson | Sonos Capital</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#40485d",
+          "surface-container-highest": "#192540",
+          "primary": "#81ecff",
+          "on-surface-variant": "#a3aac4",
+          "surface": "#060e20",
+          "background": "#060e20",
+        },
+        fontFamily: { "headline": ["Space Grotesk"], "body": ["Manrope"], "label": ["Manrope"] },
+        borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+      },
+    },
+  }
+</script>
+<link rel="stylesheet" href="/css/style.css"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -33,10 +56,10 @@
     font-family: 'Source Sans 3', sans-serif;
     background: #e8e8e8;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
-    padding: 24px;
+    padding: 96px 24px 0;
   }
 
   .page {
@@ -407,6 +430,41 @@
 </style>
 </head>
 <body>
+
+<!-- ── NAV ── -->
+<header class="fixed top-0 w-full z-50 px-6 py-4 lg:px-20">
+  <nav class="glass-nav flex items-center justify-between px-8 py-4 rounded-xl border border-outline-variant/15">
+    <div class="flex flex-1 items-center gap-3">
+      <a href="/" class="logo-link" aria-label="Elettro home">
+        <div class="size-7 text-white">
+          <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+      </a>
+      <a href="/"><img class="brand-logo elettro-nav-logo" src="/images/Elettro-logo-white.png" alt="Elettro"/></a>
+    </div>
+    <button class="mobile-nav-toggle md:hidden inline-flex items-center justify-center" id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Toggle navigation menu">
+      <span class="material-symbols-outlined text-[20px]" aria-hidden="true">menu</span>
+    </button>
+    <div class="hidden md:flex flex-1 items-center justify-end gap-8">
+      <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#services">Services</a>
+      <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#portfolio">Highlights</a>
+      <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/portfolio/">Portfolio</a>
+      <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#about">About</a>
+      <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/#contact">Contact</a>
+    </div>
+    <div class="mobile-menu-panel md:hidden" id="mobile-menu-panel" hidden>
+      <a class="mobile-menu-link" href="/#services">Services</a>
+      <a class="mobile-menu-link" href="/#portfolio">Highlights</a>
+      <a class="mobile-menu-link" href="/portfolio/">Portfolio</a>
+      <a class="mobile-menu-link" href="/#about">About</a>
+      <a class="mobile-menu-link" href="/#contact">Contact</a>
+      <a class="mobile-menu-cta" href="/#contact">Start Your Project</a>
+    </div>
+  </nav>
+</header>
+
 <div class="page">
 
   <!-- HEADER -->
@@ -593,5 +651,43 @@
   </div>
 
 </div>
+
+<!-- ── FOOTER ── -->
+<footer class="py-12 border-t border-outline-variant/10 px-6 w-full mt-8" style="background:#060e20;">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+    <div class="flex items-center gap-3">
+      <div class="size-5 text-white/50">
+        <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <img class="footer-brand-logo elettro-footer-logo" src="/images/Elettro-logo-white.png" alt="Elettro"/>
+    </div>
+    <div class="flex flex-col items-center gap-1">
+      <a class="elettro-org-footer-link" href="https://Elettro.org" target="_blank" rel="noopener noreferrer">✦ Also visit Elettro.org</a>
+      <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.3em]">© 2026 Elettro Digital Production. Built for the kinetic era.</div>
+    </div>
+    <div class="flex gap-6">
+      <a class="footer-social-icon" href="https://youtube.com/@Elettrotv" target="_blank" rel="noopener noreferrer" aria-label="Elettro YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 7.2a2.9 2.9 0 0 0-2-2C19.8 4.7 12 4.7 12 4.7s-7.8 0-9.5.5a2.9 2.9 0 0 0-2 2A30.2 30.2 0 0 0 0 12a30.2 30.2 0 0 0 .5 4.8 2.9 2.9 0 0 0 2 2c1.7.5 9.5.5 9.5.5s7.8 0 9.5-.5a2.9 2.9 0 0 0 2-2A30.2 30.2 0 0 0 24 12a30.2 30.2 0 0 0-.5-4.8ZM9.5 15.3V8.7l6 3.3-6 3.3Z"/></svg>
+      </a>
+      <a class="footer-social-icon" href="https://linkedin.com/in/deanpalermo" target="_blank" rel="noopener noreferrer" aria-label="Dean Palermo LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.4 8.3a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8ZM3.7 9.9h3.4V20H3.7V9.9Zm5.3 0h3.2v1.4h.1c.4-.8 1.5-1.7 3.2-1.7 3.4 0 4 2.2 4 5.2V20H16v-4.6c0-1.1 0-2.5-1.6-2.5s-1.8 1.2-1.8 2.4V20H9V9.9Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const panel = document.getElementById('mobile-menu-panel');
+  if (toggle && panel) {
+    toggle.addEventListener('click', () => {
+      const open = panel.hidden;
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+</script>
 </body>
 </html>
