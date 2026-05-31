@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walter Johnson | Sonos Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d2545;
+    --navy-mid: #1a3a6b;
+    --blue-accent: #2c5fa8;
+    --blue-light: #6b92c9;
+    --blue-pale: #dce8f7;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --white: #ffffff;
+    --off-white: #f8f6f1;
+    --text-dark: #1a1a1a;
+    --text-mid: #3d3d3d;
+    --text-muted: #6b6b6b;
+    --rule: #d0d8e4;
+  }
+
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .page {
+    width: 816px;
+    min-height: 1056px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── TOP HEADER BAND ── */
+  .header {
+    background: var(--navy);
+    display: flex;
+    align-items: stretch;
+    min-height: 220px;
+    position: relative;
+  }
+
+  .header-left {
+    width: 220px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-left img.headshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: grayscale(15%);
+  }
+
+  .header-left::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 32px;
+    background: linear-gradient(to right, transparent, var(--navy));
+  }
+
+  .header-right {
+    flex: 1;
+    padding: 36px 40px 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .logo-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .logo-bar img.sc-logo {
+    height: 42px;
+    width: auto;
+    filter: brightness(0) invert(1) opacity(0.9);
+  }
+
+  .company-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  .company-name span {
+    display: block;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-top: 2px;
+  }
+
+  .name-block {
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .name-block h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+
+  .name-block .title-line {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 6px;
+  }
+
+  /* ── GOLD DIVIDER ── */
+  .gold-strip {
+    height: 4px;
+    background: var(--gold);
+  }
+
+  /* ── STAT BAR ── */
+  .stat-bar {
+    background: var(--navy-mid);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 14px 40px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat .label {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-top: 3px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ── BODY ── */
+  .body {
+    flex: 1;
+    display: flex;
+    gap: 0;
+    padding: 0;
+  }
+
+  /* ── LEFT COLUMN ── */
+  .col-left {
+    width: 248px;
+    flex-shrink: 0;
+    background: var(--off-white);
+    padding: 32px 24px;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .sidebar-section h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .expertise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .expertise-item::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .expertise-item span {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.4;
+  }
+
+  .career-item {
+    margin-bottom: 14px;
+  }
+
+  .career-item .ci-company {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .career-item .ci-role {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  .career-item .ci-year {
+    font-size: 10px;
+    color: var(--blue-accent);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  .community-item {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 2px solid var(--blue-pale);
+  }
+
+  /* ── RIGHT COLUMN ── */
+  .col-right {
+    flex: 1;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--gold);
+    display: inline-block;
+  }
+
+  .bio-text {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  .highlight-box {
+    background: var(--blue-pale);
+    border-left: 3px solid var(--blue-accent);
+    padding: 14px 16px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .highlight-box p {
+    font-size: 12.5px;
+    color: var(--navy);
+    line-height: 1.65;
+  }
+
+  .achievement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .ach-card {
+    background: var(--off-white);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    border-radius: 0 0 4px 4px;
+    padding: 12px 14px;
+  }
+
+  .ach-card .ach-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .ach-card .ach-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer .contact-group {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .footer .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer .contact-item .ci-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    font-weight: 300;
+  }
+
+  .footer .contact-item .ci-val {
+    font-size: 12px;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .footer .tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--gold-light);
+    text-align: right;
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  .vline {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <img class="headshot" src="/mnt/user-data/uploads/walter.jpg" alt="Walter Johnson">
+    </div>
+    <div class="header-right">
+      <div class="logo-bar">
+        <img class="sc-logo" src="/mnt/user-data/uploads/logo.png" alt="Sonos Capital">
+        <div class="company-name">
+          Sonos Capital
+          <span>Private Real Estate Investment</span>
+        </div>
+      </div>
+      <div class="name-block">
+        <h1>Walter Johnson</h1>
+        <div class="title-line">Founder &amp; CEO &nbsp;|&nbsp; Finance Professional &amp; Real Estate Syndicator</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gold-strip"></div>
+
+  <!-- STAT BAR -->
+  <div class="stat-bar">
+    <div class="stat">
+      <div class="num">16+</div>
+      <div class="label">Years Experience</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="num">$882M</div>
+      <div class="label">Sales Generated</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="num">$7M</div>
+      <div class="label">Loan Portfolio Managed</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="num">140%</div>
+      <div class="label">Revenue Increase</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="num">40%</div>
+      <div class="label">Customer Base Growth</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-left">
+
+      <div class="sidebar-section">
+        <h3>Areas of Expertise</h3>
+        <div class="expertise-item"><span>Multi-Family Real Estate Syndication</span></div>
+        <div class="expertise-item"><span>Manufactured Home Parks &amp; Apartment Buildings</span></div>
+        <div class="expertise-item"><span>Strategic Business Development</span></div>
+        <div class="expertise-item"><span>Mortgage Banking &amp; Loan Portfolio Management</span></div>
+        <div class="expertise-item"><span>High-Conversion Sales Leadership</span></div>
+        <div class="expertise-item"><span>Investor Relations (Accredited &amp; Non-Accredited)</span></div>
+        <div class="expertise-item"><span>Team Building &amp; Executive Leadership</span></div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Career Timeline</h3>
+        <div class="career-item">
+          <div class="ci-company">Sonos Capital</div>
+          <div class="ci-role">Founder &amp; CEO / Multi-Family Syndicator</div>
+          <div class="ci-year">Present</div>
+        </div>
+        <div class="career-item">
+          <div class="ci-company">Freedom Mortgage</div>
+          <div class="ci-role">Vice President</div>
+          <div class="ci-year">2013 – 2016</div>
+        </div>
+        <div class="career-item">
+          <div class="ci-company">Quicken Loans</div>
+          <div class="ci-role">High Converting Banker</div>
+          <div class="ci-year">2012 – 2013</div>
+        </div>
+        <div class="career-item">
+          <div class="ci-company">AmeriFirst Financial Inc.</div>
+          <div class="ci-role">Sales Manager / Banker</div>
+          <div class="ci-year">2009 – 2011</div>
+        </div>
+        <div class="career-item">
+          <div class="ci-company">Security Mortgage Corporation</div>
+          <div class="ci-role">Sales Development &amp; Sales Manager</div>
+          <div class="ci-year">2004 – 2008</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Community Leadership</h3>
+        <div class="community-item">Appointed by Governor John Giles to serve on the <strong>Housing &amp; Community Development Advisory Board</strong> — City of Mesa, Arizona</div>
+        <div class="community-item">Passionate advocate for generational wealth, community development, and financial literacy</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-right">
+
+      <div>
+        <div class="section-heading">About Walter Johnson</div>
+        <p class="bio-text">
+          Walter Johnson is a seasoned Finance Professional and Real Estate Investor/Syndicator with over 16 years of experience across the Real Estate and Banking industries. As Founder and CEO of Sonos Capital, he sources and manages Manufactured Home Parks and Apartment Building opportunities, partnering with accredited and non-accredited investors, banking institutions, and real estate professionals to unlock high-value growth.
+        </p>
+        <br>
+        <p class="bio-text">
+          Mr. Johnson's career is defined by a rare combination of executive leadership, revenue generation, and relationship-driven business development. He is recognized as a "Top Producer" whose track record spans hundreds of millions in sales and consistent, measurable impact at every organization he has led.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <p>
+          <strong>At Freedom Mortgage</strong>, Mr. Johnson helped generate <strong>$882 million in sales in 2015</strong> and designed a Direct Mail Campaign that drove a <strong>140% increase in revenue</strong>. He also spearheaded the development of new offices and cultivated strategic service partner relationships that consistently produced high-converting leads.
+        </p>
+      </div>
+
+      <div>
+        <div class="section-heading">Notable Achievements</div>
+        <div class="achievement-grid">
+          <div class="ach-card">
+            <div class="ach-num">$882M</div>
+            <div class="ach-label">Sales generated at Freedom Mortgage (2015)</div>
+          </div>
+          <div class="ach-card">
+            <div class="ach-num">25%</div>
+            <div class="ach-label">Sales revenue increase at Security Mortgage Corp.</div>
+          </div>
+          <div class="ach-card">
+            <div class="ach-num">$5M</div>
+            <div class="ach-label">Monthly volume target achieved at AmeriFirst Financial</div>
+          </div>
+          <div class="ach-card">
+            <div class="ach-num">20%</div>
+            <div class="ach-label">Profit margin increase managing a $7M loan portfolio</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-heading">Investment Focus — Sonos Capital</div>
+        <p class="bio-text">
+          Sonos Capital is a private investment firm sourcing <strong>Manufactured Home Parks</strong> and <strong>Apartment Building</strong> opportunities for a growing network of investors. Mr. Johnson works directly with investors to identify, structure, and close deals — providing clear transparency, strategic due diligence, and results-driven asset management.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="contact-group">
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Company</div>
+          <div class="ci-val">Sonos Capital</div>
+        </div>
+      </div>
+      <div class="vline"></div>
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-val">Mesa, Arizona</div>
+        </div>
+      </div>
+      <div class="vline"></div>
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Focus</div>
+          <div class="ci-val">Manufactured Home Parks &amp; Multi-Family</div>
+        </div>
+      </div>
+    </div>
+    <div class="tagline">"Inspiring generations to strive for long-term business success and prosperity."</div>
+  </div>
+
+</div>
+</body>
+</html>
