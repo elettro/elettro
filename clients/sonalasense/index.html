@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — SonALAsense | Elettro</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f4f6fb;
+    --elettro-cyan: #00e5ff;
+    --elettro-green: #69ff47;
+    --brand-blue: #1b4fd8;
+    --brand-blue-light: #3b82f6;
+    --brand-blue-pale: #dbeafe;
+    --brand-navy: #0f1e4a;
+    --brand-sky: #e0f0ff;
+    --arpa-gold: #f0b429;
+    --gray-100: #f0f2f8;
+    --gray-200: #dde2ef;
+    --gray-400: #8892aa;
+    --gray-600: #4a5268;
+    --gray-800: #1e2235;
+    --grade-a: #22c55e;
+    --grade-b: #84cc16;
+    --grade-c: #eab308;
+    --grade-d: #f97316;
+    --grade-f: #ef4444;
+    --grade-a-bg: #dcfce7;
+    --grade-b-bg: #ecfccb;
+    --grade-c-bg: #fef9c3;
+    --grade-d-bg: #ffedd5;
+    --grade-f-bg: #fee2e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--brand-navy);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(27,79,216,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 10% 80%, rgba(0,229,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Soundwave decorative bars */
+  .soundwave {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .sw-bar {
+    width: 6px;
+    background: var(--elettro-cyan);
+    border-radius: 3px;
+    animation: wave 1.4s ease-in-out infinite;
+  }
+
+  .sw-bar:nth-child(1) { height: 30px; animation-delay: 0s; }
+  .sw-bar:nth-child(2) { height: 70px; animation-delay: 0.1s; }
+  .sw-bar:nth-child(3) { height: 100px; animation-delay: 0.2s; }
+  .sw-bar:nth-child(4) { height: 140px; animation-delay: 0.3s; }
+  .sw-bar:nth-child(5) { height: 180px; animation-delay: 0.2s; }
+  .sw-bar:nth-child(6) { height: 140px; animation-delay: 0.1s; }
+  .sw-bar:nth-child(7) { height: 100px; animation-delay: 0s; }
+  .sw-bar:nth-child(8) { height: 70px; animation-delay: 0.1s; }
+  .sw-bar:nth-child(9) { height: 30px; animation-delay: 0.2s; }
+
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); opacity: 0.8; }
+    50% { transform: scaleY(0.4); opacity: 0.4; }
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--elettro-cyan);
+    margin-bottom: 16px;
+  }
+
+  .arpa-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(240,180,41,0.12);
+    border: 1px solid rgba(240,180,41,0.35);
+    border-radius: 6px;
+    padding: 7px 16px;
+    margin-bottom: 24px;
+  }
+
+  .arpa-banner-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--arpa-gold);
+    flex-shrink: 0;
+  }
+
+  .arpa-banner-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--arpa-gold);
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .header-title span { color: var(--elettro-cyan); }
+
+  .header-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 300;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 28px;
+  }
+
+  .meta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+
+  .meta-value { font-size: 14px; color: var(--white); }
+  .meta-value a { color: var(--elettro-cyan); text-decoration: none; }
+
+  .accent-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-blue-light) 0%, var(--elettro-cyan) 40%, var(--arpa-gold) 100%);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  .section-header { margin-bottom: 32px; }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-blue-light);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--gray-200);
+    margin: 48px 0;
+  }
+
+  /* ── INTRO ── */
+  .intro-block {
+    background: var(--brand-navy);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--elettro-cyan);
+  }
+
+  .intro-block p {
+    color: rgba(255,255,255,0.82);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .intro-block p:last-child { margin-bottom: 0; }
+  .intro-block strong { color: var(--elettro-cyan); font-weight: 500; }
+
+  /* ── YMYL NOTICE ── */
+  .ymyl-box {
+    background: rgba(27,79,216,0.06);
+    border: 1px solid rgba(27,79,216,0.2);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+
+  .ymyl-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+
+  .ymyl-box p { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+  .ymyl-box strong { color: var(--black); font-weight: 600; }
+
+  /* ── BACKEND ── */
+  .backend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .backend-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .bc-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .bc-note { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+
+  .bc-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill-no { background: #fee2e2; color: #991b1b; }
+  .pill-wix { background: #fef9c3; color: #854d0e; }
+  .pill-warn { background: #ffedd5; color: #9a3412; }
+  .pill-partial { background: #dbeafe; color: #1e40af; }
+  .pill-yes { background: #dcfce7; color: #166534; }
+
+  /* ── SCORE HERO ── */
+  .score-hero {
+    background: var(--brand-navy);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .score-hero { grid-template-columns: 1fr; } }
+
+  .overall-score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid var(--grade-d);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .osc-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .osc-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .osc-grade { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--grade-d); }
+
+  .score-bars { display: flex; flex-direction: column; gap: 14px; }
+  .score-row { display: flex; flex-direction: column; gap: 5px; }
+  .score-row-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .score-cat { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); }
+  .score-val { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; }
+
+  .bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* ── CATEGORY CARDS ── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .cat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .cat-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .grade-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
+  .grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
+  .grade-c { background: var(--grade-c-bg); color: #854d0e; }
+  .grade-b { background: var(--grade-b-bg); color: #3f6212; }
+  .grade-a { background: var(--grade-a-bg); color: #166534; }
+
+  .cat-score-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .cat-score-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .cat-score-denom { font-size: 13px; color: var(--gray-400); margin-top: 4px; }
+
+  .cat-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill { height: 100%; border-radius: 4px; }
+
+  .cat-findings { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .finding {
+    font-size: 13px;
+    line-height: 1.45;
+    padding-left: 18px;
+    position: relative;
+    color: var(--gray-600);
+  }
+
+  .finding::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .finding.pos::before { background: var(--grade-a); }
+  .finding.neg::before { background: var(--grade-f); }
+  .finding strong { color: var(--black); font-weight: 500; }
+
+  /* ── ASSETS ── */
+  .assets-box {
+    background: var(--brand-navy);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--arpa-gold);
+  }
+
+  .assets-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--arpa-gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .asset-item {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .asset-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+  .asset-value { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: var(--white); line-height: 1.25; }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 0.5px solid var(--gray-200);
+    margin-bottom: 48px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: var(--brand-navy); color: var(--white); }
+
+  thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+  tbody tr { border-bottom: 0.5px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #f8fafd; }
+  tbody td { padding: 14px 20px; vertical-align: middle; }
+  tbody td:first-child { font-weight: 500; color: var(--black); font-size: 13px; }
+  tbody td:not(:first-child) { text-align: center; }
+
+  .td-current { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--grade-f); }
+  .td-projected { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--grade-a); }
+  .td-delta { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--brand-blue-light); background: rgba(59,130,246,0.08); border-radius: 6px; padding: 4px 10px !important; }
+
+  .table-footer { background: var(--brand-navy); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; }
+  .table-footer td { padding: 16px 20px !important; }
+  .table-footer .td-current { color: var(--grade-d); }
+  .table-footer .td-projected { color: var(--elettro-green); font-size: 22px; }
+  .table-footer .td-delta { color: var(--elettro-cyan); font-size: 20px; background: rgba(0,229,255,0.1); }
+
+  /* ── FIXES ── */
+  .fixes-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+
+  .fix-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 22px 28px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .fix-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--brand-blue-light);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .fix-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .fix-desc { font-size: 14px; line-height: 1.6; color: var(--gray-600); }
+
+  .fix-impact {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-top: 8px;
+  }
+
+  .impact-critical { background: #fee2e2; color: #991b1b; }
+  .impact-high { background: #ffedd5; color: #9a3412; }
+  .impact-aio { background: rgba(59,130,246,0.1); color: #1e40af; }
+  .impact-ymyl { background: rgba(240,180,41,0.12); color: #92620a; }
+
+  /* ── CEILING ── */
+  .ceiling-box {
+    background: var(--brand-navy);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceiling-box::after {
+    content: '88';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 180px;
+    font-weight: 800;
+    color: rgba(0,229,255,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ceiling-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--elettro-cyan);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .ceiling-box p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ceiling-box p:last-child { margin-bottom: 0; }
+  .ceiling-box strong { color: var(--elettro-cyan); font-weight: 500; }
+
+  /* ── WIX WARNING ── */
+  .wix-warning {
+    background: rgba(234,179,8,0.06);
+    border: 1px solid rgba(234,179,8,0.25);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+
+  .wix-warning h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #854d0e;
+    margin-bottom: 10px;
+  }
+
+  .wix-warning p { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+  .wix-warning strong { color: var(--black); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--brand-navy); padding: 40px; }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span { color: var(--elettro-cyan); }
+  .footer-contact { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .footer-contact a { color: var(--elettro-cyan); text-decoration: none; }
+
+  .footer-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-navy);
+    background: var(--elettro-cyan);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 40px 24px 60px; }
+    .header-inner { padding: 40px 24px 36px; }
+    footer { padding: 32px 24px; }
+    .intro-block, .assets-box { padding: 28px 24px; }
+    .score-hero { padding: 28px 24px; }
+    .soundwave { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="soundwave">
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+    <div class="sw-bar"></div>
+  </div>
+
+  <div class="header-inner">
+    <p class="header-eyebrow">Elettro Interactive &nbsp;·&nbsp; Confidential Digital Audit</p>
+    <div class="arpa-banner">
+      <div class="arpa-banner-dot"></div>
+      <span class="arpa-banner-text">$46MM ARPA-H Award &nbsp;·&nbsp; U.S. Dept. of Health &amp; Human Services &nbsp;·&nbsp; Dec. 2024</span>
+    </div>
+    <h1 class="header-title">SEO &amp; <span>AIO</span><br>Audit Report</h1>
+    <p class="header-subtitle">SonALAsense &nbsp;·&nbsp; sonalasense.com</p>
+    <div class="header-meta">
+      <div>
+        <p class="meta-label">Prepared by</p>
+        <p class="meta-value">Dean Palermo, Elettro Interactive</p>
+      </div>
+      <div>
+        <p class="meta-label">Contact</p>
+        <p class="meta-value"><a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a></p>
+      </div>
+      <div>
+        <p class="meta-label">Prepared for</p>
+        <p class="meta-value">Nadja Atwal &nbsp;·&nbsp; SonALAsense</p>
+      </div>
+      <div>
+        <p class="meta-label">Date</p>
+        <p class="meta-value">June 12, 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <p>This audit evaluates <strong>sonalasense.com</strong> — the corporate website of SonALAsense, Inc., a clinical-stage biopharmaceutical company pioneering Sonodynamic Therapy (SDT) for cancer treatment — across five core dimensions of modern search performance.</p>
+    <p>SonALAsense carries extraordinary real-world authority: <strong>first company in the world to advance SDT into clinical trials, a $46MM ARPA-H award from the U.S. Department of Health &amp; Human Services, $20M+ raised from accredited biotech investors, active Phase 1/2 clinical trials for glioblastoma and DIPG, and a new Mayo Clinic / NCI collaboration trial beginning August 2025.</strong> Founder Dr. Stuart Marcus brings over 30 years of ALA pharmacology experience and multiple FDA-approved drug-device combination products to his credit.</p>
+    <p>The website is built on <strong>Wix.com</strong> — a platform with known structural SEO limitations — and is missing the schema markup and AIO optimization that a company of this scientific and institutional standing urgently needs. The gap between SonALAsense's clinical authority and its digital discoverability is large, consequential, and entirely fixable.</p>
+  </div>
+
+  <!-- SECTION 01: BACKEND -->
+  <div class="section-header">
+    <p class="section-eyebrow">01 &nbsp;—&nbsp; Platform Analysis</p>
+    <h2 class="section-title">Is It WordPress? What's the Stack?</h2>
+  </div>
+
+  <div class="wix-warning">
+    <h3>Wix Platform Warning — Structural SEO Limitations</h3>
+    <p>The site is built on <strong>Wix.com</strong> — confirmed by the meta-generator tag and all asset URLs (static.wixstatic.com). Wix is a capable website builder for general use, but it carries well-documented limitations for SEO and AIO: <strong>JavaScript-heavy rendering that crawlers struggle with, limited schema markup control, restricted URL structure flexibility, bloated page weight, and no direct access to the HTML head for custom structured data injection.</strong> The page's meta-format-detection and meta-skype_toolbar boilerplate tags are Wix noise with no SEO value. For a clinical-stage biopharmaceutical company competing for YMYL (Your Money or Your Life) trust signals, Wix is a platform ceiling — not a foundation.</p>
+  </div>
+
+  <div class="backend-grid">
+    <div class="backend-card">
+      <span class="bc-label">WordPress?</span>
+      <span class="bc-pill pill-no">No</span>
+      <span class="bc-note">Not WordPress. Built entirely on Wix.com website builder platform.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Platform</span>
+      <span class="bc-value">Wix.com</span>
+      <span class="bc-note">Confirmed by meta-generator tag. All images hosted on static.wixstatic.com CDN.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Website by</span>
+      <span class="bc-value">Argus</span>
+      <span class="bc-note">Footer credit: "Website by Argus" (thisisargus.com). Agency-built Wix site.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">GSC Verified</span>
+      <span class="bc-pill pill-yes">Yes</span>
+      <span class="bc-note">Google Search Console verification meta tag present — good hygiene signal.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">OG / Twitter Card</span>
+      <span class="bc-pill pill-partial">Partial</span>
+      <span class="bc-note">OG title, description, and image set. OG image is a generic hero photo — not a branded share card.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Schema Markup</span>
+      <span class="bc-pill pill-no">None Detected</span>
+      <span class="bc-note">Zero structured data. No MedicalOrganization, ClinicalTrial, Drug, or Person schema anywhere.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Site Architecture</span>
+      <span class="bc-value">Multi-Page Wix</span>
+      <span class="bc-note">9+ subpages (For Patients, Our Science, Clinical Trials, For Investors, Team, News, Careers, Contact). Good content depth.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Copyright Year</span>
+      <span class="bc-pill pill-warn">© 2022</span>
+      <span class="bc-note">Footer copyright is 4 years out of date — signals site staleness to crawlers and users alike.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Compliance Pages</span>
+      <span class="bc-pill pill-yes">Present</span>
+      <span class="bc-note">Privacy Policy, Terms of Use, FCOI Policy, and FDA investigational disclaimer all present — strong regulatory hygiene.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 02: SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">02 &nbsp;—&nbsp; Current Performance</p>
+    <h2 class="section-title">SEO &amp; AIO Scores — Today</h2>
+  </div>
+
+  <div class="ymyl-box">
+    <h3>YMYL Context — This Site Requires the Highest SEO &amp; AIO Standards</h3>
+    <p>SonALAsense operates in the <strong>Your Money or Your Life (YMYL)</strong> category — medical/health content that Google and AI systems evaluate with significantly elevated scrutiny. Clinical trial information, cancer treatment options, and drug-device combination therapies require demonstrably superior E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) signals. The scores below are graded against YMYL standards — the bar for this category is higher than for general commercial sites, which makes the gaps identified all the more urgent to close.</p>
+  </div>
+
+  <!-- Overall Score Hero -->
+  <div class="score-hero">
+    <div class="overall-score-circle">
+      <span class="osc-number">48</span>
+      <span class="osc-label">/ 100</span>
+      <span class="osc-grade">D+</span>
+    </div>
+    <div class="score-bars">
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Technical SEO</span>
+          <span class="score-val" style="color:#f97316;">44</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:44%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">On-Page SEO</span>
+          <span class="score-val" style="color:#f97316;">48</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:48%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Content Quality</span>
+          <span class="score-val" style="color:#eab308;">62</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%;background:#eab308;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">AI Search Optimization</span>
+          <span class="score-val" style="color:#ef4444;">30</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:30%;background:#ef4444;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Trust &amp; Authority</span>
+          <span class="score-val" style="color:#eab308;">58</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:58%;background:#eab308;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Breakdown -->
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Technical<br>SEO</div>
+        <div class="grade-badge grade-d">D</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">44</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:44%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Google Search Console verified</strong> — site is being actively monitored</li>
+        <li class="finding pos"><strong>OG meta + Twitter Card partially implemented</strong> — social sharing has some baseline functionality</li>
+        <li class="finding pos"><strong>Multi-page site architecture with 9+ indexed subpages</strong> — good crawlable URL depth for a Wix site</li>
+        <li class="finding pos"><strong>Compliance pages present</strong> — Privacy Policy, FCOI, Terms of Use, FDA disclaimer all indexed</li>
+        <li class="finding neg"><strong>Wix JavaScript rendering</strong> — Wix delivers content via heavy client-side JS, making it harder for crawlers and AI bots to parse page content reliably</li>
+        <li class="finding neg"><strong>No schema markup of any kind</strong> — not a single structured data element on any page</li>
+        <li class="finding neg"><strong>meta-format-detection: telephone=no</strong> — disables tap-to-call on mobile. For a company recruiting clinical trial patients, this is an active UX and conversion barrier</li>
+        <li class="finding neg"><strong>Copyright footer reads © 2022</strong> — four years stale, signals site neglect to both users and crawlers</li>
+        <li class="finding neg"><strong>Wix CDN asset paths</strong> (static.wixstatic.com) — images are served from Wix's CDN rather than the domain itself, fragmenting brand consistency for crawlers</li>
+        <li class="finding neg"><strong>Infinite image carousel loop</strong> — the homepage repeats the same 3 hero images 9+ times in the HTML source, massively bloating page weight</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">On-Page<br>SEO</div>
+        <div class="grade-badge grade-d">D+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">48</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:48%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Title tag is keyword-targeted</strong>: "Sonodynamic Therapy | SonALAsense" — hits the primary product keyword immediately</li>
+        <li class="finding pos"><strong>Meta description is punchy and factual</strong>: "SonALAsense is the first company to advance Sonodynamic Therapy into clinical trials" — strong differentiation claim</li>
+        <li class="finding pos"><strong>Navigation taxonomy is excellent</strong> — For Patients / Our Science / Clinical Trials / For Investors / About Us maps exactly to distinct audience segments and keyword clusters</li>
+        <li class="finding pos"><strong>Clinical trial subpages</strong> exist for both Phase 0/1 rHGG and Phase 1/2 DIPG — dedicated URL structure for each trial is correct SEO architecture</li>
+        <li class="finding neg"><strong>ARPA-H $46MM award is not in the title tag or meta description</strong> — the most newsworthy, authoritative fact about this company is absent from the most-read on-page SEO elements</li>
+        <li class="finding neg"><strong>Homepage H1 is the animated tagline "Soundly Defeating Cancer"</strong> — evocative brand copy, but not a keyword-bearing H1 that helps Google understand the page's topic</li>
+        <li class="finding neg"><strong>No location signals</strong> — Berkeley, CA is the company address but doesn't appear in homepage metadata, limiting local and regional search relevance</li>
+        <li class="finding neg"><strong>All CTA buttons point back to /for-patients</strong> even when labeled "Investors" and "About Us" — misleading internal link attribution hurts crawl logic</li>
+        <li class="finding neg"><strong>Pipeline page linked from homepage but not in primary nav</strong> — keyword-rich content is an orphaned page outside the main navigation hierarchy</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Content<br>Quality</div>
+        <div class="grade-badge grade-c">C+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">62</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:62%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Our Science page has genuinely rich technical content</strong> — heme pathway explanation, PpIX mechanism, ALA pharmacology described in depth</li>
+        <li class="finding pos"><strong>DIPG patient story (Esther)</strong> — real patient narrative with video is exceptional E-E-A-T and deeply humanizing content</li>
+        <li class="finding pos"><strong>ClinicalTrials.gov listings linked</strong> — direct government source citations add verifiability and trust</li>
+        <li class="finding pos"><strong>For Investors page is substantive</strong> — $20M+ raised, ARPA-H award, proof-of-concept results, syndicate contact — all present</li>
+        <li class="finding pos"><strong>News section exists</strong> — ARPA-H announcement indexed, milestone press releases present</li>
+        <li class="finding neg"><strong>Team page bios are one-sentence summaries</strong> — Dr. Stuart Marcus's 30+ years of ALA pharmacology, FDA approvals, and multiple drug-device combination products are not fully documented as YMYL E-E-A-T content</li>
+        <li class="finding neg"><strong>No published peer-reviewed paper citations on the main site</strong> — the Cancers MDPI paper co-authored by Dr. Marcus is a major credibility asset that isn't surfaced in homepage content</li>
+        <li class="finding neg"><strong>No patient eligibility FAQ</strong> — "Clinical trials now recruiting" appears in the footer, but there's no structured FAQ explaining who qualifies, what the process is, or what SDT feels like for patients</li>
+        <li class="finding neg"><strong>Copyright © 2022 in footer</strong> signals the site has not been substantively maintained since its launch year</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">AI Search<br>Optimization</div>
+        <div class="grade-badge grade-f">F</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">30</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:30%;background:var(--grade-f);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>Zero schema markup sitewide</strong> — the most critical gap. No MedicalOrganization, Drug, ClinicalTrial, MedicalStudy, or Person schema. AI systems have no machine-readable structured data to build an entity model from this site</li>
+        <li class="finding neg"><strong>When AI systems are asked "What is sonodynamic therapy?" or "Is there a clinical trial for glioblastoma?"</strong> — answers currently sourced from PubMed, Focused Ultrasound Foundation, CancerCommons, and ClinicalTrials.gov, not from sonalasense.com</li>
+        <li class="finding neg"><strong>The $46MM ARPA-H award is not structured</strong> as a citable entity claim — it appears in the homepage banner as a plain text callout, not in structured data or a properly marked-up news article</li>
+        <li class="finding neg"><strong>No FAQPage schema</strong> — "What is SDT?", "How does SONALA-001 work?", "What cancers does SonALAsense treat?", "Is SonALAsense recruiting clinical trial patients?" are all high-value AI query targets with no structured answers</li>
+        <li class="finding neg"><strong>Wix's JavaScript delivery creates AI crawler parsing friction</strong> — many AI indexers (Perplexity's crawler, Google's AI Overview system) prefer clean HTML over JS-rendered content</li>
+        <li class="finding neg"><strong>No llms.txt or AI crawler guidance</strong> — no directive file to help AI systems understand the site's content categories</li>
+        <li class="finding pos"><strong>ClinicalTrials.gov cross-references</strong> mean the company entity is tied to government-verified clinical records — a major AIO trust signal from off-site sources</li>
+        <li class="finding pos"><strong>ARPA-H.gov press release links directly to SonALAsense</strong> — the highest-authority government health agency is an inbound citation that AI systems weight heavily</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Trust &amp;<br>Authority</div>
+        <div class="grade-badge grade-c">C+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">58</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:58%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>$46MM ARPA-H award (U.S. HHS)</strong> — federal government funding of this magnitude is among the strongest institutional trust signals in biotech</li>
+        <li class="finding pos"><strong>$20M+ raised from accredited biotech investors</strong></li>
+        <li class="finding pos"><strong>First company in the world to advance SDT into clinical trials</strong> — a unique "first mover" claim with ClinicalTrials.gov verification</li>
+        <li class="finding pos"><strong>Mayo Clinic / NCI collaboration</strong> — Phase Ib trial starting August 2025 with Mayo Clinic as lead sponsor adds tier-1 institutional credibility</li>
+        <li class="finding pos"><strong>Ivy Brain Tumor Center / Barrow Neurological Institute partnership</strong> — largest early-phase brain cancer drug development program in the world</li>
+        <li class="finding pos"><strong>FDA-regulated drug and device</strong> — regulatory oversight status is clearly disclosed</li>
+        <li class="finding pos"><strong>Peer-reviewed publication in Cancers MDPI</strong> — scientific literature citation adds academic authority</li>
+        <li class="finding neg"><strong>Wix platform signals</strong> undermine technical credibility for a clinical-stage company — the platform choice creates a perception gap between the science and the site</li>
+        <li class="finding neg"><strong>© 2022 footer</strong> — four years of copyright staleness on a YMYL medical site actively suppresses trust scores in Google's quality rater guidelines</li>
+        <li class="finding neg"><strong>Team bios are thin</strong> — Dr. Marcus's full credentials (Albert Einstein College of Medicine MD+PhD, Levulan/BLU-U FDA approvals, DUSA Pharmaceuticals VP) are not surfaced in full on the site</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ASSETS -->
+  <div class="assets-box">
+    <h3>What SonALAsense Has Going For It</h3>
+    <div class="assets-grid">
+      <div class="asset-item">
+        <p class="asset-label">ARPA-H Award</p>
+        <p class="asset-value">$46MM — U.S. Dept. of Health &amp; Human Services</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Investor Funding</p>
+        <p class="asset-value">$20M+ from Accredited Biotech Investors</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Clinical Milestone</p>
+        <p class="asset-value">First Company to Advance SDT into Clinical Trials Worldwide</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Active Trials</p>
+        <p class="asset-value">Phase 0/1 rHGG · Phase 1/2 DIPG · Mayo Clinic Phase Ib (2025)</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Institutional Partners</p>
+        <p class="asset-value">Mayo Clinic · NCI · Ivy Brain Tumor Center · Barrow Neurological</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Founder</p>
+        <p class="asset-value">Dr. Stuart Marcus, MD PhD — 30+ yrs ALA, Multiple FDA Approvals</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Founded</p>
+        <p class="asset-value">2019 — Berkeley, CA</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Pipeline</p>
+        <p class="asset-value">Brain Tumors · Blood Cancers (Leukemia, Myeloma) · Multi-indication SDT Platform</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 03: PROJECTIONS -->
+  <div class="section-header">
+    <p class="section-eyebrow">03 &nbsp;—&nbsp; Elettro Rebuild Projection</p>
+    <h2 class="section-title">Current vs. Projected Scores</h2>
+  </div>
+
+  <div class="compare-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Current Score</th>
+          <th>Projected Score</th>
+          <th>Point Gain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Technical SEO</td>
+          <td><span class="td-current">44 &nbsp;D</span></td>
+          <td><span class="td-projected">88 &nbsp;A</span></td>
+          <td><span class="td-delta">+44</span></td>
+        </tr>
+        <tr>
+          <td>On-Page SEO</td>
+          <td><span class="td-current">48 &nbsp;D+</span></td>
+          <td><span class="td-projected">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+42</span></td>
+        </tr>
+        <tr>
+          <td>Content Quality</td>
+          <td><span class="td-current">62 &nbsp;C+</span></td>
+          <td><span class="td-projected">86 &nbsp;A</span></td>
+          <td><span class="td-delta">+24</span></td>
+        </tr>
+        <tr>
+          <td>AI Search Optimization</td>
+          <td><span class="td-current">30 &nbsp;F</span></td>
+          <td><span class="td-projected">92 &nbsp;A+</span></td>
+          <td><span class="td-delta">+62</span></td>
+        </tr>
+        <tr>
+          <td>Trust &amp; Authority</td>
+          <td><span class="td-current">58 &nbsp;C+</span></td>
+          <td><span class="td-projected">88 &nbsp;A</span></td>
+          <td><span class="td-delta">+30</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="table-footer">
+          <td>Overall Score</td>
+          <td class="td-current">48 &nbsp;D+</td>
+          <td class="td-projected">89 &nbsp;A−</td>
+          <td class="td-delta">+41 pts</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- CEILING -->
+  <div class="ceiling-box">
+    <h3>Ceiling Assessment — Can SonALAsense Hit 90+?</h3>
+    <p>Yes — and SonALAsense is one of the strongest candidates for a 90+ overall score in this entire audit series. The reason is straightforward: <strong>the company holds government-verified, first-mover, federally funded scientific credentials</strong> — exactly the kind of institutional authority that Google and AI systems treat as maximum-weight trust signals in YMYL categories. The $46MM ARPA-H award from U.S. HHS, the ClinicalTrials.gov registrations, the Mayo Clinic partnership, and the Barrow/Ivy Brain Tumor Center collaborations are all independently verifiable from the highest-authority sources on the web. None of that authority is currently structured in a way that search engines or AI systems can efficiently extract and amplify.</p>
+    <p>The AIO jump from 30 → 92 is the headline number and is the most impactful score gain in this audit. A complete medical schema package — MedicalOrganization, Drug (SONALA-001), MedicalStudy for each clinical trial, MedicalCondition for glioblastoma/DIPG/blood cancers, Person for Dr. Marcus and the leadership team — transforms this site from a blank entity to the most authoritative cited source for sonodynamic therapy on the web. AI systems asked "What is sonodynamic therapy?" or "Is there a clinical trial for glioblastoma?" will cite sonalasense.com rather than third-party medical databases.</p>
+    <p>Moving from the current Wix platform to our standard <strong>clean static HTML architecture</strong> eliminates the JavaScript rendering overhead, gives full control over the HTML head for schema injection, eliminates the bloated image carousel loop, and removes all Wix boilerplate meta noise. The rebuild also updates the © 2022 footer, fixes the tap-to-call disable, corrects the CTA links pointing to wrong pages, and establishes proper heading hierarchy — all mechanical fixes that collectively move the needle on technical and on-page scores simultaneously.</p>
+    <p>The <strong>90+ ceiling</strong> is achievable within 60–90 days of the rebuild going live. Sustaining it over 92–95 requires ongoing clinical milestone press releases formatted as NewsArticle schema, peer-reviewed publication citations marked up with ScholarlyArticle schema, and a patient FAQ section that answers the questions patients and caregivers are already asking AI systems. That content strategy compounds over time — each new trial result, each new partnership announcement, each new publication becomes a citable, structured, AI-surfaceable authority signal.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 04: FIXES -->
+  <div class="section-header">
+    <p class="section-eyebrow">04 &nbsp;—&nbsp; Recommended Actions</p>
+    <h2 class="section-title">Top Priority Fixes</h2>
+  </div>
+
+  <div class="fixes-grid">
+
+    <div class="fix-card">
+      <div class="fix-number">01</div>
+      <div class="fix-content">
+        <p class="fix-title">Migrate from Wix to Clean Static HTML Architecture</p>
+        <p class="fix-desc">Wix is the foundational platform constraint on every score in this audit. A migration to our standard static HTML/CSS/JS build eliminates JavaScript rendering overhead for crawlers, gives full control of the HTML head for schema injection, removes all Wix boilerplate noise, resolves the infinite image carousel loop bloating the HTML, and delivers significantly faster Core Web Vitals scores. For a clinical-stage company that relies on institutional credibility, the platform itself must match the science. This is the single action that unlocks everything else.</p>
+        <span class="fix-impact impact-critical">Foundation — Fix First</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">02</div>
+      <div class="fix-content">
+        <p class="fix-title">Implement Full Medical Schema Markup Package</p>
+        <p class="fix-desc">This is the highest-ROI action for AI search visibility. The schema package for SonALAsense: MedicalOrganization (name, url, description, medicalSpecialty: Oncology, address: Berkeley CA); Drug schema for SONALA-001 (activeIngredient: aminolevulinic acid, drugClass: sonodynamic therapy agent, mechanismOfAction); MedicalStudy for Phase 0/1 rHGG and Phase 1/2 DIPG (identifier linking to ClinicalTrials.gov NCT numbers); MedicalCondition for glioblastoma, DIPG, leukemia, myeloma; Person schema for Dr. Stuart Marcus with credentials, publications, and sameAs links. Once live, AI systems can build a complete, verified entity model from the official site — not from third-party databases.</p>
+        <span class="fix-impact impact-aio">AIO +62 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">03</div>
+      <div class="fix-content">
+        <p class="fix-title">Rewrite Homepage Title Tag + H1 to Lead with the ARPA-H Award</p>
+        <p class="fix-desc">The $46MM ARPA-H award is the most credibility-dense fact about this company and it is completely absent from the title tag and H1. Proposed title: "SonALAsense — Sonodynamic Therapy Pioneer | $46MM ARPA-H Award | Clinical Trials for Brain &amp; Blood Cancers." Proposed H1 (semantic, not just animated text): "Pioneering Sonodynamic Therapy — The First SDT Company in Clinical Trials." The animated "Soundly Defeating Cancer" headline can remain as brand copy below the H1, but a semantic heading must carry keyword weight for Google and AI parsing.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">04</div>
+      <div class="fix-content">
+        <p class="fix-title">Build a Patient &amp; Caregiver FAQ Page with FAQPage Schema</p>
+        <p class="fix-desc">Patients and caregivers diagnosed with glioblastoma, DIPG, leukemia, and myeloma are actively asking AI systems questions right now. "Is there a clinical trial for my glioblastoma?", "What is sonodynamic therapy?", "Is SONALA-001 FDA approved?", "How does ultrasound kill cancer cells?", "Who qualifies for the DIPG trial?". A dedicated FAQ page with FAQPage schema structured to answer these questions in plain language makes SonALAsense the authoritative cited source for its own disease categories — and for patients who most need this information.</p>
+        <span class="fix-impact impact-ymyl">YMYL Patient Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">05</div>
+      <div class="fix-content">
+        <p class="fix-title">Expand Dr. Marcus's Bio + Add Full Team Schema</p>
+        <p class="fix-desc">Dr. Stuart Marcus's credentials are extraordinary: MD + PhD from Albert Einstein College of Medicine, VP Scientific Affairs at DUSA Pharmaceuticals, multiple FDA-approved drug-device combinations (Levulan Kerastick + BLU-U, Photofrin + Laser), 30+ years of ALA pharmacology experience, peer-reviewed publications in Cancers MDPI. His current team page bio is a single sentence. A full biography page with Person schema, publication citations marked as ScholarlyArticle, and sameAs links to LinkedIn and PubMed author profiles establishes the E-E-A-T depth Google requires for YMYL medical content.</p>
+        <span class="fix-impact impact-ymyl">E-E-A-T Critical</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">06</div>
+      <div class="fix-content">
+        <p class="fix-title">Fix tap-to-call, update © 2022, correct CTA Links</p>
+        <p class="fix-desc">Three quick mechanical fixes with outsized impact: (1) Remove meta-format-detection: telephone=no — this disables tap-to-call on mobile for a company actively recruiting clinical trial patients. Every patient or caregiver who wants to call (510) 831-2220 from their phone is blocked by this tag. (2) Update the footer copyright to © 2026 — four years of staleness on a YMYL medical site is an active trust signal against the company. (3) Fix the CTA buttons — the "Investors" and "About Us" CTAs both link to /for-patients, which is incorrect internal link routing that confuses both users and crawlers.</p>
+        <span class="fix-impact impact-high">Fix Immediately</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand"><span>Elettro</span> Interactive</p>
+      <p class="footer-contact">
+        Dean Palermo, Founder &amp; Executive Producer<br>
+        <a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a><br>
+        Davie / Plantation, FL &nbsp;·&nbsp; AIO Authority — a division of Elettro
+      </p>
+    </div>
+    <a class="footer-cta" href="mailto:dpalermo@elettro.com?subject=SonALAsense — SEO & AIO Engagement">Let's Talk →</a>
+  </div>
+</footer>
+
+</body>
+</html>
