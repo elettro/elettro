@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — FINTECH.TV Terminal | Elettro</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f5f4f0;
+    --elettro-cyan: #00e5ff;
+    --elettro-magenta: #e040fb;
+    --elettro-green: #69ff47;
+    --elettro-orange: #ff6d00;
+    --fintech-gold: #f5c842;
+    --fintech-blue: #1a6bff;
+    --gray-100: #f0eff0;
+    --gray-200: #dddcdd;
+    --gray-400: #999899;
+    --gray-600: #555455;
+    --gray-800: #222122;
+    --grade-a: #22c55e;
+    --grade-b: #84cc16;
+    --grade-c: #eab308;
+    --grade-d: #f97316;
+    --grade-f: #ef4444;
+    --grade-a-bg: #dcfce7;
+    --grade-b-bg: #ecfccb;
+    --grade-c-bg: #fef9c3;
+    --grade-d-bg: #ffedd5;
+    --grade-f-bg: #fee2e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-ticker {
+    background: var(--fintech-gold);
+    padding: 8px 40px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 52px 40px 44px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fintech-gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grade-f);
+    display: inline-block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .header-title span { color: var(--fintech-gold); }
+
+  .header-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 300;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .launch-badge {
+    display: inline-block;
+    background: rgba(239,68,68,0.15);
+    border: 1px solid rgba(239,68,68,0.4);
+    color: #fca5a5;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+    display: block;
+    width: fit-content;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 28px;
+  }
+
+  .meta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--white);
+  }
+
+  .meta-value a { color: var(--fintech-gold); text-decoration: none; }
+
+  .accent-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--fintech-blue) 0%, var(--fintech-gold) 40%, var(--elettro-magenta) 100%);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  .section-header { margin-bottom: 32px; }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fintech-gold);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--gray-200);
+    margin: 48px 0;
+  }
+
+  /* INTRO */
+  .intro-block {
+    background: var(--black);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--fintech-gold);
+  }
+
+  .intro-block p {
+    color: rgba(255,255,255,0.82);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .intro-block p:last-child { margin-bottom: 0; }
+  .intro-block strong { color: var(--fintech-gold); font-weight: 500; }
+
+  /* BACKEND GRID */
+  .backend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .backend-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .bc-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .bc-note { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+
+  .bc-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill-no { background: #fee2e2; color: #991b1b; }
+  .pill-yes { background: #dcfce7; color: #166534; }
+  .pill-warn { background: #ffedd5; color: #9a3412; }
+  .pill-new { background: rgba(245,200,66,0.15); color: #92620a; border: 1px solid rgba(245,200,66,0.3); }
+
+  /* SCORE HERO */
+  .score-hero {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .score-hero { grid-template-columns: 1fr; } }
+
+  .overall-score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid var(--grade-d);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .osc-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .osc-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
+  .osc-grade { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--grade-d); }
+
+  .score-bars { display: flex; flex-direction: column; gap: 14px; }
+  .score-row { display: flex; flex-direction: column; gap: 5px; }
+
+  .score-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .score-cat { font-size: 13px; font-weight: 500; color: var(--gray-200); letter-spacing: 0.02em; }
+  .score-val { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; }
+
+  .bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* CATEGORY CARDS */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .cat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .cat-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .grade-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
+  .grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
+  .grade-c { background: var(--grade-c-bg); color: #854d0e; }
+  .grade-b { background: var(--grade-b-bg); color: #3f6212; }
+  .grade-a { background: var(--grade-a-bg); color: #166534; }
+
+  .cat-score-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .cat-score-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .cat-score-denom { font-size: 13px; color: var(--gray-400); margin-top: 4px; }
+
+  .cat-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill { height: 100%; border-radius: 4px; }
+
+  .cat-findings { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .finding {
+    font-size: 13px;
+    line-height: 1.45;
+    padding-left: 18px;
+    position: relative;
+    color: var(--gray-600);
+  }
+
+  .finding::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .finding.pos::before { background: var(--grade-a); }
+  .finding.neg::before { background: var(--grade-f); }
+  .finding strong { color: var(--black); font-weight: 500; }
+
+  /* CONTEXT BOX */
+  .context-box {
+    background: rgba(245,200,66,0.07);
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+
+  .context-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #92620a;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+
+  .context-box p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  .context-box strong { color: var(--black); font-weight: 500; }
+
+  /* COMPARISON TABLE */
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 0.5px solid var(--gray-200);
+    margin-bottom: 48px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+  thead { background: var(--black); color: var(--white); }
+
+  thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+
+  tbody tr { border-bottom: 0.5px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafaf9; }
+
+  tbody td { padding: 14px 20px; vertical-align: middle; }
+  tbody td:first-child { font-weight: 500; color: var(--black); font-size: 13px; }
+  tbody td:not(:first-child) { text-align: center; }
+
+  .td-current { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--grade-f); }
+  .td-projected { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--grade-a); }
+  .td-delta { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--fintech-gold); background: rgba(245,200,66,0.08); border-radius: 6px; padding: 4px 10px !important; }
+
+  .table-footer { background: var(--black); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .table-footer td { padding: 16px 20px !important; }
+  .table-footer .td-current { color: var(--grade-d); }
+  .table-footer .td-projected { color: var(--elettro-green); font-size: 22px; }
+  .table-footer .td-delta { color: var(--fintech-gold); font-size: 20px; background: rgba(245,200,66,0.12); }
+
+  /* ASSETS BOX */
+  .assets-box {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--fintech-gold);
+  }
+
+  .assets-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--fintech-gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+  }
+
+  .asset-item {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .asset-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .asset-value { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); }
+
+  /* PRIORITY FIXES */
+  .fixes-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+
+  .fix-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 22px 28px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .fix-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--fintech-gold);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .fix-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .fix-desc { font-size: 14px; line-height: 1.6; color: var(--gray-600); }
+
+  .fix-impact {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-top: 8px;
+  }
+
+  .impact-high { background: #fee2e2; color: #991b1b; }
+  .impact-med { background: #ffedd5; color: #9a3412; }
+  .impact-aio { background: rgba(245,200,66,0.12); color: #92620a; }
+  .impact-ymyl { background: rgba(26,107,255,0.1); color: #1e40af; }
+
+  /* CEILING */
+  .ceiling-box {
+    background: #0a0a0a;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceiling-box::after {
+    content: '91';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 180px;
+    font-weight: 800;
+    color: rgba(245,200,66,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ceiling-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--fintech-gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .ceiling-box p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ceiling-box p:last-child { margin-bottom: 0; }
+  .ceiling-box strong { color: var(--fintech-gold); font-weight: 500; }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 40px; }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span { color: var(--fintech-gold); }
+
+  .footer-contact { font-size: 13px; color: var(--gray-400); line-height: 1.8; }
+  .footer-contact a { color: var(--fintech-gold); text-decoration: none; }
+
+  .footer-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    background: var(--fintech-gold);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 40px 24px 60px; }
+    .header-inner { padding: 40px 24px 36px; }
+    footer { padding: 32px 24px; }
+    .intro-block { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-ticker">
+    <span class="ticker-inner">
+      &nbsp;&nbsp;FINTECH.TV TERMINAL — LAUNCHED JUNE 9, 2026 &nbsp;·&nbsp; NYSE STUDIOS &nbsp;·&nbsp; ABU DHABI SECURITIES EXCHANGE &nbsp;·&nbsp; DUBAI &nbsp;·&nbsp; 70+ CUSTOMIZABLE WIDGETS &nbsp;·&nbsp; LIVE BROADCAST + MARKET DATA &nbsp;·&nbsp; BREAKOUT SOCIAL AUDIO — 24 COUNTRIES &nbsp;·&nbsp; Q1 2026: +103K NEW USERS, +27.5% GROWTH &nbsp;·&nbsp; FINTECH.TV TERMINAL — LAUNCHED JUNE 9, 2026 &nbsp;·&nbsp; NYSE STUDIOS &nbsp;·&nbsp; ABU DHABI SECURITIES EXCHANGE &nbsp;·&nbsp; DUBAI &nbsp;·&nbsp; 70+ CUSTOMIZABLE WIDGETS &nbsp;·&nbsp; LIVE BROADCAST + MARKET DATA &nbsp;·&nbsp;
+    </span>
+  </div>
+
+  <div class="header-inner">
+    <p class="header-eyebrow">
+      <span class="live-dot"></span>
+      Elettro Interactive &nbsp;·&nbsp; Confidential Digital Audit
+    </p>
+    <span class="launch-badge">⚡ Terminal Launched June 9, 2026 — 3 Days Old</span>
+    <h1 class="header-title">SEO & <span>AIO</span><br>Audit Report</h1>
+    <p class="header-subtitle">FINTECH.TV Terminal &nbsp;·&nbsp; terminal.fintech.tv</p>
+    <div class="header-meta">
+      <div>
+        <p class="meta-label">Prepared by</p>
+        <p class="meta-value">Dean Palermo, Elettro Interactive</p>
+      </div>
+      <div>
+        <p class="meta-label">Contact</p>
+        <p class="meta-value"><a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a></p>
+      </div>
+      <div>
+        <p class="meta-label">Client</p>
+        <p class="meta-value">FINTECH.TV &nbsp;·&nbsp; FINTECH Media Group</p>
+      </div>
+      <div>
+        <p class="meta-label">Date</p>
+        <p class="meta-value">June 12, 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <p>This audit evaluates <strong>terminal.fintech.tv</strong> — FINTECH.TV's newly launched financial markets platform — across five core dimensions of modern search performance. The Terminal was publicly announced just <strong>three days ago on June 9, 2026</strong>, making this audit a launch-window opportunity assessment rather than a standard remediation review.</p>
+    <p>FINTECH.TV has exceptional real-world authority: <strong>NYSE studio presence, Abu Dhabi Securities Exchange partnership, Breakout acquisition, 100,000 active users in Q1 2026, and a press footprint spanning Access Newswire, Morningstar, and Gulf Business</strong>. The Terminal itself is a significant product — 70+ customizable widgets, live broadcast integration, real-time market data, and social engagement tools. The SEO and AIO infrastructure needs to match the product's ambition.</p>
+    <p>The good news: <strong>the terminal launched into a domain with existing authority</strong>. The gap between current scores and projected scores with a full SEO/AIO build is among the largest we have modeled — precisely because the raw ingredients (brand authority, press footprint, institutional partnerships) are already world-class.</p>
+  </div>
+
+  <!-- BACKEND -->
+  <div class="section-header">
+    <p class="section-eyebrow">01 &nbsp;—&nbsp; Platform Analysis</p>
+    <h2 class="section-title">Is It WordPress? What's the Stack?</h2>
+  </div>
+
+  <div class="context-box">
+    <h3>Important Note on Crawl Access</h3>
+    <p>terminal.fintech.tv has <strong>robots.txt set to disallow automated crawl access</strong> — a deliberate decision, common for authenticated financial dashboards and real-time data platforms. This means Googlebot, AI training crawlers, and third-party audit tools are also blocked from indexing terminal-specific content. This is one of the most significant findings in this audit and is addressed in the Priority Fixes section.</p>
+  </div>
+
+  <div class="backend-grid">
+    <div class="backend-card">
+      <span class="bc-label">WordPress?</span>
+      <span class="bc-pill pill-no">No</span>
+      <span class="bc-note">Not WordPress. The CMS blog lives at cms.fintech.tv — a separate headless CMS instance.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Terminal Platform</span>
+      <span class="bc-value">TAP-Powered SPA</span>
+      <span class="bc-note">Terminal is powered by TAP (referenced in ADX partnership release) — a real-time data and broadcast integration layer. Likely React or Next.js frontend.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">CMS / Editorial</span>
+      <span class="bc-value">cms.fintech.tv</span>
+      <span class="bc-note">Headless CMS on a subdomain serving news, press releases, and editorial content separately from the Terminal app.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Robots.txt</span>
+      <span class="bc-pill pill-warn">Crawl Blocked</span>
+      <span class="bc-note">terminal.fintech.tv disallows all automated crawlers — including Googlebot. Major SEO liability.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Data Layer</span>
+      <span class="bc-value">Real-Time Market API</span>
+      <span class="bc-note">70+ widgets suggest a live market data API integration (equities, crypto, commodities, prediction markets).</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Schema Markup</span>
+      <span class="bc-pill pill-no">None Confirmed</span>
+      <span class="bc-note">Crawl block prevents verification, but no schema detectable from indexed content or press page.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Auth / Portal</span>
+      <span class="bc-value">Gated Platform</span>
+      <span class="bc-note">Terminal requires login — standard for financial dashboards. Creates a public-facing SEO gap.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Launch Status</span>
+      <span class="bc-pill pill-new">3 Days Old</span>
+      <span class="bc-note">Publicly launched June 9, 2026 via Access Newswire. Indexed content is still minimal.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CURRENT SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">02 &nbsp;—&nbsp; Current Performance</p>
+    <h2 class="section-title">SEO & AIO Scores — Today</h2>
+  </div>
+
+  <div class="score-hero">
+    <div class="overall-score-circle">
+      <span class="osc-number">34</span>
+      <span class="osc-label">/ 100</span>
+      <span class="osc-grade">F</span>
+    </div>
+    <div class="score-bars">
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Technical SEO</span>
+          <span class="score-val" style="color:#ef4444;">22</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:22%;background:#ef4444;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">On-Page SEO</span>
+          <span class="score-val" style="color:#ef4444;">28</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:28%;background:#ef4444;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Content Quality</span>
+          <span class="score-val" style="color:#f97316;">40</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:40%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">AI Search Optimization</span>
+          <span class="score-val" style="color:#ef4444;">25</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:25%;background:#ef4444;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Trust & Authority</span>
+          <span class="score-val" style="color:#eab308;">62</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%;background:#eab308;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY BREAKDOWN -->
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Technical<br>SEO</div>
+        <div class="grade-badge grade-f">F</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">22</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:22%;background:var(--grade-f);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>Robots.txt blocks all crawlers</strong> — Googlebot, Bingbot, GPTBot, and every AI crawler is actively denied access to terminal.fintech.tv. This is the most severe technical SEO issue possible short of being de-indexed.</li>
+        <li class="finding neg"><strong>Authenticated SPA architecture</strong> — the terminal requires login, meaning 100% of the interactive content is gated behind auth and invisible to search engines</li>
+        <li class="finding neg"><strong>No public-facing landing page</strong> — there is no indexed, crawlable marketing/features page at terminal.fintech.tv for organic search</li>
+        <li class="finding neg"><strong>No sitemap for the terminal subdomain</strong></li>
+        <li class="finding pos"><strong>Domain authority of fintech.tv is established</strong> — the parent domain has press syndication and backlinks from major financial outlets</li>
+        <li class="finding pos"><strong>Subdomain strategy</strong> (cms.fintech.tv, terminal.fintech.tv) is professionally structured — separation of concerns is correct architecture</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">On-Page<br>SEO</div>
+        <div class="grade-badge grade-f">F</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">28</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:28%;background:var(--grade-f);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>No public landing page</strong> — no title tag, no meta description, no H1, no keyword targeting possible on a crawl-blocked gated app</li>
+        <li class="finding neg"><strong>Zero keyword footprint</strong> for high-value queries: "financial markets terminal," "real-time market data platform," "Bloomberg alternative retail investors" — none of these resolve to any terminal.fintech.tv page</li>
+        <li class="finding neg"><strong>Press release is the only indexed description</strong> of the product — Access Newswire, not the official site, is where Google and AI systems find product details</li>
+        <li class="finding pos"><strong>cms.fintech.tv editorial content</strong> is separate, crawlable, and publishing regularly — The Signal newsletter, Pre-Market Pulse pages serve as the current keyword footprint</li>
+        <li class="finding pos"><strong>Product announced with strong descriptive language</strong> in press release — 70+ widgets, U.S. and global equities, digital assets, commodities, prediction markets — all indexable from the newswire</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Content<br>Quality</div>
+        <div class="grade-badge grade-d">D</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">40</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:40%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>cms.fintech.tv editorial content is active and substantial</strong> — The Signal newsletter, Pre-Market Pulse, interview archive, news coverage</li>
+        <li class="finding pos"><strong>Press release content is rich and detailed</strong> — widget descriptions, use case language, and founder quote from Vince Molinari all serve as indexable content</li>
+        <li class="finding pos"><strong>27.5% user growth Q1 2026</strong> — strong proof-point content for any About or Press page</li>
+        <li class="finding neg"><strong>No product features page exists at terminal.fintech.tv</strong> — the 70+ widgets, broadcast integration, and market intelligence features have no crawlable home</li>
+        <li class="finding neg"><strong>No comparison content</strong> — "FINTECH.TV Terminal vs Bloomberg Terminal," "FINTECH.TV Terminal vs Yahoo Finance" are high-intent queries with no content targeting them</li>
+        <li class="finding neg"><strong>No use-case pages</strong> — retail investor, institutional investor, and creator/broadcaster use cases are described in press releases but not on the site</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">AI Search<br>Optimization</div>
+        <div class="grade-badge grade-f">F</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">25</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:25%;background:var(--grade-f);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>GPTBot and all AI crawlers are blocked by robots.txt</strong> — OpenAI, Anthropic, Perplexity, and Google cannot crawl or index the terminal for AI training or real-time AI search</li>
+        <li class="finding neg"><strong>No SoftwareApplication or WebApplication schema</strong> — AI systems cannot identify the Terminal as a structured product entity with features, pricing, or target audience</li>
+        <li class="finding neg"><strong>No Organization schema connecting FINTECH Media Group → FINTECH.TV → Terminal</strong> — the entity hierarchy is invisible to AI systems</li>
+        <li class="finding neg"><strong>No FAQPage schema</strong> — "What is the FINTECH.TV Terminal?", "How does the FINTECH.TV Terminal compare to Bloomberg?", "Is the FINTECH.TV Terminal free?" are unanswered structured questions</li>
+        <li class="finding pos"><strong>Access Newswire syndication</strong> gives AI systems something to cite — the launch press release is indexed widely (Morningstar, Yahoo Finance, Gulf Business)</li>
+        <li class="finding pos"><strong>Vince Molinari named CEO quote in press release</strong> — gives AI a named entity anchor to associate with the product</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Trust &<br>Authority</div>
+        <div class="grade-badge grade-c">C+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">62</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:62%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>NYSE studio presence</strong> — broadcasting live from the New York Stock Exchange is an extraordinary institutional authority signal</li>
+        <li class="finding pos"><strong>Abu Dhabi Securities Exchange (ADX) partnership</strong> — announced June 3, 2026. First international financial media company with daily broadcast at ADX.</li>
+        <li class="finding pos"><strong>$3.51M raised</strong> — Capital Factory and Brand Capital International as investors</li>
+        <li class="finding pos"><strong>America First News acquisition — June 11, 2025</strong> — adds audience and content authority</li>
+        <li class="finding pos"><strong>Press: Morningstar, Gulf Business, SiliconANGLE, Business Wire</strong> — high-authority financial media citations</li>
+        <li class="finding pos"><strong>Breakout acquisition</strong> — social audio platform with users in 24 countries adds network authority</li>
+        <li class="finding neg"><strong>12 total employees</strong> (PitchBook) — small team relative to the platform's ambition. Authority signals may not match scale claims.</li>
+        <li class="finding neg"><strong>Terminal is 3 days old</strong> — zero domain history, zero reviews, zero user-generated trust signals for the terminal.fintech.tv subdomain specifically</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ASSETS -->
+  <div class="assets-box">
+    <h3>What FINTECH.TV Has Going For It</h3>
+    <div class="assets-grid">
+      <div class="asset-item">
+        <p class="asset-label">Studio Location</p>
+        <p class="asset-value">New York Stock Exchange</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Exchange Partnerships</p>
+        <p class="asset-value">NYSE + ADX Abu Dhabi</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Q1 2026 User Growth</p>
+        <p class="asset-value">+27.5% / 103K New Users</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Breakout Reach</p>
+        <p class="asset-value">24+ Countries</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Terminal Widgets</p>
+        <p class="asset-value">70+ Customizable</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Founded</p>
+        <p class="asset-value">2019 — NYSE-Based</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Capital Raised</p>
+        <p class="asset-value">$3.51M</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">CEO</p>
+        <p class="asset-value">Vince Molinari</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTED -->
+  <div class="section-header">
+    <p class="section-eyebrow">03 &nbsp;—&nbsp; Elettro Rebuild Projection</p>
+    <h2 class="section-title">Current vs. Projected Scores</h2>
+  </div>
+
+  <div class="compare-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Current Score</th>
+          <th>Projected Score</th>
+          <th>Point Gain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Technical SEO</td>
+          <td><span class="td-current">22 &nbsp;F</span></td>
+          <td><span class="td-projected">86 &nbsp;A</span></td>
+          <td><span class="td-delta">+64</span></td>
+        </tr>
+        <tr>
+          <td>On-Page SEO</td>
+          <td><span class="td-current">28 &nbsp;F</span></td>
+          <td><span class="td-projected">88 &nbsp;A</span></td>
+          <td><span class="td-delta">+60</span></td>
+        </tr>
+        <tr>
+          <td>Content Quality</td>
+          <td><span class="td-current">40 &nbsp;D</span></td>
+          <td><span class="td-projected">84 &nbsp;B+</span></td>
+          <td><span class="td-delta">+44</span></td>
+        </tr>
+        <tr>
+          <td>AI Search Optimization</td>
+          <td><span class="td-current">25 &nbsp;F</span></td>
+          <td><span class="td-projected">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+65</span></td>
+        </tr>
+        <tr>
+          <td>Trust & Authority</td>
+          <td><span class="td-current">62 &nbsp;C+</span></td>
+          <td><span class="td-projected">86 &nbsp;A</span></td>
+          <td><span class="td-delta">+24</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="table-footer">
+          <td>Overall Score</td>
+          <td class="td-current">34 &nbsp;F</td>
+          <td class="td-projected">87 &nbsp;A−</td>
+          <td class="td-delta">+53 pts</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- CEILING -->
+  <div class="ceiling-box">
+    <h3>Ceiling Assessment — Can FINTECH.TV Terminal Hit 90+?</h3>
+    <p>Yes — and this is one of the most dramatic score-gap opportunities in this entire audit series. The terminal launched with an F overall score not because the product or the brand is weak, but because <strong>the robots.txt crawl block is functioning as an SEO kill switch</strong> on one of the most technically significant financial media platforms launched in 2026.</p>
+    <p>The core fix — building a public-facing, SEO-optimized product landing page separate from the authenticated dashboard, with proper schema and the crawl block limited to the /app/ or /dashboard/ paths only — immediately unlocks every other optimization. You cannot write meta descriptions, implement schema, or build keyword rankings on a URL that returns a crawl block to every search engine on earth.</p>
+    <p>Once the crawl architecture is resolved, the brand's existing authority accelerates everything else. <strong>NYSE studio presence, ADX partnership, and Morningstar/Gulf Business press coverage</strong> are exactly the trust signals Google and AI systems use to fast-track new content to high rankings. FINTECH.TV doesn't need to build authority from scratch — it needs to make the authority it already has accessible to crawlers.</p>
+    <p>With a proper static public landing page, full schema package, and the robots.txt scoped correctly, <strong>87–91 is achievable within 60–90 days of Google re-crawling</strong>. The Trust & Authority category alone has room to climb to 90+ as the Terminal accumulates user reviews, press coverage, and third-party citations post-launch.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRIORITY FIXES -->
+  <div class="section-header">
+    <p class="section-eyebrow">04 &nbsp;—&nbsp; Recommended Actions</p>
+    <h2 class="section-title">Top Priority Fixes</h2>
+  </div>
+
+  <div class="fixes-grid">
+
+    <div class="fix-card">
+      <div class="fix-number">01</div>
+      <div class="fix-content">
+        <p class="fix-title">Fix Robots.txt — Scope the Crawl Block to /app/ Only</p>
+        <p class="fix-desc">The current robots.txt disallows all crawlers from terminal.fintech.tv entirely. The correct approach is to allow crawling of the public-facing marketing/landing pages while blocking only the authenticated dashboard paths (e.g. /app/, /dashboard/, /portfolio/). This single change unlocks every other optimization in this list. Without it, nothing else matters — Google and all AI systems see a door with a "Do Not Enter" sign.</p>
+        <span class="fix-impact impact-high">Critical — Fix First</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">02</div>
+      <div class="fix-content">
+        <p class="fix-title">Build a Public-Facing Terminal Landing Page</p>
+        <p class="fix-desc">Create a fully crawlable, SEO-optimized marketing page at terminal.fintech.tv/features (or /about) that exists independently of the authenticated app. This page targets: "financial markets terminal for retail investors," "Bloomberg alternative 2026," "real-time market data platform," and "customizable financial dashboard." It becomes the indexed entry point that drives signups, organic traffic, and AI citation — the authenticated dashboard remains gated behind login.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">03</div>
+      <div class="fix-content">
+        <p class="fix-title">Implement Full Schema Markup Package</p>
+        <p class="fix-desc">WebApplication schema for the Terminal (name, description, applicationCategory: "FinanceApplication", featureList of the 70+ widgets, offers/pricing). Organization schema for FINTECH Media Group with sameAs links to NYSE presence, ADX partnership, LinkedIn, and press coverage. Person schema for Vince Molinari as CEO. NewsMediaOrganization schema connecting cms.fintech.tv editorial content to the parent entity. This makes FINTECH.TV Terminal a fully citable entity in AI search responses.</p>
+        <span class="fix-impact impact-aio">AIO +50 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">04</div>
+      <div class="fix-content">
+        <p class="fix-title">Create Widget & Feature Pages (70+ Widgets = 70+ SEO Assets)</p>
+        <p class="fix-desc">Each of the Terminal's 70+ widget categories — U.S. equities, global equities, digital assets, commodities, prediction markets, live broadcast, social audio — is a distinct keyword cluster. Dedicated pages for each major category function as individual organic search landing pages. "Cryptocurrency portfolio widget," "real-time stock dashboard," and "prediction markets tracker" are all rankable terms with commercial intent that no competitor owns cleanly.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">05</div>
+      <div class="fix-content">
+        <p class="fix-title">Add FAQPage Schema — Own the AI Answer Layer for Terminal Queries</p>
+        <p class="fix-desc">AI systems are already being asked: "What is the FINTECH.TV Terminal?", "Is FINTECH.TV Terminal free?", "How does FINTECH.TV Terminal compare to Bloomberg?", "What data does FINTECH.TV Terminal cover?" A dedicated FAQ page with FAQPage schema structured to answer these questions directly makes FINTECH.TV Terminal the authoritative cited source for its own category — rather than letting press releases and third-party comparisons define the narrative.</p>
+        <span class="fix-impact impact-aio">AIO +20 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">06</div>
+      <div class="fix-content">
+        <p class="fix-title">YMYL Compliance — Financial Disclaimer & E-E-A-T Architecture</p>
+        <p class="fix-desc">The FINTECH.TV Terminal is YMYL (Your Money or Your Life) content — Google applies heightened scrutiny to financial platforms. Proper E-E-A-T architecture requires: a named editorial team page with credentials, a clear "Not Financial Advice" disclaimer structured with LegalNotice schema, regulatory/compliance information, and named author attribution on all cms.fintech.tv articles. Without this, Google's quality raters will suppress the site's ranking potential regardless of technical optimization.</p>
+        <span class="fix-impact impact-ymyl">YMYL Compliance</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand"><span>Elettro</span> Interactive</p>
+      <p class="footer-contact">
+        Dean Palermo, Founder & Executive Producer<br>
+        <a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a><br>
+        Davie / Plantation, FL &nbsp;·&nbsp; AIO Authority — a division of Elettro
+      </p>
+    </div>
+    <a class="footer-cta" href="mailto:dpalermo@elettro.com?subject=FINTECH.TV Terminal — SEO & AIO Engagement">Let's Talk →</a>
+  </div>
+</footer>
+
+</body>
+</html>
