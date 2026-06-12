@@ -1,1 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — Vocabulous US | Elettro</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f5f4f0;
+    --elettro-cyan: #00e5ff;
+    --elettro-magenta: #e040fb;
+    --elettro-green: #69ff47;
+    --elettro-orange: #ff6d00;
+    --gray-100: #f0eff0;
+    --gray-200: #dddcdd;
+    --gray-400: #999899;
+    --gray-600: #555455;
+    --gray-800: #222122;
+    --grade-a: #22c55e;
+    --grade-b: #84cc16;
+    --grade-c: #eab308;
+    --grade-d: #f97316;
+    --grade-f: #ef4444;
+    --grade-a-bg: #dcfce7;
+    --grade-b-bg: #ecfccb;
+    --grade-c-bg: #fef9c3;
+    --grade-d-bg: #ffedd5;
+    --grade-f-bg: #fee2e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--black);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--elettro-cyan);
+    margin-bottom: 20px;
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .header-title span {
+    color: var(--elettro-cyan);
+  }
+
+  .header-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 300;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    border-top: 0.5px solid rgba(255,255,255,0.12);
+    padding-top: 28px;
+  }
+
+  .meta-block {}
+
+  .meta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .meta-value a {
+    color: var(--elettro-cyan);
+    text-decoration: none;
+  }
+
+  .accent-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--elettro-cyan) 0%, var(--elettro-magenta) 50%, var(--elettro-orange) 100%);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--elettro-cyan);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--gray-200);
+    margin: 48px 0;
+  }
+
+  /* ── INTRO BLOCK ── */
+  .intro-block {
+    background: var(--black);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--elettro-cyan);
+  }
+
+  .intro-block p {
+    color: rgba(255,255,255,0.82);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .intro-block p:last-child { margin-bottom: 0; }
+
+  .intro-block strong {
+    color: var(--elettro-cyan);
+    font-weight: 500;
+  }
+
+  /* ── BACKEND CARD ── */
+  .backend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .backend-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .backend-card .bc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .backend-card .bc-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .backend-card .bc-note {
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.4;
+  }
+
+  .bc-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill-no { background: #fee2e2; color: #991b1b; }
+  .pill-yes { background: #dcfce7; color: #166534; }
+  .pill-warn { background: #ffedd5; color: #9a3412; }
+
+  /* ── SCORE SUMMARY ── */
+  .score-hero {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .score-hero { grid-template-columns: 1fr; }
+  }
+
+  .overall-score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid var(--grade-d);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .osc-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .osc-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .osc-grade {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--grade-d);
+  }
+
+  .score-bars { display: flex; flex-direction: column; gap: 14px; }
+
+  .score-row { display: flex; flex-direction: column; gap: 5px; }
+
+  .score-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .score-cat {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-200);
+    letter-spacing: 0.02em;
+  }
+
+  .score-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+
+  /* ── CATEGORY SCORE CARDS ── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .cat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .cat-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .grade-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
+  .grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
+  .grade-c { background: var(--grade-c-bg); color: #854d0e; }
+  .grade-b { background: var(--grade-b-bg); color: #3f6212; }
+  .grade-a { background: var(--grade-a-bg); color: #166534; }
+
+  .cat-score-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .cat-score-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .cat-score-denom {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+
+  .cat-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .cat-findings { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .finding {
+    font-size: 13px;
+    line-height: 1.45;
+    padding-left: 18px;
+    position: relative;
+    color: var(--gray-600);
+  }
+
+  .finding::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .finding.pos::before { background: var(--grade-a); }
+  .finding.neg::before { background: var(--grade-f); }
+
+  .finding strong { color: var(--black); font-weight: 500; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-section { margin-bottom: 48px; }
+
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 0.5px solid var(--gray-200);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+
+  tbody tr { border-bottom: 0.5px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafaf9; }
+
+  tbody td {
+    padding: 14px 20px;
+    vertical-align: middle;
+  }
+
+  tbody td:first-child {
+    font-weight: 500;
+    color: var(--black);
+    font-size: 13px;
+  }
+
+  tbody td:not(:first-child) { text-align: center; }
+
+  .td-current {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--grade-f);
+  }
+
+  .td-projected {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--grade-a);
+  }
+
+  .td-delta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--elettro-cyan);
+    background: rgba(0,229,255,0.06);
+    border-radius: 6px;
+    padding: 4px 10px !important;
+  }
+
+  .table-footer {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .table-footer td { padding: 16px 20px !important; }
+  .table-footer .td-current { color: var(--grade-d); }
+  .table-footer .td-projected { color: var(--elettro-green); font-size: 22px; }
+  .table-footer .td-delta { color: var(--elettro-cyan); font-size: 20px; background: rgba(0,229,255,0.1); }
+
+  /* ── PRIORITY FIXES ── */
+  .fixes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .fix-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 22px 28px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .fix-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--elettro-cyan);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .fix-content {}
+
+  .fix-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .fix-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gray-600);
+  }
+
+  .fix-impact {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-top: 8px;
+  }
+
+  .impact-high { background: #fee2e2; color: #991b1b; }
+  .impact-med { background: #ffedd5; color: #9a3412; }
+  .impact-aio { background: rgba(0,229,255,0.1); color: #0369a1; }
+
+  /* ── ASSETS CALLOUT ── */
+  .assets-box {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--elettro-green);
+  }
+
+  .assets-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--elettro-green);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .asset-item {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .asset-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+  }
+
+  .asset-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* ── CEILING SECTION ── */
+  .ceiling-box {
+    background: linear-gradient(135deg, #0a0a0a 0%, #111827 100%);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceiling-box::after {
+    content: '92';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 180px;
+    font-weight: 800;
+    color: rgba(105,255,71,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ceiling-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--elettro-green);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .ceiling-box p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ceiling-box p:last-child { margin-bottom: 0; }
+
+  .ceiling-box strong { color: var(--elettro-green); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 40px;
+  }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span { color: var(--elettro-cyan); }
+
+  .footer-contact {
+    font-size: 13px;
+    color: var(--gray-400);
+    line-height: 1.8;
+  }
+
+  .footer-contact a { color: var(--elettro-cyan); text-decoration: none; }
+
+  .footer-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    background: var(--elettro-cyan);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 40px 24px 60px; }
+    .header-inner { padding: 40px 24px 36px; }
+    .header-meta { gap: 20px; }
+    .score-hero { padding: 28px 24px; }
+    .intro-block { padding: 28px 24px; }
+    footer { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <p class="header-eyebrow">Elettro Interactive &nbsp;·&nbsp; Confidential Digital Audit</p>
+    <h1 class="header-title">SEO & <span>AIO</span><br>Audit Report</h1>
+    <p class="header-subtitle">Vocabulous US &nbsp;·&nbsp; vocabulous.us</p>
+    <div class="header-meta">
+      <div class="meta-block">
+        <p class="meta-label">Prepared by</p>
+        <p class="meta-value">Dean Palermo, Elettro Interactive</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Contact</p>
+        <p class="meta-value"><a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a></p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Prepared for</p>
+        <p class="meta-value">Nadja Atwal &nbsp;·&nbsp; Vocabulous US</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Date</p>
+        <p class="meta-value">June 12, 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-block" style="margin-top: 0;">
+    <p>This audit evaluates <strong>vocabulous.us</strong> across five core dimensions of modern search performance: Technical SEO, On-Page SEO, Content Quality, AI Search Optimization (AIO), and Trust & Authority Signals.</p>
+    <p>Vocabulous US has a compelling product story — <strong>7 million downloads, a Best Mobile App Award, press coverage in Forbes, Inc., and HackerNoon, and an active newsletter and social community</strong>. The opportunity identified in this audit is significant: almost none of that authority is structured in a way that search engines or AI systems can extract, cite, or amplify. The fix is achievable and the projected score gain is among the largest we have modeled for a client at this stage.</p>
+  </div>
+
+  <!-- BACKEND -->
+  <div class="section-header">
+    <p class="section-eyebrow">01 &nbsp;—&nbsp; Platform Analysis</p>
+    <h2 class="section-title">Is It WordPress?</h2>
+  </div>
+
+  <div class="backend-grid">
+    <div class="backend-card">
+      <span class="bc-label">WordPress?</span>
+      <span class="bc-pill pill-no">No</span>
+      <span class="bc-note">Not WordPress. Custom-built static HTML site — hand-coded, no CMS.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Platform / Stack</span>
+      <span class="bc-value">Custom Static HTML</span>
+      <span class="bc-note">Flat HTML files served directly. No CMS, no plugin dependencies.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">CDN / Edge</span>
+      <span class="bc-value">Cloudflare</span>
+      <span class="bc-note">Cloudflare handling CDN and email obfuscation (cdn-cgi/l/email-protection).</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Blog Engine</span>
+      <span class="bc-value">blog.html</span>
+      <span class="bc-note">Blog is a separate static page. Articles load dynamically via JS fetch — invisible to crawlers.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Investor / Auth</span>
+      <span class="bc-value">N/A</span>
+      <span class="bc-note">No gated portal. App store links go directly to Apple App Store.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Schema Markup</span>
+      <span class="bc-pill pill-no">None detected</span>
+      <span class="bc-note">Zero structured data anywhere on the site. Primary AIO gap.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CURRENT SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">02 &nbsp;—&nbsp; Current Performance</p>
+    <h2 class="section-title">SEO & AIO Scores — Today</h2>
+  </div>
+
+  <!-- Overall Hero -->
+  <div class="score-hero">
+    <div class="overall-score-circle">
+      <span class="osc-number">51</span>
+      <span class="osc-label">/ 100</span>
+      <span class="osc-grade">D+</span>
+    </div>
+    <div class="score-bars">
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Technical SEO</span>
+          <span class="score-val" style="color:#f97316;">48</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:48%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">On-Page SEO</span>
+          <span class="score-val" style="color:#f97316;">42</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:42%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Content Quality</span>
+          <span class="score-val" style="color:#eab308;">62</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%;background:#eab308;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">AI Search Optimization</span>
+          <span class="score-val" style="color:#ef4444;">38</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:38%;background:#ef4444;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Trust & Authority</span>
+          <span class="score-val" style="color:#eab308;">65</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%;background:#eab308;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Breakdown -->
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Technical<br>SEO</div>
+        <div class="grade-badge grade-d">D</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">48</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:48%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Cloudflare CDN</strong> — fast edge delivery, solid uptime infrastructure</li>
+        <li class="finding pos"><strong>Clean URL structure</strong> — no messy CMS-generated paths</li>
+        <li class="finding neg"><strong>Blog articles load via JS fetch</strong> — completely invisible to Googlebot and AI crawlers</li>
+        <li class="finding neg"><strong>No sitemap.xml or robots.txt</strong> referenced — crawl guidance is absent</li>
+        <li class="finding neg"><strong>No canonical tags</strong> — potential duplicate content risk between /blog.html and /blog</li>
+        <li class="finding neg"><strong>No OG or Twitter Card meta</strong> — social sharing previews are broken or auto-generated</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">On-Page<br>SEO</div>
+        <div class="grade-badge grade-d">D</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">42</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:42%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>Title tag is just "Vocabulous US"</strong> — no keywords, no mission, no category</li>
+        <li class="finding neg"><strong>No meta description</strong> — Google auto-generates snippet, losing click-through control</li>
+        <li class="finding neg"><strong>Single-page anchor architecture</strong> — Team, App, Culture are all #anchors, not real URLs. Cannot rank individually</li>
+        <li class="finding neg"><strong>No H1 tag</strong> — the hero headline is not wrapped in semantic heading markup</li>
+        <li class="finding neg"><strong>No keyword targeting</strong> — "vocabulary app," "word of the day app," "vocabulary builder" appear nowhere in metadata</li>
+        <li class="finding pos"><strong>Clean navigation</strong> — Team, App, Culture, Blog all logically linked</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Content<br>Quality</div>
+        <div class="grade-badge grade-c">C</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">62</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:62%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>"As Seen On" bar</strong> — Forbes, Inc., HackerNoon, TechBullion linked. Strong credibility anchors.</li>
+        <li class="finding pos"><strong>Team bios present</strong> — named founders (Dmitry Sukhotski CEO, Vlad Hreben CTO) with role descriptions</li>
+        <li class="finding pos"><strong>App reviews displayed</strong> — real user testimonials on the homepage</li>
+        <li class="finding pos"><strong>Culture values section</strong> — adds E-E-A-T depth and brand character</li>
+        <li class="finding neg"><strong>7M downloads not marked up</strong> — the most powerful credential on the page is plain text, not schema</li>
+        <li class="finding neg"><strong>Blog articles are JS-loaded</strong> — all that content is invisible to search engines</li>
+        <li class="finding neg"><strong>Award not featured on homepage</strong> — Best Mobile App Awards (August 2025) is a major untapped trust signal</li>
+        <li class="finding neg"><strong>No Biblegram or product portfolio page</strong> — second app launched Sept 2025 has no dedicated web presence</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">AI Search<br>Optimization</div>
+        <div class="grade-badge grade-f">F</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">38</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:38%;background:var(--grade-f);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>Zero schema markup</strong> — no SoftwareApplication, Organization, Person, FAQPage, or AggregateRating schema anywhere</li>
+        <li class="finding neg"><strong>AI systems can't identify the product</strong> — no structured data defining what Word of the Day is, who built it, what it costs, or how many downloads it has</li>
+        <li class="finding neg"><strong>Blog content invisible to AI crawlers</strong> — JS-rendered articles cannot be ingested or cited by Perplexity, ChatGPT Browse, or Google AIO</li>
+        <li class="finding neg"><strong>No FAQ page or FAQ schema</strong> — "best vocabulary app," "free word of the day app," "vocabulary builder for adults" queries produce no structured answers from this site</li>
+        <li class="finding neg"><strong>Press mentions not linked with sameAs</strong> — Forbes and Inc. citations exist on-page but aren't structured as entity references</li>
+        <li class="finding pos"><strong>136K Instagram + active TikTok</strong> — social signals are real; they just aren't connected to the site's entity profile</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Trust &<br>Authority</div>
+        <div class="grade-badge grade-c">C+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">65</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:65%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>7 million App Store downloads</strong> — exceptional social proof signal for an education app</li>
+        <li class="finding pos"><strong>Best Mobile App Awards Silver — August 2025</strong></li>
+        <li class="finding pos"><strong>Featured in Forbes, Inc., HackerNoon, TechBullion</strong></li>
+        <li class="finding pos"><strong>Active since 2014</strong> — 10+ year operating history on App Store</li>
+        <li class="finding pos"><strong>Backed by Steuart Ventures</strong> — institutional backer adds credibility</li>
+        <li class="finding neg"><strong>Crunchbase lists Boynton Beach, FL</strong> — no address or location on the site itself</li>
+        <li class="finding neg"><strong>No privacy policy or terms linked from homepage</strong> — only accessible via /docs/ deep links</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ASSETS CALLOUT -->
+  <div class="assets-box">
+    <h3>What Vocabulous US Has Going For It</h3>
+    <div class="assets-grid">
+      <div class="asset-item">
+        <p class="asset-label">App Downloads</p>
+        <p class="asset-value">7 Million+</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Instagram Followers</p>
+        <p class="asset-value">136,000</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Active Since</p>
+        <p class="asset-value">2014</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Award</p>
+        <p class="asset-value">Best Mobile App 2025</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Press Coverage</p>
+        <p class="asset-value">Forbes · Inc. · HackerNoon</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Backed By</p>
+        <p class="asset-value">Steuart Ventures</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTED SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">03 &nbsp;—&nbsp; Elettro Rebuild Projection</p>
+    <h2 class="section-title">Current vs. Projected Scores</h2>
+  </div>
+
+  <div class="compare-section">
+    <div class="compare-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Current Score</th>
+            <th>Projected Score</th>
+            <th>Point Gain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Technical SEO</td>
+            <td><span class="td-current">48 &nbsp;D</span></td>
+            <td><span class="td-projected">90 &nbsp;A</span></td>
+            <td><span class="td-delta">+42</span></td>
+          </tr>
+          <tr>
+            <td>On-Page SEO</td>
+            <td><span class="td-current">42 &nbsp;D</span></td>
+            <td><span class="td-projected">88 &nbsp;A</span></td>
+            <td><span class="td-delta">+46</span></td>
+          </tr>
+          <tr>
+            <td>Content Quality</td>
+            <td><span class="td-current">62 &nbsp;C</span></td>
+            <td><span class="td-projected">85 &nbsp;B+</span></td>
+            <td><span class="td-delta">+23</span></td>
+          </tr>
+          <tr>
+            <td>AI Search Optimization</td>
+            <td><span class="td-current">38 &nbsp;F</span></td>
+            <td><span class="td-projected">91 &nbsp;A</span></td>
+            <td><span class="td-delta">+53</span></td>
+          </tr>
+          <tr>
+            <td>Trust & Authority</td>
+            <td><span class="td-current">65 &nbsp;C+</span></td>
+            <td><span class="td-projected">84 &nbsp;B+</span></td>
+            <td><span class="td-delta">+19</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="table-footer">
+            <td>Overall Score</td>
+            <td class="td-current">51 &nbsp;D+</td>
+            <td class="td-projected">88 &nbsp;A−</td>
+            <td class="td-delta">+37 pts</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- CEILING SECTION -->
+  <div class="ceiling-box">
+    <h3>Ceiling Assessment — Can We Hit 90+?</h3>
+    <p>Yes — and Vocabulous US is actually one of the strongest candidates for a 90+ score of any site we've audited this cycle. Here's why: the raw authority already exists in the real world. <strong>7 million downloads, a major award, decade-long operating history, and press in Forbes and Inc.</strong> are the inputs AI systems and search engines need to treat a brand as authoritative. The only thing missing is structure — and that's entirely within scope of a rebuild.</p>
+    <p>The <strong>AIO jump from 38 → 91</strong> is the headline number. Once SoftwareApplication schema, Organization schema, AggregateRating schema (pulling from 7M download count and App Store ratings), and FAQPage schema are live, AI systems asked "best free vocabulary app" or "word of the day app with games" have a fully structured, citable, authoritative source to reference. Right now they don't — they surface App Store pages and third-party reviews instead of the official site.</p>
+    <p>Sustaining 88–92 over time requires one additional commitment: <strong>blog articles must be rendered as static HTML</strong>, not JS-fetched. The blog content appears to be strong — making it crawlable unlocks compounding keyword authority that no single-page site can achieve. Low-to-mid 90s is the realistic ceiling with a full rebuild plus 90 days of re-indexing.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRIORITY FIXES -->
+  <div class="section-header">
+    <p class="section-eyebrow">04 &nbsp;—&nbsp; Recommended Actions</p>
+    <h2 class="section-title">Top Priority Fixes</h2>
+  </div>
+
+  <div class="fixes-grid">
+
+    <div class="fix-card">
+      <div class="fix-number">01</div>
+      <div class="fix-content">
+        <p class="fix-title">Implement Full Schema Markup Package</p>
+        <p class="fix-desc">SoftwareApplication schema for Word of the Day (name, description, applicationCategory, operatingSystem, offers, aggregateRating). Organization schema for Vocabulous US (name, url, sameAs, foundingDate, location). Person schema for Dmitry Sukhotski and Vlad Hreben. This is the single highest-ROI action for AIO — transforms the site from invisible to fully citable by AI systems.</p>
+        <span class="fix-impact impact-aio">AIO +40 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">02</div>
+      <div class="fix-content">
+        <p class="fix-title">Rebuild Blog as Static HTML Pages</p>
+        <p class="fix-desc">Blog articles currently load via JavaScript fetch — making them completely invisible to Google, Bing, Perplexity, and every AI crawler. Each article needs its own crawlable URL (/blog/word-of-the-day-tips/, etc.) with proper title, meta description, and canonical. This unlocks the compounding SEO value of all existing and future content.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">03</div>
+      <div class="fix-content">
+        <p class="fix-title">Write Homepage Title Tag + Meta Description</p>
+        <p class="fix-desc">"Vocabulous US" as a title tag is the equivalent of naming a storefront "Store." A rebuilt title such as "Word of the Day App — Vocabulary Builder with 7M+ Downloads | Vocabulous US" combined with a 155-character meta description targeting "vocabulary app," "word of the day," and "vocabulary builder" would immediately improve click-through from every search result the site appears in.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">04</div>
+      <div class="fix-content">
+        <p class="fix-title">Add OG / Twitter Card Meta + Branded Social Preview Image</p>
+        <p class="fix-desc">No OG tags exist on the site — every link share on LinkedIn, X, Slack, or any AI-sourced preview renders as plain text with no image. A branded 1200×630 preview image featuring the app screenshot and "7M Downloads" would make every social share and AI summary significantly more compelling and credible.</p>
+        <span class="fix-impact impact-med">Medium Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">05</div>
+      <div class="fix-content">
+        <p class="fix-title">Build Dedicated Pages for App, Press, Awards, and Biblegram</p>
+        <p class="fix-desc">A single-page site cannot rank for multiple distinct keyword clusters. Dedicated pages for /word-of-the-day-app/, /press/, /awards/, and /biblegram/ each become independent ranking assets. The Best Mobile App Award (August 2025) and the Biblegram launch (September 2025) are both significant news that deserves permanent, indexed, schema-marked-up web real estate.</p>
+        <span class="fix-impact impact-high">High Impact</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">06</div>
+      <div class="fix-content">
+        <p class="fix-title">Add FAQPage Schema — Own AI Answer Boxes</p>
+        <p class="fix-desc">Questions like "What is the best free vocabulary app?", "How does Word of the Day work?", "Is Vocabulous US free?", and "What games does the Word of the Day app have?" are actively answered by AI systems — currently sourcing answers from App Store pages and third-party reviews. A dedicated FAQ page with FAQPage schema makes vocabulous.us the authoritative source for these answers.</p>
+        <span class="fix-impact impact-aio">AIO +15 pts</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand"><span>Elettro</span> Interactive</p>
+      <p class="footer-contact">
+        Dean Palermo, Founder & Executive Producer<br>
+        <a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a><br>
+        Davie / Plantation, FL &nbsp;·&nbsp; AIO Authority — a division of Elettro
+      </p>
+    </div>
+    <a class="footer-cta" href="mailto:dpalermo@elettro.com?subject=Vocabulous US — SEO & AIO Engagement">Let's Talk →</a>
+  </div>
+</footer>
+
+</body>
+</html>
