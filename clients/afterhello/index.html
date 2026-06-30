@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — After Hello Matchmaking | Elettro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #1a1418;
+    --white: #ffffff;
+    --off-white: #fdf9f6;
+    --elettro-cyan: #00e5ff;
+    --elettro-green: #69ff47;
+    --ah-blush: #e8a0a8;
+    --ah-rose: #c97b86;
+    --ah-rose-dark: #9c5560;
+    --ah-cream: #f6ede6;
+    --ah-charcoal: #2a2024;
+    --ah-gold: #c9a86a;
+    --gray-100: #f3ece8;
+    --gray-200: #e3d6cf;
+    --gray-400: #a8968f;
+    --gray-600: #6b5550;
+    --grade-a: #22c55e;
+    --grade-b: #84cc16;
+    --grade-c: #eab308;
+    --grade-d: #f97316;
+    --grade-f: #ef4444;
+    --grade-a-bg: #dcfce7;
+    --grade-b-bg: #ecfccb;
+    --grade-c-bg: #fef9c3;
+    --grade-d-bg: #ffedd5;
+    --grade-f-bg: #fee2e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ah-charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 90% at 85% 30%, rgba(201,123,134,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ah-blush);
+    margin-bottom: 18px;
+  }
+
+  .press-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .press-badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,123,134,0.3);
+    color: rgba(232,160,168,0.9);
+    background: rgba(201,123,134,0.08);
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6.8vw, 70px);
+    font-weight: 700;
+    line-height: 1.02;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  .header-title em {
+    color: var(--ah-blush);
+    font-style: italic;
+  }
+
+  .header-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(15px, 2.2vw, 18px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 38px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 26px;
+  }
+
+  .meta-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+
+  .meta-value { font-size: 14px; color: var(--white); }
+  .meta-value a { color: var(--ah-blush); text-decoration: none; }
+
+  .accent-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ah-rose) 0%, var(--ah-blush) 40%, var(--ah-gold) 100%);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  .section-header { margin-bottom: 30px; }
+
+  .section-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ah-rose-dark);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.8vw, 36px);
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.1;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--gray-200);
+    margin: 46px 0;
+  }
+
+  /* INTRO */
+  .intro-block {
+    background: var(--ah-charcoal);
+    border-radius: 14px;
+    padding: 34px 38px;
+    margin-bottom: 46px;
+    border-left: 4px solid var(--ah-blush);
+  }
+
+  .intro-block p {
+    color: rgba(255,255,255,0.82);
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin-bottom: 11px;
+  }
+
+  .intro-block p:last-child { margin-bottom: 0; }
+  .intro-block strong { color: var(--ah-blush); font-weight: 500; }
+
+  /* WEBFLOW NOTE */
+  .platform-note {
+    background: rgba(34,197,94,0.05);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 30px;
+  }
+
+  .platform-note h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #15803d;
+    margin-bottom: 8px;
+  }
+
+  .platform-note p { font-size: 13.5px; color: var(--gray-600); line-height: 1.65; }
+  .platform-note strong { color: var(--black); font-weight: 600; }
+
+  /* BACKEND */
+  .backend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+    margin-bottom: 46px;
+  }
+
+  .backend-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bc-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-400); }
+  .bc-value { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--black); line-height: 1.2; }
+  .bc-note { font-size: 11.5px; color: var(--gray-600); line-height: 1.4; }
+
+  .bc-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 99px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill-no { background: #fee2e2; color: #991b1b; }
+  .pill-yes { background: #dcfce7; color: #166534; }
+  .pill-webflow { background: #dbeafe; color: #1e40af; }
+  .pill-warn { background: #ffedd5; color: #9a3412; }
+
+  /* SCORE HERO */
+  .score-hero {
+    background: var(--ah-charcoal);
+    border-radius: 16px;
+    padding: 38px;
+    margin-bottom: 46px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 38px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .score-hero { grid-template-columns: 1fr; } }
+
+  .overall-score-circle {
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    border: 3px solid var(--grade-c);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .osc-number { font-family: 'Playfair Display', serif; font-size: 50px; font-weight: 700; color: var(--white); line-height: 1; }
+  .osc-label { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .osc-grade { font-family: 'DM Sans', sans-serif; font-size: 20px; font-weight: 700; color: var(--grade-c); }
+
+  .score-bars { display: flex; flex-direction: column; gap: 13px; }
+  .score-row { display: flex; flex-direction: column; gap: 4px; }
+  .score-row-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .score-cat { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.68); }
+  .score-val { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; }
+
+  .bar-track { width: 100%; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* CATEGORY CARDS */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    margin-bottom: 46px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .cat-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+
+  .cat-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.15;
+  }
+
+  .grade-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
+  .grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
+  .grade-c { background: var(--grade-c-bg); color: #854d0e; }
+  .grade-b { background: var(--grade-b-bg); color: #3f6212; }
+  .grade-a { background: var(--grade-a-bg); color: #166534; }
+
+  .cat-score-line { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .cat-score-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; line-height: 1; color: var(--black); }
+  .cat-score-denom { font-size: 12.5px; color: var(--gray-400); margin-top: 4px; }
+  .cat-bar-track { flex: 1; height: 7px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 4px; }
+
+  .cat-findings { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+
+  .finding {
+    font-size: 12.5px;
+    line-height: 1.45;
+    padding-left: 17px;
+    position: relative;
+    color: var(--gray-600);
+  }
+
+  .finding::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .finding.pos::before { background: var(--grade-a); }
+  .finding.neg::before { background: var(--grade-f); }
+  .finding strong { color: var(--black); font-weight: 600; }
+
+  /* ASSETS */
+  .assets-box {
+    background: var(--ah-charcoal);
+    border-radius: 16px;
+    padding: 34px 38px;
+    margin-bottom: 46px;
+    border-left: 4px solid var(--ah-gold);
+  }
+
+  .assets-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--ah-gold);
+    margin-bottom: 18px;
+  }
+
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+    gap: 14px;
+  }
+
+  .asset-item {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 15px 17px;
+  }
+
+  .asset-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 5px; }
+  .asset-value { font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; color: var(--white); line-height: 1.3; }
+
+  /* COMPARE TABLE */
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 0.5px solid var(--gray-200);
+    margin-bottom: 46px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead { background: var(--ah-charcoal); color: var(--white); }
+
+  thead th {
+    padding: 15px 20px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+  tbody tr { border-bottom: 0.5px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fbf4f0; }
+  tbody td { padding: 13px 20px; vertical-align: middle; }
+  tbody td:first-child { font-weight: 500; color: var(--black); font-size: 13px; }
+  tbody td:not(:first-child) { text-align: center; }
+
+  .td-current { font-family: 'DM Sans', sans-serif; font-size: 16.5px; font-weight: 700; }
+  .td-delta { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ah-rose-dark); background: rgba(201,123,134,0.08); border-radius: 5px; padding: 3px 9px !important; }
+
+  .table-footer { background: var(--ah-charcoal); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 700; text-transform: uppercase; }
+  .table-footer td { padding: 15px 20px !important; }
+
+  /* FIXES */
+  .fixes-grid { display: flex; flex-direction: column; gap: 14px; margin-bottom: 46px; }
+
+  .fix-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 14px;
+    padding: 21px 27px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .fix-number { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ah-rose); line-height: 1; margin-top: 2px; }
+  .fix-title { font-family: 'DM Sans', sans-serif; font-size: 16.5px; font-weight: 700; color: var(--black); letter-spacing: 0.01em; margin-bottom: 6px; }
+  .fix-desc { font-size: 13.5px; line-height: 1.6; color: var(--gray-600); }
+
+  .fix-impact {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-top: 8px;
+  }
+
+  .impact-high { background: #ffedd5; color: #9a3412; }
+  .impact-aio { background: rgba(201,123,134,0.1); color: #9c5560; }
+  .impact-local { background: #dbeafe; color: #1e40af; }
+  .impact-quick { background: #dcfce7; color: #166534; }
+
+  /* CEILING */
+  .ceiling-box {
+    background: var(--ah-charcoal);
+    border-radius: 16px;
+    padding: 38px;
+    margin-bottom: 46px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceiling-box::after {
+    content: '90';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 170px;
+    font-weight: 700;
+    color: rgba(201,123,134,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ceiling-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--ah-blush);
+    margin-bottom: 15px;
+  }
+
+  .ceiling-box p {
+    font-size: 14.5px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    margin-bottom: 11px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ceiling-box p:last-child { margin-bottom: 0; }
+  .ceiling-box strong { color: var(--ah-blush); font-weight: 500; }
+
+  /* LOCATIONS GRID */
+  .locations-box {
+    background: rgba(201,123,134,0.05);
+    border: 1px solid rgba(201,123,134,0.18);
+    border-radius: 14px;
+    padding: 26px 30px;
+    margin-bottom: 30px;
+  }
+
+  .locations-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ah-rose-dark);
+    margin-bottom: 12px;
+  }
+
+  .locations-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .loc-tag {
+    font-size: 11.5px;
+    font-weight: 600;
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    padding: 5px 13px;
+    border-radius: 99px;
+    color: var(--gray-600);
+  }
+
+  .locations-box p { font-size: 13.5px; color: var(--gray-600); line-height: 1.65; }
+  .locations-box strong { color: var(--black); font-weight: 600; }
+
+  /* FOOTER */
+  footer { background: var(--ah-charcoal); padding: 38px 40px; }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 30px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .footer-brand span { color: var(--ah-blush); }
+  .footer-contact { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .footer-contact a { color: var(--ah-blush); text-decoration: none; }
+
+  .footer-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ah-charcoal);
+    background: var(--ah-blush);
+    padding: 13px 27px;
+    border-radius: 99px;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  @media (max-width: 620px) {
+    main { padding: 40px 22px 60px; }
+    .header-inner { padding: 38px 22px 32px; }
+    footer { padding: 30px 22px; }
+    .intro-block, .assets-box { padding: 26px 22px; }
+    .score-hero { padding: 26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <p class="header-eyebrow">Elettro Interactive &nbsp;·&nbsp; Confidential Digital Audit</p>
+    <div class="press-row">
+      <span class="press-badge">Featured: People</span>
+      <span class="press-badge">Business Insider</span>
+      <span class="press-badge">NBC · ABC News · AP · NPR</span>
+      <span class="press-badge">Matchmakers Alliance Member</span>
+    </div>
+    <h1 class="header-title">SEO &amp; <em>AIO</em><br>Audit Report</h1>
+    <p class="header-subtitle">After Hello Matchmaking &nbsp;·&nbsp; afterhello.com</p>
+    <div class="header-meta">
+      <div>
+        <p class="meta-label">Prepared by</p>
+        <p class="meta-value">Dean Palermo, Elettro Interactive</p>
+      </div>
+      <div>
+        <p class="meta-label">Contact</p>
+        <p class="meta-value"><a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a></p>
+      </div>
+      <div>
+        <p class="meta-label">Client</p>
+        <p class="meta-value">After Hello &nbsp;·&nbsp; Ann Parnes &amp; Maria Murray, Co-Founders</p>
+      </div>
+      <div>
+        <p class="meta-label">Date</p>
+        <p class="meta-value">June 15, 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <p>This audit evaluates <strong>afterhello.com</strong> — the website of After Hello, a professional matchmaking agency founded by Ann Parnes (former Assistant District Attorney) and Maria Murray — across five core dimensions of modern search performance.</p>
+    <p>After Hello has a genuinely compelling brand story and real press momentum: <strong>featured in People, Business Insider, NBC, ABC News, AP, and NPR, an active 925-follower Instagram presence, a viral founder narrative (lawyer-to-matchmaker career change), 11-city service footprint across the U.S., and Matchmakers Alliance membership.</strong> The site is built on Webflow — a strong technical foundation — with a clean, well-organized service and location architecture already in place.</p>
+    <p>This is one of the better-built sites in this audit series. The opportunity here isn't a platform rebuild — it's <strong>closing the schema and AIO gap</strong> on top of an already-solid foundation, which means the path to a high score is faster and lower-risk than most of the sites we've reviewed.</p>
+  </div>
+
+  <!-- SECTION 01: BACKEND -->
+  <div class="section-header">
+    <p class="section-eyebrow">01 &nbsp;—&nbsp; Platform Analysis</p>
+    <h2 class="section-title">Is It WordPress? What's the Stack?</h2>
+  </div>
+
+  <div class="platform-note">
+    <h3>Good News — This Is Webflow, Not WordPress</h3>
+    <p>The site is built on <strong>Webflow</strong> — confirmed by the <code>meta-generator: Webflow</code> tag and CDN asset paths (cdn.prod.website-files.com). Webflow is a strong choice for a service business: it produces clean semantic HTML, doesn't carry WordPress's plugin bloat or Odoo's ERP overhead, and gives designers full control over markup. This is one of the better technical foundations in this audit series — the gaps identified below are optimization opportunities, not platform-level rebuilds.</p>
+  </div>
+
+  <div class="backend-grid">
+    <div class="backend-card">
+      <span class="bc-label">WordPress?</span>
+      <span class="bc-pill pill-no">No</span>
+      <span class="bc-note">Not WordPress. Built on Webflow — a modern, designer-friendly visual CMS.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Platform</span>
+      <span class="bc-pill pill-webflow">Webflow</span>
+      <span class="bc-note">Confirmed via meta-generator and cdn.prod.website-files.com asset hosting.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Site Built By</span>
+      <span class="bc-value">Andro Brands</span>
+      <span class="bc-note">Footer credit: "Designed by Andro Brands" — professional agency build.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">OG / Twitter Card</span>
+      <span class="bc-pill pill-yes">Fully Set</span>
+      <span class="bc-note">og:title, og:description, og:image, Twitter Card all properly implemented with branded header image.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">GTM Installed</span>
+      <span class="bc-pill pill-yes">Yes</span>
+      <span class="bc-note">GTM-TS26FQ7B confirmed — analytics tracking is live.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Schema Markup</span>
+      <span class="bc-pill pill-no">None Detected</span>
+      <span class="bc-note">No LocalBusiness, Service, FAQPage, or Person schema despite excellent FAQ and team content already on-site.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Site Architecture</span>
+      <span class="bc-value">Excellent</span>
+      <span class="bc-note">11 location pages, 4 service pages, About, Team, FAQ, Blog, Contact — genuinely strong multi-page structure.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Phone Mismatch</span>
+      <span class="bc-pill pill-warn">Inconsistent</span>
+      <span class="bc-note">Footer displays +1-786-309-2258 but the tel: link routes to a different number (504-233-4006). Click-to-call is broken.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 02: SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">02 &nbsp;—&nbsp; Current Performance</p>
+    <h2 class="section-title">SEO &amp; AIO Scores — Today</h2>
+  </div>
+
+  <div class="score-hero">
+    <div class="overall-score-circle">
+      <span class="osc-number">61</span>
+      <span class="osc-label">/ 100</span>
+      <span class="osc-grade">C+</span>
+    </div>
+    <div class="score-bars">
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Technical SEO</span>
+          <span class="score-val" style="color:#84cc16;">72</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:72%;background:#84cc16;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">On-Page SEO</span>
+          <span class="score-val" style="color:#eab308;">65</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%;background:#eab308;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Content Quality</span>
+          <span class="score-val" style="color:#84cc16;">76</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:76%;background:#84cc16;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">AI Search Optimization</span>
+          <span class="score-val" style="color:#f97316;">38</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:38%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Trust &amp; Authority</span>
+          <span class="score-val" style="color:#84cc16;">70</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:70%;background:#84cc16;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY CARDS -->
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Technical SEO</div>
+        <div class="grade-badge grade-b">B</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">72</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:72%;background:var(--grade-b);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Webflow produces clean, crawlable HTML</strong> — no JS-rendering blank page problem seen on Lovable.dev or Wix sites in this series</li>
+        <li class="finding pos"><strong>Canonical tag correctly set</strong> to https://afterhello.com</li>
+        <li class="finding pos"><strong>Full OG and Twitter Card meta</strong> — branded header image, proper title/description, summary_large_image card type</li>
+        <li class="finding pos"><strong>11 location pages with dedicated URLs</strong> — excellent local SEO architecture already built (Atlanta, Austin, Chicago, Dallas, Denver, Houston, Las Vegas, Miami, Minneapolis, Phoenix, Scottsdale)</li>
+        <li class="finding pos"><strong>GTM installed and active</strong></li>
+        <li class="finding neg"><strong>Phone number mismatch</strong> — footer text shows +1-786-309-2258 but the clickable tel: link goes to a completely different number. Anyone tapping to call on mobile reaches the wrong number</li>
+        <li class="finding neg"><strong>No schema markup anywhere</strong> — the single biggest technical gap given how much structured content already exists on the site</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">On-Page SEO</div>
+        <div class="grade-badge grade-c">C+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">65</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:65%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Title tag is well-built</strong>: "Professional Matchmaking Services | After Hello Matchmaking Agency" — keyword + brand, clean</li>
+        <li class="finding pos"><strong>Meta description is benefit-focused and accurate</strong>: targets "professional matchmaking agency," "personalized matchmaking," "serious, long-term connections"</li>
+        <li class="finding pos"><strong>H1 "Luxury Matchmaking for Successful Singles"</strong> — strong positioning, though could be more keyword-dense</li>
+        <li class="finding pos"><strong>11 location pages exist</strong> — but this needs verification that each has unique title tags and content, not templated duplicates</li>
+        <li class="finding neg"><strong>"Solutions" nav link in footer vs "Services" in header</strong> — inconsistent navigation labeling between header and footer is confusing for both users and crawlers building a site structure model</li>
+        <li class="finding neg"><strong>No location-specific keywords in the homepage title/meta</strong> — "matchmaking Atlanta," "matchmaking Miami" etc. are only captured on the dedicated location pages, missing a chance to signal multi-city service in primary meta</li>
+        <li class="finding warn"><strong>"Resources" in nav links to /blog</strong> — inconsistent labeling (nav says "Resources," URL and likely page title says "Blog") creates minor crawl confusion</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Content Quality</div>
+        <div class="grade-badge grade-b">B+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">76</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:76%;background:var(--grade-b);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Exceptional FAQ content already written</strong> — 9 genuinely substantive, well-reasoned answers covering differentiation, process, timeline, and screening methodology</li>
+        <li class="finding pos"><strong>Rich, named team bios</strong> — Ann (former ADA), Maria (co-founder, operations/recruiting), plus 6 more named matchmakers and staff with real credentials</li>
+        <li class="finding pos"><strong>Six genuine, specific testimonials</strong> with names, ages, professions — David (38, Engineer), Sarah (43, Designer), Ethan (52, Developer), and more</li>
+        <li class="finding pos"><strong>Press section featuring People, Business Insider</strong> directly on homepage</li>
+        <li class="finding pos"><strong>Vision/Values/Vibe framework</strong> is a genuinely differentiated, memorable methodology — strong brand IP</li>
+        <li class="finding neg"><strong>One FAQ answer is a placeholder</strong>: "Are there any success stories...?" → "Yes and here is the link to see them" — no actual link inserted. This is live on the site right now</li>
+        <li class="finding neg"><strong>Location pages' content depth unverified</strong> — need confirmation these aren't templated duplicates across all 11 cities, which would create a content quality/duplicate content risk</li>
+        <li class="finding neg"><strong>No blog content visible in this crawl</strong> — /blog exists in nav but freshness and depth unconfirmed</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">AI Search Optimization</div>
+        <div class="grade-badge grade-d">D+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">38</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:38%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>The FAQ content is exceptional raw material for AIO</strong> — "How Is Professional Matchmaking Different From Dating Apps?" and "What Does a Matchmaking Agency Actually Do?" are exactly the queries AI systems answer. The writing is already AI-citation-ready in tone and structure.</li>
+        <li class="finding neg"><strong>None of that FAQ content has FAQPage schema</strong> — despite being genuinely excellent, AI systems cannot extract it as structured Q&amp;A data. This is the single biggest missed opportunity in this entire audit</li>
+        <li class="finding neg"><strong>No LocalBusiness schema per city</strong> — 11 location pages exist but none are marked up with geo-specific LocalBusiness schema, meaning "best matchmaker in Scottsdale" or "Miami matchmaking services" queries can't resolve to After Hello's specific city pages in AI answers</li>
+        <li class="finding neg"><strong>No Person schema for Ann and Maria</strong> — their founder story (lawyer-to-matchmaker, recruiting/ops background) is compelling and press-verified, but AI systems asked "who founded After Hello" have no structured entity to cite from the site itself</li>
+        <li class="finding neg"><strong>No Review/AggregateRating schema</strong> — six strong testimonials exist but aren't marked up, so they don't appear in rich results or get cited as verified social proof by AI systems</li>
+        <li class="finding neg"><strong>No Service schema</strong> for Matchmaking, Date Coaching, Profile Management, or The Inner Circle VIP — each is a distinct offering that should be independently structured</li>
+        <li class="finding pos"><strong>Press citations (People, Business Insider, NBC, ABC, AP, NPR via Instagram bio)</strong> give AI systems strong off-site verification signals, even without on-site schema</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Trust &amp; Authority</div>
+        <div class="grade-badge grade-b">B</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">70</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:70%;background:var(--grade-b);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Featured in People (exclusive interview)</strong> — a major national lifestyle publication, exclusive placement is especially valuable</li>
+        <li class="finding pos"><strong>Business Insider feature</strong> — Ann's career-change story ("I quit my job as a lawyer...") is a genuinely compelling, widely-shareable narrative</li>
+        <li class="finding pos"><strong>Instagram bio cites NBC, ABC News, AP, NPR, People</strong> — a strong cumulative press footprint for a boutique matchmaking firm</li>
+        <li class="finding pos"><strong>Matchmakers Alliance member</strong> — industry association credibility badge displayed in footer</li>
+        <li class="finding pos"><strong>Named, credentialed founders</strong> — Ann's Assistant District Attorney background and Maria's operations/recruiting background both add real-world professional credibility uncommon in this industry</li>
+        <li class="finding pos"><strong>Active LinkedIn presence</strong> — Ann Parnes personally publishing thought leadership content with substantive dating market data</li>
+        <li class="finding neg"><strong>925 Instagram followers</strong> is modest relative to the press coverage achieved — a gap between earned media reach and owned audience size</li>
+        <li class="finding neg"><strong>No visible Google Business Profile signals</strong> per city — for a multi-city service business, local Google Business Profiles with reviews would meaningfully strengthen local trust signals</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- LOCATIONS -->
+  <div class="locations-box">
+    <h3>11-City Footprint — Already Built, Needs AIO Layer</h3>
+    <div class="locations-tags">
+      <span class="loc-tag">Atlanta</span>
+      <span class="loc-tag">Austin</span>
+      <span class="loc-tag">Chicago</span>
+      <span class="loc-tag">Dallas</span>
+      <span class="loc-tag">Denver</span>
+      <span class="loc-tag">Houston</span>
+      <span class="loc-tag">Las Vegas</span>
+      <span class="loc-tag">Miami</span>
+      <span class="loc-tag">Minneapolis</span>
+      <span class="loc-tag">Phoenix</span>
+      <span class="loc-tag">Scottsdale</span>
+    </div>
+    <p>This is a real competitive advantage most matchmaking competitors don't have: <strong>dedicated landing pages for 11 major U.S. metros.</strong> Once each carries LocalBusiness schema with city-specific geo coordinates, service area, and locally-relevant FAQ content, After Hello is positioned to be the AI-cited answer for "matchmaking services in [city]" across all 11 markets simultaneously — a high-leverage, low-effort win given the pages already exist.</p>
+  </div>
+
+  <!-- ASSETS -->
+  <div class="assets-box">
+    <h3>What After Hello Has Going For It</h3>
+    <div class="assets-grid">
+      <div class="asset-item">
+        <p class="asset-label">Press Coverage</p>
+        <p class="asset-value">People · Business Insider · NBC · ABC · AP · NPR</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Founders</p>
+        <p class="asset-value">Ann Parnes (Former ADA) &amp; Maria Murray</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Service Cities</p>
+        <p class="asset-value">11 U.S. Metro Markets</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Industry Membership</p>
+        <p class="asset-value">Matchmakers Alliance</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Platform</p>
+        <p class="asset-value">Webflow — Clean, Modern Stack</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Testimonials</p>
+        <p class="asset-value">6 Named, Verified Client Stories</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Team Size</p>
+        <p class="asset-value">8 Named Staff &amp; Matchmakers</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Signature Asset</p>
+        <p class="asset-value">National Cuffing Day™ — Dec. 7</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTED SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">03 &nbsp;—&nbsp; Elettro Optimization Projection</p>
+    <h2 class="section-title">Current vs. Projected Scores</h2>
+  </div>
+
+  <div class="compare-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Current Score</th>
+          <th>Projected Score</th>
+          <th>Point Gain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Technical SEO</td>
+          <td><span class="td-current" style="color:var(--grade-b);">72 &nbsp;B</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">92 &nbsp;A</span></td>
+          <td><span class="td-delta">+20</span></td>
+        </tr>
+        <tr>
+          <td>On-Page SEO</td>
+          <td><span class="td-current" style="color:var(--grade-c);">65 &nbsp;C+</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+25</span></td>
+        </tr>
+        <tr>
+          <td>Content Quality</td>
+          <td><span class="td-current" style="color:var(--grade-b);">76 &nbsp;B+</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+14</span></td>
+        </tr>
+        <tr>
+          <td>AI Search Optimization</td>
+          <td><span class="td-current" style="color:var(--grade-d);">38 &nbsp;D+</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">92 &nbsp;A</span></td>
+          <td><span class="td-delta">+54</span></td>
+        </tr>
+        <tr>
+          <td>Trust &amp; Authority</td>
+          <td><span class="td-current" style="color:var(--grade-b);">70 &nbsp;B</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">88 &nbsp;A</span></td>
+          <td><span class="td-delta">+18</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="table-footer">
+          <td>Overall Score</td>
+          <td style="font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;color:var(--grade-c);">61 &nbsp;C+</td>
+          <td style="font-family:'DM Sans',sans-serif;font-size:21px;font-weight:700;color:var(--elettro-green);">91 &nbsp;A</td>
+          <td style="font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;color:var(--ah-rose-dark);background:rgba(201,123,134,0.1);border-radius:6px;padding:4px 12px;">+30 pts</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- CEILING -->
+  <div class="ceiling-box">
+    <h3>Ceiling Assessment — Why This Is a 90+ Site Already in Progress</h3>
+    <p>After Hello is the rare audit in this series where the foundation is already strong — Webflow, clean architecture, 11 city pages, genuinely excellent FAQ writing, real press, named credentialed founders. This isn't a rebuild. <strong>It's a schema and polish engagement</strong>, which means the timeline to 90+ is measurably shorter than sites requiring platform migration.</p>
+    <p>The <strong>AIO jump from 38 → 92 (+54 points) is the standout opportunity</strong>, and it's almost entirely a schema-implementation task rather than new content creation — the content already exists and is genuinely good. FAQPage schema on the existing FAQ content, LocalBusiness schema across all 11 city pages, Person schema for Ann and Maria with sameAs links to their press coverage, Service schema for the four offerings, and Review/AggregateRating schema for the six testimonials. Once live, AI systems asked "best matchmaking service in Denver" or "how is matchmaking different from dating apps" have a fully structured, citable source directly from afterhello.com.</p>
+    <p>Two quick fixes carry outsized weight here: <strong>the broken phone number</strong> (footer text doesn't match the tel: link — actively costing leads on mobile) and <strong>the unfinished FAQ answer</strong> ("Yes and here is the link to see them" with no link). Both are five-minute fixes with immediate trust and conversion impact, independent of any larger schema work.</p>
+    <p>Given the strength of the existing foundation, <strong>91+ is achievable within 30–45 days</strong> — the fastest turnaround of any site in this audit series, because the work is additive rather than corrective.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FIXES -->
+  <div class="section-header">
+    <p class="section-eyebrow">04 &nbsp;—&nbsp; Recommended Actions</p>
+    <h2 class="section-title">Top Priority Fixes</h2>
+  </div>
+
+  <div class="fixes-grid">
+
+    <div class="fix-card">
+      <div class="fix-number">01</div>
+      <div class="fix-content">
+        <p class="fix-title">Fix the Phone Number Mismatch — Today</p>
+        <p class="fix-desc">The footer displays +1-786-309-2258 as the visible phone text, but the underlying tel: link routes to a completely different number (504-233-4006). Anyone tapping to call from mobile — the primary device for most matchmaking inquiries — reaches the wrong number. This is a five-minute Webflow fix and should happen before anything else on this list.</p>
+        <span class="fix-impact impact-quick">Fix Today</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">02</div>
+      <div class="fix-content">
+        <p class="fix-title">Complete the Unfinished FAQ Answer</p>
+        <p class="fix-desc">The final FAQ question, "Are there any success stories or testimonials available from previous clients?", currently answers "Yes and here is the link to see them" with no actual link inserted. This is live on the site today. Either link to the testimonials section, a dedicated success stories page, or remove the placeholder language and write a complete answer.</p>
+        <span class="fix-impact impact-quick">Fix Today</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">03</div>
+      <div class="fix-content">
+        <p class="fix-title">Implement FAQPage Schema on Existing FAQ Content</p>
+        <p class="fix-desc">The FAQ content on this site is genuinely excellent — well-reasoned, specific, and written in a tone that AI systems favor for direct citation. Adding FAQPage schema to the 9 existing questions (after fixing #2) is the single highest-leverage action in this entire audit: it requires zero new content, just structured markup around content that already exists. This alone could meaningfully shift how AI systems answer "how does matchmaking work" and "how is this different from dating apps" queries.</p>
+        <span class="fix-impact impact-aio">AIO +25 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">04</div>
+      <div class="fix-content">
+        <p class="fix-title">Add LocalBusiness Schema to All 11 City Pages</p>
+        <p class="fix-desc">Each of the 11 location pages (Atlanta, Austin, Chicago, Dallas, Denver, Houston, Las Vegas, Miami, Minneapolis, Phoenix, Scottsdale) should carry its own LocalBusiness schema with city-specific geo coordinates, areaServed, and a unique meta description referencing local market context. This transforms 11 already-built pages from generic location landing pages into structured local entities that AI systems can match to "matchmaking services in [city]" queries with confidence.</p>
+        <span class="fix-impact impact-local">Local SEO + AIO</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">05</div>
+      <div class="fix-content">
+        <p class="fix-title">Add Person Schema for Ann Parnes &amp; Maria Murray</p>
+        <p class="fix-desc">Ann's former-ADA-to-matchmaker story is press-verified (People, Business Insider) and is exactly the kind of founder narrative AI systems surface when asked "who founded After Hello" or "best matchmakers with unique backgrounds." Person schema with jobTitle, worksFor, sameAs links to LinkedIn and the press coverage transforms this from a compelling story buried in team bios into a structured, citable entity.</p>
+        <span class="fix-impact impact-aio">AIO + Founder Authority</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">06</div>
+      <div class="fix-content">
+        <p class="fix-title">Add Service + Review Schema for the Four Core Offerings</p>
+        <p class="fix-desc">Matchmaking, Date Coaching, Dating Profile Management, and The Inner Circle VIP Membership are each distinct, well-described offerings that deserve independent Service schema (name, description, provider, areaServed). The six named testimonials should carry Review schema with AggregateRating rolling up to the Organization level — giving AI systems and Google rich results verified, structured social proof rather than plain testimonial text.</p>
+        <span class="fix-impact impact-aio">AIO + Rich Results</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand"><span>Elettro</span> Interactive</p>
+      <p class="footer-contact">
+        Dean Palermo, Founder &amp; Executive Producer<br>
+        <a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a><br>
+        Davie / Plantation, FL &nbsp;·&nbsp; AIO Authority — a division of Elettro
+      </p>
+    </div>
+    <a class="footer-cta" href="mailto:dpalermo@elettro.com?subject=After Hello — SEO & AIO Engagement">Let's Talk →</a>
+  </div>
+</footer>
+
+</body>
+</html>
