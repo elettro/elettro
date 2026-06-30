@@ -1,345 +1,47 @@
-/* =========================================================
-   VINCE MOLINARI — Broadcast site
-   Shared design system
-   ========================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-:root{
-  --bg:#0a0a0c;
-  --bg2:#101116;
-  --panel:#15161c;
-  --panel2:#1b1d24;
-  --line:rgba(255,255,255,.09);
-  --line2:rgba(255,255,255,.14);
-  --ink:#f3f1ec;
-  --mut:#9a948b;
-  --mut2:#6f6a62;
-  --gold:#16a3e0;       /* FINTECH.TV azure (primary accent) */
-  --gold-d:#0e7fb4;     /* deeper azure */
-  --gold-br:#3fbdf0;    /* bright hover */
-  --red:#e0231f;
-  --serif:'Archivo',system-ui,-apple-system,sans-serif; /* headlines: clean grotesque, matching FINTECH.TV */
-  --sans:'Archivo',system-ui,-apple-system,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --max:1240px;
-  --pad:clamp(20px,5vw,60px);
-}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{margin:0;font-weight:800;font-family:var(--serif);letter-spacing:-.022em;line-height:1.02}
-p{margin:0}
-
-.container{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.section{padding:clamp(56px,8vw,104px) 0}
-.center{text-align:center}
-
-/* ---- shared bits ---- */
-.kicker{
-  font-family:var(--sans);font-weight:700;font-size:12px;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
-}
-.eyebrow{
-  font-family:var(--mono);font-weight:500;font-size:11px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--mut);
-}
-.lead{font-size:clamp(17px,2vw,20px);line-height:1.6;color:#cfcabf}
-.muted{color:var(--mut)}
-
-.live-badge{
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--mono);font-weight:600;font-size:10px;
-  letter-spacing:.18em;text-transform:uppercase;color:#fff;
-}
-.live-badge::before{
-  content:"";width:8px;height:8px;border-radius:50%;background:var(--red);
-  box-shadow:0 0 0 0 rgba(224,35,31,.6);animation:pulse 1.8s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(224,35,31,.55)}
-  70%{box-shadow:0 0 0 7px rgba(224,35,31,0)}
-  100%{box-shadow:0 0 0 0 rgba(224,35,31,0)}
-}
-
-/* ---- buttons ---- */
-.btn{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--sans);font-weight:700;font-size:13px;
-  letter-spacing:.05em;text-transform:uppercase;
-  padding:15px 28px;border:1px solid transparent;cursor:pointer;
-  transition:transform .15s ease,background .15s ease,color .15s ease,border-color .15s ease;
-}
-.btn:hover{transform:translateY(-1px)}
-.btn-gold{background:var(--gold);color:#0a0a0c}
-.btn-gold:hover{background:var(--gold-br)}
-.btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);border-color:var(--line2)}
-.btn-ghost:hover{background:rgba(255,255,255,.12)}
-.btn-dark{background:#0a0a0c;color:#fff}
-.btn-dark:hover{background:#1b1d24}
-
-/* =========================================================
-   NAV / channel chrome
-   ========================================================= */
-.nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(10,10,12,.86);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
-}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
-.bug{display:flex;align-items:center;gap:11px}
-.bug-mark{
-  font-family:var(--serif);font-size:22px;color:var(--ink);line-height:1;
-  border-right:1px solid var(--line2);padding-right:11px;
-}
-.bug-sub{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
-.nav-links{display:flex;gap:30px}
-.nav-links a{
-  font-family:var(--sans);font-weight:600;font-size:13px;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--mut);
-  padding:6px 0;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;
-}
-.nav-links a:hover{color:var(--ink)}
-.nav-links a.active{color:var(--ink);border-color:var(--gold)}
-.nav .btn{padding:11px 20px}
-
-/* =========================================================
-   TICKER (scrolling authority bar)
-   ========================================================= */
-.ticker{
-  background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  overflow:hidden;white-space:nowrap;position:relative;
-}
-.ticker::before{
-  content:"TRUSTED ACROSS";position:absolute;left:0;top:0;bottom:0;z-index:2;
-  display:flex;align-items:center;padding:0 22px;background:var(--gold);color:#0a0a0c;
-  font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.14em;white-space:nowrap;
-}
-.ticker-track{
-  display:inline-flex;align-items:center;gap:30px;padding:22px 0 22px 210px;
-  animation:scroll 40s linear infinite;
-}
-/* text fallback wordmarks */
-.ticker-track span{
-  font-family:var(--sans);font-weight:800;font-size:20px;letter-spacing:.04em;
-  text-transform:uppercase;color:#cbc6bd;display:inline-flex;align-items:center;
-}
-/* brand logo images */
-.ticker-logo{height:34px;width:auto;opacity:.92}
-.ticker-sep{width:5px;height:5px;border-radius:50%;background:var(--gold);flex:none;opacity:.7}
-@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.ticker:hover .ticker-track{animation-play-state:paused}
-
-/* =========================================================
-   HERO (full-bleed broadcast)
-   ========================================================= */
-.hero{position:relative;min-height:clamp(520px,86vh,820px);display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(115deg,rgba(255,255,255,.04) 0 1px,transparent 1px 16px) ,
-    radial-gradient(120% 120% at 70% 30%,#1a1d24 0%,#0c0d11 60%,#08080a 100%);
-}
-.hero-grad{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,10,.96) 0%,rgba(8,8,10,.8) 38%,rgba(8,8,10,.35) 72%,rgba(8,8,10,.55) 100%)}
-.hero-grad-b{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,10,.9) 0%,transparent 45%)}
-.hero-top{position:absolute;top:0;left:0;right:0;z-index:3}
-.hero-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
-.hero-topbar .eyebrow{color:var(--mut2)}
-.hero-inner{position:relative;z-index:3;width:100%;padding-bottom:clamp(40px,7vw,72px)}
-.hero h1{font-size:clamp(46px,8.5vw,104px);color:#fff;margin:18px 0 22px;letter-spacing:-.015em}
-.hero .lead{max-width:580px;margin-bottom:34px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.ph-chip{
-  position:absolute;z-index:3;right:var(--pad);bottom:clamp(40px,7vw,72px);
-  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--mut2);border:1px dashed var(--line2);padding:7px 11px;
-}
-
-/* page hero (interior) */
-.phero{position:relative;padding:clamp(64px,10vw,120px) 0 clamp(40px,6vw,64px);border-bottom:1px solid var(--line);overflow:hidden}
-.phero-bg{position:absolute;inset:0;background:radial-gradient(120% 140% at 80% 0%,#15171e 0%,#0a0a0c 62%)}
-.phero .inner{position:relative;z-index:2;max-width:840px}
-.phero h1{font-size:clamp(40px,6.5vw,76px);color:#fff;margin:18px 0 20px}
-
-/* =========================================================
-   STATS
-   ========================================================= */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
-.stat{padding:clamp(28px,4vw,48px) clamp(20px,3vw,36px);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stat:last-child{border-right:none}
-.stat-num{font-family:var(--serif);font-size:clamp(40px,5vw,68px);line-height:.9;color:#fff}
-.stat-num.gold{color:var(--gold)}
-.stat-label{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:14px}
-
-/* =========================================================
-   SECTION HEADINGS
-   ========================================================= */
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(28px,4vw,46px);flex-wrap:wrap}
-.sec-head h2{font-size:clamp(30px,4.4vw,52px);color:#fff}
-.sec-head .kicker{margin-bottom:14px;display:block}
-.sec-link{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-
-/* =========================================================
-   VALUE CARDS (who is vince)
-   ========================================================= */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:var(--panel);border:1px solid var(--line);padding:34px 30px;position:relative}
-.card .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.14em}
-.card h3{font-size:26px;color:#fff;margin:18px 0 12px}
-.card p{color:var(--mut);font-size:15px}
-
-/* =========================================================
-   VIDEO
-   ========================================================= */
-.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.vcard{background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:border-color .15s}
-.vcard:hover{border-color:var(--line2)}
-.vframe{position:relative;aspect-ratio:16/9;background:#000}
-.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vmeta{padding:16px 18px 20px}
-.vshow{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
-.vtitle{font-family:var(--sans);font-weight:600;font-size:16px;color:var(--ink);margin-top:8px}
-/* placeholder video tile */
-.vph{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#101118 repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 13px)}
-.vph .play{width:52px;height:52px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;color:var(--mut)}
-.vph small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2)}
-
-/* =========================================================
-   SPLIT / INFOGRAPHIC / FEATURE
-   ========================================================= */
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,64px);align-items:center}
-.split.rev{grid-template-columns:.95fr 1.05fr}
-.ph-img{position:relative;aspect-ratio:4/3;background:#101118 repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 14px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
-.ph-img small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);text-align:center;padding:0 16px}
-.portrait{position:relative}
-.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 18%;border:1px solid var(--line)}
-.portrait .lower{position:absolute;left:0;bottom:22px;background:var(--gold);color:#0a0a0c;font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px}
-
-.checklist{display:flex;flex-direction:column;gap:14px;margin-top:24px}
-.checklist .ci{display:flex;gap:13px;align-items:baseline;font-size:15px;color:#c5c0b6}
-.checklist .ci b{color:#fff;font-weight:600}
-.checklist .ci::before{content:"▸";color:var(--gold);font-size:13px;flex:none}
-
-.figblock{margin-top:clamp(40px,6vw,72px)}
-.figblock img{width:100%;border:1px solid var(--line)}
-.figcap{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);margin-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-/* =========================================================
-   TOPICS (speaking)
-   ========================================================= */
-.topics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.topic{background:var(--bg);padding:30px 32px;display:flex;gap:20px;align-items:flex-start;transition:background .15s}
-.topic:hover{background:var(--panel)}
-.topic .tn{font-family:var(--mono);font-size:13px;color:var(--gold);padding-top:4px;flex:none}
-.topic h3{font-family:var(--sans);font-weight:700;font-size:18px;color:#fff;letter-spacing:0}
-.topic p{color:var(--mut);font-size:14px;margin-top:7px}
-
-/* stages */
-.stages{display:flex;flex-wrap:wrap;gap:12px}
-.stage{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);padding:12px 18px;font-family:var(--sans);font-weight:600;font-size:14px;color:#cfcabf}
-.stage .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
-
-/* quote */
-.quote{border-left:3px solid var(--gold);padding:6px 0 6px 30px;max-width:760px}
-.quote p{font-family:var(--serif);font-size:clamp(24px,3.4vw,38px);line-height:1.22;color:#fff}
-.quote cite{display:block;font-style:normal;font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-top:20px}
-
-/* =========================================================
-   PRESS
-   ========================================================= */
-.press-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.press-card{background:var(--panel);border:1px solid var(--line);padding:28px 28px 26px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s,transform .15s}
-.press-card:hover{border-color:var(--line2);transform:translateY(-2px)}
-.press-outlet{font-family:var(--serif);font-size:24px;color:#fff}
-.press-card p{color:var(--mut);font-size:14px;flex:1}
-.press-card .read{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-.logo-row{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center}
-.logo-row span{font-family:var(--serif);font-size:clamp(18px,2.4vw,26px);color:#7d786f}
-
-/* =========================================================
-   BOOKING / CTA band
-   ========================================================= */
-.booking{background:var(--gold);color:#0a0a0c}
-.booking .inner{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:clamp(40px,6vw,68px) 0;flex-wrap:wrap}
-.booking h2{font-size:clamp(30px,4.6vw,52px);color:#0a0a0c}
-.booking .sub{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#063a52;margin-top:10px}
-.booking-dark{background:var(--bg2);border-top:1px solid rgba(22,163,224,.3)}
-.booking-dark h2{color:#fff}
-.booking-dark .sub{color:var(--gold)}
-
-/* inquiry form */
-.inquire{max-width:760px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
-.field input,.field textarea,.field select{
-  width:100%;background:var(--panel);border:1px solid var(--line2);color:var(--ink);
-  font-family:var(--sans);font-size:15px;padding:14px 15px;outline:none;transition:border-color .15s;
-}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
-.field textarea{resize:vertical;min-height:120px}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.footer{background:var(--bg2);border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 36px}
-.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;margin-bottom:48px}
-.footer h4{font-family:var(--serif);font-size:28px;color:#fff;margin-bottom:14px}
-.footer .fcol-title{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.footer .fcol a,.footer .fcol p{display:block;color:var(--mut);font-size:14px;margin-bottom:10px;transition:color .15s}
-.footer .fcol a:hover{color:var(--ink)}
-.footer-bottom{display:flex;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
-.footer-bottom span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mut2)}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-/* =========================================================
-   PODCAST PLAYER
-   ========================================================= */
-.podcast-wrap{background:var(--panel);border:1px solid var(--line);display:grid;grid-template-columns:320px 1fr}
-.podcast-art{position:relative;min-height:320px;background:#0c0d12 repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 1px,transparent 1px 14px);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);overflow:hidden}
-.podcast-art .badge{position:absolute;top:18px;left:18px;z-index:2}
-.podcast-art .art-note{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);text-align:center;padding:0 20px}
-.podcast-art .art-mark{font-family:var(--serif);font-weight:900;font-size:48px;color:rgba(22,163,224,.32);position:absolute;bottom:20px;right:22px;line-height:1}
-.player-body{padding:clamp(28px,4vw,42px);display:flex;flex-direction:column;justify-content:center}
-.player-title{font-family:var(--serif);font-size:clamp(24px,3vw,36px);color:#fff;margin:10px 0 4px;line-height:1.05}
-.player-sub{color:var(--mut);font-size:14px;margin-bottom:26px}
-.player-bar{height:9px;background:rgba(255,255,255,.1);cursor:pointer;position:relative;overflow:hidden;border-radius:2px}
-.player-prog{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold)}
-.player-bar:hover .player-prog{background:var(--gold-br)}
-.player-times{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mut);margin-top:11px}
-.player-ctrls{display:flex;align-items:center;gap:14px;margin-top:26px}
-.player-play{width:62px;height:62px;border-radius:50%;background:var(--gold);color:#0a0a0c;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,background .15s;flex:none}
-.player-play:hover{transform:scale(1.05);background:var(--gold-br)}
-.player-skip{background:transparent;border:1px solid var(--line2);color:var(--ink);font-family:var(--mono);font-size:12px;padding:12px 14px;cursor:pointer;letter-spacing:.03em;transition:border-color .15s,color .15s}
-.player-skip:hover{border-color:var(--gold);color:var(--gold)}
-.player-rate{margin-left:auto;background:transparent;border:1px solid var(--line2);color:var(--mut);font-family:var(--mono);font-size:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s,color .15s}
-.player-rate:hover{border-color:var(--gold);color:var(--gold)}
-
-@media(max-width:980px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:none}
-  .cards,.vgrid,.press-grid{grid-template-columns:repeat(2,1fr)}
-  .split,.split.rev{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:760px){
-  .nav-links{display:none}
-  .topics{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
-  .podcast-wrap{grid-template-columns:1fr}
-  .podcast-art{min-height:200px}
-}
-@media(max-width:560px){
-  .cards,.vgrid,.press-grid{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr}
-  .stat{border-right:none}
-  .footer-grid{grid-template-columns:1fr}
-  .hero-cta .btn{flex:1;justify-content:center}
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video — Vince Molinari</title>
+<meta name="description" content="FINTECH.TV video highlights and appearances from Vince Molinari.">
+<link rel="stylesheet" href="./style.css?v=vince-css-final-20260630">
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="index.html">VM <span>| FINTECH.TV</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="speaking.html">Speaking</a>
+      <a href="video.html" class="active">Video</a>
+      <a href="index.html#podcast">Podcast</a>
+      <a href="press.html">Press</a>
+    </nav>
+    <a class="btn" href="speaking.html#inquire">Book Vince</a>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <span class="kicker">FINTECH.TV Video</span>
+    <h1>Market conversations from the global voice of finance.</h1>
+    <p>Watch Vince Molinari's FINTECH.TV segments, interviews, and speaker highlights from capital markets conversations around the world.</p>
+    <div class="actions">
+      <a class="btn" href="index.html">Back Home</a>
+      <a class="btn secondary" href="speaking.html#inquire">Book Vince</a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-inner">
+    <span class="eyebrow">Featured Videos</span>
+    <div class="card-grid">
+      <article class="card"><small>FINTECH.TV</small><h3>Live from the NYSE</h3><p>Capital markets perspective from the floor of the New York Stock Exchange.</p></article>
+      <article class="card"><small>Interviews</small><h3>Global finance leaders</h3><p>Conversations across fintech, digital assets, sustainability, and market structure.</p></article>
+      <article class="card"><small>Keynotes</small><h3>Speaker highlights</h3><p>Vince's perspective from major financial conferences and institutional forums.</p></article>
+    </div>
+  </div>
+</section>
+<footer><div class="footer-inner"><div class="brand">VM <span>| FINTECH.TV</span></div><a href="index.html">Home</a><a href="speaking.html#inquire">Book Vince</a></div></footer>
+</body>
+</html>
