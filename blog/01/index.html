@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stashbox Radio — Listen. Watch. Shop. Share.</title>
+    <meta
+      name="description"
+      content="What Stashbox Radio is: a visual music commerce platform combining streaming radio, video, booking, custom music, and merch for independent music islands."
+    />
+    <link rel="canonical" href="https://stashbox.com/blog/01/" />
+    <meta
+      property="og:title"
+      content="Stashbox Radio — Listen. Watch. Shop. Share."
+    />
+    <meta
+      property="og:description"
+      content="Stashbox Radio is a visual music commerce platform replacing passive streaming with independent music islands."
+    />
+    <meta property="og:url" content="https://stashbox.com/blog/01/" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Stashbox Radio — Listen. Watch. Shop. Share.",
+        "description": "What Stashbox Radio is: a visual music commerce platform combining streaming radio, video, booking, custom music, and merch for independent music islands.",
+        "url": "https://stashbox.com/blog/01/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Stashbox",
+          "url": "https://stashbox.com/"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --bg: #07080b;
+        --panel: #11141b;
+        --panel-2: #171b23;
+        --text: #f7f3e8;
+        --muted: #b8b0a3;
+        --line: rgba(255, 255, 255, 0.12);
+        --accent: #25aee8;
+        --accent-2: #f7c94b;
+        --max: 1180px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      body {
+        margin: 0;
+        min-width: 0;
+        overflow-x: hidden;
+        background:
+          radial-gradient(
+            circle at 20% 0,
+            rgba(37, 174, 232, 0.18),
+            transparent 34rem
+          ),
+          var(--bg);
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+      }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(7, 8, 11, 0.92);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(18px);
+      }
+      .nav-wrap {
+        max-width: var(--max);
+        margin: auto;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      .brand {
+        font-weight: 950;
+        letter-spacing: 0.18em;
+        text-decoration: none;
+      }
+      .nav-toggle {
+        display: none;
+        margin-left: auto;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 12px;
+      }
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex: 1;
+      }
+      .main-nav a,
+      .dropbtn {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 8px 11px;
+        border-radius: 999px;
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .main-nav a:hover,
+      .dropbtn:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .dropdown {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+      .dropdown-menu {
+        position: absolute;
+        left: 0;
+        top: calc(100% + 8px);
+        min-width: 230px;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #10141b;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        display: none;
+      }
+      .dropdown:hover .dropdown-menu,
+      .dropdown:focus-within .dropdown-menu {
+        display: block;
+      }
+      .dropdown-menu a {
+        display: flex;
+        border-radius: 10px;
+        white-space: normal;
+      }
+      .youtube-cta {
+        margin-left: auto;
+        background: var(--accent) !important;
+        color: #021017 !important;
+      }
+      .hero {
+        padding: 80px 22px 34px;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-inner,
+      .content,
+      .footer-inner {
+        max-width: var(--max);
+        margin: auto;
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      .hero h1 {
+        font-size: clamp(42px, 8vw, 88px);
+        line-height: 0.94;
+        margin: 16px 0 18px;
+        letter-spacing: -0.06em;
+      }
+      .dek {
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 20px;
+      }
+      .audio-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 30px;
+      }
+      .audio-card,
+      .article-card {
+        border: 1px solid var(--line);
+        background: rgba(17, 20, 27, 0.82);
+        border-radius: 22px;
+        padding: 22px;
+      }
+      .audio-card h3 {
+        margin: 0 0 6px;
+        font-size: 21px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      audio {
+        width: 100%;
+        margin-top: 16px;
+      }
+      .content {
+        padding: 54px 22px 80px;
+      }
+      .article-card {
+        padding: clamp(24px, 5vw, 54px);
+      }
+      .launch {
+        display: inline-flex;
+        margin: 10px 0 30px;
+        padding: 13px 18px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #021017;
+        text-decoration: none;
+        font-weight: 900;
+      }
+      .article-card h2 {
+        font-size: clamp(28px, 5vw, 52px);
+        line-height: 1;
+        margin: 34px 0 12px;
+        letter-spacing: -0.04em;
+      }
+      .article-card h3 {
+        font-size: 24px;
+        margin: 28px 0 8px;
+        color: var(--accent-2);
+      }
+      .article-card p,
+      .article-card li {
+        color: #ddd6ca;
+      }
+      .article-card ul {
+        padding-left: 22px;
+      }
+      .tagline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 32px;
+      }
+      .tagline span {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: #050609;
+        padding: 48px 22px 28px;
+      }
+      .footer-inner {
+        display: grid;
+        grid-template-columns: 1.3fr repeat(3, 1fr);
+        gap: 28px;
+      }
+      .footer-inner h4 {
+        margin: 0 0 12px;
+      }
+      .footer-inner ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .footer-inner li {
+        margin: 7px 0;
+      }
+      .footer-inner a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .footer-inner a:hover {
+        color: var(--text);
+      }
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .socials a,
+      .footer-docs a {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 10px;
+      }
+      .footer-bottom {
+        max-width: var(--max);
+        margin: 32px auto 0;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 980px) {
+        .nav-toggle {
+          display: inline-flex;
+        }
+        .nav-wrap {
+          flex-wrap: wrap;
+        }
+        .main-nav {
+          display: none;
+          flex-basis: 100%;
+          order: 3;
+          flex-direction: column;
+          align-items: stretch;
+          padding-top: 12px;
+        }
+        .main-nav.is-open {
+          display: flex;
+        }
+        .main-nav a,
+        .dropbtn {
+          justify-content: space-between;
+          width: 100%;
+          border-radius: 12px;
+        }
+        .dropdown {
+          display: block;
+        }
+        .dropdown-menu {
+          position: static;
+          display: block;
+          margin: 4px 0 8px;
+          background: rgba(255, 255, 255, 0.04);
+          box-shadow: none;
+        }
+        .youtube-cta {
+          margin-left: 0;
+          justify-content: center !important;
+        }
+        .audio-grid,
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding-top: 46px;
+        }
+        .article-card {
+          border-radius: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="/">STASHBOX</a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="main-nav"
+          aria-expanded="false"
+        >
+          Menu
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Global navigation">
+          <a href="/">Home</a>
+          <div class="dropdown">
+            <button class="dropbtn" type="button">Radio</button>
+            <div class="dropdown-menu">
+              <a href="/blog/01/">What Is Stashbox Radio?</a>
+            </div>
+          </div>
+          <a href="/videos/">Videos</a><a href="/sessions/">Sessions</a
+          ><a href="https://stashbox.ai/">Shop</a
+          ><a href="/setlists/">Setlists</a><a href="/book/">Book Band</a
+          ><a href="/custom-music/">Custom Music</a><a href="/about/">About</a
+          ><a href="/radio/dashboard/">Dashboard</a
+          ><a
+            class="youtube-cta"
+            href="https://www.youtube.com/@stashboxband"
+            target="_blank"
+            rel="noopener"
+            >Subscribe on YouTube</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">
+            Stashbox Radio · Visual Music Commerce Platform
+          </div>
+          <h1>Listen. Watch.<br />Shop. Share.</h1>
+          <p class="dek">Replacing Streaming with Independent Music Islands</p>
+          <div class="audio-grid">
+            <div class="audio-card">
+              <h3>Replacing Streaming with Independent Music Islands</h3>
+              <div class="meta">
+                English · Episode 01 · Stashbox Radio Podcast
+              </div>
+              <audio controls>
+                Your browser does not support audio playback.
+              </audio>
+            </div>
+            <div class="audio-card">
+              <h3>Musik-Inseln statt Streaming-Ozean mit Stashbox Radio</h3>
+              <div class="meta">
+                Deutsch · Episode 01 · Stashbox Radio Podcast
+              </div>
+              <audio controls>
+                Your browser does not support audio playback.
+              </audio>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content">
+        <article class="article-card">
+          <div class="eyebrow">Now Streaming · 110+ Tracks · Free</div>
+          <h2>Stashbox<br />Radio</h2>
+          <p>
+            Listen, watch, shop, and share — all in one place. The only
+            streaming radio built for music, commerce, and brand experience.
+          </p>
+          <a class="launch" href="/radio/">Launch Stashbox Radio ↗</a>
+          <h2>What Stashbox Radio Is</h2>
+          <p>
+            This is not just a band website. Stashbox is a music-driven business
+            platform combining live entertainment, custom music production,
+            streaming radio, video, booking, and merch — all connected around
+            one brand. The official AI reference describes Stashbox as a "live
+            band, recording artist, tribute show producer, custom music creator,
+            and branded music content producer."
+          </p>
+          <h2>The Main Business Idea</h2>
+          <p>
+            The strongest value is helping organizations create a recognizable
+            sound and memorable content experience — instead of relying on
+            generic ads, stock music, or one-off entertainment. Stashbox creates
+            original music for companies that need more than one song: branded
+            songs, campaign tracks, event music, product songs, venue music,
+            social media hooks, artist releases, and custom audio content
+            designed around a company's message.
+          </p>
+          <h2>Who It Serves</h2>
+          <h3>Resorts, Hotels &amp; Cruise Lines</h3>
+          <p>
+            A full branded atmosphere, not just background entertainment. Create
+            a unique destination sound used across lobbies, pools, restaurants,
+            guest experiences, and events — reusable across video, social, and
+            advertising.
+          </p>
+          <ul>
+            <li>Unique destination sound for all property touchpoints</li>
+            <li>Reusable music for videos and social media</li>
+            <li>Live performance plus custom content in one identity</li>
+            <li>Stronger guest memory with original place-based songs</li>
+          </ul>
+          <h3>Restaurants, Bars &amp; Venues</h3>
+          <p>
+            Live music programming and branded audio content working together.
+            Custom songs for menu items, happy hours, events, or seasonal
+            promotions alongside live entertainment that matches the venue's
+            vibe.
+          </p>
+          <ul>
+            <li>Custom songs for promos, specials, and events</li>
+            <li>Live reggae, rock, blues, funk, soul, or acoustic sets</li>
+            <li>Short-form social hooks for memorable content</li>
+            <li>Brand recall through recurring original themes</li>
+          </ul>
+          <h3>Corporate Brands &amp; Product Companies</h3>
+          <p>
+            Music becomes part of the brand's communication system — not
+            decoration. A custom audio-content engine for launches, campaigns,
+            ads, and internal culture built around the company's message and
+            audience.
+          </p>
+          <ul>
+            <li>Campaign music for product launches and seasonal promos</li>
+            <li>Product song series with consistent voice and CTA</li>
+            <li>Brand consistency across all audio content</li>
+            <li>Internal culture: awards, walk-ons, celebrations</li>
+          </ul>
+          <h3>Event Producers &amp; Festivals</h3>
+          <p>
+            Music integrated before, during, and after the event. Live show
+            flexibility from 2-piece to 8-piece productions, tribute shows, and
+            a full mix format — plus post-event assets reused in recap reels and
+            sponsor videos.
+          </p>
+          <ul>
+            <li>Walk-on songs, opening themes, sponsor tracks</li>
+            <li>
+              Bob Dylan tribute, Sublime tribute, Classic Reggae, Mix Show
+            </li>
+            <li>Scalable band size for any stage</li>
+            <li>Post-event content for recaps and future promos</li>
+          </ul>
+          <h3>Cities &amp; Tourism Campaigns</h3>
+          <p>
+            Place-based marketing through original music. Custom songs can
+            include city names, destination details, event names, seasonal
+            messages, slogans, sponsor mentions, and calls to action — promoting
+            a location emotionally.
+          </p>
+          <ul>
+            <li>Destination storytelling through original music</li>
+            <li>Campaign songs for festivals, beach towns, districts</li>
+            <li>Localized content with exact places and slogans</li>
+            <li>Shareable audio/video assets for tourism boards</li>
+          </ul>
+          <h3>Artists, Creators &amp; Influencers</h3>
+          <p>
+            Original music for video content instead of overused stock tracks.
+            Release-ready production support covering lyrics, melody, vocals,
+            arrangement, production, mixing, and mastering — plus multi-song
+            creative direction.
+          </p>
+          <ul>
+            <li>Original music for content, not stock library tracks</li>
+            <li>Full release-ready production support</li>
+            <li>Branded music for creator partnerships and sponsorships</li>
+            <li>Multi-song libraries for a distinctive content identity</li>
+          </ul>
+          <h3>Merch &amp; Ecommerce Brands</h3>
+          <p>
+            Stashbox Radio demonstrates how songs, video, and product
+            recommendations can live in one interface. Contextual ecommerce
+            where products attach to specific songs or moods, giving listeners a
+            reason to stay — and shop.
+          </p>
+          <ul>
+            <li>Song-specific product recommendations in the player</li>
+            <li>In-player merch shop with Shopify integration</li>
+            <li>Longer engagement through music-driven discovery</li>
+            <li>Cross-promotion across songs, videos, and merch</li>
+          </ul>
+          <h2>Why It Works Commercially</h2>
+          <p>
+            Most businesses buy these pieces separately — a band for an event,
+            stock music for videos, an agency for campaign assets, a
+            videographer for social, a merch store, and a streaming player.
+            Stashbox connects all of them around one music brand and production
+            workflow, handling lyrics, melody, vocals, arrangement, production,
+            mixing, mastering, genre direction, brand integration, release-ready
+            delivery, fast iteration, and multi-song creative direction.
+          </p>
+          <h3>Bottom Line</h3>
+          <p>
+            Stashbox is best understood as a branded music and entertainment
+            platform. It sells live performances, produces custom songs, creates
+            multi-song libraries, documents performances through video, streams
+            music through Stashbox Radio, and connects listeners to merchandise
+            or booking opportunities. For the right business, the benefit is not
+            merely "having music" — it's owning a repeatable, memorable, branded
+            sound used across events, ads, videos, social content, venues,
+            campaigns, and customer experiences.
+          </p>
+          <div class="tagline">
+            <span>Resorts &amp; Hotels</span><span>Restaurants &amp; Bars</span
+            ><span>Corporate Brands</span><span>Events &amp; Festivals</span
+            ><span>Tourism &amp; Cities</span><span>Artists &amp; Creators</span
+            ><span>Merch &amp; Ecommerce</span>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="/">STASHBOX</a>
+          <p>Rock · Reggae · Blues · Originals · South Florida</p>
+          <p>
+            <a href="tel:+13104086687">310.408.6687</a><br /><a
+              href="mailto:booking@stashbox.com"
+              >booking@stashbox.com</a
+            >
+          </p>
+        </div>
+        <div>
+          <h4>Tribute Shows</h4>
+          <ul>
+            <li><a href="/book/">Stashbox Does Dylan</a></li>
+            <li><a href="/book/">Stashbox Does Sublime</a></li>
+            <li><a href="/book/">Classic Reggae Show</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Music</h4>
+          <ul>
+            <li><a href="/radio/">Radio</a></li>
+            <li><a href="/blog/01/">What Is Stashbox Radio?</a></li>
+            <li><a href="/videos/">Videos</a></li>
+            <li><a href="/sessions/">Sessions</a></li>
+            <li><a href="/setlists/">Setlists</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>More</h4>
+          <ul>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/past-shows/">Past Shows</a></li>
+            <li><a href="https://stashbox.ai/">Merch Store</a></li>
+            <li><a href="/custom-music/">Custom Music</a></li>
+            <li><a href="/radio/dashboard/">Dashboard</a></li>
+            <li><a href="/report/">Report</a></li>
+            <li><a href="https://elettro.com/">Elettro.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Stashbox · South Florida Live Music · Dean Palermo</div>
+        <div class="footer-docs">
+          <a href="/radio/one-sheet/">View Radio One Sheet →</a>
+          <a href="/radio/flyer/">Stashbox Radio Flyer →</a>
+        </div>
+        <div class="socials">
+          <a href="https://www.youtube.com/@stashboxband">YouTube</a
+          ><a href="https://www.facebook.com/Stashboxband/">Facebook</a
+          ><a href="https://www.instagram.com/stashboxmusic/">Instagram</a
+          ><a href="https://open.spotify.com/artist/0hA2HDsBCFrg9VT7gBHvMT"
+            >Spotify</a
+          ><a href="https://www.tiktok.com/@stashboxband">TikTok</a
+          ><a href="https://x.com/stashboxband">X</a
+          ><a href="https://www.threads.com/@stashboxmusic">Threads</a>
+        </div>
+        <div>Built by <a href="https://elettro.com/">Elettro.com</a></div>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector(".nav-toggle");
+      const nav = document.getElementById("main-nav");
+      toggle.addEventListener("click", () => {
+        const open = nav.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", String(open));
+      });
+    </script>
+  </body>
+</html>
