@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — Rock and Blues Muse | Elettro</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f5f3ef;
+    --rb-amber: #e8920c;
+    --rb-amber-dark: #b5700a;
+    --rb-rust: #c14d28;
+    --rb-denim: #2c3e50;
+    --rb-charcoal: #161616;
+    --elettro-cyan: #00e5ff;
+    --elettro-green: #69ff47;
+    --gray-100: #efece6;
+    --gray-200: #ddd8cf;
+    --gray-400: #9c958a;
+    --gray-600: #5c564c;
+    --grade-a: #22c55e;
+    --grade-b: #84cc16;
+    --grade-c: #eab308;
+    --grade-d: #f97316;
+    --grade-f: #ef4444;
+    --grade-a-bg: #dcfce7;
+    --grade-b-bg: #ecfccb;
+    --grade-c-bg: #fef9c3;
+    --grade-d-bg: #ffedd5;
+    --grade-f-bg: #fee2e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--rb-charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 88% 20%, rgba(232,146,12,0.15) 0%, transparent 60%),
+      repeating-linear-gradient(180deg, transparent, transparent 3px, rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 54px 40px 46px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rb-amber);
+    margin-bottom: 18px;
+  }
+
+  .header-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .hbadge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 13px;
+    border-radius: 3px;
+    border: 1px solid rgba(232,146,12,0.3);
+    color: rgba(232,146,12,0.9);
+    background: rgba(232,146,12,0.07);
+  }
+
+  .header-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(40px, 6.8vw, 72px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  .header-title span { color: var(--rb-amber); }
+
+  .header-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(17px, 2.6vw, 23px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+  }
+
+  .meta-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+
+  .meta-value { font-size: 14px; color: var(--white); }
+  .meta-value a { color: var(--rb-amber); text-decoration: none; }
+
+  .accent-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rb-rust) 0%, var(--rb-amber) 50%, var(--elettro-cyan) 100%);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 54px 40px 80px;
+  }
+
+  .section-header { margin-bottom: 30px; }
+
+  .section-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rb-amber-dark);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(27px, 4vw, 38px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--gray-200);
+    margin: 46px 0;
+  }
+
+  /* INTRO */
+  .intro-block {
+    background: var(--rb-charcoal);
+    border-radius: 12px;
+    padding: 34px 38px;
+    margin-bottom: 46px;
+    border-left: 4px solid var(--rb-amber);
+  }
+
+  .intro-block p {
+    color: rgba(255,255,255,0.82);
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin-bottom: 11px;
+  }
+
+  .intro-block p:last-child { margin-bottom: 0; }
+  .intro-block strong { color: var(--rb-amber); font-weight: 500; }
+
+  /* WP CONFIRMED NOTE */
+  .platform-note {
+    background: rgba(34,197,94,0.05);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 30px;
+  }
+
+  .platform-note h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #15803d;
+    margin-bottom: 8px;
+  }
+
+  .platform-note p { font-size: 13.5px; color: var(--gray-600); line-height: 1.65; }
+  .platform-note strong { color: var(--black); font-weight: 600; }
+
+  /* BACKEND */
+  .backend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+    margin-bottom: 46px;
+  }
+
+  .backend-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bc-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-400); }
+  .bc-value { font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 700; color: var(--black); line-height: 1.2; }
+  .bc-note { font-size: 11.5px; color: var(--gray-600); line-height: 1.4; }
+
+  .bc-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 99px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill-yes { background: #dcfce7; color: #166534; }
+  .pill-no { background: #fee2e2; color: #991b1b; }
+  .pill-warn { background: #ffedd5; color: #9a3412; }
+  .pill-partial { background: #dbeafe; color: #1e40af; }
+
+  /* SCORE HERO */
+  .score-hero {
+    background: var(--rb-charcoal);
+    border-radius: 14px;
+    padding: 38px;
+    margin-bottom: 46px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 38px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .score-hero { grid-template-columns: 1fr; } }
+
+  .overall-score-circle {
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    border: 3px solid var(--grade-c);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .osc-number { font-family: 'Oswald', sans-serif; font-size: 52px; font-weight: 800; color: var(--white); line-height: 1; }
+  .osc-label { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .osc-grade { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: var(--grade-c); }
+
+  .score-bars { display: flex; flex-direction: column; gap: 13px; }
+  .score-row { display: flex; flex-direction: column; gap: 4px; }
+  .score-row-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .score-cat { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.68); }
+  .score-val { font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700; }
+
+  .bar-track { width: 100%; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* CATEGORY CARDS */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    margin-bottom: 46px;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .cat-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+
+  .cat-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+  }
+
+  .grade-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
+  .grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
+  .grade-c { background: var(--grade-c-bg); color: #854d0e; }
+  .grade-b { background: var(--grade-b-bg); color: #3f6212; }
+  .grade-a { background: var(--grade-a-bg); color: #166534; }
+
+  .cat-score-line { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .cat-score-num { font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 800; line-height: 1; color: var(--black); }
+  .cat-score-denom { font-size: 12.5px; color: var(--gray-400); margin-top: 4px; }
+  .cat-bar-track { flex: 1; height: 7px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 4px; }
+
+  .cat-findings { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+
+  .finding {
+    font-size: 12.5px;
+    line-height: 1.45;
+    padding-left: 17px;
+    position: relative;
+    color: var(--gray-600);
+  }
+
+  .finding::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .finding.pos::before { background: var(--grade-a); }
+  .finding.neg::before { background: var(--grade-f); }
+  .finding strong { color: var(--black); font-weight: 500; }
+
+  /* ASSETS */
+  .assets-box {
+    background: var(--rb-charcoal);
+    border-radius: 14px;
+    padding: 34px 38px;
+    margin-bottom: 46px;
+    border-left: 4px solid var(--rb-amber);
+  }
+
+  .assets-box h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--rb-amber);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+  }
+
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+    gap: 14px;
+  }
+
+  .asset-item {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 15px 17px;
+  }
+
+  .asset-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 5px; }
+  .asset-value { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); line-height: 1.3; }
+
+  /* COMPARE TABLE */
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 0.5px solid var(--gray-200);
+    margin-bottom: 46px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead { background: var(--rb-charcoal); color: var(--white); }
+
+  thead th {
+    padding: 15px 20px;
+    text-align: left;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+  tbody tr { border-bottom: 0.5px solid var(--gray-100); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #f9f5ef; }
+  tbody td { padding: 13px 20px; vertical-align: middle; }
+  tbody td:first-child { font-weight: 500; color: var(--black); font-size: 13px; }
+  tbody td:not(:first-child) { text-align: center; }
+
+  .td-current { font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 700; }
+  .td-delta { font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700; color: var(--rb-amber-dark); background: rgba(232,146,12,0.08); border-radius: 5px; padding: 3px 9px !important; }
+
+  .table-footer { background: var(--rb-charcoal); color: var(--white); font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; }
+  .table-footer td { padding: 15px 20px !important; }
+
+  /* FIXES */
+  .fixes-grid { display: flex; flex-direction: column; gap: 14px; margin-bottom: 46px; }
+
+  .fix-card {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 21px 27px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .fix-number { font-family: 'Oswald', sans-serif; font-size: 34px; font-weight: 800; color: var(--rb-amber); line-height: 1; margin-top: 2px; }
+  .fix-title { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; color: var(--black); letter-spacing: 0.02em; margin-bottom: 6px; }
+  .fix-desc { font-size: 13.5px; line-height: 1.6; color: var(--gray-600); }
+
+  .fix-impact {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-top: 8px;
+  }
+
+  .impact-high { background: #ffedd5; color: #9a3412; }
+  .impact-aio { background: rgba(232,146,12,0.1); color: #92620a; }
+  .impact-quick { background: #dcfce7; color: #166534; }
+  .impact-monetize { background: #dbeafe; color: #1e40af; }
+
+  /* CEILING */
+  .ceiling-box {
+    background: var(--rb-charcoal);
+    border-radius: 14px;
+    padding: 38px;
+    margin-bottom: 46px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceiling-box::after {
+    content: '90';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 170px;
+    font-weight: 800;
+    color: rgba(232,146,12,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ceiling-box h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--rb-amber);
+    letter-spacing: 0.04em;
+    margin-bottom: 15px;
+  }
+
+  .ceiling-box p {
+    font-size: 14.5px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+    margin-bottom: 11px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ceiling-box p:last-child { margin-bottom: 0; }
+  .ceiling-box strong { color: var(--rb-amber); font-weight: 500; }
+
+  /* CONTENT VOLUME CALLOUT */
+  .volume-box {
+    background: rgba(232,146,12,0.05);
+    border: 1px solid rgba(232,146,12,0.2);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    text-align: center;
+  }
+
+  .vol-stat-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--rb-amber-dark);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .vol-stat-label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer { background: var(--rb-charcoal); padding: 38px 40px; }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 30px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-brand { font-family: 'Oswald', sans-serif; font-size: 27px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--white); margin-bottom: 6px; }
+  .footer-brand span { color: var(--rb-amber); }
+  .footer-contact { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .footer-contact a { color: var(--rb-amber); text-decoration: none; }
+
+  .footer-cta {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    background: var(--rb-amber);
+    padding: 13px 27px;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  @media (max-width: 620px) {
+    main { padding: 40px 22px 60px; }
+    .header-inner { padding: 36px 22px 32px; }
+    footer { padding: 30px 22px; }
+    .intro-block, .assets-box { padding: 26px 22px; }
+    .score-hero { padding: 26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <p class="header-eyebrow">Elettro Interactive &nbsp;·&nbsp; Confidential Digital Audit</p>
+    <div class="header-badges">
+      <span class="hbadge">4,379+ Articles Published</span>
+      <span class="hbadge">Daily Posting Cadence</span>
+      <span class="hbadge">$4M Est. Annual Revenue</span>
+      <span class="hbadge">Senior Editor: Martine Ehrenclou</span>
+    </div>
+    <h1 class="header-title">SEO &amp; <span>AIO</span><br>Audit Report</h1>
+    <p class="header-subtitle">Rock and Blues Muse &nbsp;·&nbsp; rockandbluesmuse.com</p>
+    <div class="header-meta">
+      <div>
+        <p class="meta-label">Prepared by</p>
+        <p class="meta-value">Dean Palermo, Elettro Interactive</p>
+      </div>
+      <div>
+        <p class="meta-label">Contact</p>
+        <p class="meta-value"><a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a></p>
+      </div>
+      <div>
+        <p class="meta-label">Client</p>
+        <p class="meta-value">Rock and Blues Muse &nbsp;·&nbsp; Martine Ehrenclou, Senior Editor &amp; Publisher</p>
+      </div>
+      <div>
+        <p class="meta-label">Date</p>
+        <p class="meta-value">June 15, 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <p>This audit evaluates <strong>rockandbluesmuse.com</strong> — an established online music magazine covering blues, blues-rock, rock, and roots music — across five core dimensions of modern search performance.</p>
+    <p>Rock and Blues Muse is a genuinely substantial publication: <strong>4,379+ published articles under Senior Editor Martine Ehrenclou alone, daily publishing cadence through 2026, an estimated $4M in annual revenue, active social presence across Facebook, X, Instagram, Threads, LinkedIn, and RSS, and a contributor network</strong> covering artist interviews, album reviews, concert reviews, and breaking music news. This is one of the highest-content-volume sites in this entire audit series.</p>
+    <p>The site is on WordPress with strong content fundamentals already in place. The opportunity here is less about content creation — that engine is clearly working — and more about <strong>structured data, on-page consistency, and converting two decades of archive content into AI-citable authority</strong> for the blues-rock genre specifically.</p>
+  </div>
+
+  <!-- SECTION 01: BACKEND -->
+  <div class="section-header">
+    <p class="section-eyebrow">01 &nbsp;—&nbsp; Platform Analysis</p>
+    <h2 class="section-title">Is It WordPress? What's the Stack?</h2>
+  </div>
+
+  <div class="platform-note">
+    <h3>Confirmed: WordPress — A Solid Foundation for a Content-Heavy Publication</h3>
+    <p>Rock and Blues Muse runs on <strong>WordPress</strong>, evidenced by the standard URL date-based permalink structure (/2026/02/27/article-slug/), the WordPress-style author archive pages (/author/martine/), the category taxonomy structure, and the "Load More Posts" pagination pattern typical of WordPress theme builders. For a high-volume publisher posting daily, WordPress is the correct choice — the question isn't the CMS, it's whether SEO plugins, schema, and technical hygiene are keeping pace with the publishing volume.</p>
+  </div>
+
+  <div class="backend-grid">
+    <div class="backend-card">
+      <span class="bc-label">WordPress?</span>
+      <span class="bc-pill pill-yes">Yes</span>
+      <span class="bc-note">Confirmed via permalink structure, author archives, and category taxonomy pattern.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">URL Structure</span>
+      <span class="bc-value">Date-Based Permalinks</span>
+      <span class="bc-note">/2026/02/27/article-slug/ — functional but not the most SEO-friendly structure available in WordPress.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Domain Variant Issue</span>
+      <span class="bc-pill pill-warn">www / non-www split</span>
+      <span class="bc-note">Content found indexed at both rockandbluesmuse.com and www.rockandbluesmuse.com — needs canonical consolidation check.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Publishing Volume</span>
+      <span class="bc-value">4,379+ Articles</span>
+      <span class="bc-note">From Martine Ehrenclou alone. Massive content archive — a significant SEO and AIO asset if properly structured.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Schema Markup</span>
+      <span class="bc-pill pill-warn">Unverified / Likely Thin</span>
+      <span class="bc-note">No Article, MusicGroup, MusicAlbum, or Review schema confirmed in available crawl data — high-priority item to verify and build out.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Social Integration</span>
+      <span class="bc-pill pill-yes">Strong</span>
+      <span class="bc-note">Facebook, X, Instagram, RSS, Threads, LinkedIn all linked in primary navigation — active multi-platform presence.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Monetization</span>
+      <span class="bc-value">Shop · Advertise · Donate</span>
+      <span class="bc-note">All three monetization paths present in nav — Shop, Advertise, Donate — solid revenue diversification for a media publisher.</span>
+    </div>
+    <div class="backend-card">
+      <span class="bc-label">Content Taxonomy</span>
+      <span class="bc-value">Excellent</span>
+      <span class="bc-note">Music News, Album Reviews, Concert Reviews, Documentaries, Interviews, Videos &amp; Singles — clean, logical category structure.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 02: SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">02 &nbsp;—&nbsp; Current Performance</p>
+    <h2 class="section-title">SEO &amp; AIO Scores — Today</h2>
+  </div>
+
+  <!-- VOLUME STATS -->
+  <div class="volume-box">
+    <div>
+      <p class="vol-stat-num">4,379+</p>
+      <p class="vol-stat-label">Published Articles</p>
+    </div>
+    <div>
+      <p class="vol-stat-num">Daily</p>
+      <p class="vol-stat-label">Publishing Cadence</p>
+    </div>
+    <div>
+      <p class="vol-stat-num">6</p>
+      <p class="vol-stat-label">Active Social Platforms</p>
+    </div>
+    <div>
+      <p class="vol-stat-num">$4M</p>
+      <p class="vol-stat-label">Est. Annual Revenue</p>
+    </div>
+  </div>
+
+  <div class="score-hero">
+    <div class="overall-score-circle">
+      <span class="osc-number">64</span>
+      <span class="osc-label">/ 100</span>
+      <span class="osc-grade">C+</span>
+    </div>
+    <div class="score-bars">
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Technical SEO</span>
+          <span class="score-val" style="color:#eab308;">62</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%;background:#eab308;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">On-Page SEO</span>
+          <span class="score-val" style="color:#84cc16;">68</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:68%;background:#84cc16;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Content Quality</span>
+          <span class="score-val" style="color:#22c55e;">85</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:85%;background:#22c55e;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">AI Search Optimization</span>
+          <span class="score-val" style="color:#f97316;">42</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:42%;background:#f97316;"></div></div>
+      </div>
+      <div class="score-row">
+        <div class="score-row-header">
+          <span class="score-cat">Trust &amp; Authority</span>
+          <span class="score-val" style="color:#84cc16;">65</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%;background:#84cc16;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY CARDS -->
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Technical SEO</div>
+        <div class="grade-badge grade-c">C</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">62</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:62%;background:var(--grade-c);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>WordPress is the correct platform</strong> for this content volume and publishing cadence</li>
+        <li class="finding pos"><strong>Clean category taxonomy</strong> — Music News, Album Reviews, Concert Reviews, Music Documentaries, Interviews, Videos &amp; Singles</li>
+        <li class="finding pos"><strong>"Load More Posts" pagination</strong> works well for infinite-scroll music news consumption</li>
+        <li class="finding neg"><strong>www / non-www domain inconsistency</strong> — content appears indexed under both rockandbluesmuse.com and www.rockandbluesmuse.com, which risks split authority and duplicate content signals if canonicalization isn't airtight</li>
+        <li class="finding neg"><strong>Date-based permalink structure</strong> (/2026/02/27/...) is functional but less optimal than a clean /category/article-slug/ structure for long-term SEO — dates in URLs can also (incorrectly) signal staleness for evergreen content like classic artist interviews</li>
+        <li class="finding neg"><strong>No schema markup confirmed</strong> for a content type that benefits enormously from it — Article, NewsArticle, MusicAlbum, Review, and VideoObject schema all have direct application here and don't appear to be implemented</li>
+        <li class="finding warn"><strong>4,379+ articles is a massive technical SEO asset if internal linking is strong</strong> — needs verification that older high-value content (classic artist interviews, foundational reviews) is still being internally linked from new posts</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">On-Page SEO</div>
+        <div class="grade-badge grade-b">B−</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">68</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:68%;background:var(--grade-b);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Article headlines are well-written and keyword-natural</strong> — "Two-Time Grammy Award Winner Tyler Bryant 'Screwed &amp; Tattooed'" and similar headlines naturally include artist name, achievement, and release title</li>
+        <li class="finding pos"><strong>Byline and date consistently present</strong> on every article — "By Martine Ehrenclou | [date] | [categories] | [comment count]" is a clean, consistent on-page pattern</li>
+        <li class="finding pos"><strong>Category tags are applied consistently</strong> — most articles carry 2-4 relevant category tags (Music News, Videos &amp; Singles, specific artist tags like "Warren Haynes" or "Gov't Mule")</li>
+        <li class="finding pos"><strong>Artist-specific tagging</strong> (e.g., "The Rolling Stones," "Warren Haynes," "Gov't Mule") creates natural topic clusters that help both SEO and content discovery</li>
+        <li class="finding neg"><strong>Homepage title/meta optimization unverified</strong> — couldn't confirm meta description quality due to crawl access limitations, but this should be audited directly given the importance of the homepage as the primary entry point</li>
+        <li class="finding neg"><strong>Author page for Martine doesn't surface her credentials</strong> — "This author has not yet filled in any details" appears on her own author archive page despite her being the senior editor and most prolific writer on the site</li>
+        <li class="finding warn"><strong>Headline pattern is strong for humans but inconsistent for SEO templating</strong> — some headlines lead with artist name, others with achievement, others with action verb. A consistent SEO title pattern (Artist Name + News Type + Keyword) would compound over thousands of future articles</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Content Quality</div>
+        <div class="grade-badge grade-a">A−</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">85</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:85%;background:var(--grade-a);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>4,379+ articles is an extraordinary content depth asset</strong> — few independent music publications in this genre have this volume of original journalism</li>
+        <li class="finding pos"><strong>Daily publishing cadence sustained through 2026</strong> — this is not a stale or abandoned blog; it's an actively run newsroom</li>
+        <li class="finding pos"><strong>Genuine original journalism</strong> — named bylines, original interviews (Colin James, Tab Benoit, Mike Zito), and substantive album reviews rather than press-release reposts</li>
+        <li class="finding pos"><strong>Real-time breaking news coverage</strong> — covered the passing of Altered Five's Jeffrey Taylor with appropriate sensitivity and timeliness</li>
+        <li class="finding pos"><strong>Strong contributor network</strong> beyond Martine — bylines from Jim Hynes, Hal Horowitz, Simon Green, and others add editorial depth and topic range</li>
+        <li class="finding pos"><strong>Niche authority is genuinely earned</strong> — "with a special emphasis on great guitar players" is a clear editorial identity that's been consistently executed across thousands of articles</li>
+        <li class="finding neg"><strong>Top 20 Albums of 2024 listicle content exists</strong> but annual "best of" content needs to be a consistent, promoted franchise to maximize seasonal search value year over year</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">AI Search Optimization</div>
+        <div class="grade-badge grade-d">D+</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">42</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:42%;background:var(--grade-d);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding neg"><strong>No Article/NewsArticle schema confirmed</strong> — for a publication with 4,379+ articles, this is the single largest missed AIO opportunity in this entire audit series by sheer content volume. Each article should carry structured headline, author, datePublished, and articleBody markup</li>
+        <li class="finding neg"><strong>No MusicGroup/MusicAlbum/MusicRecording schema</strong> on album review and artist coverage content — when AI systems are asked "what do critics think of [new blues album]" or "who is [emerging blues artist]," structured music entity data would make Rock and Blues Muse a directly citable source</li>
+        <li class="finding neg"><strong>No Review schema</strong> on album and concert reviews — AI Overview and similar systems prize structured review content (with ratingValue where applicable) for "best new blues albums" type queries</li>
+        <li class="finding neg"><strong>No Person schema for Martine Ehrenclou or contributing writers</strong> — given her status as senior editor with 4,379+ bylines, this is a significant authorship/E-E-A-T gap for AI systems trying to verify content provenance</li>
+        <li class="finding neg"><strong>No FAQPage content identified</strong> — "what is blues-rock," "best blues guitarists today," "new blues albums 2026" are exactly the genre-defining queries AI systems answer, and a publication with this much expertise should own that answer space</li>
+        <li class="finding pos"><strong>The sheer volume and freshness of content (daily publishing) is itself a meaningful AIO asset</strong> — AI systems favor frequently-updated, topically-deep sources even without perfect schema, and this site has both in abundance</li>
+        <li class="finding pos"><strong>Strong topical authority on a specific niche</strong> (blues-rock guitar music) makes this a strong candidate for becoming the default cited source in that genre once structured properly</li>
+      </ul>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-card-title">Trust &amp; Authority</div>
+        <div class="grade-badge grade-b">B−</div>
+      </div>
+      <div class="cat-score-line">
+        <span class="cat-score-num">65</span>
+        <span class="cat-score-denom">/100</span>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:65%;background:var(--grade-b);"></div></div>
+      </div>
+      <ul class="cat-findings">
+        <li class="finding pos"><strong>Active, verified Muck Rack journalist profile</strong> for Martine Ehrenclou — a meaningful press-industry credibility signal</li>
+        <li class="finding pos"><strong>Estimated $4M annual revenue</strong> — indicates a genuinely sustainable, established media business, not a hobby blog</li>
+        <li class="finding pos"><strong>Direct relationships with major labels and artists</strong> evidenced by exclusive premieres, interview access (Tab Benoit, Colin James, Mike Zito), and producer/label credit citations</li>
+        <li class="finding pos"><strong>Multi-platform social presence</strong> with apparent engagement (retweets, likes visible in available data)</li>
+        <li class="finding pos"><strong>Years of operating history</strong> — content dating back years with consistent quality and cadence is a strong domain trust signal</li>
+        <li class="finding neg"><strong>Martine's own author bio page is blank</strong> ("This author has not yet filled in any details") despite her being the public face and senior editor of a $4M media business — a significant missed E-E-A-T opportunity</li>
+        <li class="finding neg"><strong>No visible masthead/staff page</strong> confirmed — readers and AI systems evaluating editorial credibility benefit from a clear "who runs this publication" page with credentials for Martine and contributing writers</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ASSETS -->
+  <div class="assets-box">
+    <h3>What Rock and Blues Muse Has Going For It</h3>
+    <div class="assets-grid">
+      <div class="asset-item">
+        <p class="asset-label">Content Archive</p>
+        <p class="asset-value">4,379+ Articles Published</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Publishing Cadence</p>
+        <p class="asset-value">Daily, Sustained Through 2026</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Senior Editor</p>
+        <p class="asset-value">Martine Ehrenclou — Verified Journalist</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Est. Annual Revenue</p>
+        <p class="asset-value">$4 Million (2025)</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Editorial Access</p>
+        <p class="asset-value">Direct Artist &amp; Label Interviews</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Social Footprint</p>
+        <p class="asset-value">Facebook · X · Instagram · Threads · LinkedIn · RSS</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Niche Authority</p>
+        <p class="asset-value">Blues, Blues-Rock, Roots &amp; Guitar Music</p>
+      </div>
+      <div class="asset-item">
+        <p class="asset-label">Monetization</p>
+        <p class="asset-value">Shop · Advertise · Donate — All Active</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTED SCORES -->
+  <div class="section-header">
+    <p class="section-eyebrow">03 &nbsp;—&nbsp; Elettro Optimization Projection</p>
+    <h2 class="section-title">Current vs. Projected Scores</h2>
+  </div>
+
+  <div class="compare-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Current Score</th>
+          <th>Projected Score</th>
+          <th>Point Gain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Technical SEO</td>
+          <td><span class="td-current" style="color:var(--grade-c);">62 &nbsp;C</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+28</span></td>
+        </tr>
+        <tr>
+          <td>On-Page SEO</td>
+          <td><span class="td-current" style="color:var(--grade-b);">68 &nbsp;B−</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">90 &nbsp;A</span></td>
+          <td><span class="td-delta">+22</span></td>
+        </tr>
+        <tr>
+          <td>Content Quality</td>
+          <td><span class="td-current" style="color:var(--grade-a);">85 &nbsp;A−</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">93 &nbsp;A</span></td>
+          <td><span class="td-delta">+8</span></td>
+        </tr>
+        <tr>
+          <td>AI Search Optimization</td>
+          <td><span class="td-current" style="color:var(--grade-d);">42 &nbsp;D+</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">93 &nbsp;A</span></td>
+          <td><span class="td-delta">+51</span></td>
+        </tr>
+        <tr>
+          <td>Trust &amp; Authority</td>
+          <td><span class="td-current" style="color:var(--grade-b);">65 &nbsp;B−</span></td>
+          <td><span class="td-current" style="color:var(--grade-a);">88 &nbsp;A</span></td>
+          <td><span class="td-delta">+23</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="table-footer">
+          <td>Overall Score</td>
+          <td style="font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;color:var(--grade-c);">64 &nbsp;C+</td>
+          <td style="font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--elettro-green);">91 &nbsp;A</td>
+          <td style="font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;color:var(--rb-amber-dark);background:rgba(232,146,12,0.1);border-radius:6px;padding:4px 12px;">+27 pts</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- CEILING -->
+  <div class="ceiling-box">
+    <h3>Ceiling Assessment — Why This Site Can Become the Authoritative Source for Blues-Rock AI Queries</h3>
+    <p>Rock and Blues Muse has something almost no site in this audit series has: <strong>a 4,379+ article content archive with daily publishing cadence and genuine journalistic access.</strong> The problem isn't content — it's that none of that content is structured for AI systems to extract, cite, and surface in answers. This is fundamentally a schema and architecture project layered on top of an already-thriving editorial operation.</p>
+    <p>The <strong>AIO jump from 42 → 93 (+51 points) is the largest opportunity in this audit</strong>, and the mechanism is straightforward: Article/NewsArticle schema across the archive (even retroactively applied via a bulk plugin update), MusicGroup and MusicAlbum schema on artist coverage and album reviews, Review schema with structured ratings, and Person schema establishing Martine Ehrenclou and contributing writers as verified authors. Once implemented, AI systems asked "who are the best emerging blues-rock guitarists" or "what's the best new blues album this year" have a structured, dated, attributed, citable source — built from content that already exists.</p>
+    <p>The <strong>www/non-www canonicalization issue should be resolved immediately</strong> — split indexing between domain variants can quietly suppress ranking potential across the entire archive, which is especially costly given the content volume at stake. Fixing this is a single technical change with archive-wide impact.</p>
+    <p>Given the strength of the existing content engine, <strong>91+ is achievable within 60 days</strong> of schema implementation and technical cleanup — content creation is already solved; this is purely an infrastructure and structured-data project layered on top of a publication that's clearly already winning on the editorial side.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FIXES -->
+  <div class="section-header">
+    <p class="section-eyebrow">04 &nbsp;—&nbsp; Recommended Actions</p>
+    <h2 class="section-title">Top Priority Fixes</h2>
+  </div>
+
+  <div class="fixes-grid">
+
+    <div class="fix-card">
+      <div class="fix-number">01</div>
+      <div class="fix-content">
+        <p class="fix-title">Resolve www / Non-www Canonicalization</p>
+        <p class="fix-desc">Content was found indexed under both rockandbluesmuse.com and www.rockandbluesmuse.com. With 4,379+ articles in the archive, even a partial split in canonical authority compounds into a meaningful SEO loss across the entire site. A single 301 redirect rule and consistent canonical tag implementation resolves this site-wide in one technical change.</p>
+        <span class="fix-impact impact-quick">Fix This Week</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">02</div>
+      <div class="fix-content">
+        <p class="fix-title">Implement Article + NewsArticle Schema Across the Archive</p>
+        <p class="fix-desc">This is the single highest-leverage action available given the content volume. With WordPress, this can be implemented via a schema plugin (Yoast, RankMath, or custom) applied as a template across all post types — meaning the entire 4,379+ article archive gains structured headline, author, datePublished, dateModified, and image markup in a single deployment, rather than requiring article-by-article work. This is the rare case where scale works in your favor.</p>
+        <span class="fix-impact impact-aio">AIO +25 pts</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">03</div>
+      <div class="fix-content">
+        <p class="fix-title">Add MusicGroup, MusicAlbum &amp; Review Schema to Music Coverage</p>
+        <p class="fix-desc">Album reviews and artist interview content should carry MusicGroup schema (artist name, genre, sameAs links to official artist sites/socials) and MusicAlbum schema (album name, release date, recordLabel) where applicable. Reviews should carry Review schema with itemReviewed and ratingValue where the publication uses a rating system. This makes Rock and Blues Muse directly citable when AI systems answer questions about specific artists, albums, or "best of" genre queries — converting editorial content into structured, machine-readable music journalism.</p>
+        <span class="fix-impact impact-aio">AIO + Genre Authority</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">04</div>
+      <div class="fix-content">
+        <p class="fix-title">Build Out Martine Ehrenclou's Author Bio &amp; Add Person Schema</p>
+        <p class="fix-desc">Martine's author archive page currently displays "This author has not yet filled in any details" — despite being the senior editor and publisher with 4,379+ bylines and a verified Muck Rack journalist profile. A complete bio (background, areas of expertise, notable interviews conducted, awards if applicable) combined with Person schema (jobTitle, worksFor, sameAs links to Muck Rack and social profiles) establishes the E-E-A-T foundation that both Google and AI systems weight heavily for editorial credibility — especially valuable given her role as the public face of a $4M media business.</p>
+        <span class="fix-impact impact-aio">E-E-A-T Critical</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">05</div>
+      <div class="fix-content">
+        <p class="fix-title">Build a "Best Of" / Genre-Authority FAQ &amp; Hub Page</p>
+        <p class="fix-desc">With this much editorial expertise in blues-rock music, the site should own genre-defining queries directly: "What is blues-rock?", "Who are the best blues-rock guitarists today?", "Best new blues albums 2026" — built as a dedicated, regularly-updated hub page with FAQPage schema. This converts genuine subject-matter expertise (already evident across thousands of articles) into a single, AI-citable authority page that aggregates and links to the deeper archive content.</p>
+        <span class="fix-impact impact-aio">AIO + Genre Hub</span>
+      </div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-number">06</div>
+      <div class="fix-content">
+        <p class="fix-title">Standardize Headline &amp; Internal Linking Patterns Going Forward</p>
+        <p class="fix-desc">Current headlines are well-written but inconsistently structured (some lead with artist name, others with achievement). Establishing a consistent SEO title pattern — e.g., "[Artist Name] [Action]: '[Release Title]' [Context]" — compounds in value across future publishing volume. Additionally, with 4,379+ archive articles, a systematic internal linking strategy (linking new artist coverage back to past interviews/reviews of the same artist) would meaningfully strengthen topical authority clusters that are likely already present but under-leveraged.</p>
+        <span class="fix-impact impact-high">Compounding Value</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand"><span>Elettro</span> Interactive</p>
+      <p class="footer-contact">
+        Dean Palermo, Founder &amp; Executive Producer<br>
+        <a href="tel:3104086687">310.408.6687</a> &nbsp;·&nbsp; <a href="mailto:dpalermo@elettro.com">dpalermo@elettro.com</a><br>
+        Davie / Plantation, FL &nbsp;·&nbsp; AIO Authority — a division of Elettro
+      </p>
+    </div>
+    <a class="footer-cta" href="mailto:dpalermo@elettro.com?subject=Rock and Blues Muse — SEO & AIO Engagement">Let's Talk →</a>
+  </div>
+</footer>
+
+</body>
+</html>
