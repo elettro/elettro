@@ -1,0 +1,112 @@
+/* ============================================================
+   VINCE MOLINARI — site.js
+   Custom broadcast audio player with resume-on-reload.
+   Activates any element with [data-player].
+   ============================================================ */
+(function () {
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return m + ":" + (sec < 10 ? "0" : "") + sec;
+  }
+
+  function initPlayer(root) {
+    var audio = root.querySelector("[data-audio]");
+    if (!audio) return;
+    var playBtn = root.querySelector("[data-play]");
+    var prog = root.querySelector("[data-prog]");
+    var bar = root.querySelector("[data-seek]");
+    var curEl = root.querySelector("[data-cur]");
+    var durEl = root.querySelector("[data-dur]");
+    var backBtn = root.querySelector("[data-back]");
+    var fwdBtn = root.querySelector("[data-fwd]");
+    var rateBtn = root.querySelector("[data-rate]");
+
+    var key = "vm-podcast-pos:" + (audio.getAttribute("data-src") || "default");
+    var rates = [1, 1.25, 1.5, 2];
+    var rateIdx = 0;
+
+    function setPlayIcon(playing) {
+      if (playBtn) playBtn.textContent = playing ? "❚❚" : "▶";
+    }
+
+    // restore saved position
+    function restore() {
+      try {
+        var saved = parseFloat(localStorage.getItem(key));
+        if (!isNaN(saved) && saved > 0 && saved < (audio.duration || Infinity) - 1) {
+          audio.currentTime = saved;
+        }
+      } catch (e) {}
+    }
+
+    audio.addEventListener("loadedmetadata", function () {
+      if (durEl) durEl.textContent = fmt(audio.duration);
+      restore();
+      update();
+    });
+    if (audio.readyState >= 1) {
+      if (durEl) durEl.textContent = fmt(audio.duration);
+      restore();
+    }
+
+    function update() {
+      var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      if (prog) prog.style.width = pct + "%";
+      if (curEl) curEl.textContent = fmt(audio.currentTime);
+    }
+
+    audio.addEventListener("timeupdate", function () {
+      update();
+      try { localStorage.setItem(key, audio.currentTime); } catch (e) {}
+    });
+    audio.addEventListener("play", function () { setPlayIcon(true); });
+    audio.addEventListener("pause", function () { setPlayIcon(false); });
+    audio.addEventListener("ended", function () {
+      setPlayIcon(false);
+      try { localStorage.removeItem(key); } catch (e) {}
+    });
+
+    if (playBtn) playBtn.addEventListener("click", function () {
+      if (audio.paused) audio.play(); else audio.pause();
+    });
+    if (backBtn) backBtn.addEventListener("click", function () {
+      audio.currentTime = Math.max(0, audio.currentTime - 15);
+    });
+    if (fwdBtn) fwdBtn.addEventListener("click", function () {
+      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 30);
+    });
+    if (rateBtn) rateBtn.addEventListener("click", function () {
+      rateIdx = (rateIdx + 1) % rates.length;
+      audio.playbackRate = rates[rateIdx];
+      rateBtn.textContent = rates[rateIdx] + "×";
+    });
+    if (bar) bar.addEventListener("click", function (e) {
+      var rect = bar.getBoundingClientRect();
+      var ratio = (e.clientX - rect.left) / rect.width;
+      if (audio.duration) audio.currentTime = ratio * audio.duration;
+    });
+
+    // Only attach the source once we've confirmed the file exists,
+    // so a not-yet-uploaded episode doesn't throw a console error.
+    var src = audio.getAttribute("data-src");
+    var sub = root.querySelector(".player-sub");
+    function markUnavailable() {
+      if (playBtn) { playBtn.style.opacity = ".45"; playBtn.style.pointerEvents = "none"; }
+      if (sub) sub.textContent = "Episode coming soon — upload assets/podcast.m4a to go live.";
+    }
+    if (src) {
+      fetch(src, { method: "HEAD" })
+        .then(function (res) {
+          if (res && res.ok) { audio.src = src; }
+          else { markUnavailable(); }
+        })
+        .catch(function () { markUnavailable(); });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-player]").forEach(initPlayer);
+  });
+})();

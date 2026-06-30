@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video — Vince Molinari on FINTECH.TV</title>
+<meta name="description" content="Featured episodes and speaker highlights — Vince Molinari hosting FINTECH.TV from the New York Stock Exchange and speaking at global financial events.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="bug" href="index.html"><span class="bug-mark">VM</span><span class="bug-sub">FINTECH.TV</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="speaking.html">Speaking</a>
+      <a href="video.html" class="active">Video</a>
+      <a href="index.html#podcast">Podcast</a>
+      <a href="press.html">Press</a>
+    </nav>
+    <a class="btn btn-gold" href="speaking.html#inquire">Book Vince</a>
+  </div>
+</header>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="phero">
+  <div class="phero-bg"></div>
+  <div class="container inner">
+    <span class="live-badge" style="margin-bottom:18px">On Air</span>
+    <h1>Watch Vince.</h1>
+    <p class="lead">From the Digital Asset Report — one of the most-watched blockchain programs in the world — to live coverage from the NYSE and the global stage. A curated selection of episodes and appearances.</p>
+  </div>
+</section>
+
+<!-- ============ CATEGORY 1: EPISODES ============ -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <div><span class="kicker">From FINTECH.TV</span><h2>Top episodes</h2></div>
+      <a class="sec-link" href="https://fintech.tv" target="_blank" rel="noopener">FINTECH.TV ↗</a>
+    </div>
+    <div class="vgrid">
+      <div class="vcard">
+        <div class="vframe"><iframe src="https://www.youtube-nocookie.com/embed/F2d_K-8x2m0" title="Vince Molinari — Digital Asset Report" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="vmeta"><div class="vshow">Digital Asset Report</div><div class="vtitle">Markets &amp; digital-asset outlook</div></div>
+      </div>
+      <div class="vcard">
+        <div class="vframe"><iframe src="https://www.youtube-nocookie.com/embed/eS39KNPBD_8" title="Vince Molinari on FINTECH.TV at the NYSE" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="vmeta"><div class="vshow">FINTECH.TV · NYSE</div><div class="vtitle">Live from the exchange floor</div></div>
+      </div>
+      <div class="vcard">
+        <div class="vframe"><iframe src="https://www.youtube-nocookie.com/embed/MUVoU56hLzA" title="Vince Molinari interview" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="vmeta"><div class="vshow">Interview</div><div class="vtitle">On digital assets &amp; regulation</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORY 2: SPEAKER HIGHLIGHTS ============ -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--line)">
+  <div class="container">
+    <div class="sec-head"><div><span class="kicker">On the Global Stage</span><h2>Speaker highlights &amp; conference appearances</h2></div></div>
+    <div class="vgrid">
+      <div class="vcard">
+        <div class="vframe vph"><div class="play">▶</div><small>Paste YouTube URL</small></div>
+        <div class="vmeta"><div class="vshow">ADFW · Abu Dhabi</div><div class="vtitle">Fintech Day — Master of Ceremonies</div></div>
+      </div>
+      <div class="vcard">
+        <div class="vframe vph"><div class="play">▶</div><small>Paste YouTube URL</small></div>
+        <div class="vmeta"><div class="vshow">Congressional Testimony</div><div class="vtitle">House Financial Services — Capital Markets</div></div>
+      </div>
+      <div class="vcard">
+        <div class="vframe vph"><div class="play">▶</div><small>Paste YouTube URL</small></div>
+        <div class="vmeta"><div class="vshow">CNBC · ADFW</div><div class="vtitle">Abu Dhabi as a global financial center</div></div>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:26px;font-size:14px">Replace the three placeholders above with Vince's top conference clips — once URLs are supplied they drop straight into these slots.</p>
+  </div>
+</section>
+
+<!-- ============ SHOWS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head"><div><span class="kicker">The Programs</span><h2>Shows Vince anchors</h2></div></div>
+    <div class="topics">
+      <div class="topic"><span class="tn">◆</span><div><h3>Digital Asset Report (DAR)</h3><p>The flagship — one of the most-watched blockchain programs globally, 4M+ viewers.</p></div></div>
+      <div class="topic"><span class="tn">◆</span><div><h3>TheIMPACT</h3><p>Filmed at NYSE, NASDAQ &amp; LSEG through a sustainability and UN SDG lens.</p></div></div>
+      <div class="topic"><span class="tn">◆</span><div><h3>Market Movers: The Opening Bell</h3><p>Daily show with ReachTV, live from the New York Stock Exchange.</p></div></div>
+      <div class="topic"><span class="tn">◆</span><div><h3>Sustainable Stock Exchange TV</h3><p>In partnership with the United Nations on sustainable capital markets.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="booking">
+  <div class="container inner">
+    <div><h2>Want Vince on your stage or screen?</h2><div class="sub">Inquire for availability &amp; fees</div></div>
+    <a class="btn btn-dark" href="speaking.html#inquire">Inquire Now →</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Vince Molinari</h4>
+        <p class="muted" style="max-width:340px;font-size:14px">Wall Street veteran, founder &amp; CEO of FINTECH.TV, and global keynote speaker on the future of capital markets, digital assets, and sustainable finance.</p>
+      </div>
+      <div class="fcol">
+        <div class="fcol-title">Explore</div>
+        <a href="index.html">Home</a>
+        <a href="speaking.html">Speaking</a>
+        <a href="video.html">Video</a>
+        <a href="press.html">Press &amp; Media</a>
+      </div>
+      <div class="fcol">
+        <div class="fcol-title">Booking</div>
+        <a href="mailto:booking@vincemolinari.com">booking@vincemolinari.com</a>
+        <a href="speaking.html#inquire">Speaking inquiries</a>
+        <a href="https://fintech.tv" target="_blank" rel="noopener">FINTECH.TV ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vince Molinari. All rights reserved.</span>
+      <span>Inquire for availability &amp; fees</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Spectral:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=DM+Serif+Display&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#e9e6df;font-family:'Hanken Grotesk',system-ui,sans-serif}
+  .dv-turn{padding:44px 48px 36px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 24px}
+  .dv-tid{font:600 10px 'JetBrains Mono',monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:600 13px/1.2 'Hanken Grotesk',sans-serif;color:#1a1a1a}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px 'JetBrains Mono',monospace;padding:3px 7px;background:rgba(0,0,0,.09);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:center;gap:9px;font:500 12px/1.3 'Hanken Grotesk',sans-serif;color:rgba(0,0,0,.6)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-card{width:1200px;max-width:none;border-radius:10px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.1)}
+  .dv-next{margin:26px 0 0;font:13px/1.6 'Hanken Grotesk',sans-serif;color:rgba(0,0,0,.55);max-width:900px}
+  .dv-next a{color:rgba(0,0,0,.55)}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Three homepage directions · modern fintech</span></div>
+  <div class="dv-opts">
+
+    <!-- ===================== 1a — TERMINAL ===================== -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Terminal — dark, data-driven, sharp grid</div>
+      <div class="dv-card" style="background:#0a0e14;font-family:'Space Grotesk',sans-serif;color:#e6eaf0">
+
+        <!-- nav -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 56px;border-bottom:1px solid rgba(255,255,255,.07)">
+          <div style="font:600 15px 'JetBrains Mono',monospace;letter-spacing:.04em;color:#e6eaf0">VM<span style="color:#c9a84c">.</span></div>
+          <div style="display:flex;gap:30px;font:500 12px 'Space Grotesk',sans-serif;color:#8a93a3;letter-spacing:.03em">
+            <span>Speaking</span><span>FINTECH.TV</span><span>Video</span><span>Press</span><span style="color:#e6eaf0">Contact</span>
+          </div>
+        </div>
+
+        <!-- hero -->
+        <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:48px;padding:64px 56px 56px;align-items:center">
+          <div>
+            <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.22em;color:#c9a84c;margin-bottom:24px">WALL STREET VETERAN — MEDIA FOUNDER — GLOBAL SPEAKER</div>
+            <h1 style="font:300 76px/.98 'Newsreader',serif;letter-spacing:-.02em;margin:0 0 26px;color:#fff">Vince Molinari</h1>
+            <p style="font:400 18px/1.55 'Space Grotesk',sans-serif;color:#aab2c0;max-width:480px;margin:0 0 36px">Founder &amp; CEO of FINTECH.TV, broadcasting live from the floor of the New York Stock Exchange. Three decades turning capital markets into a global conversation.</p>
+            <div style="display:flex;gap:14px">
+              <a href="#1a" style="display:inline-flex;align-items:center;padding:15px 26px;background:#c9a84c;color:#0a0e14;font:600 14px 'Space Grotesk',sans-serif;border-radius:5px;text-decoration:none">Book Vince to Speak</a>
+              <a href="#1a" style="display:inline-flex;align-items:center;padding:15px 26px;background:transparent;color:#e6eaf0;font:600 14px 'Space Grotesk',sans-serif;border:1px solid rgba(255,255,255,.18);border-radius:5px;text-decoration:none">Watch FINTECH.TV ↗</a>
+            </div>
+          </div>
+          <div style="position:relative;border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;background:#11161f">
+            <img src="assets/vincent.jpg" alt="Vince Molinari" style="display:block;width:100%;height:340px;object-fit:cover;object-position:center 20%">
+            <div style="position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(transparent,rgba(10,14,20,.92));font:500 10px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#c9a84c">
+              <span>LIVE · NYSE FLOOR</span><span style="color:#8a93a3">FINTECH.TV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- authority ticker -->
+        <div style="border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:20px 56px;display:flex;align-items:center;gap:38px;flex-wrap:wrap">
+          <span style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#646d7d">TRUSTED ACROSS ▸</span>
+          <div style="display:flex;gap:34px;flex-wrap:wrap;font:600 13px 'Space Grotesk',sans-serif;letter-spacing:.04em;color:#9aa3b2">
+            <span>NYSE</span><span>NASDAQ</span><span>LSEG</span><span>ADGM</span><span>U.S. CHAMBER</span><span>UNITED NATIONS</span><span>GOLDMAN SACHS</span><span>NEWSMAX</span>
+          </div>
+        </div>
+
+        <!-- stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(255,255,255,.07)">
+          <div style="padding:38px 32px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:300 48px 'Newsreader',serif;color:#fff;line-height:1">30+</div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3;margin-top:10px">YEARS ON WALL STREET</div></div>
+          <div style="padding:38px 32px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:300 48px 'Newsreader',serif;color:#fff;line-height:1">4M+</div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3;margin-top:10px">DIGITAL ASSET REPORT VIEWS</div></div>
+          <div style="padding:38px 32px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:300 48px 'Newsreader',serif;color:#fff;line-height:1">3×</div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3;margin-top:10px">ADFW MASTER OF CEREMONIES</div></div>
+          <div style="padding:38px 32px"><div style="font:300 48px 'Newsreader',serif;color:#c9a84c;line-height:1">5</div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3;margin-top:10px">NYSE-FLOOR STUDIOS IN HISTORY</div></div>
+        </div>
+
+        <!-- featured -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:56px 56px;align-items:center">
+          <div>
+            <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#c9a84c;margin-bottom:18px">THE GLOBAL VOICE OF FINANCE</div>
+            <p style="font:400 17px/1.6 'Space Grotesk',sans-serif;color:#c2cad7;margin:0 0 22px">A rare speaker who is a practitioner, a media personality, a policy voice, and a global connector — all at once.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;gap:12px;align-items:baseline;font:400 14px/1.4 'Space Grotesk',sans-serif;color:#aab2c0"><span style="color:#c9a84c;font-family:'JetBrains Mono',monospace">+</span>Testified before the U.S. House Committee on Financial Services</div>
+              <div style="display:flex;gap:12px;align-items:baseline;font:400 14px/1.4 'Space Grotesk',sans-serif;color:#aab2c0"><span style="color:#c9a84c;font-family:'JetBrains Mono',monospace">+</span>Pioneered the first FINRA-approved broker-dealer &amp; ATS for digital securities</div>
+              <div style="display:flex;gap:12px;align-items:baseline;font:400 14px/1.4 'Space Grotesk',sans-serif;color:#aab2c0"><span style="color:#c9a84c;font-family:'JetBrains Mono',monospace">+</span>Digital Assets Board Member, U.S. Chamber of Commerce</div>
+            </div>
+          </div>
+          <div style="position:relative;height:300px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:#0d1219 repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 1px,transparent 1px 13px);display:flex;align-items:center;justify-content:center">
+            <span style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#606a79;text-align:center">[ STAGE / NYSE ANCHOR DESK PHOTO ]</span>
+          </div>
+        </div>
+
+        <!-- videos -->
+        <div style="padding:56px 56px;border-top:1px solid rgba(255,255,255,.07)">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px">
+            <div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#c9a84c;margin-bottom:12px">FROM FINTECH.TV</div><h2 style="font:300 36px 'Newsreader',serif;color:#fff;margin:0">Featured broadcasts</h2></div>
+            <span style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3">VIEW ALL ↗</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+            <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;background:#11161f"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/F2d_K-8x2m0" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:14px 16px"><div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#c9a84c;margin-bottom:6px">DIGITAL ASSET REPORT</div><div style="font:500 14px 'Space Grotesk',sans-serif;color:#cfd5df">Markets &amp; digital-asset outlook</div></div></div>
+            <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;background:#11161f"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/eS39KNPBD_8" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:14px 16px"><div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#c9a84c;margin-bottom:6px">FINTECH.TV · NYSE</div><div style="font:500 14px 'Space Grotesk',sans-serif;color:#cfd5df">Live from the exchange floor</div></div></div>
+            <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;background:#11161f"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/MUVoU56hLzA" title="Vince Molinari speaker highlight" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:14px 16px"><div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#c9a84c;margin-bottom:6px">SPEAKER HIGHLIGHT</div><div style="font:500 14px 'Space Grotesk',sans-serif;color:#cfd5df">Conference keynote &amp; panel</div></div></div>
+          </div>
+        </div>
+
+        <!-- infographic -->
+        <div style="padding:8px 56px 56px;border-top:1px solid rgba(255,255,255,.07);padding-top:56px">
+          <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#c9a84c;margin-bottom:18px">THE AUTHORITY, AT A GLANCE</div>
+          <img src="assets/infographic-leader.png" alt="Vince Molinari — finance &amp; fintech leader infographic" style="display:block;width:100%;border:1px solid rgba(255,255,255,.1);border-radius:8px">
+        </div>
+
+        <!-- booking band -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:40px 56px;background:#11161f;border-top:1px solid rgba(201,168,76,.25)">
+          <div><div style="font:300 32px 'Newsreader',serif;color:#fff">Book Vince for your next event</div><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8a93a3;margin-top:8px">INQUIRE FOR AVAILABILITY &amp; FEES</div></div>
+          <a href="#1a" style="display:inline-flex;align-items:center;padding:16px 30px;background:#c9a84c;color:#0a0e14;font:600 14px 'Space Grotesk',sans-serif;border-radius:5px;text-decoration:none;white-space:nowrap">Inquire Now →</a>
+        </div>
+        <div style="padding:22px 56px;display:flex;justify-content:space-between;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.08em;color:#616a78"><span>© VINCE MOLINARI</span><span>BOOKING@VINCEMOLINARI.COM</span></div>
+
+      </div>
+    </div>
+
+    <!-- ===================== 1b — EDITORIAL ===================== -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Editorial — light, premium, airy</div>
+      <div class="dv-card" style="background:#f4f1ea;font-family:'Hanken Grotesk',sans-serif;color:#0d1b2a">
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 60px;border-bottom:1px solid rgba(13,27,42,.1)">
+          <div style="font:600 16px 'Spectral',serif;letter-spacing:.01em;color:#0d1b2a">Vince Molinari</div>
+          <div style="display:flex;gap:32px;font:500 13px 'Hanken Grotesk',sans-serif;color:#5c6470">
+            <span>Speaking</span><span>FINTECH.TV</span><span>Video</span><span>Press</span><span style="color:#0d1b2a">Contact</span>
+          </div>
+        </div>
+
+        <!-- hero -->
+        <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:56px;padding:76px 60px 60px;align-items:center">
+          <div>
+            <div style="font:600 12px 'Hanken Grotesk',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#b8923a;margin-bottom:26px">Wall Street Veteran · Media Founder · Global Speaker</div>
+            <h1 style="font:300 82px/.96 'Spectral',serif;letter-spacing:-.015em;margin:0 0 28px;color:#0d1b2a">He doesn't just speak<br>about finance.</h1>
+            <p style="font:400 19px/1.6 'Hanken Grotesk',sans-serif;color:#46505d;max-width:520px;margin:0 0 38px">Founder &amp; CEO of FINTECH.TV, broadcasting live from the floor of the New York Stock Exchange — and one of finance's most connected global voices.</p>
+            <div style="display:flex;gap:14px">
+              <a href="#1b" style="display:inline-flex;align-items:center;padding:16px 28px;background:#0d1b2a;color:#fff;font:600 14px 'Hanken Grotesk',sans-serif;border-radius:3px;text-decoration:none">Book Vince to Speak</a>
+              <a href="#1b" style="display:inline-flex;align-items:center;padding:16px 28px;background:transparent;color:#0d1b2a;font:600 14px 'Hanken Grotesk',sans-serif;border:1px solid rgba(13,27,42,.25);border-radius:3px;text-decoration:none">Watch FINTECH.TV ↗</a>
+            </div>
+          </div>
+          <div style="position:relative">
+            <img src="assets/vincent.jpg" alt="Vince Molinari" style="display:block;width:100%;height:400px;object-fit:cover;object-position:center 18%;border-radius:4px">
+            <div style="position:absolute;left:-1px;bottom:18px;background:#b8923a;color:#0d1b2a;font:600 11px 'Hanken Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px">Live from the NYSE floor</div>
+          </div>
+        </div>
+
+        <!-- authority -->
+        <div style="border-top:1px solid rgba(13,27,42,.1);border-bottom:1px solid rgba(13,27,42,.1);padding:26px 60px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap">
+          <span style="font:600 11px 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a909a">As seen across</span>
+          <div style="display:flex;gap:34px;flex-wrap:wrap;font:600 14px 'Spectral',serif;color:#3a444f">
+            <span>NYSE</span><span>NASDAQ</span><span>LSEG</span><span>ADGM</span><span>U.S. Chamber</span><span>United Nations</span><span>Goldman Sachs</span><span>Newsmax</span>
+          </div>
+        </div>
+
+        <!-- stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);padding:54px 60px;gap:30px">
+          <div><div style="font:300 56px 'Spectral',serif;color:#0d1b2a;line-height:1">30+</div><div style="width:34px;height:2px;background:#b8923a;margin:14px 0 12px"></div><div style="font:500 13px/1.4 'Hanken Grotesk',sans-serif;color:#5c6470">Years on Wall Street, since Lehman Brothers</div></div>
+          <div><div style="font:300 56px 'Spectral',serif;color:#0d1b2a;line-height:1">4M+</div><div style="width:34px;height:2px;background:#b8923a;margin:14px 0 12px"></div><div style="font:500 13px/1.4 'Hanken Grotesk',sans-serif;color:#5c6470">Digital Asset Report viewers worldwide</div></div>
+          <div><div style="font:300 56px 'Spectral',serif;color:#0d1b2a;line-height:1">3×</div><div style="width:34px;height:2px;background:#b8923a;margin:14px 0 12px"></div><div style="font:500 13px/1.4 'Hanken Grotesk',sans-serif;color:#5c6470">Master of Ceremonies at Abu Dhabi Finance Week</div></div>
+          <div><div style="font:300 56px 'Spectral',serif;color:#0d1b2a;line-height:1">5</div><div style="width:34px;height:2px;background:#b8923a;margin:14px 0 12px"></div><div style="font:500 13px/1.4 'Hanken Grotesk',sans-serif;color:#5c6470">Permanent broadcast studios in NYSE-floor history</div></div>
+        </div>
+
+        <!-- featured -->
+        <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;padding:14px 60px 64px;align-items:center">
+          <div style="position:relative;height:320px;border-radius:4px;background:#e6e1d6 repeating-linear-gradient(135deg,rgba(13,27,42,.05) 0 1px,transparent 1px 13px);display:flex;align-items:center;justify-content:center">
+            <span style="font:600 11px 'Hanken Grotesk',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9aa0aa">[ Stage / Keynote photo ]</span>
+          </div>
+          <div>
+            <div style="font:600 12px 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#b8923a;margin-bottom:18px">Practitioner · Media · Policy · Connector</div>
+            <h2 style="font:400 34px/1.15 'Spectral',serif;color:#0d1b2a;margin:0 0 18px">The rare voice that has lived every side of the market.</h2>
+            <p style="font:400 16px/1.65 'Hanken Grotesk',sans-serif;color:#46505d;margin:0 0 22px">Testified before Congress. Pioneered the first FINRA-approved digital-securities broker-dealer. Sits on the U.S. Chamber's Digital Assets Board. Co-founded Blockchain for Impact at the U.N. General Assembly.</p>
+            <a href="#1b" style="font:600 14px 'Hanken Grotesk',sans-serif;color:#0d1b2a;text-decoration:none;border-bottom:2px solid #b8923a;padding-bottom:3px">Read the full story →</a>
+          </div>
+        </div>
+
+        <!-- videos -->
+        <div style="padding:60px 60px;border-top:1px solid rgba(13,27,42,.1)">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px">
+            <div><div style="font:600 12px 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#b8923a;margin-bottom:12px">From FINTECH.TV</div><h2 style="font:400 34px 'Spectral',serif;color:#0d1b2a;margin:0">Featured broadcasts</h2></div>
+            <span style="font:600 12px 'Hanken Grotesk',sans-serif;letter-spacing:.04em;color:#5c6470">View all ↗</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+            <div style="border:1px solid rgba(13,27,42,.12);border-radius:4px;overflow:hidden;background:#fff"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/F2d_K-8x2m0" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:15px 16px"><div style="font:600 10px 'Hanken Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8923a;margin-bottom:6px">Digital Asset Report</div><div style="font:500 15px 'Hanken Grotesk',sans-serif;color:#0d1b2a">Markets &amp; digital-asset outlook</div></div></div>
+            <div style="border:1px solid rgba(13,27,42,.12);border-radius:4px;overflow:hidden;background:#fff"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/eS39KNPBD_8" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:15px 16px"><div style="font:600 10px 'Hanken Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8923a;margin-bottom:6px">FINTECH.TV · NYSE</div><div style="font:500 15px 'Hanken Grotesk',sans-serif;color:#0d1b2a">Live from the exchange floor</div></div></div>
+            <div style="border:1px solid rgba(13,27,42,.12);border-radius:4px;overflow:hidden;background:#fff"><div style="aspect-ratio:16/9;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/MUVoU56hLzA" title="Vince Molinari speaker highlight" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="padding:15px 16px"><div style="font:600 10px 'Hanken Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8923a;margin-bottom:6px">Speaker Highlight</div><div style="font:500 15px 'Hanken Grotesk',sans-serif;color:#0d1b2a">Conference keynote &amp; panel</div></div></div>
+          </div>
+        </div>
+
+        <!-- infographic -->
+        <div style="padding:0 60px 64px">
+          <div style="font:600 12px 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#b8923a;margin-bottom:18px">The authority, at a glance</div>
+          <img src="assets/infographic-speaker.png" alt="Vince Molinari — global finance &amp; fintech speaker infographic" style="display:block;width:100%;border:1px solid rgba(13,27,42,.12);border-radius:4px">
+        </div>
+
+        <!-- booking -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:48px 60px;background:#0d1b2a;color:#fff">
+          <div><div style="font:300 36px 'Spectral',serif">Book Vince for your next event</div><div style="font:500 13px 'Hanken Grotesk',sans-serif;color:#b8923a;margin-top:8px;letter-spacing:.04em">Inquire for availability and fees</div></div>
+          <a href="#1b" style="display:inline-flex;align-items:center;padding:16px 30px;background:#b8923a;color:#0d1b2a;font:600 14px 'Hanken Grotesk',sans-serif;border-radius:3px;text-decoration:none;white-space:nowrap">Inquire Now →</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===================== 1c — BROADCAST ===================== -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Broadcast — cinematic, full-bleed, bold</div>
+      <div class="dv-card" style="background:#0b0b0d;font-family:'Archivo',sans-serif;color:#f2f0ec">
+
+        <!-- full-bleed hero -->
+        <div style="position:relative;height:560px;background:#101216 repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 1px,transparent 1px 15px);overflow:hidden">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span style="font:600 12px 'Archivo',sans-serif;letter-spacing:.2em;color:#3f444c">[ FULL-BLEED NYSE TRADING FLOOR PHOTO ]</span></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,13,.95) 0%,rgba(11,11,13,.78) 40%,rgba(11,11,13,.35) 100%)"></div>
+          <!-- nav -->
+          <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:26px 60px">
+            <div style="font:800 17px 'Archivo',sans-serif;letter-spacing:.02em">VINCE MOLINARI</div>
+            <div style="display:flex;gap:30px;font:600 12px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#b9b4ab">
+              <span>Speaking</span><span>FINTECH.TV</span><span>Video</span><span>Press</span><span style="color:#d4af37">Contact</span>
+            </div>
+          </div>
+          <!-- hero copy -->
+          <div style="position:absolute;left:60px;bottom:56px;max-width:780px">
+            <div style="font:700 13px 'Archivo',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#d4af37;margin-bottom:22px">Wall Street Veteran · Media Founder · Global Speaker</div>
+            <h1 style="font:400 88px/.92 'DM Serif Display',serif;letter-spacing:-.01em;margin:0 0 24px;color:#fff">The global voice<br>of finance.</h1>
+            <p style="font:400 18px/1.55 'Archivo',sans-serif;color:#cfcabf;max-width:560px;margin:0 0 34px">Vince Molinari anchors FINTECH.TV live from the floor of the New York Stock Exchange — one of only five permanent studios in NYSE history.</p>
+            <div style="display:flex;gap:14px">
+              <a href="#1c" style="display:inline-flex;align-items:center;padding:16px 30px;background:#d4af37;color:#0b0b0d;font:700 13px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.06em;text-decoration:none">Book Vince to Speak</a>
+              <a href="#1c" style="display:inline-flex;align-items:center;padding:16px 30px;background:rgba(255,255,255,.07);color:#fff;font:700 13px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.06em;border:1px solid rgba(255,255,255,.2);text-decoration:none">Watch FINTECH.TV ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- authority strip -->
+        <div style="padding:22px 60px;background:#141417;display:flex;align-items:center;gap:36px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.06)">
+          <span style="font:700 11px 'Archivo',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#6f6a62">Trusted across</span>
+          <div style="display:flex;gap:32px;flex-wrap:wrap;font:700 14px 'Archivo',sans-serif;letter-spacing:.03em;color:#a8a298;text-transform:uppercase">
+            <span>NYSE</span><span>NASDAQ</span><span>LSEG</span><span>ADGM</span><span>U.S. Chamber</span><span>United Nations</span><span>Goldman Sachs</span><span>Newsmax</span>
+          </div>
+        </div>
+
+        <!-- big stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr)">
+          <div style="padding:46px 36px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:400 64px 'DM Serif Display',serif;color:#d4af37;line-height:.9">30+</div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#8d877d;margin-top:14px">Years on Wall Street</div></div>
+          <div style="padding:46px 36px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:400 64px 'DM Serif Display',serif;color:#fff;line-height:.9">4M+</div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#8d877d;margin-top:14px">Digital Asset Report views</div></div>
+          <div style="padding:46px 36px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:400 64px 'DM Serif Display',serif;color:#fff;line-height:.9">$70T</div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#8d877d;margin-top:14px">Assets repped at ADFW</div></div>
+          <div style="padding:46px 36px"><div style="font:400 64px 'DM Serif Display',serif;color:#fff;line-height:.9">3×</div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#8d877d;margin-top:14px">ADFW Master of Ceremonies</div></div>
+        </div>
+
+        <!-- featured video strip -->
+        <div style="padding:56px 60px;border-top:1px solid rgba(255,255,255,.07)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:26px">
+            <h2 style="font:400 40px 'DM Serif Display',serif;color:#fff;margin:0">Featured broadcasts</h2>
+            <span style="font:700 12px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#d4af37">View all ↗</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+            <div><div style="aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden"><iframe src="https://www.youtube-nocookie.com/embed/F2d_K-8x2m0" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#d4af37;margin:14px 0 5px">Digital Asset Report</div><div style="font:500 14px 'Archivo',sans-serif;color:#cfcabf">Markets &amp; digital-asset outlook</div></div>
+            <div><div style="aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden"><iframe src="https://www.youtube-nocookie.com/embed/eS39KNPBD_8" title="Vince Molinari on FINTECH.TV" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#d4af37;margin:14px 0 5px">FINTECH.TV · NYSE</div><div style="font:500 14px 'Archivo',sans-serif;color:#cfcabf">Live from the exchange floor</div></div>
+            <div><div style="aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden"><iframe src="https://www.youtube-nocookie.com/embed/MUVoU56hLzA" title="Vince Molinari speaker highlight" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div style="font:700 11px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#d4af37;margin:14px 0 5px">Speaker Highlight</div><div style="font:500 14px 'Archivo',sans-serif;color:#cfcabf">Conference keynote &amp; panel</div></div>
+          </div>
+        </div>
+
+        <!-- infographic -->
+        <div style="padding:0 60px 60px">
+          <div style="font:700 12px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#d4af37;margin-bottom:18px">The authority, at a glance</div>
+          <img src="assets/infographic-leader.png" alt="Vince Molinari — finance &amp; fintech leader infographic" style="display:block;width:100%;border:1px solid rgba(255,255,255,.08);border-radius:4px">
+        </div>
+
+        <!-- booking -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:48px 60px;background:#d4af37;color:#0b0b0d">
+          <div><div style="font:400 38px 'DM Serif Display',serif">Book Vince for your next event</div><div style="font:700 12px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.1em;margin-top:8px;color:#6b5a1e">Inquire for availability &amp; fees</div></div>
+          <a href="#1c" style="display:inline-flex;align-items:center;padding:16px 32px;background:#0b0b0d;color:#fff;font:700 13px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;white-space:nowrap">Inquire Now →</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Tell me which to build into the full site — e.g. "build out <a class="dv-oid" href="#1a">1a</a>", "go with <a class="dv-oid" href="#1c">1c</a> but lighter stats band", or "mix <a class="dv-oid" href="#1b">1b</a>'s type with <a class="dv-oid" href="#1a">1a</a>'s dark palette". Once you pick, I'll build Home, Speaking, Video, and Press pages.</p>
+</section>
+
+</x-dc>
+</body>
+</html>
