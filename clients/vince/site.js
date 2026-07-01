@@ -370,9 +370,38 @@
     var grid = document.querySelector("[data-video-sheet]");
     if (!grid) return;
 
-    var SHEET_ID = "1R81gIQBLICMpccV2fYTHnSI_j8BKEu_fTum-nEGsw0g";
-    var SHEET_NAME = "Videos";
-    var callbackName = "vmVideoSheetCallback_" + Date.now();
+    var PUBLISHED_ID = "2PACX-1vQIvOcrwwyjF1amkBgD0R6eiGoIQn_PuRrCr1UblDS8Ig6igH1XxD7RTZJ2N_ilbNobVbtD7_M-Lwjz";
+    var GID = "0";
+
+    function parseCsv(text) {
+      var rows = [];
+      var row = [];
+      var field = "";
+      var inQuotes = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (inQuotes) {
+          if (c === '"') {
+            if (text[i + 1] === '"') { field += '"'; i++; }
+            else { inQuotes = false; }
+          } else {
+            field += c;
+          }
+        } else if (c === '"') {
+          inQuotes = true;
+        } else if (c === ',') {
+          row.push(field); field = "";
+        } else if (c === '\n' || c === '\r') {
+          if (c === '\r' && text[i + 1] === '\n') i++;
+          row.push(field); field = "";
+          rows.push(row); row = [];
+        } else {
+          field += c;
+        }
+      }
+      if (field.length || row.length) { row.push(field); rows.push(row); }
+      return rows.filter(function (r) { return r.length > 1 || r[0] !== ""; });
+    }
 
     function normalizeHeader(value) {
       return String(value || "")
@@ -420,9 +449,8 @@
     }
 
     function getCell(row, index) {
-      if (!row || !row.c || !row.c[index]) return "";
-      var cell = row.c[index];
-      return cell.v != null ? cell.v : "";
+      if (!row || index == null || row[index] == null) return "";
+      return row[index];
     }
 
     function renderVideos(videos) {
@@ -472,15 +500,25 @@
       ].join("");
     }
 
-    window[callbackName] = function (response) {
-      try {
-        var table = response && response.table;
-        var cols = table && table.cols ? table.cols : [];
-        var rows = table && table.rows ? table.rows : [];
+    var csvUrl =
+      "https://docs.google.com/spreadsheets/d/e/" + PUBLISHED_ID +
+      "/pub?gid=" + encodeURIComponent(GID) + "&single=true&output=csv";
+
+    fetch(csvUrl)
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
+      .then(function (text) {
+        var table = parseCsv(text);
+        if (!table.length) throw new Error("Empty sheet");
+
+        var header = table[0];
+        var dataRows = table.slice(1);
 
         var indexByHeader = {};
-        cols.forEach(function (col, index) {
-          var key = normalizeHeader(col.label);
+        header.forEach(function (label, index) {
+          var key = normalizeHeader(label);
           if (key) indexByHeader[key] = index;
         });
 
@@ -497,7 +535,7 @@
         var buttonTextIndex = idx("button_text");
         var buttonUrlIndex = idx("button_url");
 
-        var videos = rows.map(function (row) {
+        var videos = dataRows.map(function (row) {
           return {
             active: getCell(row, activeIndex),
             sort: Number(getCell(row, sortIndex)) || 999,
@@ -515,19 +553,11 @@
         });
 
         renderVideos(videos);
-      } catch (e) {
+      })
+      .catch(function (e) {
         console.error("Video sheet render failed:", e);
         handleError();
-      }
-    };
-
-    var script = document.createElement("script");
-    script.onerror = handleError;
-    script.src =
-      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
-      "/gviz/tq?sheet=" + encodeURIComponent(SHEET_NAME) +
-      "&tqx=responseHandler:" + encodeURIComponent(callbackName);
-    document.body.appendChild(script);
+      });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
