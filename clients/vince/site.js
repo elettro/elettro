@@ -365,11 +365,177 @@
     }, { passive: true });
   }
 
+
+  function initVideoSheet() {
+    var grid = document.querySelector("[data-video-sheet]");
+    if (!grid) return;
+
+    var SHEET_ID = "1R81gIQBLICMpccV2fYTHnSl_j8BKEu_fTum-nEGsw0g";
+    var SHEET_NAME = "Videos";
+    var callbackName = "vmVideoSheetCallback_" + Date.now();
+
+    function normalizeHeader(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function getYouTubeId(url) {
+      url = String(url || "").trim();
+      if (!url) return "";
+
+      var patterns = [
+        /youtube\.com\/watch\?[^#]*v=([^&#]+)/i,
+        /youtube\.com\/shorts\/([^?&#]+)/i,
+        /youtube\.com\/embed\/([^?&#]+)/i,
+        /youtu\.be\/([^?&#]+)/i
+      ];
+
+      for (var i = 0; i < patterns.length; i++) {
+        var match = url.match(patterns[i]);
+        if (match && match[1]) return match[1];
+      }
+
+      try {
+        var parsed = new URL(url);
+        return parsed.searchParams.get("v") || "";
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function toEmbedUrl(url) {
+      var id = getYouTubeId(url);
+      if (id) return "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
+      return String(url || "").trim();
+    }
+
+    function getCell(row, index) {
+      if (!row || !row.c || !row.c[index]) return "";
+      var cell = row.c[index];
+      return cell.v != null ? cell.v : "";
+    }
+
+    function renderVideos(videos) {
+      if (!videos.length) {
+        grid.innerHTML = [
+          '<div class="vcard">',
+            '<div class="vmeta">',
+              '<div class="vshow">No active videos</div>',
+              '<div class="vtitle">Turn Active to TRUE in the Google Sheet.</div>',
+            '</div>',
+          '</div>'
+        ].join("");
+        return;
+      }
+
+      grid.innerHTML = videos.map(function (video) {
+        var embedUrl = toEmbedUrl(video.video_url);
+        var title = escapeHtml(video.title);
+        var description = escapeHtml(video.description);
+        var buttonText = escapeHtml(video.button_text || "Watch Video");
+        var buttonUrl = escapeHtml(video.button_url || video.video_url);
+
+        return [
+          '<div class="vcard">',
+            '<div class="vframe">',
+              '<iframe src="' + embedUrl + '" title="' + title + '" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+            '</div>',
+            '<div class="vmeta">',
+              '<div class="vshow">FINTECH.TV</div>',
+              '<div class="vtitle">' + title + '</div>',
+              description ? '<p class="vdesc">' + description + '</p>' : '',
+              buttonUrl ? '<a class="video-button" href="' + buttonUrl + '" target="_blank" rel="noopener">' + buttonText + '</a>' : '',
+            '</div>',
+          '</div>'
+        ].join("");
+      }).join("");
+    }
+
+    function handleError() {
+      grid.innerHTML = [
+        '<div class="vcard">',
+          '<div class="vmeta">',
+            '<div class="vshow">Video sheet error</div>',
+            '<div class="vtitle">Check that the Google Sheet is published to web and the tab is named Videos.</div>',
+          '</div>',
+        '</div>'
+      ].join("");
+    }
+
+    window[callbackName] = function (response) {
+      try {
+        var table = response && response.table;
+        var cols = table && table.cols ? table.cols : [];
+        var rows = table && table.rows ? table.rows : [];
+
+        var indexByHeader = {};
+        cols.forEach(function (col, index) {
+          var key = normalizeHeader(col.label);
+          if (key) indexByHeader[key] = index;
+        });
+
+        function idx(name) {
+          return indexByHeader[normalizeHeader(name)];
+        }
+
+        var activeIndex = idx("Active");
+        var sortIndex = idx("Sort");
+        var titleIndex = idx("Title");
+        var descriptionIndex = idx("Description");
+        var videoUrlIndex = idx("video_url");
+        var posterUrlIndex = idx("poster_url");
+        var buttonTextIndex = idx("button_text");
+        var buttonUrlIndex = idx("button_url");
+
+        var videos = rows.map(function (row) {
+          return {
+            active: getCell(row, activeIndex),
+            sort: Number(getCell(row, sortIndex)) || 999,
+            title: getCell(row, titleIndex),
+            description: getCell(row, descriptionIndex),
+            video_url: getCell(row, videoUrlIndex),
+            poster_url: getCell(row, posterUrlIndex),
+            button_text: getCell(row, buttonTextIndex),
+            button_url: getCell(row, buttonUrlIndex)
+          };
+        }).filter(function (video) {
+          return String(video.active).toLowerCase() === "true" && video.video_url;
+        }).sort(function (a, b) {
+          return a.sort - b.sort;
+        });
+
+        renderVideos(videos);
+      } catch (e) {
+        console.error("Video sheet render failed:", e);
+        handleError();
+      }
+    };
+
+    var script = document.createElement("script");
+    script.onerror = handleError;
+    script.src =
+      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
+      "/gviz/tq?sheet=" + encodeURIComponent(SHEET_NAME) +
+      "&tqx=responseHandler:" + encodeURIComponent(callbackName);
+    document.body.appendChild(script);
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-player]").forEach(initPlayer);
     initLightbox();
     document.querySelectorAll("[data-carousel]").forEach(initCarousel);
     document.querySelectorAll("[data-hero-photos]").forEach(initHeroPhotos);
     document.querySelectorAll("[data-portrait]").forEach(initPortraitCarousel);
+    initVideoSheet();
   });
 })();
