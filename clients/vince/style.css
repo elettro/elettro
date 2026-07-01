@@ -333,6 +333,38 @@ p{margin:0}
 .onesheet-sub{color:var(--mut);font-size:14px;margin:0}
 .onesheet-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
 
+.media-library{border-top:1px solid var(--line);background:radial-gradient(900px 520px at 78% 0%,rgba(22,163,224,.14),transparent 62%),var(--bg)}
+.media-library-intro{max-width:520px;color:var(--mut);font-size:15px;line-height:1.6}
+.asset-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:-12px 0 36px}
+.asset-toolbar .btn{padding:10px 15px;font-size:11px}
+.asset-group{margin-top:42px}
+.asset-group+.asset-group{padding-top:42px;border-top:1px solid var(--line)}
+.asset-group-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:20px}
+.asset-group-head h3{font-family:var(--serif);font-size:clamp(24px,3vw,34px);color:#fff}
+.asset-group-head p{max-width:540px;color:var(--mut);font-size:14px;line-height:1.55}
+.asset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.asset-grid-compact{grid-template-columns:repeat(4,1fr)}
+.asset-card{background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.asset-card:hover{transform:translateY(-3px);border-color:rgba(22,163,224,.45);box-shadow:0 18px 44px rgba(0,0,0,.28)}
+.asset-thumb{display:block;aspect-ratio:16/10;background:#08090c;overflow:hidden;border-bottom:1px solid var(--line)}
+.asset-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+.asset-card:hover .asset-thumb img{transform:scale(1.035)}
+.asset-body{padding:16px 16px 18px}
+.asset-body span{display:block;margin-bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.asset-body h4{font-family:var(--sans);font-size:16px;line-height:1.2;color:#fff;letter-spacing:0}
+.asset-body p{margin-top:8px;color:var(--mut);font-size:13px;line-height:1.45}
+.asset-body a{display:inline-flex;margin-top:14px;font-family:var(--sans);font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.asset-body a:hover{color:var(--gold-br)}
+@media(max-width:980px){
+  .asset-grid,.asset-grid-compact{grid-template-columns:repeat(2,1fr)}
+  .asset-group-head{display:block}
+  .asset-group-head p{margin-top:10px}
+}
+@media(max-width:560px){
+  .asset-grid,.asset-grid-compact{grid-template-columns:1fr}
+  .asset-toolbar .btn{flex:1 1 auto;justify-content:center}
+}
+
 /* =========================================================
    BOOKING / CTA band
    ========================================================= */
