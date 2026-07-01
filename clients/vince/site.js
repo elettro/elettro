@@ -371,8 +371,12 @@
     if (!grid) return;
 
     var SHEET_ID = "1R81gIQBLICMpccV2fYTHnSI_j8BKEu_fTum-nEGsw0g";
+    var SHEET_GID = "0";
     var SHEET_NAME = "Videos";
     var callbackName = "vmVideoSheetCallback_" + Date.now();
+    var script;
+    var urls;
+    var urlIndex = 0;
 
     function normalizeHeader(value) {
       return String(value || "")
@@ -420,7 +424,7 @@
     }
 
     function getCell(row, index) {
-      if (!row || !row.c || !row.c[index]) return "";
+      if (index == null || index < 0 || !row || !row.c || !row.c[index]) return "";
       var cell = row.c[index];
       return cell.v != null ? cell.v : "";
     }
@@ -439,7 +443,7 @@
       }
 
       grid.innerHTML = videos.map(function (video) {
-        var embedUrl = toEmbedUrl(video.video_url);
+        var embedUrl = escapeHtml(toEmbedUrl(video.video_url));
         var title = escapeHtml(video.title);
         var description = escapeHtml(video.description);
         var buttonText = escapeHtml(video.button_text || "Watch Video");
@@ -462,14 +466,33 @@
     }
 
     function handleError() {
+      if (tryNextUrl()) return;
+
       grid.innerHTML = [
         '<div class="vcard">',
           '<div class="vmeta">',
             '<div class="vshow">Video sheet error</div>',
-            '<div class="vtitle">Check that the Google Sheet is published to web and the tab is named Videos.</div>',
+            '<div class="vtitle">Check that the Google Sheet is published to web and the Videos tab is available.</div>',
           '</div>',
         '</div>'
       ].join("");
+    }
+
+    function cleanupScript() {
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+      script = null;
+    }
+
+    function tryNextUrl() {
+      if (!urls || urlIndex >= urls.length) return false;
+
+      cleanupScript();
+      script = document.createElement("script");
+      script.onerror = handleError;
+      script.src = urls[urlIndex++];
+      console.log("Loading Vince video sheet URL:", script.src);
+      document.body.appendChild(script);
+      return true;
     }
 
     window[callbackName] = function (response) {
@@ -478,9 +501,14 @@
         var cols = table && table.cols ? table.cols : [];
         var rows = table && table.rows ? table.rows : [];
 
+        if (!cols.length) {
+          handleError();
+          return;
+        }
+
         var indexByHeader = {};
         cols.forEach(function (col, index) {
-          var key = normalizeHeader(col.label);
+          var key = normalizeHeader(col.label || col.id);
           if (key) indexByHeader[key] = index;
         });
 
@@ -514,6 +542,7 @@
           return a.sort - b.sort;
         });
 
+        cleanupScript();
         renderVideos(videos);
       } catch (e) {
         console.error("Video sheet render failed:", e);
@@ -521,13 +550,17 @@
       }
     };
 
-    var script = document.createElement("script");
-    script.onerror = handleError;
-    script.src =
+    urls = [
       "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
-      "/gviz/tq?sheet=" + encodeURIComponent(SHEET_NAME) +
-      "&tqx=responseHandler:" + encodeURIComponent(callbackName);
-    document.body.appendChild(script);
+        "/gviz/tq?gid=" + encodeURIComponent(SHEET_GID) +
+        "&tqx=responseHandler:" + encodeURIComponent(callbackName),
+      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
+        "/gviz/tq?tq=" + encodeURIComponent("select *") +
+        "&sheet=" + encodeURIComponent(SHEET_NAME) +
+        "&tqx=responseHandler:" + encodeURIComponent(callbackName)
+    ];
+
+    tryNextUrl();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
