@@ -560,6 +560,32 @@
       });
   }
 
+  function initMobileNav() {
+    var toggle = document.querySelector("[data-nav-toggle]");
+    var links = document.querySelector(".nav-links");
+    if (!toggle || !links) return;
+
+    function setOpen(open) {
+      links.classList.toggle("is-open", open);
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    toggle.addEventListener("click", function () {
+      setOpen(!links.classList.contains("is-open"));
+    });
+
+    links.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!links.classList.contains("is-open")) return;
+      if (links.contains(e.target) || toggle.contains(e.target)) return;
+      setOpen(false);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-player]").forEach(initPlayer);
     initLightbox();
@@ -567,5 +593,6 @@
     document.querySelectorAll("[data-hero-photos]").forEach(initHeroPhotos);
     document.querySelectorAll("[data-portrait]").forEach(initPortraitCarousel);
     initVideoSheet();
+    initMobileNav();
   });
 })();

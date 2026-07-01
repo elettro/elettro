@@ -2,7 +2,6 @@
    VINCE MOLINARI — Broadcast site
    Shared design system
    ========================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root{
   --bg:#0a0a0c;
@@ -108,6 +107,11 @@ p{margin:0}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a.active{color:var(--ink);border-color:var(--gold)}
 .nav .btn{padding:11px 20px}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:transparent;border:1px solid var(--line2);cursor:pointer;padding:0;flex:none}
+.nav-hamburger span{display:block;width:18px;height:2px;background:var(--ink);transition:transform .2s ease,opacity .2s ease}
+.nav-hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.is-open span:nth-child(2){opacity:0}
+.nav-hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* =========================================================
    TICKER (scrolling authority bar)
@@ -435,6 +439,16 @@ p{margin:0}
 }
 @media(max-width:760px){
   .nav-links{display:none}
+  .nav .btn{display:none}
+  .nav-hamburger{display:flex}
+  .nav-links.is-open{
+    display:flex;flex-direction:column;align-items:flex-start;gap:18px;
+    position:absolute;top:100%;left:0;right:0;
+    background:rgba(10,10,12,.98);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    padding:22px var(--pad);z-index:60;
+  }
+  .nav-links.is-open a{padding:4px 0}
   .topics{grid-template-columns:1fr}
   .affil-cards{grid-template-columns:1fr}
   .onesheet-grid{grid-template-columns:1fr}
