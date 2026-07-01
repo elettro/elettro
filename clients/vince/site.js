@@ -371,12 +371,11 @@
     if (!grid) return;
 
     var SHEET_ID = "1R81gIQBLICMpccV2fYTHnSI_j8BKEu_fTum-nEGsw0g";
-    var SHEET_GID = "0";
     var SHEET_NAME = "Videos";
+    var callbackName = "vmVideoSheetCallback_" + Date.now();
 
     function normalizeHeader(value) {
       return String(value || "")
-        .trim()
         .toLowerCase()
         .replace(/[^a-z0-9]/g, "");
     }
@@ -420,13 +419,19 @@
       return String(url || "").trim();
     }
 
+    function getCell(row, index) {
+      if (!row || !row.c || !row.c[index]) return "";
+      var cell = row.c[index];
+      return cell.v != null ? cell.v : "";
+    }
+
     function renderVideos(videos) {
       if (!videos.length) {
         grid.innerHTML = [
           '<div class="vcard">',
             '<div class="vmeta">',
               '<div class="vshow">No active videos</div>',
-              '<div class="vtitle">No TRUE rows with video_url were found in the Google Sheet.</div>',
+              '<div class="vtitle">Turn Active to TRUE in the Google Sheet.</div>',
             '</div>',
           '</div>'
         ].join("");
@@ -456,190 +461,73 @@
       }).join("");
     }
 
-    function showError(message) {
-      console.error("Vince video sheet error:", message);
+    function handleError() {
       grid.innerHTML = [
         '<div class="vcard">',
           '<div class="vmeta">',
             '<div class="vshow">Video sheet error</div>',
-            '<div class="vtitle">' + escapeHtml(message || "Could not load the Google Sheet.") + '</div>',
+            '<div class="vtitle">Check that the Google Sheet is published to web and the tab is named Videos.</div>',
           '</div>',
         '</div>'
       ].join("");
     }
 
-    function getCell(row, index) {
-      if (index == null || index < 0) return "";
-      if (!row || !row.c || !row.c[index]) return "";
-      var cell = row.c[index];
-      return cell.v != null ? cell.v : "";
-    }
+    window[callbackName] = function (response) {
+      try {
+        var table = response && response.table;
+        var cols = table && table.cols ? table.cols : [];
+        var rows = table && table.rows ? table.rows : [];
 
-    function parseGoogleTable(table) {
-      if (!table || !table.rows || !table.cols) {
-        throw new Error("Google returned no table rows or columns.");
+        var indexByHeader = {};
+        cols.forEach(function (col, index) {
+          var key = normalizeHeader(col.label);
+          if (key) indexByHeader[key] = index;
+        });
+
+        function idx(name) {
+          return indexByHeader[normalizeHeader(name)];
+        }
+
+        var activeIndex = idx("Active");
+        var sortIndex = idx("Sort");
+        var titleIndex = idx("Title");
+        var descriptionIndex = idx("Description");
+        var videoUrlIndex = idx("video_url");
+        var posterUrlIndex = idx("poster_url");
+        var buttonTextIndex = idx("button_text");
+        var buttonUrlIndex = idx("button_url");
+
+        var videos = rows.map(function (row) {
+          return {
+            active: getCell(row, activeIndex),
+            sort: Number(getCell(row, sortIndex)) || 999,
+            title: getCell(row, titleIndex),
+            description: getCell(row, descriptionIndex),
+            video_url: getCell(row, videoUrlIndex),
+            poster_url: getCell(row, posterUrlIndex),
+            button_text: getCell(row, buttonTextIndex),
+            button_url: getCell(row, buttonUrlIndex)
+          };
+        }).filter(function (video) {
+          return String(video.active).toLowerCase() === "true" && video.video_url;
+        }).sort(function (a, b) {
+          return a.sort - b.sort;
+        });
+
+        renderVideos(videos);
+      } catch (e) {
+        console.error("Video sheet render failed:", e);
+        handleError();
       }
+    };
 
-      console.log("Vince video sheet raw table:", table);
-
-      var headerMap = {};
-      table.cols.forEach(function (col, index) {
-        var key = normalizeHeader(col.label);
-        if (key) headerMap[key] = index;
-      });
-
-      console.log("Vince video sheet detected headers from cols:", headerMap);
-
-      var rows = table.rows.slice();
-
-      /*
-        Fallback:
-        Sometimes Google does not treat row 1 as headers.
-        If required headers are missing, use the first row as the header row.
-      */
-      if (headerMap.active == null || headerMap.title == null || headerMap.videourl == null) {
-        var firstRow = rows[0];
-        var fallbackHeaderMap = {};
-
-        if (firstRow && firstRow.c) {
-          firstRow.c.forEach(function (cell, index) {
-            var key = normalizeHeader(cell && cell.v);
-            if (key) fallbackHeaderMap[key] = index;
-          });
-        }
-
-        if (fallbackHeaderMap.active != null && fallbackHeaderMap.title != null && fallbackHeaderMap.videourl != null) {
-          headerMap = fallbackHeaderMap;
-          rows = rows.slice(1);
-          console.log("Vince video sheet using first row as headers:", headerMap);
-        }
-      }
-
-      function idx(name) {
-        return headerMap[normalizeHeader(name)];
-      }
-
-      var activeIndex = idx("Active");
-      var sortIndex = idx("Sort");
-      var titleIndex = idx("Title");
-      var descriptionIndex = idx("Description");
-      var videoUrlIndex = idx("video_url");
-      var posterUrlIndex = idx("poster_url");
-      var buttonTextIndex = idx("button_text");
-      var buttonUrlIndex = idx("button_url");
-
-      if (activeIndex == null || titleIndex == null || videoUrlIndex == null) {
-        throw new Error("Missing required headers. Need Active, Title, and video_url. Found: " + Object.keys(headerMap).join(", "));
-      }
-
-      var videos = rows.map(function (row) {
-        return {
-          active: getCell(row, activeIndex),
-          sort: Number(getCell(row, sortIndex)) || 999,
-          title: getCell(row, titleIndex),
-          description: getCell(row, descriptionIndex),
-          video_url: getCell(row, videoUrlIndex),
-          poster_url: getCell(row, posterUrlIndex),
-          button_text: getCell(row, buttonTextIndex),
-          button_url: getCell(row, buttonUrlIndex)
-        };
-      }).filter(function (video) {
-        return String(video.active).toLowerCase() === "true" && String(video.video_url || "").trim();
-      }).sort(function (a, b) {
-        return a.sort - b.sort;
-      });
-
-      console.log("Vince active videos loaded:", videos);
-      return videos;
-    }
-
-    function loadJsonp(url, onSuccess, onFailure) {
-      var callbackName = "vmVideoSheetCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-      var script = document.createElement("script");
-      var done = false;
-
-      window[callbackName] = function (response) {
-        done = true;
-        try {
-          delete window[callbackName];
-        } catch (e) {
-          window[callbackName] = undefined;
-        }
-
-        if (script.parentNode) script.parentNode.removeChild(script);
-
-        if (!response || response.status === "error") {
-          onFailure(response);
-          return;
-        }
-
-        onSuccess(response);
-      };
-
-      script.onerror = function () {
-        if (done) return;
-        done = true;
-
-        try {
-          delete window[callbackName];
-        } catch (e) {
-          window[callbackName] = undefined;
-        }
-
-        if (script.parentNode) script.parentNode.removeChild(script);
-        onFailure({ message: "Script failed to load: " + url });
-      };
-
-      script.src = url.replace("__CALLBACK__", encodeURIComponent(callbackName));
-      console.log("Loading Vince video sheet URL:", script.src);
-      document.body.appendChild(script);
-
-      window.setTimeout(function () {
-        if (done) return;
-        done = true;
-
-        try {
-          delete window[callbackName];
-        } catch (e) {
-          window[callbackName] = undefined;
-        }
-
-        if (script.parentNode) script.parentNode.removeChild(script);
-        onFailure({ message: "Timed out loading: " + url });
-      }, 8000);
-    }
-
-    var urls = [
-      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) + "/gviz/tq?tqx=responseHandler:__CALLBACK__&gid=" + encodeURIComponent(SHEET_GID) + "&headers=1",
-      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) + "/gviz/tq?tqx=responseHandler:__CALLBACK__&sheet=" + encodeURIComponent(SHEET_NAME) + "&headers=1",
-      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) + "/gviz/tq?tqx=responseHandler:__CALLBACK__&gid=" + encodeURIComponent(SHEET_GID)
-    ];
-
-    function tryNextUrl(index, errors) {
-      errors = errors || [];
-
-      if (index >= urls.length) {
-        showError("Google Sheet did not load. Confirm Share is Anyone with the link, Publish to web is enabled, and tab gid is 0. Errors: " + errors.join(" | "));
-        return;
-      }
-
-      loadJsonp(urls[index], function (response) {
-        try {
-          console.log("Vince video sheet response:", response);
-          var videos = parseGoogleTable(response.table);
-          renderVideos(videos);
-        } catch (e) {
-          errors.push(e.message);
-          tryNextUrl(index + 1, errors);
-        }
-      }, function (response) {
-        var msg = response && (response.message || response.detailed_message || JSON.stringify(response));
-        errors.push(msg || "Unknown JSONP load failure");
-        tryNextUrl(index + 1, errors);
-      });
-    }
-
-    tryNextUrl(0, []);
+    var script = document.createElement("script");
+    script.onerror = handleError;
+    script.src =
+      "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
+      "/gviz/tq?sheet=" + encodeURIComponent(SHEET_NAME) +
+      "&tqx=responseHandler:" + encodeURIComponent(callbackName);
+    document.body.appendChild(script);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
