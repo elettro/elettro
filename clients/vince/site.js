@@ -490,8 +490,6 @@
     }
 
     function handleError() {
-      if (tryNextUrl()) return;
-
       grid.innerHTML = [
         '<div class="vcard">',
           '<div class="vmeta">',
@@ -517,11 +515,6 @@
 
         var header = table[0];
         var dataRows = table.slice(1);
-
-        if (!cols.length) {
-          handleError();
-          return;
-        }
 
         var indexByHeader = {};
         header.forEach(function (label, index) {
@@ -559,7 +552,6 @@
           return a.sort - b.sort;
         });
 
-        cleanupScript();
         renderVideos(videos);
       })
       .catch(function (e) {
