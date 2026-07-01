@@ -467,7 +467,7 @@
       }
 
       grid.innerHTML = videos.map(function (video) {
-        var embedUrl = toEmbedUrl(video.video_url);
+        var embedUrl = escapeHtml(toEmbedUrl(video.video_url));
         var title = escapeHtml(video.title);
         var description = escapeHtml(video.description);
         var buttonText = escapeHtml(video.button_text || "Watch Video");
@@ -490,11 +490,13 @@
     }
 
     function handleError() {
+      if (tryNextUrl()) return;
+
       grid.innerHTML = [
         '<div class="vcard">',
           '<div class="vmeta">',
             '<div class="vshow">Video sheet error</div>',
-            '<div class="vtitle">Check that the Google Sheet is published to web and the tab is named Videos.</div>',
+            '<div class="vtitle">Check that the Google Sheet is published to web and the Videos tab is available.</div>',
           '</div>',
         '</div>'
       ].join("");
@@ -515,6 +517,11 @@
 
         var header = table[0];
         var dataRows = table.slice(1);
+
+        if (!cols.length) {
+          handleError();
+          return;
+        }
 
         var indexByHeader = {};
         header.forEach(function (label, index) {
@@ -552,6 +559,7 @@
           return a.sort - b.sort;
         });
 
+        cleanupScript();
         renderVideos(videos);
       })
       .catch(function (e) {
