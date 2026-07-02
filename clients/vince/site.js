@@ -494,7 +494,7 @@
         '<div class="vcard">',
           '<div class="vmeta">',
             '<div class="vshow">Video sheet error</div>',
-            '<div class="vtitle">Check that the Google Sheet is published to web and the Videos tab is available.</div>',
+            '<div class="vtitle">Featured videos are temporarily unavailable. Please check back soon.</div>',
           '</div>',
         '</div>'
       ].join("");
