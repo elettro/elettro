@@ -89,12 +89,12 @@
     });
 
     // Only attach the source once we've confirmed the file exists,
-    // so a not-yet-uploaded episode doesn't throw a console error.
+    // so a missing episode doesn't throw a console error.
     var src = audio.getAttribute("data-src");
     var sub = root.querySelector(".player-sub");
     function markUnavailable() {
       if (playBtn) { playBtn.style.opacity = ".45"; playBtn.style.pointerEvents = "none"; }
-      if (sub) sub.textContent = "Episode coming soon — upload assets/podcast.m4a to go live.";
+      if (sub) sub.textContent = "Podcast episode details will be available soon.";
     }
     if (src) {
       fetch(src, { method: "HEAD" })
