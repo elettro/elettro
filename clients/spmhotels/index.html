@@ -748,14 +748,15 @@ html[lang="en"] [data-i18n-note="en"]{display:block}
   <div class="carousel ig-carousel" id="infographicCarousel" role="region" aria-label="Infographic carousel" tabindex="0">
     <div class="carousel-track" data-car-track>
       <div class="carousel-slide" data-slide="0">
-        <img data-ig-src="images/french/infographic-spmhotels-french-1.png" alt="SPM Hotels strategic infographic 1" loading="lazy">
+        <!-- Local images/french/infographic-spmhotels-french-1.png is 0-byte/corrupted in the repo; using the supplied Dropbox source until it's re-uploaded. -->
+        <img data-ig-src="https://www.dropbox.com/scl/fi/gomg4j9k850cyasz4wq8e/spmhotels-french-1.png?rlkey=ax2zxzsor5al6kk6e9iryyjt7&st=o7bpdham&raw=1" alt="SPM Hotels strategic infographic 1" loading="lazy">
       </div>
       <div class="carousel-slide" data-slide="1">
-        <img data-ig-src="images/french/infographic-spmhotels-french-2.png" alt="SPM Hotels strategic infographic 2" loading="lazy">
+        <!-- Local images/french/infographic-spmhotels-french-2.png is 0-byte/corrupted in the repo; using the supplied Dropbox source until it's re-uploaded. -->
+        <img data-ig-src="https://www.dropbox.com/scl/fi/n03xu610hvs38iqi59nhf/spmhotels-french-2.png?rlkey=nyu5my9rgd0p6pyh5r4gyqbti&st=a8jpz442&raw=1" alt="SPM Hotels strategic infographic 2" loading="lazy">
       </div>
-      <!-- NOTE: both source files above are currently 0-byte/corrupted in the repo. JS below detects the load
-           failure and shows a graceful "temporarily unavailable" placeholder instead of a broken image icon.
-           Once real infographic PNGs are re-uploaded to these same paths, they will display automatically. -->
+      <!-- If either Dropbox source above ever fails to load, JS below shows a graceful "temporarily unavailable"
+           placeholder instead of a broken image icon. -->
     </div>
     <button type="button" class="carousel-arrow prev" data-car-prev aria-label="Previous infographic">&#8249;</button>
     <button type="button" class="carousel-arrow next" data-car-next aria-label="Next infographic">&#8250;</button>
