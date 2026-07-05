@@ -214,6 +214,7 @@ html[lang="en"] [data-i18n-note="en"]{display:block}
 .music-track h4{margin:0 0 4px;font-size:15px;color:var(--ink)}
 .music-track .sub{font-size:12px;color:var(--muted);margin-bottom:12px}
 .music-track audio{width:100%}
+.music-unavailable{margin-top:10px;font-size:12px;color:var(--muted);font-style:italic}
 .music-empty{border:1px dashed var(--line);border-radius:20px;padding:44px 24px;text-align:center;color:var(--muted);background:var(--shell)}
 .music-empty .icon{font-size:32px;margin-bottom:10px}
 .music-empty h4{margin:0 0 6px;font-size:16px;color:var(--ink)}
@@ -897,8 +898,34 @@ html[lang="en"] [data-i18n-note="en"]{display:block}
   }
 
   // ---- Feature 4: branded commercial music ----
-  // Add future tracks to this array: { title, subtitle, language, audioUrl, artworkUrl, description }
-  var brandedMusicTracks = [];
+  // Add future tracks to this array: { title, subtitleEn, subtitleFr, language, audioUrl, artworkUrl, description }
+  var brandedMusicTracks = [
+    {
+      title: 'SPM Hotels',
+      subtitleEn: 'Corporate brand theme',
+      subtitleFr: 'Thème de marque corporate',
+      audioUrl: 'songs/SPM%20Hotels%2001b.wav'
+    },
+    {
+      title: 'Manava Beach Resort',
+      subtitleEn: 'Property theme — French vocal',
+      subtitleFr: 'Thème de la propriété — voix française',
+      audioUrl: 'songs/Manava%20Beach%20Resort%2001b%20IN%20FRENCH%20TC.wav'
+    },
+    {
+      title: 'Niu Beach Hotel',
+      subtitleEn: 'Property theme — French vocal',
+      subtitleFr: 'Thème de la propriété — voix française',
+      audioUrl: 'songs/Niu%20Beach%20Hotel%2001b%20IN%20FRENCH%20TC.wav'
+    },
+    {
+      title: 'I Live Where You Vacation',
+      subtitleEn: 'Brand anthem — French vocal',
+      subtitleFr: 'Hymne de marque — voix française',
+      // Local repo copy of this file is 0-byte/corrupted; using the supplied Dropbox source until it's re-uploaded.
+      audioUrl: 'https://www.dropbox.com/scl/fi/l5yuev61tmv36gt0rj4pk/I-Live-where-you-vacation-01b-IN-FRENCH-TC.mp3?rlkey=j32gsunzy7zr3202ce0t2d84x&st=vjgmbn40&raw=1'
+    }
+  ];
 
   function renderMusic(l){
     var grid = document.getElementById('musicGrid');
@@ -913,13 +940,24 @@ html[lang="en"] [data-i18n-note="en"]{display:block}
         '</div>';
       return;
     }
-    grid.innerHTML = brandedMusicTracks.map(function(t){
+    grid.innerHTML = brandedMusicTracks.map(function(t, i){
+      var subtitle = (l === 'fr' ? t.subtitleFr : t.subtitleEn) || '';
       return '<div class="music-track">' +
         '<h4>' + t.title + '</h4>' +
-        '<div class="sub">' + (t.subtitle || '') + '</div>' +
-        '<audio controls preload="none" src="' + t.audioUrl + '"></audio>' +
+        '<div class="sub">' + subtitle + '</div>' +
+        '<audio controls preload="none" data-track-index="' + i + '" src="' + t.audioUrl + '"></audio>' +
+        '<div class="music-unavailable" data-track-note="' + i + '" hidden>' +
+          (l === 'fr' ? 'Piste temporairement indisponible (fichier en cours de restauration).' : 'Track temporarily unavailable (file is being restored).') +
+        '</div>' +
         '</div>';
     }).join('');
+    grid.querySelectorAll('audio').forEach(function(audio){
+      audio.addEventListener('error', function(){
+        var note = grid.querySelector('[data-track-note="' + audio.getAttribute('data-track-index') + '"]');
+        audio.style.display = 'none';
+        if (note) note.hidden = false;
+      });
+    });
   }
 
   // ---- Feature 5: infographic carousel + modal ----
