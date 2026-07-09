@@ -71,10 +71,20 @@
     flex-wrap:wrap;
   }
   .brandmark{
-    display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;
-    font-weight:600;font-size:19px;letter-spacing:0.01em;
+    display:flex;
+    align-items:center;
+    flex:none;
+    min-width:0;
+    overflow:visible;
+    text-decoration:none;
   }
-  .brandmark .tilemark{width:26px;height:26px;flex:none;}
+  .brandmark img{
+    display:block;
+    height:64px;
+    width:auto;
+    max-width:min(320px, 38vw);
+    object-fit:contain;
+  }
   .top-strip-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
   .language-switcher{display:flex;align-items:center;gap:6px;background:rgba(237,243,241,0.08);padding:4px;border-radius:999px;}
   .language-switcher button{min-width:44px;height:44px;border:1px solid rgba(237,243,241,0.22);border-radius:999px;background:transparent;color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;}
@@ -611,6 +621,7 @@
   @media (max-width:768px){
     .top-strip-inner{justify-content:center;text-align:center;padding:10px 16px;}
     .brandmark,.top-strip-area,.top-strip-actions{width:100%;justify-content:center;}
+    .brandmark img{height:48px;max-width:min(280px, 82vw);}
     .hero{padding:36px 0 28px;}
     .hero-grid{gap:30px;}
     .hero h1{font-size:clamp(2.4rem,13vw,4.5rem);line-height:1.02;overflow-wrap:anywhere;}
@@ -626,7 +637,7 @@
   @media (max-width:480px){
     .wrap{padding:0 16px;}
     .top-strip-inner{gap:10px;}
-    .brandmark{font-size:17px;flex-wrap:wrap;}
+    .brandmark img{height:44px;max-width:82vw;}
     .hero p.lede,.section-head p,.final-cta p.sub{font-size:16px;}
     .service-card,.service-card.flagship{padding:22px;}
     .county-head{flex-direction:column;align-items:flex-start;}
@@ -637,15 +648,14 @@
 
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- ============ TOP STRIP ============ -->
 <div class="top-strip">
   <div class="top-strip-inner">
-    <div class="brandmark">
-      <svg class="tilemark" viewBox="0 0 26 26" fill="none"><path d="M2 20c2-6 6-10 11-10s9 4 11 10" stroke="#E2946B" stroke-width="2.4" stroke-linecap="round"/><path d="M6 20c1.2-4 3.6-6.4 7-6.4s5.8 2.4 7 6.4" stroke="#159AA6" stroke-width="2.4" stroke-linecap="round"/></svg>
-      Delisser <span style="color:#E2946B;">Pressure Cleaning</span>
-    </div>
+    <a class="brandmark" href="#top" aria-label="Delisser Pressure Cleaning home">
+      <img src="logos/delisser-logo-%20(6).png" alt="Delisser Pressure Cleaning">
+    </a>
     <div class="top-strip-area"><span class="dot">●</span> Broward <span class="dot">●</span> Miami-Dade <span class="dot">●</span> Palm Beach</div>
     <div class="top-strip-actions">
       <div class="language-switcher" aria-label="Language selector" data-i18n-aria-label="Language selector">
