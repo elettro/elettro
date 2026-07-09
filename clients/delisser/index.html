@@ -393,6 +393,12 @@
   .city-list li::before{content:"▸ ";color:var(--terracotta);}
   @media (max-width:900px){ .county-grid{grid-template-columns:1fr;} }
 
+  /* ============ MID-JOB PROOF CAROUSEL ============ */
+  .mid-job-proof{background:var(--paper);}
+  .mid-job-proof .roof-results{max-width:1080px;margin:0 auto;}
+  .mid-job-proof .roof-results-copy{text-align:center;max-width:760px;margin:0 auto;padding:8px 8px 20px;}
+  .mid-job-proof .roof-results-copy p{font-size:16px;}
+
   /* ============ ABOUT CODY ============ */
   .about{background:var(--ink);color:var(--paper);}
   .about-grid{
@@ -541,7 +547,7 @@
         <h2>Clean Roof Results Across Broward County</h2>
         <p>Real Spanish tile roof cleaning results showing heavy buildup removed and the original roof color restored.</p>
       </div>
-      <div class="roof-carousel" id="roofCarousel">
+      <div class="roof-carousel" id="roofCarousel" data-carousel-label="clean roof result">
         <div class="roof-carousel-track">
           <div class="roof-slide is-active"><img src="images/clean-roofs/broward-roofs-clean-%20(1).png" alt="Clean Spanish tile roof after Delisser soft washing in Broward County"></div>
           <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(2).png" alt="Restored barrel tile roof cleaned by Delisser Pressure Cleaning"></div>
@@ -683,6 +689,41 @@
           <li>Palm Beach</li><li>Lantana</li><li>Tequesta</li><li>Loxahatchee</li>
           <li>Juno Beach</li><li>Jupiter Farms</li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ MID-JOB CLEANING PROOF ============ -->
+<section class="mid-job-proof section" aria-labelledby="mid-job-proof-title">
+  <div class="wrap">
+    <div class="roof-results" aria-label="In-progress roof cleaning carousel">
+      <div class="roof-results-copy">
+        <div class="eyebrow">Transformation in progress</div>
+        <h2 id="mid-job-proof-title">See the Clean Difference Mid-Job</h2>
+        <p>These in-progress roof cleaning photos show the real contrast between dark buildup and freshly cleaned Spanish tile.</p>
+      </div>
+      <div class="roof-carousel" id="startedCleaningCarousel" data-carousel-label="mid-job roof cleaning photo">
+        <div class="roof-carousel-track">
+          <div class="roof-slide is-active"><img src="images/started-cleaning/mid-cleaning-roofs-%20(1).png" alt="Mid-job Spanish tile roof cleaning with dark buildup beside freshly cleaned tile" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(2).png" alt="In-progress roof cleaning showing a clear line between dirty and cleaned Spanish tile" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(3).png" alt="Partly cleaned tile roof during Delisser soft washing with algae still visible nearby" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(4).png" alt="Roof cleaning transformation in progress on Spanish barrel tile" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(5).png" alt="Mid-cleaning roof photo with freshly washed tile contrasting against dark roof buildup" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(6).png" alt="Professional roof cleaning midway through with visible clean and dirty sections" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(7).png" alt="South Florida Spanish tile roof partly cleaned to reveal original tile color" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(8).png" alt="In-progress soft wash roof cleaning showing before and after contrast on the same roof" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(9).png" alt="Spanish tile roof cleaning action photo with dark buildup beside cleaned roof tile" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+          <div class="roof-slide"><img src="images/started-cleaning/mid-cleaning-roofs-%20(10).png" alt="Delisser roof cleaning mid-job result showing freshly cleaned Spanish tile against dirty tile" loading="lazy" decoding="async" sizes="(max-width: 640px) 100vw, 1080px"></div>
+        </div>
+        <button class="roof-carousel-btn prev" type="button" aria-label="Show previous mid-job roof cleaning photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="roof-carousel-btn next" type="button" aria-label="Show next mid-job roof cleaning photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="roof-carousel-dots" aria-label="Choose mid-job roof cleaning photo"></div>
       </div>
     </div>
   </div>
@@ -840,71 +881,75 @@
 </footer>
 
 <script>
-  // Clean roof results carousel
+  // Roof image carousels
   (function(){
-    const carousel = document.getElementById('roofCarousel');
-    if(!carousel) return;
-
-    const slides = Array.from(carousel.querySelectorAll('.roof-slide'));
-    const prev = carousel.querySelector('.roof-carousel-btn.prev');
-    const next = carousel.querySelector('.roof-carousel-btn.next');
-    const dotsWrap = carousel.querySelector('.roof-carousel-dots');
+    const carousels = document.querySelectorAll('.roof-carousel');
     const intervalMs = 4000;
-    let active = 0;
-    let timer = null;
-    let touchStartX = 0;
 
-    const dots = slides.map((_, index) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'roof-carousel-dot';
-      dot.setAttribute('aria-label', 'Show clean roof result ' + (index + 1));
-      dot.addEventListener('click', () => { showSlide(index); restart(); });
-      dotsWrap.appendChild(dot);
-      return dot;
+    carousels.forEach((carousel) => {
+      const slides = Array.from(carousel.querySelectorAll('.roof-slide'));
+      const prev = carousel.querySelector('.roof-carousel-btn.prev');
+      const next = carousel.querySelector('.roof-carousel-btn.next');
+      const dotsWrap = carousel.querySelector('.roof-carousel-dots');
+      if(!slides.length || !prev || !next || !dotsWrap) return;
+
+      let active = 0;
+      let timer = null;
+      let touchStartX = 0;
+      const label = carousel.dataset.carouselLabel || 'roof result';
+
+      const dots = slides.map((_, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'roof-carousel-dot';
+        dot.setAttribute('aria-label', 'Show ' + label + ' ' + (index + 1));
+        dot.addEventListener('click', () => { showSlide(index); restart(); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function showSlide(index){
+        active = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === active));
+        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === active));
+      }
+
+      function advance(direction){
+        showSlide(active + direction);
+      }
+
+      function start(){
+        stop();
+        timer = window.setInterval(() => advance(1), intervalMs);
+      }
+
+      function stop(){
+        if(timer) window.clearInterval(timer);
+        timer = null;
+      }
+
+      function restart(){
+        start();
+      }
+
+      prev.addEventListener('click', () => { advance(-1); restart(); });
+      next.addEventListener('click', () => { advance(1); restart(); });
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      carousel.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+        stop();
+      }, {passive:true});
+      carousel.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        if(Math.abs(deltaX) > 40) advance(deltaX > 0 ? -1 : 1);
+        start();
+      }, {passive:true});
+
+      showSlide(0);
+      start();
     });
-
-    function showSlide(index){
-      active = (index + slides.length) % slides.length;
-      slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === active));
-      dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === active));
-    }
-
-    function advance(direction){
-      showSlide(active + direction);
-    }
-
-    function start(){
-      stop();
-      timer = window.setInterval(() => advance(1), intervalMs);
-    }
-
-    function stop(){
-      if(timer) window.clearInterval(timer);
-      timer = null;
-    }
-
-    function restart(){
-      start();
-    }
-
-    prev.addEventListener('click', () => { advance(-1); restart(); });
-    next.addEventListener('click', () => { advance(1); restart(); });
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', start);
-    carousel.addEventListener('touchstart', (event) => {
-      touchStartX = event.touches[0].clientX;
-      stop();
-    }, {passive:true});
-    carousel.addEventListener('touchend', (event) => {
-      const touchEndX = event.changedTouches[0].clientX;
-      const deltaX = touchEndX - touchStartX;
-      if(Math.abs(deltaX) > 40) advance(deltaX > 0 ? -1 : 1);
-      start();
-    }, {passive:true});
-
-    showSlide(0);
-    start();
   })();
 
   // FAQ accordion
