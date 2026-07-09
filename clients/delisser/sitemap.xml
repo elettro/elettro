@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Update loc to final domain after domain points. If final multilingual pages are later created, add /, /es/, and /fr/. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>UPDATE_WITH_FINAL_DOMAIN/</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+</urlset>
