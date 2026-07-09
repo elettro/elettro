@@ -151,42 +151,102 @@
   .trust-line b{color:var(--ink);font-weight:600;}
   .trust-line .sep{color:var(--terracotta);}
 
-  /* hero visual: before/after slider */
-  .compare{
-    position:relative;border-radius:20px;overflow:hidden;
-    box-shadow:var(--shadow);
-    aspect-ratio:5/4.3;
-    background:#cfe3e0;
+  /* hero visual: clean roof results carousel */
+  .roof-results{
+    background:linear-gradient(145deg, rgba(237,243,241,0.92), rgba(251,252,250,0.98));
     border:1px solid rgba(11,42,51,0.08);
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    padding:18px;
   }
-  .compare svg{width:100%;height:100%;position:absolute;inset:0;}
-  .compare .after-layer{clip-path:inset(0 0 0 52%);}
-  .compare-handle{
-    position:absolute;top:0;bottom:0;left:52%;width:0;
-    display:flex;align-items:center;justify-content:center;
-    cursor:ew-resize;touch-action:none;
+  .roof-results-copy{padding:4px 4px 16px;}
+  .roof-results-copy h2{
+    font-family:'Fraunces',serif;
+    font-size:clamp(26px,3vw,36px);
+    line-height:1.05;
+    margin:8px 0 10px;
+    color:var(--ink);
   }
-  .compare-handle::before{
-    content:"";position:absolute;top:0;bottom:0;left:-1.5px;width:3px;
-    background:#fff;box-shadow:0 0 0 1px rgba(11,42,51,0.15);
+  .roof-results-copy p{
+    color:var(--ink-70);
+    font-size:15px;
+    line-height:1.55;
+    margin:0;
   }
-  .compare-grip{
-    position:relative;width:46px;height:46px;border-radius:50%;
-    background:#fff;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 18px -6px rgba(11,42,51,0.4);
-    border:2px solid var(--terracotta);
+  .roof-carousel{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    aspect-ratio:16/9;
+    background:var(--ink);
+    box-shadow:0 18px 36px -22px rgba(11,42,51,0.7);
+    isolation:isolate;
   }
-  .compare-grip svg{width:20px;height:20px;color:var(--terracotta);}
-  .compare-tag{
-    position:absolute;top:16px;font-family:'IBM Plex Mono',monospace;
-    font-size:11.5px;letter-spacing:0.12em;font-weight:600;
-    padding:6px 12px;border-radius:999px;color:#fff;
+  .roof-carousel-track{position:relative;width:100%;height:100%;}
+  .roof-slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transform:scale(1.025);
+    transition:opacity .65s ease, transform .65s ease;
   }
-  .compare-tag.before{left:16px;background:var(--algae);}
-  .compare-tag.after{right:16px;background:var(--aqua-dark);}
-  .compare-caption{
-    text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;
-    color:var(--ink-70);margin-top:12px;letter-spacing:0.03em;
+  .roof-slide.is-active{opacity:1;transform:scale(1);z-index:1;}
+  .roof-slide img{width:100%;height:100%;object-fit:cover;}
+  .roof-slide::after{
+    content:"";
+    position:absolute;
+    inset:auto 0 0;
+    height:34%;
+    background:linear-gradient(180deg, transparent, rgba(11,42,51,0.38));
+    pointer-events:none;
+  }
+  .roof-carousel-btn{
+    position:absolute;
+    top:50%;
+    z-index:3;
+    width:44px;
+    height:44px;
+    border:0;
+    border-radius:999px;
+    display:grid;
+    place-items:center;
+    background:rgba(251,252,250,0.92);
+    color:var(--ink);
+    box-shadow:0 10px 22px -12px rgba(11,42,51,0.55);
+    cursor:pointer;
+    transform:translateY(-50%);
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .roof-carousel-btn:hover{background:var(--terracotta);color:#fff;transform:translateY(-50%) scale(1.05);}
+  .roof-carousel-btn.prev{left:14px;}
+  .roof-carousel-btn.next{right:14px;}
+  .roof-carousel-btn svg{width:22px;height:22px;}
+  .roof-carousel-dots{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:14px;
+    z-index:3;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+  }
+  .roof-carousel-dot{
+    width:9px;
+    height:9px;
+    border:0;
+    border-radius:999px;
+    background:rgba(251,252,250,0.65);
+    cursor:pointer;
+    padding:0;
+    transition:width .2s ease, background .2s ease;
+  }
+  .roof-carousel-dot.is-active{width:24px;background:var(--terracotta-light);}
+  @media (max-width: 640px){
+    .roof-results{padding:14px;border-radius:20px;}
+    .roof-carousel{aspect-ratio:4/5;border-radius:16px;}
+    .roof-carousel-btn{width:38px;height:38px;}
   }
 
   @media (max-width: 880px){
@@ -475,90 +535,29 @@
       </div>
     </div>
 
-    <div>
-      <div class="compare" id="compare">
-        <!-- BEFORE layer -->
-        <svg viewBox="0 0 600 516" xmlns="http://www.w3.org/2000/svg">
-          <rect width="600" height="516" fill="#cfe0d8"/>
-          <rect width="600" height="360" fill="#bcd6cd"/>
-          <circle cx="500" cy="90" r="46" fill="#e7dcae"/>
-          <path d="M0 340 q80 -26 160 0 t160 0 t160 0 t160 0 v20 h-640z" fill="#9db99f" opacity="0.6"/>
-          <!-- house body -->
-          <rect x="120" y="270" width="360" height="180" fill="#e8e2d3"/>
-          <rect x="150" y="330" width="60" height="120" fill="#7a8a72"/>
-          <rect x="250" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
-          <rect x="330" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
-          <rect x="410" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
-          <!-- dirty tile roof -->
-          <polygon points="90,270 300,150 510,270" fill="#7c6a4f"/>
-          <g stroke="#5f5138" stroke-width="2">
-            <path d="M110,262 L300,168" fill="none"/>
-            <path d="M140,262 L300,186" fill="none"/>
-            <path d="M170,262 L300,204" fill="none"/>
-            <path d="M200,262 L300,222" fill="none"/>
-            <path d="M230,262 L300,240" fill="none"/>
-            <path d="M490,262 L300,168" fill="none"/>
-            <path d="M460,262 L300,186" fill="none"/>
-            <path d="M430,262 L300,204" fill="none"/>
-            <path d="M400,262 L300,222" fill="none"/>
-            <path d="M370,262 L300,240" fill="none"/>
-          </g>
-          <g fill="#4c4530" opacity="0.55">
-            <ellipse cx="200" cy="230" rx="46" ry="16"/>
-            <ellipse cx="340" cy="210" rx="60" ry="20"/>
-            <ellipse cx="260" cy="255" rx="70" ry="14"/>
-            <ellipse cx="400" cy="245" rx="40" ry="12"/>
-          </g>
-          <rect x="380" y="150" width="16" height="46" fill="#9c8f74"/>
-          <!-- shrubs -->
-          <circle cx="100" cy="450" r="26" fill="#5f7a5c"/>
-          <circle cx="500" cy="450" r="30" fill="#5f7a5c"/>
-        </svg>
-
-        <!-- AFTER layer -->
-        <div class="after-layer">
-        <svg viewBox="0 0 600 516" xmlns="http://www.w3.org/2000/svg">
-          <rect width="600" height="516" fill="#dcecef"/>
-          <rect width="600" height="360" fill="#cfe6e8"/>
-          <circle cx="500" cy="90" r="46" fill="#ffe9a8"/>
-          <path d="M0 340 q80 -26 160 0 t160 0 t160 0 t160 0 v20 h-640z" fill="#8fc79a" opacity="0.7"/>
-          <rect x="120" y="270" width="360" height="180" fill="#faf6ec"/>
-          <rect x="150" y="330" width="60" height="120" fill="#159AA6"/>
-          <rect x="250" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
-          <rect x="330" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
-          <rect x="410" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
-          <polygon points="90,270 300,150 510,270" fill="#C1512B"/>
-          <g stroke="#8F3A1E" stroke-width="2">
-            <path d="M110,262 L300,168" fill="none"/>
-            <path d="M140,262 L300,186" fill="none"/>
-            <path d="M170,262 L300,204" fill="none"/>
-            <path d="M200,262 L300,222" fill="none"/>
-            <path d="M230,262 L300,240" fill="none"/>
-            <path d="M490,262 L300,168" fill="none"/>
-            <path d="M460,262 L300,186" fill="none"/>
-            <path d="M430,262 L300,204" fill="none"/>
-            <path d="M400,262 L300,222" fill="none"/>
-            <path d="M370,262 L300,240" fill="none"/>
-          </g>
-          <rect x="380" y="150" width="16" height="46" fill="#E2946B"/>
-          <circle cx="100" cy="450" r="26" fill="#4f9d5c"/>
-          <circle cx="500" cy="450" r="30" fill="#4f9d5c"/>
-          <g opacity="0.85" stroke="#EDF3F1" stroke-width="3" stroke-linecap="round">
-            <path d="M250,230 l14,14 M270,215 l10,10"/>
-            <path d="M390,220 l14,14 M410,205 l10,10"/>
-          </g>
-        </svg>
-        </div>
-
-        <span class="compare-tag before">BEFORE</span>
-        <span class="compare-tag after">AFTER</span>
-        <div class="compare-handle" id="compareHandle">
-          <div class="compare-grip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
-          </div>
-        </div>
+    <div class="roof-results" aria-label="Clean roof results carousel">
+      <div class="roof-results-copy">
+        <div class="eyebrow">Proof in the tile</div>
+        <h2>Clean Roof Results Across Broward County</h2>
+        <p>Real Spanish tile roof cleaning results showing heavy buildup removed and the original roof color restored.</p>
       </div>
-      <p class="compare-caption">Drag to compare &mdash; typical South Florida barrel-tile roof, before &amp; after Delisser soft-wash</p>
+      <div class="roof-carousel" id="roofCarousel">
+        <div class="roof-carousel-track">
+          <div class="roof-slide is-active"><img src="images/clean-roofs/broward-roofs-clean-%20(1).png" alt="Clean Spanish tile roof after Delisser soft washing in Broward County"></div>
+          <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(2).png" alt="Restored barrel tile roof cleaned by Delisser Pressure Cleaning"></div>
+          <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(3).png" alt="South Florida tile roof with algae buildup removed"></div>
+          <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(4).png" alt="Bright cleaned tile roof result across Broward County"></div>
+          <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(5).png" alt="Professional roof cleaning result on Spanish tile"></div>
+          <div class="roof-slide"><img src="images/clean-roofs/broward-roofs-clean-%20(6).png" alt="Delisser soft wash roof cleaning result with restored roof color"></div>
+        </div>
+        <button class="roof-carousel-btn prev" type="button" aria-label="Show previous clean roof result">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="roof-carousel-btn next" type="button" aria-label="Show next clean roof result">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="roof-carousel-dots" aria-label="Choose clean roof result slide"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -841,27 +840,71 @@
 </footer>
 
 <script>
-  // Before/After compare slider
+  // Clean roof results carousel
   (function(){
-    const compare = document.getElementById('compare');
-    const after = compare.querySelector('.after-layer');
-    const handle = document.getElementById('compareHandle');
-    let dragging = false;
+    const carousel = document.getElementById('roofCarousel');
+    if(!carousel) return;
 
-    function setPos(clientX){
-      const rect = compare.getBoundingClientRect();
-      let pct = ((clientX - rect.left) / rect.width) * 100;
-      pct = Math.max(4, Math.min(96, pct));
-      after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
-      handle.style.left = pct + '%';
+    const slides = Array.from(carousel.querySelectorAll('.roof-slide'));
+    const prev = carousel.querySelector('.roof-carousel-btn.prev');
+    const next = carousel.querySelector('.roof-carousel-btn.next');
+    const dotsWrap = carousel.querySelector('.roof-carousel-dots');
+    const intervalMs = 4000;
+    let active = 0;
+    let timer = null;
+    let touchStartX = 0;
+
+    const dots = slides.map((_, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'roof-carousel-dot';
+      dot.setAttribute('aria-label', 'Show clean roof result ' + (index + 1));
+      dot.addEventListener('click', () => { showSlide(index); restart(); });
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+
+    function showSlide(index){
+      active = (index + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === active));
+      dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === active));
     }
-    handle.addEventListener('mousedown', () => dragging = true);
-    window.addEventListener('mouseup', () => dragging = false);
-    window.addEventListener('mousemove', (e) => { if(dragging) setPos(e.clientX); });
-    handle.addEventListener('touchstart', () => dragging = true, {passive:true});
-    window.addEventListener('touchend', () => dragging = false);
-    window.addEventListener('touchmove', (e) => { if(dragging && e.touches[0]) setPos(e.touches[0].clientX); }, {passive:true});
-    compare.addEventListener('click', (e) => setPos(e.clientX));
+
+    function advance(direction){
+      showSlide(active + direction);
+    }
+
+    function start(){
+      stop();
+      timer = window.setInterval(() => advance(1), intervalMs);
+    }
+
+    function stop(){
+      if(timer) window.clearInterval(timer);
+      timer = null;
+    }
+
+    function restart(){
+      start();
+    }
+
+    prev.addEventListener('click', () => { advance(-1); restart(); });
+    next.addEventListener('click', () => { advance(1); restart(); });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    carousel.addEventListener('touchstart', (event) => {
+      touchStartX = event.touches[0].clientX;
+      stop();
+    }, {passive:true});
+    carousel.addEventListener('touchend', (event) => {
+      const touchEndX = event.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+      if(Math.abs(deltaX) > 40) advance(deltaX > 0 ? -1 : 1);
+      start();
+    }, {passive:true});
+
+    showSlide(0);
+    start();
   })();
 
   // FAQ accordion
