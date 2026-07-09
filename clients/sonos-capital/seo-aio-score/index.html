@@ -141,6 +141,100 @@
   footer .produced{font-size:12.5px;color:var(--text-faint);}
   footer .produced a{color:var(--gold);text-decoration:none;font-weight:600;}
   footer .fine{font-size:11px;color:var(--text-faint);margin-top:10px;max-width:640px;margin-left:auto;margin-right:auto;}
+
+
+  .sonos-collection-strip {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    background: linear-gradient(135deg, #07111f 0%, #10243d 100%);
+    border-top: 1px solid rgba(255,255,255,0.10);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 18px 20px;
+    box-sizing: border-box;
+  }
+
+  .sonos-collection-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .sonos-collection-label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.92;
+  }
+
+  .sonos-collection-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .sonos-collection-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+  }
+
+  .sonos-collection-button:hover,
+  .sonos-collection-button:focus {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.16);
+    border-color: rgba(255,255,255,0.42);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .sonos-collection-button.is-active {
+    background: #ffffff;
+    color: #07111f;
+    border-color: #ffffff;
+  }
+
+  @media (max-width: 700px) {
+    .sonos-collection-strip {
+      padding: 16px;
+    }
+
+    .sonos-collection-inner {
+      align-items: stretch;
+    }
+
+    .sonos-collection-label {
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .sonos-collection-nav {
+      width: 100%;
+    }
+
+    .sonos-collection-button {
+      width: 100%;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -174,6 +268,18 @@
     </div>
   </div>
 </header>
+
+<section class="sonos-collection-strip" aria-label="Sonos Capital page navigation">
+  <div class="sonos-collection-inner">
+    <div class="sonos-collection-label">Sonos Capital / Walter Johnson Collection</div>
+    <nav class="sonos-collection-nav">
+      <a class="sonos-collection-button" href="https://elettro.com/clients/sonos-capital/">Sonos One Sheet &amp; Videos</a>
+      <a class="sonos-collection-button" href="https://elettro.com/clients/sonos-capital/walter/">Walter Johnson One Sheet</a>
+      <a class="sonos-collection-button is-active" href="https://elettro.com/clients/sonos-capital/seo-aio-score">Sonos Site Website Score</a>
+    </nav>
+  </div>
+</section>
+
 
 <section>
   <div class="wrap">
