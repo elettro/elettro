@@ -432,6 +432,8 @@
     border:1px solid rgba(237,243,241,0.15);
     box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);
   }
+  .cody-portrait .roof-carousel{width:100%;height:100%;aspect-ratio:auto;border-radius:0;box-shadow:none;}
+  .cody-portrait .roof-slide img{width:100%;height:100%;object-fit:cover;}
   .about h2{
     font-family:'Fraunces',serif;font-weight:600;color:#fff;
     font-size:clamp(28px,3.6vw,40px);margin:10px 0 16px;
@@ -828,22 +830,21 @@
 <section class="about section" id="about">
   <div class="wrap about-grid">
     <div class="cody-portrait">
-      <svg viewBox="0 0 400 470" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="470" fill="#0E323C"/>
-        <rect width="400" height="470" fill="url(#g)" opacity="0.5"/>
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#159AA6"/>
-            <stop offset="1" stop-color="#0B2A33"/>
-          </linearGradient>
-        </defs>
-        <circle cx="200" cy="180" r="86" fill="#E2946B"/>
-        <path d="M200 250c-70 0-120 46-120 110v110h240V360c0-64-50-110-120-110z" fill="#C1512B"/>
-        <rect x="150" y="330" width="100" height="26" rx="6" fill="#EDF3F1" opacity="0.9"/>
-        <text x="200" y="349" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#0B2A33" font-weight="600">DELISSER</text>
-        <circle cx="150" cy="415" r="8" fill="#159AA6"/>
-        <circle cx="250" cy="415" r="8" fill="#159AA6"/>
-      </svg>
+      <div class="roof-carousel" id="staffCarousel" data-carousel-label="Cody Delisser staff photo">
+        <div class="roof-carousel-track">
+          <div class="roof-slide is-active"><img src="images/staff/staff%20(1).png" alt="Cody Delisser from Delisser Pressure Cleaning" loading="lazy" decoding="async" sizes="(max-width: 880px) 320px, 460px"></div>
+          <div class="roof-slide"><img src="images/staff/staff%20(3).png" alt="Cody Delisser on site with Delisser Pressure Cleaning" loading="lazy" decoding="async" sizes="(max-width: 880px) 320px, 460px"></div>
+          <div class="roof-slide"><img src="images/staff/staff%20(4).png" alt="Delisser Pressure Cleaning team photo featuring Cody Delisser" loading="lazy" decoding="async" sizes="(max-width: 880px) 320px, 460px"></div>
+          <div class="roof-slide"><img src="images/staff/staff%20(5).png" alt="Cody Delisser staff portrait for Delisser Pressure Cleaning" loading="lazy" decoding="async" sizes="(max-width: 880px) 320px, 460px"></div>
+        </div>
+        <button class="roof-carousel-btn prev" type="button" aria-label="Show previous Cody Delisser staff photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="roof-carousel-btn next" type="button" aria-label="Show next Cody Delisser staff photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="roof-carousel-dots" aria-label="Choose Cody Delisser staff photo"></div>
+      </div>
     </div>
     <div>
       <div class="eyebrow on-dark">Meet Your Roof Cleaner</div>
