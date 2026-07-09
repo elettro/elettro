@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sonos Capital — SEO & AIO Audit | Elettro</title>
+<style>
+  :root{
+    --bg:#0B0D10;
+    --bg-panel:#12151A;
+    --bg-panel-2:#171B21;
+    --border:#262B33;
+    --text:#EDEFF2;
+    --text-dim:#9AA2AE;
+    --text-faint:#5D6472;
+    --gold:#E8B34C;
+    --gold-dim:#4A3B1E;
+    --emerald:#3FAE73;
+    --emerald-dim:#173A2B;
+    --red:#E85C4C;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+
+  /* ===== HEADER ===== */
+  header{
+    padding:56px 0 40px;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(ellipse 800px 300px at 15% 0%, rgba(232,179,76,0.08), transparent 60%),
+      radial-gradient(ellipse 800px 300px at 85% 0%, rgba(63,174,115,0.06), transparent 60%);
+  }
+  .brandline{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;}
+  .brand{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);font-weight:600;}
+  .brand b{color:var(--text);}
+  .datepill{font-size:12px;color:var(--text-faint);border:1px solid var(--border);padding:6px 12px;border-radius:20px;}
+  .eyebrow{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;}
+  h1{font-size:38px;line-height:1.15;margin:0 0 14px;font-weight:750;letter-spacing:-0.01em;}
+  h1 span{color:var(--text-dim);font-weight:500;}
+  .subhead{font-size:16px;color:var(--text-dim);max-width:640px;margin:0 0 28px;}
+  .target-card{
+    display:flex;flex-wrap:wrap;gap:28px;
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;
+    padding:20px 24px;
+  }
+  .target-item .label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-faint);margin-bottom:4px;}
+  .target-item .value{font-size:14px;color:var(--text);font-weight:600;}
+  .target-item a{color:var(--gold);text-decoration:none;}
+
+  /* ===== SECTION SHELL ===== */
+  section{padding:56px 0;border-bottom:1px solid var(--border);}
+  .section-title{font-size:22px;font-weight:700;margin:0 0 6px;letter-spacing:-0.01em;}
+  .section-desc{font-size:14px;color:var(--text-dim);margin:0 0 32px;max-width:680px;}
+
+  /* ===== SCORE RINGS ===== */
+  .ring-row{display:flex;gap:24px;flex-wrap:wrap;}
+  .ring-card{
+    flex:1;min-width:280px;
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;
+    padding:28px;display:flex;align-items:center;gap:24px;
+  }
+  .ring-meta{flex:1;}
+  .ring-meta .name{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .ring-meta .desc{font-size:12.5px;color:var(--text-dim);margin-bottom:14px;}
+  .legend-row{display:flex;gap:16px;font-size:12px;}
+  .legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;}
+  .legend-item{color:var(--text-dim);display:flex;align-items:center;}
+  .ring-svg-wrap{position:relative;width:132px;height:132px;flex-shrink:0;}
+  .ring-svg-wrap svg{width:132px;height:132px;transform:rotate(-90deg);}
+  .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .ring-center .delta{font-size:11px;color:var(--emerald);font-weight:700;}
+
+  /* ===== BAR COMPARISON ===== */
+  .bar-grid{display:flex;flex-direction:column;gap:22px;}
+  .bar-row{display:grid;grid-template-columns:200px 1fr 1fr 90px;gap:16px;align-items:center;}
+  .bar-row .metric-name{font-size:13.5px;font-weight:600;color:var(--text);}
+  .bar-track{background:var(--bg-panel-2);border-radius:6px;height:14px;position:relative;overflow:hidden;border:1px solid var(--border);}
+  .bar-fill{height:100%;border-radius:6px;}
+  .bar-fill.current{background:linear-gradient(90deg,#7a5a22,var(--gold));}
+  .bar-fill.projected{background:linear-gradient(90deg,#1f5c3f,var(--emerald));}
+  .bar-row .score-val{font-size:12px;color:var(--text-dim);text-align:right;}
+  .bar-row .score-val.current-val{color:var(--gold);}
+  .bar-row .score-val.projected-val{color:var(--emerald);}
+  .bar-col-label{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-faint);margin-bottom:6px;}
+  .bar-header{display:grid;grid-template-columns:200px 1fr 1fr 90px;gap:16px;margin-bottom:6px;}
+
+  /* ===== FINDINGS GRID ===== */
+  .findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:760px){.findings-grid{grid-template-columns:1fr;}}
+  .findings-col{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:24px;}
+  .findings-col h3{font-size:14px;margin:0 0 16px;display:flex;align-items:center;gap:8px;}
+  .findings-col.strengths h3{color:var(--emerald);}
+  .findings-col.issues h3{color:var(--red);}
+  .findings-col ul{margin:0;padding:0;list-style:none;}
+  .findings-col li{font-size:13.5px;color:var(--text-dim);padding:10px 0;border-top:1px solid var(--border);display:flex;gap:10px;}
+  .findings-col li:first-child{border-top:none;padding-top:0;}
+  .findings-col li::before{content:"";flex-shrink:0;width:6px;height:6px;border-radius:50%;margin-top:6px;}
+  .findings-col.strengths li::before{background:var(--emerald);}
+  .findings-col.issues li::before{background:var(--red);}
+  .findings-col li b{color:var(--text);font-weight:600;}
+
+  /* ===== TECH STACK ===== */
+  .stack-compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media(max-width:760px){.stack-compare{grid-template-columns:1fr;}}
+  .stack-panel{border-radius:14px;padding:24px;border:1px solid var(--border);}
+  .stack-panel.now{background:linear-gradient(180deg,var(--gold-dim)18%,transparent),var(--bg-panel);}
+  .stack-panel.future{background:linear-gradient(180deg,var(--emerald-dim)18%,transparent),var(--bg-panel);}
+  .stack-panel .tag{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:14px;}
+  .stack-panel.now .tag{color:var(--gold);}
+  .stack-panel.future .tag{color:var(--emerald);}
+  .stack-card-list{display:flex;flex-direction:column;gap:10px;}
+  .stack-card{background:var(--bg-panel-2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;font-size:13px;color:var(--text-dim);}
+  .stack-card b{display:block;color:var(--text);font-size:13.5px;margin-bottom:2px;}
+
+  /* ===== METHODOLOGY ===== */
+  .methodology{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;
+    padding:20px 24px;font-size:12.5px;color:var(--text-faint);line-height:1.7;
+  }
+
+  /* ===== CTA / FOOTER ===== */
+  .cta{
+    text-align:center;padding:64px 0 40px;
+    background:radial-gradient(ellipse 700px 320px at 50% 0%, rgba(232,179,76,0.08), transparent 65%);
+  }
+  .cta h2{font-size:26px;margin:0 0 12px;}
+  .cta p{color:var(--text-dim);font-size:14.5px;max-width:520px;margin:0 auto 26px;}
+  .cta-btn{
+    display:inline-block;background:var(--gold);color:#12151A;font-weight:700;
+    padding:14px 30px;border-radius:8px;text-decoration:none;font-size:14px;letter-spacing:0.02em;
+  }
+  footer{padding:28px 0 48px;text-align:center;}
+  footer .produced{font-size:12.5px;color:var(--text-faint);}
+  footer .produced a{color:var(--gold);text-decoration:none;font-weight:600;}
+  footer .fine{font-size:11px;color:var(--text-faint);margin-top:10px;max-width:640px;margin-left:auto;margin-right:auto;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandline">
+      <div class="brand"><b>ELETTRO</b> · Diagnostic Intelligence</div>
+      <div class="datepill">Audited July 9, 2026</div>
+    </div>
+    <div class="eyebrow">SEO &amp; AIO Optimization Report</div>
+    <h1>Sonos Capital <span>— Investor Portal Site Audit</span></h1>
+    <p class="subhead">A diagnostic review of search and AI-answer-engine readiness for sonoscapital.com, with projected scores if Elettro rebuilds the site on our custom HTML/CSS/JS stack.</p>
+    <div class="target-card">
+      <div class="target-item">
+        <div class="label">Site Audited</div>
+        <div class="value"><a href="https://www.sonoscapital.com/" target="_blank" rel="noopener">sonoscapital.com</a></div>
+      </div>
+      <div class="target-item">
+        <div class="label">Entity</div>
+        <div class="value">Sonos Capital Fund 2, LLC</div>
+      </div>
+      <div class="target-item">
+        <div class="label">Category</div>
+        <div class="value">Reg D 506(c) Real Estate Fund — Investor Relations</div>
+      </div>
+      <div class="target-item">
+        <div class="label">Pages Indexed</div>
+        <div class="value">1 (single-page site)</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-title">Headline Scores</div>
+    <p class="section-desc">Current state vs. projected state after an Elettro rebuild on a fully self-contained, semantically structured, AI-crawlable tech stack.</p>
+    <div class="ring-row">
+
+      <div class="ring-card">
+        <div class="ring-svg-wrap">
+          <svg viewBox="0 0 132 132">
+            <circle cx="66" cy="66" r="56" fill="none" stroke="#1E222A" stroke-width="14"/>
+            <circle cx="66" cy="66" r="56" fill="none" stroke="#E8B34C" stroke-width="14"
+              stroke-dasharray="351.86" stroke-dashoffset="232" stroke-linecap="round"/>
+          </svg>
+          <div class="ring-center">
+            <div style="font-size:26px;font-weight:800;color:#E8B34C;">34</div>
+            <div style="font-size:10px;color:var(--text-faint);">/ 100 now</div>
+          </div>
+        </div>
+        <div class="ring-meta">
+          <div class="name">Overall SEO Score</div>
+          <div class="desc">Crawlability, architecture, on-page signals, page performance.</div>
+          <div class="legend-row">
+            <span class="legend-item"><span class="legend-dot" style="background:#E8B34C"></span>Current: 34</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#3FAE73"></span>Projected: 91</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ring-card">
+        <div class="ring-svg-wrap">
+          <svg viewBox="0 0 132 132">
+            <circle cx="66" cy="66" r="56" fill="none" stroke="#1E222A" stroke-width="14"/>
+            <circle cx="66" cy="66" r="56" fill="none" stroke="#E8B34C" stroke-width="14"
+              stroke-dasharray="351.86" stroke-dashoffset="285" stroke-linecap="round"/>
+          </svg>
+          <div class="ring-center">
+            <div style="font-size:26px;font-weight:800;color:#E8B34C;">19</div>
+            <div style="font-size:10px;color:var(--text-faint);">/ 100 now</div>
+          </div>
+        </div>
+        <div class="ring-meta">
+          <div class="name">Overall AIO Score</div>
+          <div class="desc">Entity clarity, structured data, AI-crawler access, citability.</div>
+          <div class="legend-row">
+            <span class="legend-item"><span class="legend-dot" style="background:#E8B34C"></span>Current: 19</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#3FAE73"></span>Projected: 88</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-title">Score Breakdown by Category</div>
+    <p class="section-desc">Gold reflects the site as it stands today. Emerald reflects the projected score once rebuilt on Elettro's custom stack with full structured-data, entity, and architecture remediation.</p>
+
+    <div class="bar-header">
+      <div></div>
+      <div class="bar-col-label">Current</div>
+      <div class="bar-col-label">Projected (Elettro Rebuild)</div>
+      <div></div>
+    </div>
+
+    <div class="bar-grid">
+
+      <div class="bar-row">
+        <div class="metric-name">Technical SEO</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:42%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:94%"></div></div>
+        <div class="score-val"><span class="current-val">42</span> → <span class="projected-val">94</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Site Architecture</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:28%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:90%"></div></div>
+        <div class="score-val"><span class="current-val">28</span> → <span class="projected-val">90</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Content Depth &amp; Authority</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:25%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:88%"></div></div>
+        <div class="score-val"><span class="current-val">25</span> → <span class="projected-val">88</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Entity Clarity / Citability</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:20%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:92%"></div></div>
+        <div class="score-val"><span class="current-val">20</span> → <span class="projected-val">92</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Structured Data (JSON-LD)</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:5%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:95%"></div></div>
+        <div class="score-val"><span class="current-val">5</span> → <span class="projected-val">95</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Content Accessibility to Crawlers</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:18%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:90%"></div></div>
+        <div class="score-val"><span class="current-val">18</span> → <span class="projected-val">90</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Page Speed / Core Web Vitals</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:60%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:93%"></div></div>
+        <div class="score-val"><span class="current-val">60</span> → <span class="projected-val">93</span></div>
+      </div>
+
+      <div class="bar-row">
+        <div class="metric-name">Mobile &amp; Accessibility</div>
+        <div class="bar-track"><div class="bar-fill current" style="width:48%"></div></div>
+        <div class="bar-track"><div class="bar-fill projected" style="width:91%"></div></div>
+        <div class="score-val"><span class="current-val">48</span> → <span class="projected-val">91</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-title">Key Findings</div>
+    <p class="section-desc">What's working today, and the gaps holding back both traditional search visibility and AI-answer-engine citability.</p>
+    <div class="findings-grid">
+
+      <div class="findings-col strengths">
+        <h3>✓ Strengths</h3>
+        <ul>
+          <li>Clean, focused single-page value proposition with a clear conversion path into the Covercy investor portal for signup and login.</li>
+          <li>Reg D 506(c) mandated legend and accredited-investor disclosures are present and properly disclosed in the footer.</li>
+          <li>Lightweight static markup with no visible CMS bloat, plugin overhead, or third-party ad-tech scripts weighing down load time.</li>
+          <li>Contact form includes a basic honeypot field for spam mitigation.</li>
+          <li>FAQ content already exists in a clean Q&amp;A format — a ready-made source for structured FAQ markup.</li>
+        </ul>
+      </div>
+
+      <div class="findings-col issues">
+        <h3>✕ Issues</h3>
+        <ul>
+          <li><b>No llms.txt present.</b> The site gives AI crawlers (ChatGPT, Perplexity, Claude, Gemini) zero directive layer for how to read or cite it — a foundational AIO gap.</li>
+          <li><b>No structured data detected.</b> No Organization, FinancialProduct, Person, or FAQPage schema — despite bios, fund terms, and FAQs all being schema-ready content today.</li>
+          <li><b>Entity fragmentation.</b> The page title reads "Sonos Capital Investor Portal," the offering is "Sonos Capital Fund 2 LLC," and the footer legal entity is "Sonos Capital, LLC" — inconsistent naming directly undermines AI model citability.</li>
+          <li><b>Single-page architecture.</b> Team bios, fund terms, FAQs, and benefits all live under one URL with anchor links — there are no dedicated, independently indexable, crawlable pages to build topical authority on.</li>
+          <li><b>Offering documents gated off-domain.</b> The PPM and all fund-level detail sit behind a third-party Covercy login wall — fully invisible to search engines and AI models.</li>
+          <li><b>Non-semantic data presentation.</b> Fund Terms are laid out in a raw HTML table with no structured labeling, making the data harder for both crawlers and AI models to parse accurately.</li>
+          <li><b>Generic page title &amp; meta description.</b> No primary keyword targeting (e.g., "manufactured home park investment fund," "MHC syndication") in the title tag.</li>
+          <li><b>No content hub.</b> There's no blog, insights, or resource section — a significant missed opportunity to build topical authority around manufactured housing investment, a category with rising AI-search interest.</li>
+          <li><b>Domain fragmentation on every CTA.</b> All primary buttons route off-domain to investors.covercy.com, splitting SEO equity, session data, and analytics attribution away from the root domain.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-title">Tech Stack: Current vs. Elettro Rebuild</div>
+    <p class="section-desc">What the live site is running on today, compared to the self-contained stack Elettro would deploy in a rebuild.</p>
+
+    <div class="stack-compare">
+      <div class="stack-panel now">
+        <div class="tag">● Current Stack (Detected)</div>
+        <div class="stack-card-list">
+          <div class="stack-card"><b>Static single-page HTML site</b>No CMS backend detected — custom-coded or lightweight builder output, anchor-link (#hash) navigation only.</div>
+          <div class="stack-card"><b>Covercy (third-party)</b>Investor portal integration handling login, signup, and PPM access — all offer-critical content lives off-domain.</div>
+          <div class="stack-card"><b>Raw HTML table layout</b>Fund Terms &amp; Returns rendered as an unstyled data table with no semantic or structured markup.</div>
+          <div class="stack-card"><b>No schema.org / JSON-LD</b>No structured data layer found for Organization, FinancialProduct, Person, or FAQ content.</div>
+          <div class="stack-card"><b>No llms.txt</b>No AI-crawler directive file present at the domain root.</div>
+          <div class="stack-card"><b>External stock asset</b>Footer icon attributed to Freepik/Flaticon, suggesting reliance on stock/template assets rather than a fully custom design system.</div>
+        </div>
+      </div>
+
+      <div class="stack-panel future">
+        <div class="tag">● Elettro Rebuild Stack</div>
+        <div class="stack-card-list">
+          <div class="stack-card"><b>Custom HTML5 / CSS3 / vanilla JS</b>Fully self-contained, dependency-free build — no page-builder bloat, no plugin overhead.</div>
+          <div class="stack-card"><b>Multi-page indexable architecture</b>Dedicated crawlable URLs for the fund overview, team, terms, FAQ, and an investment-insights content hub.</div>
+          <div class="stack-card"><b>Full JSON-LD schema layer</b>Organization, FinancialProduct, Person, and FAQPage structured data mapped to existing content.</div>
+          <div class="stack-card"><b>llms.txt + robots.txt directives</b>Explicit, current guidance for AI crawlers on what to read and how to cite Sonos Capital.</div>
+          <div class="stack-card"><b>Entity-consistent branding</b>One unified legal/brand name across title tags, H1s, meta, and structured data — every reference reinforced, not fragmented.</div>
+          <div class="stack-card"><b>On-domain lead capture</b>Investor signup/login embedded or API-integrated rather than a full off-domain redirect, keeping SEO equity and analytics on sonoscapital.com.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-title">Methodology</div>
+    <div class="methodology">
+      Scores are directional diagnostic estimates derived from a live inspection of sonoscapital.com's on-page structure, entity/brand signal consistency, content accessibility, and indexable architecture, benchmarked against SEO and AI-answer-engine-optimization (AIO) best practices. Because standard fetch tooling cannot always confirm JSON-LD structured data or script-rendered content, findings on schema presence should be cross-checked with a browser "view source" pass and Google's Rich Results Test before final scoping. This report is intended as a pitch and planning tool, not a substitute for a full Search Console / GA4-verified technical audit.
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2>Let's rebuild sonoscapital.com to close this gap.</h2>
+  <p>Elettro can take this fund site from a single gated landing page to a fully indexable, AI-citable digital presence — built on our custom stack from day one.</p>
+  <a class="cta-btn" href="https://elettro.com" target="_blank" rel="noopener">Start the Rebuild — elettro.com</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="produced">Produced by <a href="https://elettro.com" target="_blank" rel="noopener">Elettro, Inc.</a> — Digital Marketing &amp; Creative Production, South Florida</div>
+    <div class="fine">This report reflects a point-in-time diagnostic review and is provided for prospecting and planning purposes. Scores are Elettro's proprietary estimates and are not affiliated with, verified by, or endorsed by Google, OpenAI, Anthropic, or any other search or AI platform.</div>
+  </div>
+</footer>
+
+</body>
+</html>
