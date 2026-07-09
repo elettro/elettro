@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delisser Pressure Cleaning | Roof Cleaning in Broward, Miami-Dade &amp; Palm Beach</title>
+<meta name="description" content="Professional soft-wash roof and pressure cleaning serving Broward, Miami-Dade and Palm Beach Counties. Led by Cody Delisser. 1,000+ roofs cleaned. Call 954-249-6464.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B2A33;
+    --ink-soft:#123A46;
+    --terracotta:#C1512B;
+    --terracotta-dark:#8F3A1E;
+    --terracotta-light:#E2946B;
+    --aqua:#159AA6;
+    --aqua-dark:#0E7A82;
+    --foam:#EDF3F1;
+    --foam-2:#E1EBE7;
+    --paper:#FBFCFA;
+    --algae:#6B7A4F;
+    --ink-70: rgba(11,42,51,0.7);
+    --ink-50: rgba(11,42,51,0.5);
+    --shadow: 0 18px 40px -18px rgba(11,42,51,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:0.01em;}
+  .serif{font-family:'Fraunces',serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--terracotta-dark);
+  }
+  .eyebrow.on-dark{color:var(--terracotta-light);}
+  section{position:relative;}
+
+  /* ============ TOP CTA STRIP ============ */
+  .top-strip{
+    position:sticky; top:0; z-index:50;
+    background:var(--ink);
+    color:var(--paper);
+    border-bottom:3px solid var(--terracotta);
+  }
+  .top-strip-inner{
+    max-width:1180px;margin:0 auto;padding:10px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    flex-wrap:wrap;
+  }
+  .brandmark{
+    display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;
+    font-weight:600;font-size:19px;letter-spacing:0.01em;
+  }
+  .brandmark .tilemark{width:26px;height:26px;flex:none;}
+  .top-strip-area{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:0.05em;color:var(--foam-2);
+    display:flex;gap:6px;align-items:center;
+  }
+  .top-strip-area .dot{color:var(--terracotta-light);}
+  .call-pill{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--terracotta);
+    color:#fff;
+    font-family:'Anton',sans-serif;
+    font-size:17px;
+    letter-spacing:0.03em;
+    padding:9px 20px 9px 16px;
+    border-radius:999px;
+    text-decoration:none;
+    box-shadow:0 6px 18px -6px rgba(193,81,43,0.7);
+    animation:pulseCTA 2.6s ease-in-out infinite;
+    white-space:nowrap;
+  }
+  .call-pill svg{width:18px;height:18px;flex:none;}
+  @keyframes pulseCTA{
+    0%,100%{transform:scale(1);box-shadow:0 6px 18px -6px rgba(193,81,43,0.7);}
+    50%{transform:scale(1.045);box-shadow:0 10px 24px -6px rgba(193,81,43,0.9);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .call-pill{animation:none;}
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    background:
+      radial-gradient(1100px 520px at 82% -10%, rgba(21,154,166,0.16), transparent 60%),
+      linear-gradient(180deg, var(--foam) 0%, var(--paper) 100%);
+    padding:64px 0 40px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:52px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(48px,7vw,84px);
+    line-height:0.92;
+    margin:14px 0 18px;
+    color:var(--ink);
+  }
+  .hero h1 .accent{color:var(--terracotta);display:block;}
+  .hero p.lede{
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    line-height:1.5;
+    color:var(--ink-70);
+    max-width:46ch;
+    margin:0 0 28px;
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Anton',sans-serif;font-size:18px;letter-spacing:0.02em;
+    padding:16px 26px;border-radius:10px;text-decoration:none;
+    border:2px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:var(--terracotta);color:#fff;
+    box-shadow:0 14px 28px -12px rgba(193,81,43,0.55);
+  }
+  .btn-primary svg{width:19px;height:19px;}
+  .btn-secondary{
+    background:var(--ink);color:var(--paper);
+    box-shadow:0 14px 28px -14px rgba(11,42,51,0.5);
+  }
+  .btn-ghost{
+    background:transparent;border-color:var(--ink);color:var(--ink);
+  }
+  .trust-line{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-70);
+    display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  }
+  .trust-line b{color:var(--ink);font-weight:600;}
+  .trust-line .sep{color:var(--terracotta);}
+
+  /* hero visual: before/after slider */
+  .compare{
+    position:relative;border-radius:20px;overflow:hidden;
+    box-shadow:var(--shadow);
+    aspect-ratio:5/4.3;
+    background:#cfe3e0;
+    border:1px solid rgba(11,42,51,0.08);
+  }
+  .compare svg{width:100%;height:100%;position:absolute;inset:0;}
+  .compare .after-layer{clip-path:inset(0 0 0 52%);}
+  .compare-handle{
+    position:absolute;top:0;bottom:0;left:52%;width:0;
+    display:flex;align-items:center;justify-content:center;
+    cursor:ew-resize;touch-action:none;
+  }
+  .compare-handle::before{
+    content:"";position:absolute;top:0;bottom:0;left:-1.5px;width:3px;
+    background:#fff;box-shadow:0 0 0 1px rgba(11,42,51,0.15);
+  }
+  .compare-grip{
+    position:relative;width:46px;height:46px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px -6px rgba(11,42,51,0.4);
+    border:2px solid var(--terracotta);
+  }
+  .compare-grip svg{width:20px;height:20px;color:var(--terracotta);}
+  .compare-tag{
+    position:absolute;top:16px;font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;letter-spacing:0.12em;font-weight:600;
+    padding:6px 12px;border-radius:999px;color:#fff;
+  }
+  .compare-tag.before{left:16px;background:var(--algae);}
+  .compare-tag.after{right:16px;background:var(--aqua-dark);}
+  .compare-caption{
+    text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    color:var(--ink-70);margin-top:12px;letter-spacing:0.03em;
+  }
+
+  @media (max-width: 880px){
+    .hero-grid{grid-template-columns:1fr;}
+  }
+
+  /* ============ TILE DIVIDER (signature) ============ */
+  .tile-divider{
+    height:34px;width:100%;
+    background-repeat:repeat-x;
+    background-size:52px 34px;
+  }
+  .tile-divider.to-ink{
+    background-image:radial-gradient(circle at 26px 0, var(--ink) 26px, transparent 27px);
+    background-color:transparent;
+  }
+  .tile-divider.to-foam{
+    background-image:radial-gradient(circle at 26px 34px, var(--foam) 26px, transparent 27px);
+  }
+  .tile-divider.to-paper{
+    background-image:radial-gradient(circle at 26px 34px, var(--paper) 26px, transparent 27px);
+  }
+
+  /* ============ MANTRA BANNER ============ */
+  .mantra{
+    background:var(--ink);color:var(--paper);
+    padding:0 0 54px;
+    text-align:center;
+  }
+  .mantra .wrap{padding-top:6px;}
+  .mantra h2{
+    font-size:clamp(40px,9vw,110px);
+    line-height:0.95;margin:0;
+    letter-spacing:0.01em;
+  }
+  .mantra h2 span{color:var(--terracotta-light);}
+  .mantra p{
+    font-family:'IBM Plex Mono',monospace;
+    color:rgba(237,243,241,0.75);
+    font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
+    margin-top:14px;
+  }
+
+  /* ============ STATS ============ */
+  .stats{background:var(--ink);}
+  .stats-row{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid rgba(237,243,241,0.14);
+  }
+  .stat{
+    padding:26px 18px 40px;text-align:center;
+    border-right:1px solid rgba(237,243,241,0.14);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Anton',sans-serif;font-size:clamp(30px,4vw,44px);
+    color:var(--terracotta-light);
+  }
+  .stat .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    letter-spacing:0.08em;text-transform:uppercase;color:rgba(237,243,241,0.7);
+    margin-top:6px;
+  }
+  @media (max-width:700px){ .stats-row{grid-template-columns:repeat(2,1fr);} }
+
+  /* ============ SECTION HEADERS ============ */
+  .section{padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:46px;}
+  .section-head h2{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(30px,4vw,44px);margin:10px 0 12px;color:var(--ink);
+  }
+  .section-head p{
+    color:var(--ink-70);font-size:16.5px;line-height:1.6;max-width:56ch;
+  }
+
+  /* ============ SERVICES ============ */
+  .services{background:var(--foam);}
+  .service-grid{
+    display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto auto;gap:18px;
+  }
+  .service-card{
+    background:var(--paper);border-radius:16px;padding:28px;
+    border:1px solid rgba(11,42,51,0.08);
+    box-shadow:0 12px 30px -20px rgba(11,42,51,0.25);
+  }
+  .service-card.flagship{
+    grid-row:span 2;background:var(--ink);color:var(--paper);
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:32px;
+  }
+  .service-card.flagship h3{color:#fff;}
+  .service-card.flagship p{color:rgba(237,243,241,0.78);}
+  .service-icon{width:38px;height:38px;color:var(--terracotta);margin-bottom:16px;}
+  .service-card.flagship .service-icon{color:var(--terracotta-light);width:46px;height:46px;}
+  .service-card h3{
+    font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:0 0 8px;
+  }
+  .service-card p{color:var(--ink-70);font-size:14.5px;line-height:1.55;margin:0;}
+  .flagship-tag{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--terracotta-light);
+    background:rgba(226,148,107,0.14);padding:5px 10px;border-radius:999px;
+    margin-bottom:14px;width:fit-content;
+  }
+  .flagship-link{
+    margin-top:20px;display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--terracotta-light);
+    text-decoration:none;
+  }
+  @media (max-width:880px){
+    .service-grid{grid-template-columns:1fr 1fr;}
+    .service-card.flagship{grid-column:1/-1;grid-row:auto;}
+  }
+  @media (max-width:560px){
+    .service-grid{grid-template-columns:1fr;}
+  }
+
+  /* ============ COVERAGE / CITIES ============ */
+  .coverage{background:var(--paper);}
+  .county-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  }
+  .county-card{
+    border-radius:16px;overflow:hidden;
+    border:1px solid rgba(11,42,51,0.1);
+    background:var(--foam);
+  }
+  .county-head{
+    background:var(--terracotta);color:#fff;padding:18px 22px;
+    display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  }
+  .county-head h3{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:0;}
+  .county-head .cnt{font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:0.85;}
+  .city-list{
+    list-style:none;margin:0;padding:18px 22px 22px;
+    columns:2;column-gap:18px;
+  }
+  .city-list li{
+    font-size:14px;color:var(--ink-70);padding:5px 0;
+    border-bottom:1px dashed rgba(11,42,51,0.12);
+    break-inside:avoid;
+  }
+  .city-list li::before{content:"▸ ";color:var(--terracotta);}
+  @media (max-width:900px){ .county-grid{grid-template-columns:1fr;} }
+
+  /* ============ ABOUT CODY ============ */
+  .about{background:var(--ink);color:var(--paper);}
+  .about-grid{
+    display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;align-items:center;
+  }
+  .cody-portrait{
+    aspect-ratio:4/4.7;border-radius:18px;overflow:hidden;
+    border:1px solid rgba(237,243,241,0.15);
+    box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);
+  }
+  .about h2{
+    font-family:'Fraunces',serif;font-weight:600;color:#fff;
+    font-size:clamp(28px,3.6vw,40px);margin:10px 0 16px;
+  }
+  .about p{color:rgba(237,243,241,0.82);font-size:16px;line-height:1.65;margin:0 0 16px;max-width:52ch;}
+  .cred-row{display:flex;gap:26px;flex-wrap:wrap;margin-top:24px;}
+  .cred{display:flex;align-items:center;gap:10px;}
+  .cred svg{width:22px;height:22px;color:var(--terracotta-light);flex:none;}
+  .cred span{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:rgba(237,243,241,0.85);}
+  .discount-box{
+    margin-top:30px;background:rgba(226,148,107,0.12);
+    border:1.5px dashed var(--terracotta-light);
+    border-radius:14px;padding:20px 24px;
+  }
+  .discount-box .amt{font-family:'Anton',sans-serif;font-size:30px;color:var(--terracotta-light);}
+  .discount-box p{color:rgba(237,243,241,0.85);font-size:14.5px;margin:6px 0 0;max-width:none;}
+  @media (max-width:880px){ .about-grid{grid-template-columns:1fr;} .cody-portrait{max-width:320px;} }
+
+  /* ============ FAQ ============ */
+  .faq{background:var(--foam);}
+  .faq-list{max-width:780px;}
+  .faq-item{
+    border-bottom:1px solid rgba(11,42,51,0.14);
+  }
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:22px 4px;font-family:'Fraunces',serif;font-weight:600;font-size:17.5px;
+    color:var(--ink);
+  }
+  .faq-q .plus{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    border:1.5px solid var(--terracotta);color:var(--terracotta);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif;font-size:16px;
+    transition:transform .2s ease;
+  }
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;overflow:hidden;transition:max-height .25s ease;
+  }
+  .faq-a p{
+    padding:0 34px 22px 4px;margin:0;color:var(--ink-70);font-size:15px;line-height:1.65;
+  }
+
+  /* ============ FINAL CTA ============ */
+  .final-cta{
+    background:
+      radial-gradient(900px 380px at 50% 0%, rgba(226,148,107,0.25), transparent 65%),
+      var(--terracotta-dark);
+    color:#fff;text-align:center;padding:80px 0;
+  }
+  .final-cta h2{
+    font-family:'Anton',sans-serif;font-size:clamp(34px,6vw,64px);margin:8px 0 16px;line-height:1;
+  }
+  .final-cta p.sub{
+    font-family:'Fraunces',serif;font-size:18px;color:rgba(255,255,255,0.88);
+    max-width:52ch;margin:0 auto 32px;
+  }
+  .final-cta .cta-row{justify-content:center;}
+  .final-cta .btn-secondary{background:#fff;color:var(--terracotta-dark);}
+  .final-cta .btn-ghost{border-color:rgba(255,255,255,0.6);color:#fff;}
+  .final-cta .discount-note{
+    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:13px;
+    color:rgba(255,255,255,0.85);
+  }
+  .final-cta .discount-note b{color:#fff;}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--ink);color:rgba(237,243,241,0.7);padding:52px 0 26px;}
+  .footer-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;
+    padding-bottom:36px;border-bottom:1px solid rgba(237,243,241,0.14);
+  }
+  .footer-brand{font-family:'Fraunces',serif;font-weight:600;font-size:20px;color:#fff;}
+  .footer-brand p{color:rgba(237,243,241,0.65);font-size:13.5px;line-height:1.6;margin-top:10px;max-width:34ch;}
+  footer h4{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.1em;
+    text-transform:uppercase;color:rgba(237,243,241,0.55);margin:0 0 14px;
+  }
+  footer ul{list-style:none;margin:0;padding:0;}
+  footer li{margin-bottom:9px;font-size:14px;}
+  footer a{text-decoration:none;color:rgba(237,243,241,0.85);}
+  footer a:hover{color:var(--terracotta-light);}
+  .footer-bottom{
+    padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:13px;color:rgba(237,243,241,0.55);
+  }
+  .footer-bottom a{color:rgba(237,243,241,0.75);font-weight:600;}
+  @media (max-width:800px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+
+  ::selection{background:var(--terracotta-light);color:#0B2A33;}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP STRIP ============ -->
+<div class="top-strip">
+  <div class="top-strip-inner">
+    <div class="brandmark">
+      <svg class="tilemark" viewBox="0 0 26 26" fill="none"><path d="M2 20c2-6 6-10 11-10s9 4 11 10" stroke="#E2946B" stroke-width="2.4" stroke-linecap="round"/><path d="M6 20c1.2-4 3.6-6.4 7-6.4s5.8 2.4 7 6.4" stroke="#159AA6" stroke-width="2.4" stroke-linecap="round"/></svg>
+      Delisser <span style="color:#E2946B;">Pressure Cleaning</span>
+    </div>
+    <div class="top-strip-area"><span class="dot">●</span> Broward <span class="dot">●</span> Miami-Dade <span class="dot">●</span> Palm Beach</div>
+    <a class="call-pill" href="tel:9542496464">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      CALL NOW 954-249-6464
+    </a>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">South Florida Roof &amp; Exterior Cleaning</div>
+      <h1 class="display">CLEAN YOUR<span class="accent">ROOF.</span></h1>
+      <p class="lede">Those chalky black streaks on your barrel tile aren't dirt &mdash; they're algae eating your roof alive. Delisser Pressure Cleaning soft-washes it away, safely, and gives you back the curb appeal your street deserves.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tel:9542496464">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          CALL NOW
+        </a>
+        <a class="btn btn-secondary" href="#book">
+          BOOK NOW &mdash; CLEAN YOUR ROOF
+        </a>
+      </div>
+      <div class="trust-line">
+        <b>1,000+ roofs cleaned</b><span class="sep">/</span>Led by <b>Cody Delisser</b><span class="sep">/</span>Broward · Miami-Dade · Palm Beach
+      </div>
+    </div>
+
+    <div>
+      <div class="compare" id="compare">
+        <!-- BEFORE layer -->
+        <svg viewBox="0 0 600 516" xmlns="http://www.w3.org/2000/svg">
+          <rect width="600" height="516" fill="#cfe0d8"/>
+          <rect width="600" height="360" fill="#bcd6cd"/>
+          <circle cx="500" cy="90" r="46" fill="#e7dcae"/>
+          <path d="M0 340 q80 -26 160 0 t160 0 t160 0 t160 0 v20 h-640z" fill="#9db99f" opacity="0.6"/>
+          <!-- house body -->
+          <rect x="120" y="270" width="360" height="180" fill="#e8e2d3"/>
+          <rect x="150" y="330" width="60" height="120" fill="#7a8a72"/>
+          <rect x="250" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
+          <rect x="330" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
+          <rect x="410" y="310" width="46" height="46" fill="#cfc6ad" stroke="#8a8370" stroke-width="3"/>
+          <!-- dirty tile roof -->
+          <polygon points="90,270 300,150 510,270" fill="#7c6a4f"/>
+          <g stroke="#5f5138" stroke-width="2">
+            <path d="M110,262 L300,168" fill="none"/>
+            <path d="M140,262 L300,186" fill="none"/>
+            <path d="M170,262 L300,204" fill="none"/>
+            <path d="M200,262 L300,222" fill="none"/>
+            <path d="M230,262 L300,240" fill="none"/>
+            <path d="M490,262 L300,168" fill="none"/>
+            <path d="M460,262 L300,186" fill="none"/>
+            <path d="M430,262 L300,204" fill="none"/>
+            <path d="M400,262 L300,222" fill="none"/>
+            <path d="M370,262 L300,240" fill="none"/>
+          </g>
+          <g fill="#4c4530" opacity="0.55">
+            <ellipse cx="200" cy="230" rx="46" ry="16"/>
+            <ellipse cx="340" cy="210" rx="60" ry="20"/>
+            <ellipse cx="260" cy="255" rx="70" ry="14"/>
+            <ellipse cx="400" cy="245" rx="40" ry="12"/>
+          </g>
+          <rect x="380" y="150" width="16" height="46" fill="#9c8f74"/>
+          <!-- shrubs -->
+          <circle cx="100" cy="450" r="26" fill="#5f7a5c"/>
+          <circle cx="500" cy="450" r="30" fill="#5f7a5c"/>
+        </svg>
+
+        <!-- AFTER layer -->
+        <div class="after-layer">
+        <svg viewBox="0 0 600 516" xmlns="http://www.w3.org/2000/svg">
+          <rect width="600" height="516" fill="#dcecef"/>
+          <rect width="600" height="360" fill="#cfe6e8"/>
+          <circle cx="500" cy="90" r="46" fill="#ffe9a8"/>
+          <path d="M0 340 q80 -26 160 0 t160 0 t160 0 t160 0 v20 h-640z" fill="#8fc79a" opacity="0.7"/>
+          <rect x="120" y="270" width="360" height="180" fill="#faf6ec"/>
+          <rect x="150" y="330" width="60" height="120" fill="#159AA6"/>
+          <rect x="250" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
+          <rect x="330" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
+          <rect x="410" y="310" width="46" height="46" fill="#eef3f1" stroke="#0E7A82" stroke-width="3"/>
+          <polygon points="90,270 300,150 510,270" fill="#C1512B"/>
+          <g stroke="#8F3A1E" stroke-width="2">
+            <path d="M110,262 L300,168" fill="none"/>
+            <path d="M140,262 L300,186" fill="none"/>
+            <path d="M170,262 L300,204" fill="none"/>
+            <path d="M200,262 L300,222" fill="none"/>
+            <path d="M230,262 L300,240" fill="none"/>
+            <path d="M490,262 L300,168" fill="none"/>
+            <path d="M460,262 L300,186" fill="none"/>
+            <path d="M430,262 L300,204" fill="none"/>
+            <path d="M400,262 L300,222" fill="none"/>
+            <path d="M370,262 L300,240" fill="none"/>
+          </g>
+          <rect x="380" y="150" width="16" height="46" fill="#E2946B"/>
+          <circle cx="100" cy="450" r="26" fill="#4f9d5c"/>
+          <circle cx="500" cy="450" r="30" fill="#4f9d5c"/>
+          <g opacity="0.85" stroke="#EDF3F1" stroke-width="3" stroke-linecap="round">
+            <path d="M250,230 l14,14 M270,215 l10,10"/>
+            <path d="M390,220 l14,14 M410,205 l10,10"/>
+          </g>
+        </svg>
+        </div>
+
+        <span class="compare-tag before">BEFORE</span>
+        <span class="compare-tag after">AFTER</span>
+        <div class="compare-handle" id="compareHandle">
+          <div class="compare-grip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+          </div>
+        </div>
+      </div>
+      <p class="compare-caption">Drag to compare &mdash; typical South Florida barrel-tile roof, before &amp; after Delisser soft-wash</p>
+    </div>
+  </div>
+</section>
+
+<div class="tile-divider to-ink" style="background-color:var(--paper);"></div>
+
+<!-- ============ MANTRA ============ -->
+<section class="mantra">
+  <div class="wrap">
+    <h2 class="display">CLEAN YOUR <span>ROOF.</span></h2>
+    <p>It's not a slogan. It's the whole job.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row wrap" style="max-width:1180px;margin:40px auto 0;padding:0;">
+    <div class="stat">
+      <div class="num mono">1,000+</div>
+      <div class="lbl">Roofs Cleaned</div>
+    </div>
+    <div class="stat">
+      <div class="num mono">3</div>
+      <div class="lbl">Counties Served</div>
+    </div>
+    <div class="stat">
+      <div class="num mono">100%</div>
+      <div class="lbl">Soft-Wash Safe</div>
+    </div>
+    <div class="stat">
+      <div class="num mono">$100</div>
+      <div class="lbl">Off When You Mention This Site</div>
+    </div>
+  </div>
+</section>
+
+<div class="tile-divider to-foam" style="background-color:var(--ink);"></div>
+
+<!-- ============ SERVICES ============ -->
+<section class="services section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What We Clean</div>
+      <h2>Roof-first. But we don't stop at the roof.</h2>
+      <p>Every job starts with a free visual inspection so you know exactly what's growing on your property &mdash; and exactly what it'll take to remove it.</p>
+    </div>
+
+    <div class="service-grid">
+      <div class="service-card flagship">
+        <div>
+          <span class="flagship-tag">Flagship Service</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+          <h3>Tile &amp; Shingle Roof Cleaning</h3>
+          <p>Low-pressure soft-wash treatment that kills Gloeocapsa magma algae at the root and lifts black streaking without cracking or dislodging tile &mdash; the #1 reason South Florida roofs age early.</p>
+        </div>
+        <a class="flagship-link" href="tel:9542496464">Call for a free roof inspection &rarr;</a>
+      </div>
+
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <h3>Driveway &amp; Paver Cleaning</h3>
+        <p>Restores pavers and concrete driveways stained by rubber, oil, and organic growth.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V8l6-5 6 5v13M10 21v-6h4v6"/></svg>
+        <h3>House Soft Washing</h3>
+        <p>Exterior siding and stucco wash that removes mildew and grime without damaging paint.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+        <h3>Pool Deck &amp; Lanai Cleaning</h3>
+        <p>Slip-safe cleaning for pool decks, screened enclosures, and travertine surrounds.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <h3>Gutter &amp; Downspout Cleaning</h3>
+        <p>Clears debris and buildup so water sheds properly during rainy season storms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COVERAGE / CITIES ============ -->
+<section class="coverage section" id="coverage" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Where We Clean</div>
+      <h2>Serving all of Broward, Miami-Dade &amp; Palm Beach</h2>
+      <p>If you're under a South Florida sun and a Spanish tile roof, we're probably already working on your street. Don't see your city? Call us &mdash; we're likely still a quick drive away.</p>
+    </div>
+
+    <div class="county-grid">
+      <div class="county-card">
+        <div class="county-head"><h3>Broward County</h3><span class="cnt mono">29 cities</span></div>
+        <ul class="city-list">
+          <li>Fort Lauderdale</li><li>Hollywood</li><li>Pembroke Pines</li><li>Coral Springs</li>
+          <li>Miramar</li><li>Pompano Beach</li><li>Davie</li><li>Sunrise</li>
+          <li>Plantation</li><li>Deerfield Beach</li><li>Weston</li><li>Tamarac</li>
+          <li>North Lauderdale</li><li>Margate</li><li>Coconut Creek</li><li>Cooper City</li>
+          <li>Parkland</li><li>Southwest Ranches</li><li>Dania Beach</li><li>Lauderhill</li>
+          <li>Oakland Park</li><li>Wilton Manors</li><li>Lauderdale Lakes</li><li>Lauderdale-by-the-Sea</li>
+          <li>Hallandale Beach</li><li>Pembroke Park</li><li>West Park</li><li>Lighthouse Point</li>
+          <li>Sea Ranch Lakes</li>
+        </ul>
+      </div>
+
+      <div class="county-card">
+        <div class="county-head"><h3>Miami-Dade County</h3><span class="cnt mono">23 cities</span></div>
+        <ul class="city-list">
+          <li>Miami</li><li>Miami Beach</li><li>Coral Gables</li><li>Doral</li>
+          <li>Homestead</li><li>Hialeah</li><li>Kendall</li><li>Aventura</li>
+          <li>Miami Lakes</li><li>Palmetto Bay</li><li>Pinecrest</li><li>Cutler Bay</li>
+          <li>Miami Gardens</li><li>North Miami</li><li>North Miami Beach</li><li>Sunny Isles Beach</li>
+          <li>Bal Harbour</li><li>Key Biscayne</li><li>Miami Springs</li><li>Sweetwater</li>
+          <li>South Miami</li><li>Westchester</li><li>The Hammocks</li>
+        </ul>
+      </div>
+
+      <div class="county-card">
+        <div class="county-head"><h3>Palm Beach County</h3><span class="cnt mono">18 cities</span></div>
+        <ul class="city-list">
+          <li>West Palm Beach</li><li>Boca Raton</li><li>Boynton Beach</li><li>Delray Beach</li>
+          <li>Jupiter</li><li>Wellington</li><li>Royal Palm Beach</li><li>Palm Beach Gardens</li>
+          <li>Lake Worth Beach</li><li>Greenacres</li><li>Riviera Beach</li><li>Belle Glade</li>
+          <li>Palm Beach</li><li>Lantana</li><li>Tequesta</li><li>Loxahatchee</li>
+          <li>Juno Beach</li><li>Jupiter Farms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tile-divider to-ink" style="background-color:var(--paper);"></div>
+
+<!-- ============ ABOUT CODY ============ -->
+<section class="about section" id="about">
+  <div class="wrap about-grid">
+    <div class="cody-portrait">
+      <svg viewBox="0 0 400 470" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="470" fill="#0E323C"/>
+        <rect width="400" height="470" fill="url(#g)" opacity="0.5"/>
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#159AA6"/>
+            <stop offset="1" stop-color="#0B2A33"/>
+          </linearGradient>
+        </defs>
+        <circle cx="200" cy="180" r="86" fill="#E2946B"/>
+        <path d="M200 250c-70 0-120 46-120 110v110h240V360c0-64-50-110-120-110z" fill="#C1512B"/>
+        <rect x="150" y="330" width="100" height="26" rx="6" fill="#EDF3F1" opacity="0.9"/>
+        <text x="200" y="349" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#0B2A33" font-weight="600">DELISSER</text>
+        <circle cx="150" cy="415" r="8" fill="#159AA6"/>
+        <circle cx="250" cy="415" r="8" fill="#159AA6"/>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow on-dark">Meet Your Roof Cleaner</div>
+      <h2>Led personally by Cody Delisser.</h2>
+      <p>Delisser Pressure Cleaning was built on a simple standard: treat every roof like it's the one over your own kids' bedrooms. Cody Delisser leads every crew from the estimate to the final rinse, with a soft-wash process refined over 1,000+ South Florida roofs &mdash; from Spanish barrel tile in Weston to flat concrete tile in Boca Raton.</p>
+      <p>No shortcuts, no high-pressure tactics that crack tile, and no leaving until the roofline looks the way it did the day it was installed.</p>
+      <div class="cred-row">
+        <div class="cred">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>Licensed &amp; Insured</span>
+        </div>
+        <div class="cred">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <span>Locally Owned &amp; Operated</span>
+        </div>
+        <div class="cred">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Satisfaction Guaranteed</span>
+        </div>
+      </div>
+
+      <div class="discount-box">
+        <span class="amt mono">$100 OFF</span>
+        <p>Call now, mention <b>DelisserPressureCleaning.com</b>, and take <b>$100 off</b> your roof cleaning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Questions We Get Every Day</div>
+      <h2>Roof cleaning FAQs</h2>
+      <p>Straight answers before you ever pick up the phone. Still curious? Call 954-249-6464 &mdash; Cody answers most calls himself.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q"><span>Is pressure washing safe for a Spanish tile roof?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>High-pressure blasting can crack or dislodge tile, which is why we use soft-washing &mdash; low-pressure application of a roof-safe cleaning solution that kills algae, moss, and lichen without ever putting mechanical stress on the tile itself.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Why is my roof turning black or streaky?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Those dark streaks are almost always Gloeocapsa magma, a airborne algae that feeds on the limestone filler in roofing tile and shingles. South Florida's heat and humidity make it spread fast, which is why roofs here need cleaning more often than roofs up north.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>How often should I have my roof cleaned?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Most South Florida homes need a soft-wash roof cleaning every 12&ndash;24 months, depending on tree coverage, roof pitch, and sun exposure. We'll give you an honest recommendation during your free inspection, not a sales pitch.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Will cleaning my roof actually help my home's value or HOA compliance?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes. Roof staining is one of the top HOA violation notices in South Florida communities, and it's consistently cited by appraisers and buyers as a curb-appeal red flag. A clean roof is one of the highest-ROI exterior improvements you can make.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>How long does a typical roof cleaning take?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Most single-family homes take 2&ndash;4 hours from setup to final rinse, depending on roof size, pitch, and staining severity. We'll give you a firm time estimate before we start.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Do you service my city?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>We service all of Broward, Miami-Dade, and Palm Beach Counties &mdash; see the full list of cities above. If you're just outside those lines, call us anyway; we take on nearby jobs regularly.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>How do I get the $100 discount?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Simple &mdash; call 954-249-6464 and mention that you found us on our website. We'll apply $100 off your roof cleaning quote on the spot.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta" id="book">
+  <div class="wrap">
+    <div class="eyebrow on-dark">Free Inspection &middot; Same-Week Scheduling</div>
+    <h2 class="display">BOOK NOW.<br>CLEAN YOUR ROOF.</h2>
+    <p class="sub">One call gets you a free visual inspection, an honest quote, and a roof that finally matches the rest of your home.</p>
+    <div class="cta-row">
+      <a class="btn btn-secondary" href="tel:9542496464">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        CALL NOW &mdash; 954-249-6464
+      </a>
+      <a class="btn btn-ghost" href="#faq">See FAQs first</a>
+    </div>
+    <p class="discount-note">Mention this website when you call and get <b>$100 off</b> your roof cleaning.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Delisser Pressure Cleaning</div>
+        <p>Professional soft-wash roof and exterior cleaning serving Broward, Miami-Dade, and Palm Beach Counties. Led by Cody Delisser &mdash; 1,000+ roofs cleaned.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:9542496464">954-249-6464</a></li>
+          <li><a href="#book">Book a free inspection</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Roof Cleaning</a></li>
+          <li><a href="#services">Driveway &amp; Pavers</a></li>
+          <li><a href="#services">House Soft Washing</a></li>
+          <li><a href="#services">Pool Deck &amp; Lanai</a></li>
+          <li><a href="#services">Gutter Cleaning</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Service Area</h4>
+        <ul>
+          <li><a href="#coverage">Broward County</a></li>
+          <li><a href="#coverage">Miami-Dade County</a></li>
+          <li><a href="#coverage">Palm Beach County</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Delisser Pressure Cleaning. All rights reserved.</span>
+      <span>Website Produced by <a href="https://elettro.com" target="_blank" rel="noopener">Elettro</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Before/After compare slider
+  (function(){
+    const compare = document.getElementById('compare');
+    const after = compare.querySelector('.after-layer');
+    const handle = document.getElementById('compareHandle');
+    let dragging = false;
+
+    function setPos(clientX){
+      const rect = compare.getBoundingClientRect();
+      let pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(4, Math.min(96, pct));
+      after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+      handle.style.left = pct + '%';
+    }
+    handle.addEventListener('mousedown', () => dragging = true);
+    window.addEventListener('mouseup', () => dragging = false);
+    window.addEventListener('mousemove', (e) => { if(dragging) setPos(e.clientX); });
+    handle.addEventListener('touchstart', () => dragging = true, {passive:true});
+    window.addEventListener('touchend', () => dragging = false);
+    window.addEventListener('touchmove', (e) => { if(dragging && e.touches[0]) setPos(e.touches[0].clientX); }, {passive:true});
+    compare.addEventListener('click', (e) => setPos(e.clientX));
+  })();
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const answer = item.querySelector('.faq-a');
+    const setHeight = () => { answer.style.maxHeight = item.classList.contains('open') ? answer.scrollHeight + 'px' : '0px'; };
+    setHeight();
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = '0px'; });
+      if(!wasOpen){ item.classList.add('open'); setHeight(); }
+    });
+    window.addEventListener('resize', () => { if(item.classList.contains('open')) setHeight(); });
+  });
+</script>
+
+</body>
+</html>
