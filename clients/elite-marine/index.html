@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Marine A/C — SEO &amp; AIO Audit Report | Elettro</title>
+<style>
+  :root{
+    --bg:#0B0E13;
+    --panel:#131720;
+    --panel-2:#171C27;
+    --border:#242A38;
+    --text:#EDEFF3;
+    --text-dim:#9AA3B5;
+    --gold:#E8B34C;
+    --gold-dim:#5A481F;
+    --emerald:#3FAE73;
+    --emerald-dim:#1F3A2C;
+    --red:#E1584A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:radial-gradient(circle at 20% 0%, #151A24 0%, #0B0E13 55%) fixed;
+    color:var(--text);
+    font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    line-height:1.5;
+    padding:0 0 80px;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* HEADER */
+  header{
+    padding:56px 32px 40px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:48px;
+    background:linear-gradient(180deg, rgba(232,179,76,0.06), transparent 70%);
+  }
+  .brandrow{display:flex;justify-content:space-between;align-items:flex-start;max-width:1120px;margin:0 auto 32px;flex-wrap:wrap;gap:20px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:42px;height:42px;border-radius:10px;
+    background:linear-gradient(135deg,var(--gold),#B5822F);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:#0B0E13;font-size:18px;letter-spacing:-1px;
+  }
+  .brand-name{font-size:15px;font-weight:700;letter-spacing:0.5px;}
+  .brand-sub{font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;}
+  .report-date{font-size:12px;color:var(--text-dim);text-align:right;}
+  .report-date strong{color:var(--text);display:block;font-size:13px;margin-bottom:2px;}
+
+  .titleblock{max-width:1120px;margin:0 auto;}
+  .eyebrow{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--gold);
+    background:rgba(232,179,76,0.1);border:1px solid var(--gold-dim);
+    padding:5px 12px;border-radius:20px;margin-bottom:18px;
+  }
+  h1{font-size:36px;font-weight:800;letter-spacing:-0.5px;margin-bottom:10px;}
+  h1 span{color:var(--text-dim);font-weight:400;}
+  .subtitle{color:var(--text-dim);font-size:15px;max-width:640px;margin-bottom:22px;}
+  .meta-strip{display:flex;gap:28px;flex-wrap:wrap;font-size:13px;color:var(--text-dim);}
+  .meta-strip b{color:var(--text);font-weight:600;}
+
+  /* SECTION HEADERS */
+  section{margin-bottom:56px;}
+  .sec-head{margin-bottom:26px;}
+  .sec-head .kicker{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--emerald);margin-bottom:6px;}
+  .sec-head h2{font-size:24px;font-weight:700;}
+  .sec-head p{color:var(--text-dim);font-size:14px;margin-top:6px;max-width:680px;}
+
+  /* SCORE GAUGES */
+  .gauge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:800px){.gauge-grid{grid-template-columns:repeat(2,1fr);}}
+  .gauge-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:26px 20px;text-align:center;
+  }
+  .gauge-card h3{font-size:13px;font-weight:600;color:var(--text-dim);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;}
+  .ring-wrap{position:relative;width:130px;height:130px;margin:0 auto 14px;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-label{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .ring-label .num{font-size:26px;font-weight:800;}
+  .ring-label .cur .num{color:var(--gold);}
+  .ring-label .proj .num{color:var(--emerald);}
+  .ring-label .of100{font-size:10px;color:var(--text-dim);}
+  .gauge-compare{display:flex;justify-content:center;gap:18px;font-size:12px;margin-top:4px;}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;}
+  .dot.gold{background:var(--gold);} .dot.emerald{background:var(--emerald);}
+  .delta{font-size:12px;color:var(--emerald);font-weight:700;margin-top:8px;}
+
+  /* BAR CHART */
+  .bar-panel{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:30px 28px;
+  }
+  .bar-row{margin-bottom:22px;}
+  .bar-row:last-child{margin-bottom:0;}
+  .bar-row .label-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;}
+  .bar-row .label-row .name{font-weight:600;}
+  .bar-track{display:flex;gap:6px;align-items:center;}
+  .bar-outer{flex:1;background:#0E1219;border-radius:8px;overflow:hidden;height:14px;position:relative;border:1px solid var(--border);}
+  .bar-fill{height:100%;border-radius:8px;position:absolute;top:0;left:0;}
+  .bar-fill.gold{background:linear-gradient(90deg,#B5822F,var(--gold));}
+  .bar-fill.emerald{background:linear-gradient(90deg,#1F6B44,var(--emerald));}
+  .bar-vals{display:flex;gap:16px;font-size:12px;color:var(--text-dim);margin-top:6px;}
+  .bar-vals b.gold{color:var(--gold);} .bar-vals b.emerald{color:var(--emerald);}
+
+  /* FINDINGS GRID */
+  .findings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media(max-width:800px){.findings-grid{grid-template-columns:1fr;}}
+  .finding{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    padding:20px 22px;position:relative;
+  }
+  .finding.crit{border-left:3px solid var(--red);}
+  .finding.warn{border-left:3px solid var(--gold);}
+  .finding.opp{border-left:3px solid var(--emerald);}
+  .finding .tag{
+    font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;
+  }
+  .finding.crit .tag{color:var(--red);background:rgba(225,88,74,0.12);}
+  .finding.warn .tag{color:var(--gold);background:rgba(232,179,76,0.12);}
+  .finding.opp .tag{color:var(--emerald);background:rgba(63,174,115,0.12);}
+  .finding h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .finding p{font-size:13px;color:var(--text-dim);}
+
+  /* TECH STACK CARDS */
+  .tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:800px){.tech-grid{grid-template-columns:repeat(2,1fr);}}
+  .tech-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    padding:18px;text-align:center;
+  }
+  .tech-card .icon{
+    width:38px;height:38px;border-radius:10px;margin:0 auto 10px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--panel-2);border:1px solid var(--border);font-size:16px;
+  }
+  .tech-card .name{font-size:13px;font-weight:700;}
+  .tech-card .role{font-size:11px;color:var(--text-dim);margin-top:3px;}
+  .tech-card .flag{font-size:10px;margin-top:8px;padding:2px 8px;border-radius:20px;display:inline-block;}
+  .tech-card .flag.ok{background:rgba(63,174,115,0.12);color:var(--emerald);}
+  .tech-card .flag.risk{background:rgba(232,179,76,0.12);color:var(--gold);}
+
+  /* NAP / entity table */
+  .entity-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .entity-table th{background:var(--panel-2);text-align:left;padding:12px 16px;color:var(--text-dim);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+  .entity-table td{padding:12px 16px;border-top:1px solid var(--border);}
+  .entity-table td.bad{color:var(--red);}
+  .entity-table td.good{color:var(--emerald);}
+
+  /* CTA */
+  .cta{
+    background:linear-gradient(135deg, rgba(232,179,76,0.08), rgba(63,174,115,0.08));
+    border:1px solid var(--border);border-radius:20px;padding:40px 36px;text-align:center;
+  }
+  .cta h3{font-size:22px;font-weight:800;margin-bottom:10px;}
+  .cta p{color:var(--text-dim);font-size:14px;max-width:560px;margin:0 auto 22px;}
+  .cta .btn{
+    display:inline-block;background:linear-gradient(135deg,var(--gold),#B5822F);
+    color:#0B0E13;font-weight:800;font-size:14px;padding:14px 30px;border-radius:10px;
+    text-decoration:none;
+  }
+
+  /* METHODOLOGY */
+  .method{
+    background:var(--panel);border:1px dashed var(--border);border-radius:14px;
+    padding:22px 24px;font-size:12.5px;color:var(--text-dim);
+  }
+  .method h4{color:var(--text);font-size:13px;margin-bottom:8px;}
+  .method ul{margin:8px 0 0 18px;}
+  .method li{margin-bottom:4px;}
+
+  footer{text-align:center;color:var(--text-dim);font-size:12px;margin-top:60px;padding-top:24px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brandrow">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      <div>
+        <div class="brand-name">ELETTRO</div>
+        <div class="brand-sub">Digital Strategy &amp; Creative Production</div>
+      </div>
+    </div>
+    <div class="report-date">
+      <strong>Prepared July 20, 2026</strong>
+      elettro.com — Fort Lauderdale, FL
+    </div>
+  </div>
+  <div class="titleblock">
+    <div class="eyebrow">SEO + AIO Audit Report</div>
+    <h1>Elite Marine A/C <span>— Site Performance Review</span></h1>
+    <p class="subtitle">A directional audit of elitemarineair.com covering traditional search optimization and AI answer-engine readiness, with projected outcomes under an Elettro rebuild.</p>
+    <div class="meta-strip">
+      <div><b>Domain</b> elitemarineair.com</div>
+      <div><b>Platform</b> WordPress + Elementor</div>
+      <div><b>Industry</b> Marine HVAC / Yacht Services</div>
+      <div><b>Market</b> Fort Lauderdale, FL</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HEADLINE SCORES -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">Headline Scores</div>
+      <h2>Current vs. Projected Elettro Rebuild</h2>
+      <p>Gold rings reflect the site's current standing from live inspection. Emerald rings show realistic projected scores after Elettro applies its standard SEO + AIO remediation pass.</p>
+    </div>
+    <div class="gauge-grid" id="gauges"></div>
+  </section>
+
+  <!-- CATEGORY BREAKDOWN -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">Category Breakdown</div>
+      <h2>Where the Gap Lives</h2>
+      <p>Paired bars show current score (gold) against projected score (emerald) across each audited category.</p>
+    </div>
+    <div class="bar-panel" id="bars"></div>
+  </section>
+
+  <!-- FINDINGS -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">Findings</div>
+      <h2>What's Holding the Site Back</h2>
+      <p>Directional findings from live-site inspection. Items marked "manual verification recommended" could not be fully confirmed via automated fetch and should be checked with Google's Rich Results Test or browser source view.</p>
+    </div>
+    <div class="findings-grid">
+
+      <div class="finding crit">
+        <span class="tag">Critical — AIO</span>
+        <h4>No llms.txt / AI-crawler guidance</h4>
+        <p>No llms.txt file was found at the domain root. AI answer engines (ChatGPT, Perplexity, Gemini) have no structured entry point to understand the business, meaning Elite Marine is far less likely to be cited or recommended in AI-generated answers about marine A/C services.</p>
+      </div>
+
+      <div class="finding crit">
+        <span class="tag">Critical — AIO</span>
+        <h4>No structured data detected</h4>
+        <p>No JSON-LD LocalBusiness, Service, or Review schema was surfaced on the homepage. Manual verification recommended via Google's Rich Results Test, since script tags are stripped in automated fetch, but no schema hooks are exposed in the rendered markup either.</p>
+      </div>
+
+      <div class="finding warn">
+        <span class="tag">Needs Work — On-Page</span>
+        <h4>Generic, duplicated title tag</h4>
+        <p>The homepage title reads "Elite Marine - Elite Marine Air Conditioning" — it repeats the brand name and carries no service or location keywords (e.g. "yacht A/C repair," "Fort Lauderdale"), wasting valuable SERP real estate.</p>
+      </div>
+
+      <div class="finding warn">
+        <span class="tag">Needs Work — Technical</span>
+        <h4>Elementor page-builder overhead</h4>
+        <p>The site runs on Elementor 4.1.5 with default CSS/JS bundling, which typically ships more markup and render-blocking assets than needed — a common Core Web Vitals drag on WordPress builder sites.</p>
+      </div>
+
+      <div class="finding warn">
+        <span class="tag">Needs Work — Accessibility/SEO</span>
+        <h4>Missing image alt text</h4>
+        <p>At least one homepage image was found with an empty alt attribute. Missing alt text weakens image search visibility and accessibility compliance, and removes a low-cost keyword opportunity.</p>
+      </div>
+
+      <div class="finding warn">
+        <span class="tag">Needs Work — Local/Entity</span>
+        <h4>Inconsistent NAP &amp; social entity signals</h4>
+        <p>Business name and social profile handles vary across platforms (Facebook page under "Elite Marine Yachts" vs. a newer profile, differing Instagram handles). This entity inconsistency weakens both traditional local SEO and AI-engine confidence in a single canonical business identity.</p>
+      </div>
+
+      <div class="finding opp">
+        <span class="tag">Opportunity — Content</span>
+        <h4>Thin site architecture (4 pages)</h4>
+        <p>The site is limited to Home, A/C Services, Water Products, Careers, and Contact. There's no resource/blog content — a significant missed opportunity to build topical authority around marine HVAC, watermakers, and Spot Zero systems that AI engines and Google both reward.</p>
+      </div>
+
+      <div class="finding opp">
+        <span class="tag">Opportunity — Trust Signals</span>
+        <h4>Strong review base, not surfaced on-site</h4>
+        <p>Third-party listings show a 4.7-star rating across 80+ reviews, but none of that is reflected on-site via structured review markup or testimonial content — a ready-made trust and rich-snippet opportunity.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">Technical Footprint</div>
+      <h2>Current Tech Stack</h2>
+      <p>Identified from live-site inspection of markup, meta tags, and embedded widgets.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="icon">⚙️</div>
+        <div class="name">WordPress</div>
+        <div class="role">Core CMS</div>
+        <div class="flag risk">Legacy stack</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">🧩</div>
+        <div class="name">Elementor 4.1.5</div>
+        <div class="role">Page Builder</div>
+        <div class="flag risk">Perf overhead</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">📋</div>
+        <div class="name">LeadConnector</div>
+        <div class="role">Form / CRM Widget (GoHighLevel)</div>
+        <div class="flag risk">3rd-party embed</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">🗺️</div>
+        <div class="name">Google Maps</div>
+        <div class="role">Embedded iframe</div>
+        <div class="flag risk">Render-blocking</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">🔒</div>
+        <div class="name">HTTPS</div>
+        <div class="role">SSL/TLS</div>
+        <div class="flag ok">In place</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">📱</div>
+        <div class="name">Responsive Viewport</div>
+        <div class="role">Mobile meta tag</div>
+        <div class="flag ok">In place</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">🏷️</div>
+        <div class="name">Open Graph / Twitter Cards</div>
+        <div class="role">Social meta</div>
+        <div class="flag ok">Present, generic</div>
+      </div>
+      <div class="tech-card">
+        <div class="icon">🤖</div>
+        <div class="name">llms.txt</div>
+        <div class="role">AI-crawler directive</div>
+        <div class="flag risk">Not found</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTITY / NAP CHECK -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">Entity Consistency</div>
+      <h2>Name, Address, Phone &amp; Social Signals</h2>
+      <p>AI engines and local search both weigh entity consistency heavily. Fragmented naming dilutes confidence in citations.</p>
+    </div>
+    <table class="entity-table">
+      <tr><th>Signal</th><th>Current State</th><th>Status</th></tr>
+      <tr><td>Business Name</td><td>"Elite Marine" / "Elite Marine A/C" / "Elite Marine Air Conditioning" used inconsistently across site &amp; listings</td><td class="bad">Inconsistent</td></tr>
+      <tr><td>Phone</td><td>(954) 763-9677 — consistent across site and major listings</td><td class="good">Consistent</td></tr>
+      <tr><td>Address</td><td>1957 S. Andrews Ave, Suite A, Ft. Lauderdale, FL 33316 — consistent</td><td class="good">Consistent</td></tr>
+      <tr><td>Facebook</td><td>Legacy "Elite Marine Yachts" page and a newer duplicate profile both surfaced in search</td><td class="bad">Duplicated</td></tr>
+      <tr><td>Instagram</td><td>Handle referenced on-site differs from indexed handle in search results</td><td class="bad">Mismatched</td></tr>
+      <tr><td>Structured Data / Schema</td><td>No LocalBusiness or Review schema surfaced on homepage</td><td class="bad">Not found</td></tr>
+    </table>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section>
+    <div class="method">
+      <h4>Methodology &amp; Disclaimer</h4>
+      <p>Scores in this report are directional estimates derived from live inspection of elitemarineair.com via automated fetch and manual review — they are not output from a verified crawler diagnostic (e.g. Screaming Frog, Lighthouse CI, or Google Search Console).</p>
+      <ul>
+        <li>Automated fetch strips inline &lt;script&gt; tags, so JSON-LD structured data could not be directly confirmed and is flagged as "not found in rendered markup" rather than a certainty — manual verification via <b>Google's Rich Results Test</b> or browser "View Source" is recommended before finalizing scope.</li>
+        <li>Core Web Vitals figures are inferred from platform/stack signals (WordPress + Elementor + multiple third-party embeds), not a live PageSpeed Insights run.</li>
+        <li>Projected scores reflect Elettro's typical outcome range on comparable marine/hospitality rebuilds — not a guarantee.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="cta">
+      <h3>Elite Marine A/C is sitting on real authority — reviews, tenure, a trusted local reputation — none of which the current site or AI search surfaces properly.</h3>
+      <p>An Elettro rebuild closes the structured-data and AIO gap, consolidates entity signals, and turns the site into a citable source for AI-driven answers — while fixing the technical drag holding back traditional rankings.</p>
+      <a class="btn" href="mailto:hello@elettro.com">Discuss the Rebuild →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Prepared by Elettro, Inc. — elettro.com &nbsp;|&nbsp; This report is a sales/strategy tool based on directional, automated inspection and is not a certified technical audit.
+</footer>
+
+<script>
+// ---- Ring gauge builder ----
+const categories = [
+  {label:"Overall SEO Score", cur:54, proj:92},
+  {label:"AIO Readiness", cur:22, proj:90},
+  {label:"Technical Performance", cur:48, proj:90}
+];
+
+const gaugeGrid = document.getElementById('gauges');
+categories.forEach(cat=>{
+  const r = 52, circ = 2*Math.PI*r;
+  const curOffset = circ - (cat.cur/100)*circ;
+  const projOffset = circ - (cat.proj/100)*circ;
+  const card = document.createElement('div');
+  card.className = 'gauge-card';
+  card.innerHTML = `
+    <h3>${cat.label}</h3>
+    <div class="ring-wrap">
+      <svg width="130" height="130" viewBox="0 0 130 130">
+        <circle cx="65" cy="65" r="${r}" fill="none" stroke="#1B2029" stroke-width="10"/>
+        <circle cx="65" cy="65" r="${r}" fill="none" stroke="#5A481F" stroke-width="10"
+          stroke-dasharray="${circ}" stroke-dashoffset="${curOffset}" stroke-linecap="round" opacity="0.9"/>
+        <circle cx="65" cy="65" r="${r-14}" fill="none" stroke="#1B2029" stroke-width="10"/>
+        <circle cx="65" cy="65" r="${r-14}" fill="none" stroke="#3FAE73" stroke-width="10"
+          stroke-dasharray="${2*Math.PI*(r-14)}" stroke-dashoffset="${2*Math.PI*(r-14) - (cat.proj/100)*2*Math.PI*(r-14)}"
+          stroke-linecap="round"/>
+      </svg>
+      <div class="ring-label">
+        <div class="proj"><span class="num">${cat.proj}</span></div>
+        <div class="of100">/ 100 projected</div>
+      </div>
+    </div>
+    <div class="gauge-compare">
+      <span><span class="dot gold"></span>Now: ${cat.cur}</span>
+      <span><span class="dot emerald"></span>Elettro: ${cat.proj}</span>
+    </div>
+    <div class="delta">+${cat.proj-cat.cur} pts potential</div>
+  `;
+  gaugeGrid.appendChild(card);
+});
+
+// ---- Paired bar chart ----
+const barCats = [
+  {label:"On-Page SEO", cur:61, proj:93},
+  {label:"Local SEO / Structured Data", cur:45, proj:95},
+  {label:"Content & Topical Authority", cur:58, proj:85},
+  {label:"AI Answer-Engine Readiness (AIO)", cur:22, proj:90},
+  {label:"Technical / Core Web Vitals", cur:48, proj:90},
+  {label:"Entity & NAP Consistency", cur:50, proj:96}
+];
+const barPanel = document.getElementById('bars');
+barCats.forEach(c=>{
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML = `
+    <div class="label-row"><span class="name">${c.label}</span></div>
+    <div class="bar-track">
+      <div class="bar-outer"><div class="bar-fill gold" style="width:${c.cur}%"></div></div>
+    </div>
+    <div class="bar-track" style="margin-top:5px;">
+      <div class="bar-outer"><div class="bar-fill emerald" style="width:${c.proj}%"></div></div>
+    </div>
+    <div class="bar-vals"><span>Current: <b class="gold">${c.cur}</b></span><span>Projected: <b class="emerald">${c.proj}</b></span></div>
+  `;
+  barPanel.appendChild(row);
+});
+</script>
+
+</body>
+</html>
