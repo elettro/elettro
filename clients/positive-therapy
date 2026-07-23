@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elettro Audit — Positive Therapy FL</title>
+<style>
+  :root{
+    --bg:#0B0D10;
+    --panel:#14171C;
+    --panel-2:#191D23;
+    --line:#262B33;
+    --text:#EDEFF2;
+    --text-dim:#9AA1AC;
+    --gold:#E8B34C;
+    --gold-dim:#8A6A2E;
+    --emerald:#3FAE73;
+    --emerald-dim:#276B47;
+    --red:#D9634A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+
+  /* HEADER */
+  header{
+    padding:56px 0 40px;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(232,179,76,0.08), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(63,174,115,0.08), transparent 45%);
+  }
+  .brand{display:flex; align-items:center; justify-content:space-between; margin-bottom:40px;}
+  .brand-mark{font-size:20px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;}
+  .brand-mark span{color:var(--gold);}
+  .brand-tag{font-size:11px; color:var(--text-dim); letter-spacing:0.12em; text-transform:uppercase;}
+  .report-meta{font-size:12px; color:var(--text-dim); text-align:right; line-height:1.7;}
+  h1{font-size:34px; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px;}
+  .subject-url{font-size:15px; color:var(--gold); font-weight:500; margin-bottom:18px;}
+  .lede{max-width:680px; color:var(--text-dim); font-size:15px;}
+
+  /* SCORE RINGS */
+  .scores{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:24px;
+    padding:48px 0; border-bottom:1px solid var(--line);
+  }
+  .score-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:32px; display:flex; align-items:center; gap:28px;
+  }
+  .ring-label{font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:6px;}
+  .ring-sub{font-size:13px; color:var(--text-dim); max-width:220px;}
+  .ring-wrap{position:relative; width:132px; height:132px; flex-shrink:0;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-track{fill:none; stroke:#22262E; stroke-width:10;}
+  .ring-current{fill:none; stroke:var(--gold); stroke-width:10; stroke-linecap:round;
+    stroke-dasharray:339.3; stroke-dashoffset:339.3; animation:ringfill 1.4s ease-out forwards;}
+  .ring-value{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .ring-value .num{font-size:30px; font-weight:700;}
+  .ring-value .of{font-size:11px; color:var(--text-dim);}
+  @keyframes ringfill{ to{ stroke-dashoffset: var(--offset); } }
+
+  /* SECTION HEADERS */
+  .section{padding:48px 0; border-bottom:1px solid var(--line);}
+  .section-eyebrow{font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; font-weight:600;}
+  .section h2{font-size:24px; font-weight:700; margin-bottom:16px; letter-spacing:-0.005em;}
+  .section-intro{color:var(--text-dim); font-size:14.5px; max-width:720px; margin-bottom:28px;}
+
+  /* CATEGORY BARS */
+  .bar-row{display:grid; grid-template-columns:180px 1fr; gap:20px; align-items:center; padding:14px 0; border-bottom:1px solid var(--line);}
+  .bar-row:last-child{border-bottom:none;}
+  .bar-label{font-size:13.5px; font-weight:600;}
+  .bar-track-group{display:flex; flex-direction:column; gap:6px;}
+  .bar-line{display:flex; align-items:center; gap:10px;}
+  .bar-tag{font-size:10px; width:64px; color:var(--text-dim); letter-spacing:0.06em; text-transform:uppercase;}
+  .bar-bg{flex:1; height:8px; background:#20242B; border-radius:5px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:5px;}
+  .bar-fill.current{background:var(--gold);}
+  .bar-fill.projected{background:var(--emerald);}
+  .bar-num{font-size:12px; color:var(--text-dim); width:34px; text-align:right;}
+
+  /* FINDINGS GRID */
+  .findings-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .finding{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px;
+  }
+  .finding.critical{border-left:3px solid var(--red);}
+  .finding.moderate{border-left:3px solid var(--gold);}
+  .finding-head{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .finding-severity{font-size:9.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; border-radius:4px;}
+  .finding-severity.critical{background:rgba(217,99,74,0.15); color:var(--red);}
+  .finding-severity.moderate{background:rgba(232,179,76,0.15); color:var(--gold);}
+  .finding h3{font-size:15px; font-weight:700; margin-bottom:8px;}
+  .finding p{font-size:13.5px; color:var(--text-dim);}
+
+  /* SPOTLIGHT: DOORWAY PAGES */
+  .spotlight{
+    background:linear-gradient(155deg, rgba(217,99,74,0.10), rgba(20,23,28,0.4));
+    border:1px solid rgba(217,99,74,0.35); border-radius:16px; padding:36px;
+  }
+  .spotlight-eyebrow{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); font-weight:700; margin-bottom:12px;}
+  .spotlight h3{font-size:21px; margin-bottom:14px; font-weight:700;}
+  .spotlight p{font-size:14.5px; color:var(--text-dim); margin-bottom:14px; max-width:760px;}
+  .spotlight p strong{color:var(--text);}
+  .page-compare{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0;
+  }
+  .page-chip{
+    background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:12px 14px; font-size:12px; color:var(--text-dim);
+  }
+  .page-chip b{display:block; color:var(--text); font-size:13px; margin-bottom:2px;}
+  .quote-line{
+    font-size:12.5px; color:var(--text-dim); font-family:'Courier New', monospace; background:#0E1013;
+    border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin-top:16px;
+  }
+
+  /* TECH STACK */
+  .tech-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  .tech-card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; text-align:center;}
+  .tech-card .label{font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;}
+  .tech-card .val{font-size:13px; font-weight:600;}
+
+  /* RECOMMENDATION LIST */
+  .rec-list{counter-reset:rec;}
+  .rec-item{
+    display:grid; grid-template-columns:36px 1fr; gap:16px; padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .rec-item:last-child{border-bottom:none;}
+  .rec-num{
+    counter-increment:rec; font-size:13px; font-weight:700; color:var(--emerald);
+    width:32px; height:32px; border:1px solid var(--emerald-dim); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .rec-num::before{content:counter(rec);}
+  .rec-body h4{font-size:14.5px; font-weight:700; margin-bottom:4px;}
+  .rec-body p{font-size:13.5px; color:var(--text-dim);}
+
+  /* METHODOLOGY */
+  .method-box{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:24px;}
+  .method-box p{font-size:13px; color:var(--text-dim); margin-bottom:10px;}
+  .method-box p:last-child{margin-bottom:0;}
+
+  /* DISCOVERY QUESTIONS */
+  .qa-box{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:8px 24px;}
+  .qa-item{padding:18px 0; border-bottom:1px solid var(--line);}
+  .qa-item:last-child{border-bottom:none;}
+  .qa-item .q{font-size:14.5px; font-weight:700; margin-bottom:5px; display:flex; gap:8px;}
+  .qa-item .q .tag-q{color:var(--emerald); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; flex-shrink:0; padding-top:2px;}
+  .qa-item .why{font-size:13px; color:var(--text-dim); padding-left:52px;}
+
+  /* CREATIVE PRODUCTION PLAN */
+  .plan-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .plan-card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px;}
+  .plan-card .tag{font-size:10px; color:var(--gold); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; font-weight:700;}
+  .plan-card h4{font-size:15px; margin-bottom:8px; font-weight:700;}
+  .plan-card p{font-size:13px; color:var(--text-dim);}
+  .plan-card ul{margin-top:10px; padding-left:16px;}
+  .plan-card ul li{font-size:12.5px; color:var(--text-dim); margin-bottom:4px;}
+
+  @media (max-width:720px){
+    .plan-grid{grid-template-columns:1fr;}
+    .qa-item .why{padding-left:0; margin-top:4px;}
+  }
+
+  footer{padding:40px 0 60px; text-align:center;}
+  footer .cta{
+    display:inline-block; background:var(--gold); color:#1a1408; font-weight:700; font-size:14px;
+    padding:14px 32px; border-radius:8px; margin-bottom:18px; letter-spacing:0.02em;
+  }
+  footer .fine{font-size:11.5px; color:var(--text-dim);}
+
+  @media (max-width:720px){
+    .scores{grid-template-columns:1fr;}
+    .findings-grid{grid-template-columns:1fr;}
+    .page-compare{grid-template-columns:1fr;}
+    .tech-grid{grid-template-columns:repeat(2,1fr);}
+    .score-card{flex-direction:column; text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div>
+        <div class="brand-mark">ELETTRO<span>.</span></div>
+        <div class="brand-tag">SEO &amp; AIO Site Audit</div>
+      </div>
+      <div class="report-meta">
+        Prepared July 23, 2026<br>
+        Live-site inspection, directional scoring<br>
+        Elettro, Inc. &middot; elettro.com
+      </div>
+    </div>
+    <h1>Positive Therapy FL</h1>
+    <div class="subject-url">positivetherapyfl.com</div>
+    <p class="lede">A directional read on organic search health and AI answer-engine readiness — with a spotlight on the site's nine "service area" location pages, which are doing more harm than good in their current form.</p>
+  </div>
+</header>
+
+<section class="scores">
+  <div class="wrap" style="display:contents;">
+    <div class="score-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120" width="132" height="132">
+          <circle class="ring-track" cx="60" cy="60" r="54"></circle>
+          <circle class="ring-current" cx="60" cy="60" r="54" style="--offset:129;"></circle>
+        </svg>
+        <div class="ring-value"><div class="num">62</div><div class="of">/ 100</div></div>
+      </div>
+      <div>
+        <div class="ring-label">Current SEO Score</div>
+        <div class="ring-sub">Solid technical foundation, undercut by templated on-page content and no confirmed structured data.</div>
+      </div>
+    </div>
+    <div class="score-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120" width="132" height="132">
+          <circle class="ring-track" cx="60" cy="60" r="54"></circle>
+          <circle class="ring-current" cx="60" cy="60" r="54" style="stroke:var(--emerald); --offset:31;"></circle>
+        </svg>
+        <div class="ring-value"><div class="num">91</div><div class="of">/ 100</div></div>
+      </div>
+      <div>
+        <div class="ring-label" style="color:var(--emerald);">Projected — Elettro Rebuild</div>
+        <div class="ring-sub">Consolidated location strategy, full schema implementation, and de-templated copy close nearly all of the gap.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Category Breakdown</div>
+    <h2>Where the score comes from</h2>
+    <p class="section-intro">Current vs. projected, by category. Local &amp; Entity Signals is the widest gap on the site — directly tied to the location page pattern below.</p>
+
+    <div class="bar-row">
+      <div class="bar-label">Technical SEO</div>
+      <div class="bar-track-group">
+        <div class="bar-line"><span class="bar-tag">Current</span><div class="bar-bg"><div class="bar-fill current" style="width:70%;"></div></div><span class="bar-num">70</span></div>
+        <div class="bar-line"><span class="bar-tag">Projected</span><div class="bar-bg"><div class="bar-fill projected" style="width:93%;"></div></div><span class="bar-num">93</span></div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">On-Page Content</div>
+      <div class="bar-track-group">
+        <div class="bar-line"><span class="bar-tag">Current</span><div class="bar-bg"><div class="bar-fill current" style="width:55%;"></div></div><span class="bar-num">55</span></div>
+        <div class="bar-line"><span class="bar-tag">Projected</span><div class="bar-bg"><div class="bar-fill projected" style="width:90%;"></div></div><span class="bar-num">90</span></div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Local &amp; Entity Signals</div>
+      <div class="bar-track-group">
+        <div class="bar-line"><span class="bar-tag">Current</span><div class="bar-bg"><div class="bar-fill current" style="width:38%;"></div></div><span class="bar-num">38</span></div>
+        <div class="bar-line"><span class="bar-tag">Projected</span><div class="bar-bg"><div class="bar-fill projected" style="width:92%;"></div></div><span class="bar-num">92</span></div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Structured Data</div>
+      <div class="bar-track-group">
+        <div class="bar-line"><span class="bar-tag">Current</span><div class="bar-bg"><div class="bar-fill current" style="width:30%;"></div></div><span class="bar-num">30</span></div>
+        <div class="bar-line"><span class="bar-tag">Projected</span><div class="bar-bg"><div class="bar-fill projected" style="width:96%;"></div></div><span class="bar-num">96</span></div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">AIO / Answer-Engine Readiness</div>
+      <div class="bar-track-group">
+        <div class="bar-line"><span class="bar-tag">Current</span><div class="bar-bg"><div class="bar-fill current" style="width:48%;"></div></div><span class="bar-num">48</span></div>
+        <div class="bar-line"><span class="bar-tag">Projected</span><div class="bar-bg"><div class="bar-fill projected" style="width:88%;"></div></div><span class="bar-num">88</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Priority Finding</div>
+    <h2>The location pages are a spam-policy risk, not an SEO strategy</h2>
+
+    <div class="spotlight">
+      <div class="spotlight-eyebrow">Critical — Doorway Page Pattern</div>
+      <h3>Nine "service area" pages, one templated skeleton</h3>
+      <p>Positive Therapy FL runs city-specific pages for Davie, Fort Lauderdale, Fisher Island, Palm Beach, Pinecrest, Palmetto Bay, Kendall, and a catch-all Florida page — for a <strong>telehealth practice with a single physical address in Southwest Ranches</strong>. Direct inspection of the Palm Beach and Fisher Island pages shows identical section structure, identical H2 outline (Why Choose &rarr; How It Works &rarr; Key Benefits &rarr; Who It's Ideal For &rarr; Success Stories &rarr; FAQs), and the same four service blurbs pasted at the bottom of every page with only the city name swapped.</p>
+      <p>This matches Google's own definition of doorway pages almost exactly: <strong>multiple pages, each targeting a specific city or region, that funnel users to one destination with no meaningfully unique content between them.</strong> Sites found to use this pattern at scale can see the affected pages — or the domain's broader local rankings — suppressed.</p>
+
+      <div class="page-compare">
+        <div class="page-chip"><b>Palm Beach page</b>Same 4 service blurbs, same testimonial format, same CTA copy</div>
+        <div class="page-chip"><b>Fisher Island page</b>Identical structure — even the FAQ count and phrasing pattern match</div>
+        <div class="page-chip"><b>Both pages</b>Single shared address in footer — no distinct local presence signal</div>
+      </div>
+
+      <div class="quote-line">Palm Beach: "Individual Therapy in Palm Beach... a safe, confidential space..."<br>Fisher Island: "Individual Therapy in Fisher Island... a safe, confidential space..."</div>
+
+      <p style="margin-top:16px; margin-bottom:0;">Fisher Island is a gated, ~800-resident private island — treating it as a distinct "service area" for an online counseling practice based 40+ miles away in Southwest Ranches reads as keyword-territory grabbing rather than genuine local relevance, and it's the clearest tell in the set.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Additional Findings</div>
+    <h2>What else is holding the score back</h2>
+    <div class="findings-grid">
+      <div class="finding critical">
+        <div class="finding-head"><span class="finding-severity critical">Critical</span></div>
+        <h3>No confirmed structured data</h3>
+        <p>No LocalBusiness, MedicalOrganization, or FAQPage schema detected in rendered markup. For a healthcare-adjacent local service, this is a missed opportunity for rich results and a direct AIO liability — answer engines lean heavily on structured entity data to decide what's citable.</p>
+      </div>
+      <div class="finding critical">
+        <div class="finding-head"><span class="finding-severity critical">Critical</span></div>
+        <h3>No llms.txt</h3>
+        <p>No llms.txt file present. As AI-driven discovery grows, this is an increasingly standard signal for helping answer engines understand site structure and authoritative pages.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Formulaic meta titles</h3>
+        <p>Title pattern "[Service] in [City] | Book Now" repeats across every page — functional for indexing, but low differentiation in SERP click-through and weak entity signal for AI summarization.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>No verifiable local trust signals</h3>
+        <p>Testimonials are attributed by initials only ("S.M., Palm Beach client") with no linkable review source (Google, Healthgrades, etc.) — a missed opportunity for both trust and AIO citation-worthiness.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Tag proliferation (30+ tags per blog post)</h3>
+        <p>Individual blog posts carry 30-plus overlapping tags ("relationship-support," "relationship-success," "relationship-satisfaction," "relationship-growth" — all effectively the same concept). Each tag likely generates its own thin, single-post archive page — index bloat that dilutes topical authority instead of building it.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>New-review intake bypasses Google Business Profile</h3>
+        <p>The reviews page correctly syncs and displays existing Google reviews, but the on-page "leave a review" form submits to the site only — new reviews never reach Google, so they don't count toward local pack ranking or appear where prospects are actually comparing providers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">UX &amp; Conversion Findings</div>
+    <h2>Friction points working against the site's own goals</h2>
+    <p class="section-intro">Separate from SEO/AIO, these are usability and conversion issues observed during the walkthrough — each one works against the site's core job of getting a visitor to book.</p>
+    <div class="findings-grid">
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Entry pop-up interrupts before any content loads</h3>
+        <p>A pop-up fires on page load before a visitor has seen any content. First impressions matter disproportionately for a therapy practice — an immediate interruption works against the trust-building tone the rest of the site is going for.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Dated "animate everything into place" scroll pattern</h3>
+        <p>Site-wide fade/slide-in-on-scroll animation on nearly every element reads as an older template convention. Modern builds use motion selectively — it should support content, not announce itself.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Hero imagery doesn't center the actual subject</h3>
+        <p>On the Autism Consultation page, the hero photo composition puts full focus on the two adults while the child — the actual subject of the service — is visually sidelined, looking down and cropped into the background. For a page about a child-centered service, the imagery should center the child.</p>
+      </div>
+      <div class="finding moderate">
+        <div class="finding-head"><span class="finding-severity moderate">Moderate</span></div>
+        <h3>Homepage primary path leads to a newsletter signup</h3>
+        <p>The main homepage flow guides visitors toward a "Subscribe" action rather than the booking/appointment path. For a service business, the primary CTA path should lead as directly as possible to a lead-generating action, not a secondary list-building one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Discovery Questions</div>
+    <h2>To confirm with the client before scoping</h2>
+    <p class="section-intro">Open items to run down in the next conversation — answers here will shape both the proposal scope and the rebuild's information architecture.</p>
+    <div class="qa-box">
+      <div class="qa-item">
+        <div class="q"><span class="tag-q">Q —</span> Is the "Book an Appointment" form actually converting?</div>
+        <div class="why">Are they getting real submissions through it, or mostly spam? This affects whether the rebuild should keep the current form pattern, add spam protection (reCAPTCHA/honeypot), or move to a scheduling tool integration (Calendly-style) entirely.</div>
+      </div>
+      <div class="qa-item">
+        <div class="q"><span class="tag-q">Q —</span> Do they have an actual Shopify store?</div>
+        <div class="why">If not, and they're open to it, they could piggyback on Dean's Stashbox.ai store setup — adding their product/merch collection there rather than standing up a separate storefront.</div>
+      </div>
+      <div class="qa-item">
+        <div class="q"><span class="tag-q">Q —</span> New services or content updates for the rebuild?</div>
+        <div class="why">Confirm whether there are new services to add, or whether the rebuild should carry forward existing page content/services as-is — affects scope and copywriting timeline.</div>
+      </div>
+      <div class="qa-item">
+        <div class="q"><span class="tag-q">Q —</span> Does she use a patient management / EHR database tool currently?</div>
+        <div class="why">If so, which one (e.g. SimplePractice, TherapyNotes, Kareo, athenahealth)? Worth investigating whether it exposes an API or client-portal embed so patients could log into positivetherapyfl.com directly to handle intake, make payments, or view files — rather than a separate disconnected portal. Feasibility depends entirely on what the platform supports, so this needs answering before it's scoped.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Creative Production Plan</div>
+    <h2>What Elettro would build</h2>
+    <p class="section-intro">Beyond the technical and structural rebuild, the engagement includes a creative production pass to give the site visual identity and life.</p>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="tag">Brand Assets</div>
+        <h4>Logo-integrated branded image set</h4>
+        <p>Take the existing logo and produce a full set of branded imagery across formats:</p>
+        <ul>
+          <li>Vertical (social/story format)</li>
+          <li>Square (feed/profile format)</li>
+          <li>Horizontal (web hero/banner format)</li>
+        </ul>
+      </div>
+      <div class="plan-card">
+        <div class="tag">Motion</div>
+        <h4>AI-generated video clips</h4>
+        <p>Short AI-produced video clips to bring subtle life to key pages — replacing the static, dated scroll-animation approach with genuine motion content rather than element-entrance effects.</p>
+      </div>
+      <div class="plan-card">
+        <div class="tag">Visualization</div>
+        <h4>Custom infographics</h4>
+        <p>Original infographics to visualize key subjects across the site's core topics — giving visitors a scannable, shareable way to understand concepts that are currently only explained in long-form text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Technical Snapshot</div>
+    <h2>Stack &amp; platform</h2>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="label">Platform</div><div class="val">Webware.ai CMS</div></div>
+      <div class="tech-card"><div class="label">Indexability</div><div class="val">index, follow</div></div>
+      <div class="tech-card"><div class="label">Mobile Viewport</div><div class="val">Configured</div></div>
+      <div class="tech-card"><div class="label">Structured Data</div><div class="val">Not confirmed</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Elettro Recommendations</div>
+    <h2>Path from 62/48 to 91/88</h2>
+    <div class="rec-list">
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Consolidate nine doorway pages into 2–3 real regional hubs</h4>
+          <p>Replace the city-by-city template with genuinely differentiated county-level pages (e.g. Broward, Palm Beach, Miami-Dade) built around real distinguishing content — insurance networks, region-specific therapist availability, and local partnerships — not swapped city names.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Implement LocalBusiness + FAQPage schema</h4>
+          <p>Add JSON-LD structured data site-wide, including serviceArea markup that accurately reflects the telehealth model rather than implying nine separate local offices.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Add llms.txt and entity-consistent authorship</h4>
+          <p>Publish an llms.txt and ensure clinician names/credentials are consistent across pages so answer engines can confidently resolve the practice as a single trustworthy entity.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Replace initials-only testimonials with linkable reviews</h4>
+          <p>Pull in verified Google/Healthgrades reviews with real attribution where clients consent — improves both user trust and AI answer-engine citability.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Rewrite on-page copy to be de-templated and citation-worthy</h4>
+          <p>Move away from repeated boilerplate sections toward original, specific content per page — concrete credentials, specific modalities offered, and real regional context that both readers and generative engines can trust.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Remove the entry pop-up and dated scroll-animation pattern</h4>
+          <p>Drop the load-time interrupt and site-wide "animate everything into place" effect in favor of a cleaner first impression, with motion reserved for the new AI video content.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Reset the primary homepage path to booking, not newsletter</h4>
+          <p>Restructure the homepage's main CTA flow so it leads directly to the appointment/booking action, with the subscribe option demoted to a secondary, non-blocking placement.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Automate Google review sync and redirect new-review intake</h4>
+          <p>Keep the dynamic Google review pull for on-site display, and route the "leave a review" CTA to the actual Google review-write link instead of an on-site form.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num"></div>
+        <div class="rec-body">
+          <h4>Consolidate blog tags to 5–8 reusable categories</h4>
+          <p>Replace the 30+ overlapping per-post tags with a small, stable tag set reused across all posts — builds real topical depth instead of fragmenting it across dozens of thin archive pages.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-eyebrow">Methodology</div>
+    <h2>How this was scored</h2>
+    <div class="method-box">
+      <p>Scores are directional estimates from live-site inspection (rendered HTML, meta tags, on-page content, internal linking), not a verified crawler diagnostic. This audit does not have programmatic access to JavaScript-rendered content or script-tag-embedded structured data — presence or absence of JSON-LD schema should be manually confirmed via Google's Rich Results Test or browser "View Source."</p>
+      <p>Projected scores represent Elettro's estimated outcome following a full rebuild addressing the findings above, based on comparable engagements. They are not a guarantee of specific ranking outcomes.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cta">Let's Talk Rebuild</div><br>
+    <div class="fine">Elettro, Inc. &middot; elettro.com &middot; Prepared for internal pitch use</div>
+  </div>
+</footer>
+
+</body>
+</html>
