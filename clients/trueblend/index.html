@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>True Blend Essentials — SEO & AIO Audit | Elettro</title>
+<style>
+  :root{
+    --bg:#0d0f12; --panel:#15181d; --panel2:#1b1f26; --line:#262b33;
+    --gold:#E8B34C; --emerald:#3FAE73; --text:#EDEFF2; --sub:#9AA3AF;
+    --red:#E2574C; --amber:#E8B34C; --green:#3FAE73;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:1000px;margin:0 auto;padding:48px 24px 96px;}
+  header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;flex-wrap:wrap;gap:16px;}
+  .brand{font-weight:800;letter-spacing:2px;font-size:14px;color:var(--gold);text-transform:uppercase;}
+  h1{font-size:30px;margin:8px 0 4px;}
+  .sub{color:var(--sub);font-size:14px;}
+  .meta-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .tag{font-size:11px;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--sub);}
+  .rings{display:flex;gap:24px;margin:32px 0;flex-wrap:wrap;}
+  .ring-card{flex:1;min-width:260px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;align-items:center;gap:24px;}
+  .ring-label{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:6px;}
+  .ring-scores{font-size:13px;color:var(--sub);}
+  .ring-scores b{color:var(--text);font-size:15px;}
+  svg.gauge{overflow:visible;}
+  .gauge-bg{fill:none;stroke:var(--line);stroke-width:10;}
+  .gauge-fg{fill:none;stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:60px 60px;transition:stroke-dashoffset 1.2s ease;}
+  .gauge-num{font-size:26px;font-weight:800;fill:var(--text);}
+  .gauge-den{font-size:11px;fill:var(--sub);}
+  section{margin:44px 0;}
+  h2{font-size:18px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:10px;}
+  .catbar{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center;margin-bottom:16px;}
+  .catname{font-size:13px;color:var(--text);}
+  .bars{display:flex;flex-direction:column;gap:5px;}
+  .barrow{display:flex;align-items:center;gap:8px;}
+  .barrow .label{font-size:10px;color:var(--sub);width:36px;flex-shrink:0;}
+  .barrack{flex:1;background:var(--panel2);border-radius:4px;height:9px;overflow:hidden;}
+  .barfill{height:100%;border-radius:4px;}
+  .barval{font-size:11px;color:var(--sub);width:28px;text-align:right;}
+  .findings{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.findings{grid-template-columns:1fr;} .rings{flex-direction:column;}}
+  .finding{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .fhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .ftitle{font-weight:700;font-size:14px;}
+  .sev{font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;}
+  .sev-high{background:rgba(226,87,76,0.15);color:var(--red);}
+  .sev-med{background:rgba(232,179,76,0.15);color:var(--gold);}
+  .sev-low{background:rgba(63,174,115,0.15);color:var(--green);}
+  .fbody{font-size:13px;color:var(--sub);}
+  .stack{display:flex;gap:12px;flex-wrap:wrap;}
+  .stackcard{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;min-width:140px;}
+  .stackcard .k{font-size:10px;text-transform:uppercase;color:var(--sub);letter-spacing:0.5px;margin-bottom:4px;}
+  .stackcard .v{font-size:14px;font-weight:700;}
+  .note{background:var(--panel2);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;color:var(--sub);margin-top:20px;}
+  footer{margin-top:60px;font-size:11px;color:#5a616c;border-top:1px solid var(--line);padding-top:20px;}
+  .legend{display:flex;gap:18px;font-size:12px;color:var(--sub);margin-top:8px;}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand">Elettro · Audit Report</div>
+      <h1>True Blend Essentials</h1>
+      <div class="sub">trueblendessentials.com — SEO & AIO Assessment</div>
+      <div class="meta-tags">
+        <span class="tag">Platform: Wix Stores</span>
+        <span class="tag">Vertical: Hair &amp; Skin Care / eCommerce</span>
+        <span class="tag">Audited: Aug 3, 2026</span>
+        <span class="tag">Active: Instagram · Facebook · Blogspot</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="rings">
+    <div class="ring-card">
+      <svg class="gauge" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+        <circle class="gauge-fg" cx="60" cy="60" r="50" stroke="#E8B34C" stroke-dasharray="314" stroke-dashoffset="145"></circle>
+        <text x="60" y="58" text-anchor="middle" class="gauge-num">54</text>
+        <text x="60" y="74" text-anchor="middle" class="gauge-den">/ 100</text>
+      </svg>
+      <div>
+        <div class="ring-label">SEO Score</div>
+        <div class="ring-scores">Current: <b style="color:var(--gold)">54</b><br>Projected w/ rebuild: <b style="color:var(--emerald)">88</b></div>
+      </div>
+    </div>
+    <div class="ring-card">
+      <svg class="gauge" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+        <circle class="gauge-fg" cx="60" cy="60" r="50" stroke="#E8B34C" stroke-dasharray="314" stroke-dashoffset="226"></circle>
+        <text x="60" y="58" text-anchor="middle" class="gauge-num">28</text>
+        <text x="60" y="74" text-anchor="middle" class="gauge-den">/ 100</text>
+      </svg>
+      <div>
+        <div class="ring-label">AIO Score</div>
+        <div class="ring-scores">Current: <b style="color:var(--gold)">28</b><br>Projected w/ rebuild: <b style="color:var(--emerald)">82</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Category Breakdown</h2>
+    <div class="legend"><span><span class="dot" style="background:var(--gold)"></span>Current</span><span><span class="dot" style="background:var(--emerald)"></span>Projected</span></div>
+    <div style="margin-top:18px;">
+      <div class="catbar"><div class="catname">Technical SEO &amp; Crawlability</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:60%;background:var(--gold)"></div></div><span class="barval">60</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:90%;background:var(--emerald)"></div></div><span class="barval">90</span></div>
+        </div>
+      </div>
+      <div class="catbar"><div class="catname">On-Page / Meta Optimization</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:55%;background:var(--gold)"></div></div><span class="barval">55</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:90%;background:var(--emerald)"></div></div><span class="barval">90</span></div>
+        </div>
+      </div>
+      <div class="catbar"><div class="catname">Content Depth &amp; E-E-A-T</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:60%;background:var(--gold)"></div></div><span class="barval">60</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:85%;background:var(--emerald)"></div></div><span class="barval">85</span></div>
+        </div>
+      </div>
+      <div class="catbar"><div class="catname">Structured Data / Schema</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:20%;background:var(--gold)"></div></div><span class="barval">20</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:90%;background:var(--emerald)"></div></div><span class="barval">90</span></div>
+        </div>
+      </div>
+      <div class="catbar"><div class="catname">Local / Entity Consistency</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:35%;background:var(--gold)"></div></div><span class="barval">35</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:85%;background:var(--emerald)"></div></div><span class="barval">85</span></div>
+        </div>
+      </div>
+      <div class="catbar"><div class="catname">AI / Answer Engine Readiness</div>
+        <div class="bars">
+          <div class="barrow"><span class="label">Now</span><div class="barrack"><div class="barfill" style="width:25%;background:var(--gold)"></div></div><span class="barval">25</span></div>
+          <div class="barrow"><span class="label">Proj.</span><div class="barrack"><div class="barfill" style="width:85%;background:var(--emerald)"></div></div><span class="barval">85</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Findings</h2>
+    <div class="findings">
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">No confirmable structured data</span><span class="sev sev-high">High</span></div>
+        <div class="fbody">No JSON-LD (Product, Organization, BreadcrumbList) surfaced on the homepage. Wix does inject some default schema, but coverage on product/collection pages is typically thin and needs manual verification via Google Rich Results Test before any claims are finalized.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">No llms.txt / AI-crawler guidance</span><span class="sev sev-high">High</span></div>
+        <div class="fbody">No answer-engine optimization layer present. Product descriptions read as marketing copy rather than structured, extractable facts (ingredients, use-case, benefit) that LLM-based answer engines can cite directly.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Local citation inconsistency</span><span class="sev sev-med">Medium</span></div>
+        <div class="fbody">A third-party directory listing under this domain and address shows mismatched business category data (unrelated service type), suggesting NAP/entity data isn't tightly controlled across citations — a signal issue for local and AI entity recognition.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Thin FAQ / answer-format content</span><span class="sev sev-med">Medium</span></div>
+        <div class="fbody">No FAQ blocks detected on the homepage. Adding structured Q&amp;A content (ingredient safety, usage frequency, hair type suitability) is one of the highest-leverage AIO moves for a personal care brand.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Solid brand story &amp; trust signals</span><span class="sev sev-low">Low</span></div>
+        <div class="fbody">"Our Story," community-giving messaging, and multiple customer testimonials are present — good raw material for E-E-A-T once restructured with schema and clearer authorship/sourcing signals.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Homepage title tag is reasonable</span><span class="sev sev-low">Low</span></div>
+        <div class="fbody">"Shop True Blend Essentials | Natural Hair &amp; Skin Care for All" includes relevant category keywords. Product and collection page titles were not individually audited in this pass.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tech Stack</h2>
+    <div class="stack">
+      <div class="stackcard"><div class="k">Platform</div><div class="v">Wix Stores</div></div>
+      <div class="stackcard"><div class="k">Rendering</div><div class="v">Client-heavy JS</div></div>
+      <div class="stackcard"><div class="k">Commerce</div><div class="v">Wix eCommerce</div></div>
+      <div class="stackcard"><div class="k">Hosting/CDN</div><div class="v">Wix Cloud</div></div>
+      <div class="stackcard"><div class="k">Blog</div><div class="v">Wix Blog module</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Marketing Footprint Detected</h2>
+    <div class="findings">
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Instagram — active</span><span class="sev sev-low">Active</span></div>
+        <div class="fbody">@trueblendessentials is live and posting (e.g. scalp-health content). Primary social channel based on visibility. Not confirmed as linked from the homepage header in the fetch — worth checking footer/nav social links are present and correct.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Facebook — active</span><span class="sev sev-low">Active</span></div>
+        <div class="fbody">Facebook Page is live under "True Blend Essentials | Winston-Salem NC," confirming a local market anchor. Good for local social proof, but reinforces the NAP-consistency finding above — worth auditing all directory/social listings for matching address and category data.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Content marketing exists — but it's off-platform</span><span class="sev sev-med">Fragmented</span></div>
+        <div class="fbody">Blog content (e.g. "Itchy Scalp After Braids") is being published on a separate Blogspot domain rather than the Wix site's own blog. This is a significant AIO/SEO leak: topical authority, backlinks, and answer-engine-citable content are accruing to a domain the brand doesn't fully control and that isn't linked into trueblendessentials.com's entity graph.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">No confirmed email capture / retention flow</span><span class="sev sev-med">Gap</span></div>
+        <div class="fbody">No popup, discount-for-signup, or newsletter capture was visible on the homepage fetch. For a consumables/repeat-purchase category like hair &amp; skin care, this is a meaningful revenue gap independent of SEO — worth flagging as a broader marketing opportunity, not just an audit line item.</div>
+      </div>
+      <div class="finding">
+        <div class="fhead"><span class="ftitle">Community/mission narrative in use</span><span class="sev sev-low">Asset</span></div>
+        <div class="fbody">Homepage messaging ties purchases to community support (food, clothing, essential care). This is a strong, underused trust/E-E-A-T signal — currently living in body copy only, not reinforced with schema (Organization/sameAs) or a dedicated, linkable "Impact" page that social and press could cite.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <b>Methodology note:</b> This audit is based on a live fetch of the homepage plus public search signals; it does not constitute a full crawl. Automated fetching strips inline &lt;script&gt; tags, so structured-data (JSON-LD) presence/absence could not be directly confirmed and should be verified manually via Google's Rich Results Test before using schema findings in client-facing claims. Scores are directional, meant to support a pitch narrative, not a certified technical audit.
+  </div>
+
+  <footer>Prepared by Elettro, Inc. · elettro.com · Confidential — for client discussion purposes only.</footer>
+</div>
+</body>
+</html>
