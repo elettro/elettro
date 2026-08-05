@@ -16,6 +16,40 @@
     if(!response.ok)throw new Error('Audit source unavailable');
     let html=await response.text();
     const showcase=`<div style="margin:28px 0 0"><a href="./showcase.html" style="display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border-radius:999px;border:1px solid rgba(95,168,234,.5);background:rgba(46,134,216,.12);color:#f4f8fb;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.2px">View Creative, Infographic &amp; Podcast Showcase →</a></div>`;
+    const videoStyles=`<style>
+      .helix-video-hero{position:relative;background:#050d17;border-bottom:1px solid #1E3A5C;overflow:hidden}
+      .helix-video-shell{max-width:1180px;margin:0 auto;padding:28px 32px}
+      .helix-video-frame{position:relative;aspect-ratio:16/9;background:#02070d;border:1px solid #1E3A5C;border-radius:18px;overflow:hidden;box-shadow:0 22px 70px rgba(0,0,0,.35)}
+      .helix-video-frame video{display:block;width:100%;height:100%;object-fit:cover;background:#02070d}
+      .helix-play{position:absolute;inset:0;margin:auto;width:94px;height:94px;border-radius:50%;border:1px solid rgba(255,255,255,.72);background:rgba(10,22,40,.78);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(8px);transition:transform .2s ease,background .2s ease}
+      .helix-play:hover{transform:scale(1.05);background:rgba(46,134,216,.9)}
+      .helix-play span{display:block;margin-left:7px;width:0;height:0;border-top:17px solid transparent;border-bottom:17px solid transparent;border-left:27px solid #fff}
+      .helix-play[hidden]{display:none}
+      .helix-video-label{margin-top:12px;color:#9BB0C4;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}
+      @media(max-width:700px){.helix-video-shell{padding:18px}.helix-play{width:72px;height:72px}.helix-play span{border-top-width:13px;border-bottom-width:13px;border-left-width:21px}}
+    </style>`;
+    const videoHero=`<section class="helix-video-hero" aria-label="Helix BioPharma featured video"><div class="helix-video-shell"><div class="helix-video-frame"><video id="helixIntroVideo" preload="metadata" playsinline><source src="./video-clips/wide1.mp4" type="video/mp4">Your browser does not support HTML video.</video><button class="helix-play" id="helixPlayButton" type="button" aria-label="Play Helix BioPharma video"><span aria-hidden="true"></span></button></div><div class="helix-video-label">Helix BioPharma Featured Video</div></div></section>`;
+    const videoScript=`<script>
+      (function(){
+        const video=document.getElementById('helixIntroVideo');
+        const button=document.getElementById('helixPlayButton');
+        if(!video||!button)return;
+        button.addEventListener('click',async function(){
+          button.hidden=true;
+          video.controls=true;
+          video.currentTime=0;
+          try{await video.play()}catch(error){button.hidden=false;video.controls=false}
+        });
+        video.addEventListener('ended',function(){
+          video.controls=false;
+          button.hidden=false;
+          video.currentTime=0;
+        });
+      })();
+    <\/script>`;
+    html=html.replace('</head>',videoStyles+'</head>');
+    html=html.replace('<body>','<body>'+videoHero);
+    html=html.replace('</body>',videoScript+'</body>');
     html=html.replace('</div>\n</header>',showcase+'</div>\n</header>');
     document.open();document.write(html);document.close();
   }catch(error){
