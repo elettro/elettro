@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crane's Beach House — SEO / AIO Audit — Elettro</title>
+<style>
+  :root{
+    --bg:#0B0D10;
+    --panel:#14171C;
+    --panel-2:#191D23;
+    --line:#262B33;
+    --text:#EDEEF0;
+    --text-dim:#9AA3AF;
+    --text-faint:#6B7280;
+    --gold:#E8B34C;
+    --gold-dim:#8A6A2E;
+    --emerald:#3FAE73;
+    --emerald-dim:#265E40;
+    --red:#D9614F;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{background:var(--bg);}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Georgia, 'Times New Roman', serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{ font-family: Helvetica, Arial, sans-serif; }
+  .report{ max-width:1080px; margin:0 auto; padding:0 32px 80px; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 0 20px; border-bottom:1px solid var(--line);
+    margin-bottom:44px;
+  }
+  .brand{ font-family:Helvetica,Arial,sans-serif; font-weight:700; letter-spacing:.22em; font-size:13px; color:var(--text); }
+  .brand span{ color:var(--gold); }
+  .audit-tag{ font-family:Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+
+  /* ---------- header ---------- */
+  .header-block{ margin-bottom:56px; }
+  .eyebrow{ font-family:Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+  h1{ font-size:40px; font-weight:400; line-height:1.15; letter-spacing:-.01em; max-width:760px; }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:28px; margin-top:24px;
+    font-family:Helvetica,Arial,sans-serif; font-size:12.5px; color:var(--text-dim);
+  }
+  .meta-row div span{ display:block; color:var(--text-faint); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+
+  /* ---------- hero score comparison ---------- */
+  .hero{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line); border:1px solid var(--line);
+    border-radius:2px; overflow:hidden; margin-bottom:20px;
+  }
+  .hero-cell{ background:var(--panel); padding:40px 32px; text-align:center; }
+  .hero-label{ font-family:Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); margin-bottom:22px; }
+  .gauge-num{ font-family:Helvetica,Arial,sans-serif; font-size:15px; font-weight:700; }
+  .hero-sub{ font-family:Helvetica,Arial,sans-serif; font-size:12px; color:var(--text-dim); margin-top:14px; }
+
+  .delta-strip{
+    background:var(--panel-2); border:1px solid var(--line); border-top:none;
+    padding:16px 32px; text-align:center; font-family:Helvetica,Arial,sans-serif;
+    font-size:13px; color:var(--text-dim); margin-bottom:64px;
+  }
+  .delta-strip b{ color:var(--emerald); }
+
+  svg.ring{ overflow:visible; }
+  .ring-track{ fill:none; stroke:#262B33; stroke-width:10; }
+  .ring-fill{ fill:none; stroke-width:10; stroke-linecap:round; transform:rotate(-90deg); transform-origin:60px 60px; animation:draw 1.4s ease-out forwards; }
+  .ring-gold{ stroke:var(--gold); }
+  .ring-emerald{ stroke:var(--emerald); }
+  @keyframes draw{ from{ stroke-dashoffset: var(--circ); } to{ stroke-dashoffset: var(--offset); } }
+
+  /* ---------- section heads ---------- */
+  .section{ margin-bottom:64px; }
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:24px; }
+  .section-num{ font-family:Helvetica,Arial,sans-serif; font-size:11px; color:var(--gold); letter-spacing:.1em; }
+  h2{ font-size:22px; font-weight:400; }
+  .section-intro{ color:var(--text-dim); font-size:15px; max-width:700px; margin-bottom:24px; }
+
+  /* ---------- findings list ---------- */
+  .findings{ display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line); }
+  .finding{ display:grid; grid-template-columns:44px 1fr; gap:20px; padding:20px 0; border-bottom:1px solid var(--line); }
+  .finding-num{ font-family:Helvetica,Arial,sans-serif; font-size:13px; color:var(--gold); padding-top:2px; }
+  .finding-title{ font-family:Helvetica,Arial,sans-serif; font-weight:700; font-size:14.5px; margin-bottom:6px; }
+  .finding-body{ font-size:15px; color:var(--text-dim); line-height:1.6; }
+  .finding.positive .finding-num{ color:var(--emerald); }
+  .tag{
+    display:inline-block; font-family:Helvetica,Arial,sans-serif; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase;
+    padding:2px 7px; border-radius:2px; margin-left:8px; position:relative; top:-1px;
+  }
+  .tag-risk{ background:rgba(217,97,79,.15); color:#E4897B; border:1px solid rgba(217,97,79,.35); }
+  .tag-opp{ background:rgba(63,174,115,.15); color:var(--emerald); border:1px solid rgba(63,174,115,.35); }
+  .tag-verify{ background:rgba(232,179,76,.12); color:var(--gold); border:1px solid rgba(232,179,76,.35); }
+
+  /* ---------- bar chart ---------- */
+  .chart-wrap{ background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:36px 32px 24px; }
+  .chart{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; align-items:end; height:200px; }
+  .bar-group{ display:flex; align-items:flex-end; justify-content:center; gap:6px; height:100%; }
+  .bar{ width:20px; border-radius:2px 2px 0 0; position:relative; align-self:flex-end; animation:grow .9s ease-out forwards; transform-origin:bottom; }
+  .bar-gold{ background:var(--gold); }
+  .bar-emerald{ background:var(--emerald); }
+  @keyframes grow{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+  .bar-score{ position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-family:Helvetica,Arial,sans-serif; font-size:11px; color:var(--text-dim); white-space:nowrap; }
+  .chart-labels{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; margin-top:14px; }
+  .chart-labels div{ text-align:center; font-family:Helvetica,Arial,sans-serif; font-size:10.5px; color:var(--text-faint); letter-spacing:.02em; line-height:1.3; }
+  .legend{ display:flex; gap:22px; margin-top:26px; padding-top:20px; border-top:1px solid var(--line); font-family:Helvetica,Arial,sans-serif; font-size:11.5px; color:var(--text-dim); }
+  .legend span{ display:inline-flex; align-items:center; gap:7px; }
+  .dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+  /* ---------- category cards ---------- */
+  .cat-card{ background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:28px 30px; margin-bottom:14px; }
+  .cat-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:14px; flex-wrap:wrap; }
+  .cat-name{ font-size:19px; }
+  .cat-scores{ display:flex; gap:22px; font-family:Helvetica,Arial,sans-serif; }
+  .cat-score-block{ text-align:right; }
+  .cat-score-block span{ display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin-bottom:3px; }
+  .cat-score-num{ font-size:22px; font-weight:700; }
+  .cat-score-num.gold{ color:var(--gold); }
+  .cat-score-num.emerald{ color:var(--emerald); }
+  .cat-body{ color:var(--text-dim); font-size:14.5px; line-height:1.65; }
+  .cat-body strong{ color:var(--text); font-weight:700; }
+  .cat-fix{ margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-family:Helvetica,Arial,sans-serif; font-size:13px; color:var(--emerald); }
+  .cat-fix b{ color:var(--text); font-family:Georgia,serif; }
+
+  /* ---------- tech stack ---------- */
+  .stack-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .stack-row{ background:var(--panel); padding:18px 22px; display:flex; justify-content:space-between; gap:16px; align-items:flex-start; }
+  .stack-key{ font-family:Helvetica,Arial,sans-serif; font-size:13.5px; font-weight:700; max-width:180px; }
+  .stack-val{ font-family:Helvetica,Arial,sans-serif; font-size:13px; color:var(--text-dim); text-align:right; max-width:260px; }
+  .confidence{ display:block; margin-top:5px; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; }
+  .conf-confirmed{ color:var(--emerald); }
+  .conf-reported{ color:var(--gold); }
+  .conf-verify{ color:#E4897B; }
+
+  /* ---------- footer ---------- */
+  footer{ margin-top:70px; padding-top:28px; border-top:1px solid var(--line); font-family:Helvetica,Arial,sans-serif; font-size:11.5px; color:var(--text-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+  .footnote{ font-family:Helvetica,Arial,sans-serif; font-size:11.5px; color:var(--text-faint); line-height:1.6; margin-top:14px; max-width:760px; }
+
+  @media (max-width:640px){
+    .report{ padding:0 18px 60px; }
+    h1{ font-size:28px; }
+    .hero{ grid-template-columns:1fr; }
+    .chart{ grid-template-columns:repeat(3,1fr); height:auto; row-gap:34px; }
+    .chart-labels{ grid-template-columns:repeat(3,1fr); row-gap:6px; }
+    .stack-grid{ grid-template-columns:1fr; }
+    .cat-scores{ gap:14px; }
+  }
+</style>
+</head>
+<body>
+<div class="report">
+
+  <div class="topbar">
+    <div class="brand">ELETTRO<span>.</span></div>
+    <div class="audit-tag">SEO / AIO Diagnostic</div>
+  </div>
+
+  <div class="header-block">
+    <div class="eyebrow">Prospect Audit</div>
+    <h1>Crane's Beach House Boutique Hotel &amp; Luxury Villas</h1>
+    <div class="meta-row">
+      <div><span>Domain</span>cranesbeachhouse.com</div>
+      <div><span>Vertical</span>Hospitality / Boutique Lodging</div>
+      <div><span>Prepared</span>August 18, 2026</div>
+      <div><span>Prepared by</span>Elettro, Inc.</div>
+    </div>
+  </div>
+
+  <!-- HERO SCORE COMPARISON -->
+  <div class="hero">
+    <div class="hero-cell">
+      <div class="hero-label">Current State</div>
+      <svg class="ring" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="ring-track" cx="60" cy="60" r="54"/>
+        <circle class="ring-fill ring-gold" cx="60" cy="60" r="54"
+          stroke-dasharray="339.3" style="--circ:339.3; --offset:159.5;"/>
+        <text x="60" y="66" text-anchor="middle" class="gauge-num sans" fill="#E8B34C">53</text>
+      </svg>
+      <div class="hero-sub">Overall current score, six-category average</div>
+    </div>
+    <div class="hero-cell">
+      <div class="hero-label">Elettro Rebuild — Projected</div>
+      <svg class="ring" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="ring-track" cx="60" cy="60" r="54"/>
+        <circle class="ring-fill ring-emerald" cx="60" cy="60" r="54"
+          stroke-dasharray="339.3" style="--circ:339.3; --offset:33.9;"/>
+        <text x="60" y="66" text-anchor="middle" class="gauge-num sans" fill="#3FAE73">90</text>
+      </svg>
+      <div class="hero-sub">Projected score post-rebuild, six-category average</div>
+    </div>
+  </div>
+  <div class="delta-strip">A <b>+37 point</b> gap between current state and a rebuilt, AIO-structured site — driven mainly by Structured Data/AIO and Content Depth, the two categories where AI answer engines pull the most weight.</div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">00</span><h2>Executive Summary</h2></div>
+    <p class="section-intro" style="max-width:760px;">
+      Crane's Beach House has real, earned authority: a 4.7-star Google profile, a 9.3/10 Booking.com
+      rating across 376 reviews, TripAdvisor Hall of Fame status, and an Expedia Insiders Select listing.
+      The problem isn't reputation — it's that almost none of it lives in a form search engines or AI
+      answer engines can confidently read. The website itself contradicts its own facts in places,
+      the blog has been dormant since the COVID era, and the interior room pages carry only a
+      sentence or two of unique content each. For a hospitality brand this strong offline, the gap
+      between earned authority and machine-readable authority is the single biggest opportunity here.
+    </p>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">01</span><h2>Key Findings</h2></div>
+    <div class="findings">
+      <div class="finding">
+        <div class="finding-num">01</div>
+        <div>
+          <div class="finding-title">Room count conflicts across the hotel's own pages<span class="tag tag-risk">Entity Risk</span></div>
+          <div class="finding-body">The Hotel page states <strong>28</strong> rooms and villas (twice, in duplicated
+          content blocks). The Local Favorites page states <strong>27</strong> — and so does the hotel's own reply
+          to a TripAdvisor review ("a small luxury boutique hotel of only 27 guest suites"). An AI engine
+          asked "how many rooms does Crane's Beach House have" has two conflicting first-party answers to
+          choose from, which is exactly the kind of ambiguity that gets a brand left out of a synthesized
+          answer entirely rather than risk citing the wrong number.</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">02</div>
+        <div>
+          <div class="finding-title">Blog inactive since roughly 2020–2021<span class="tag tag-risk">Content Freshness</span></div>
+          <div class="finding-body">The most recent visible blog posts are a COVID-era "New Safety Standards"
+          announcement and a 2019 Certificate of Excellence notice. Both classic crawl-frequency signals and
+          AI recency weighting read a dormant blog as a dormant brand, regardless of how active the property
+          actually is on Instagram or in the press.</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">03</div>
+        <div>
+          <div class="finding-title">Room-type pages carry almost no unique content<span class="tag tag-risk">Thin Content</span></div>
+          <div class="finding-body">The Deluxe One Bedroom Suite and Luxury Villa pages each render one or two
+          duplicated sentences and a "call us for info" prompt in place of real amenity, layout, or booking
+          content. These are exactly the pages a search or AI engine would use to answer "what's the
+          difference between a suite and a villa at Crane's" — and today there's nothing there to extract.</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">04</div>
+        <div>
+          <div class="finding-title">No structured data confirmed in rendered markup<span class="tag tag-verify">Verify Manually</span></div>
+          <div class="finding-body">No LodgingBusiness, Room, Offer, or FAQ schema was detected in the fetched
+          page markup. Script-based JSON-LD can be stripped in automated fetches, so this should be confirmed
+          directly with Google's Rich Results Test before being treated as a confirmed absence — but nothing
+          in the visible page structure suggests it's present.</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">05</div>
+        <div>
+          <div class="finding-title">Stale, expired offers still live in the page source<span class="tag tag-risk">Data Hygiene</span></div>
+          <div class="finding-body">Modal content in the source includes offers explicitly labeled "OLD" from
+          2023, plus a Cyber Sale offer scoped to November 2024–January 2025 that has since expired. These
+          remain crawlable even if hidden from the visitor, which risks conflicting pricing or availability
+          signals reaching anything indexing the raw HTML.</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">06</div>
+        <div>
+          <div class="finding-title">Brand presence is split across two separate Facebook Pages<span class="tag tag-risk">Fragmentation</span></div>
+          <div class="finding-body">CranesBeachHouseHotel and CranesBH both operate as active, separately-reviewed
+          Facebook Pages for the same property, in addition to X/Twitter and Instagram. None of these are tied
+          together with sameAs schema on the domain, so review volume and social proof are split rather than
+          consolidated under one entity.</div>
+        </div>
+      </div>
+      <div class="finding positive">
+        <div class="finding-num">07</div>
+        <div>
+          <div class="finding-title">Genuine strength: heavyweight third-party authority already earned<span class="tag tag-opp">Asset to Leverage</span></div>
+          <div class="finding-body">TripAdvisor Hall of Fame admission, Expedia Insiders Select List inclusion,
+          Booking.com's 2023 Traveller Review Award, and Travel Weekly's 2021 Magellan Gold are all real,
+          citable accolades — none of which currently appear on the hotel's own site in crawlable, structured
+          form. This is the fastest win in the audit: surface what's already been earned.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORING BREAKDOWN -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">02</span><h2>Scoring Breakdown</h2></div>
+    <p class="section-intro">Current state vs. projected outcome under an Elettro rebuild, scored 0–100 across six categories.</p>
+    <div class="chart-wrap">
+      <div class="chart">
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:58%; animation-delay:.05s;"><span class="bar-score">58</span></div>
+          <div class="bar bar-emerald" style="height:90%; animation-delay:.15s;"><span class="bar-score">90</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:55%; animation-delay:.1s;"><span class="bar-score">55</span></div>
+          <div class="bar bar-emerald" style="height:88%; animation-delay:.2s;"><span class="bar-score">88</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:40%; animation-delay:.15s;"><span class="bar-score">40</span></div>
+          <div class="bar bar-emerald" style="height:92%; animation-delay:.25s;"><span class="bar-score">92</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:35%; animation-delay:.2s;"><span class="bar-score">35</span></div>
+          <div class="bar bar-emerald" style="height:85%; animation-delay:.3s;"><span class="bar-score">85</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:55%; animation-delay:.25s;"><span class="bar-score">55</span></div>
+          <div class="bar bar-emerald" style="height:90%; animation-delay:.35s;"><span class="bar-score">90</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar bar-gold" style="height:72%; animation-delay:.3s;"><span class="bar-score">72</span></div>
+          <div class="bar bar-emerald" style="height:95%; animation-delay:.4s;"><span class="bar-score">95</span></div>
+        </div>
+      </div>
+      <div class="chart-labels">
+        <div>Technical<br>SEO</div>
+        <div>On-Page<br>SEO</div>
+        <div>Structured<br>Data / AIO</div>
+        <div>Content<br>Depth</div>
+        <div>Site<br>Performance</div>
+        <div>Local &amp;<br>Authority</div>
+      </div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--gold);"></span>Current State</span>
+        <span><span class="dot" style="background:var(--emerald);"></span>Elettro Rebuild — Projected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY DETAIL -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">03</span><h2>Category Detail</h2></div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">Technical SEO</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">58</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">90</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        Canonical tag, meta robots, and viewport are all correctly configured. Set against that: a meta
+        description was not detected in rendered markup, <strong>two separate Google Tag Manager containers</strong>
+        (GTM-WHXGWF4 and GTM-KBBKZ4Z) are firing on every page load — typically a sign of an old container
+        that was never sunset after a migration — and a Google Maps shortcode appears to render as raw,
+        unparsed text in the page rather than an embedded map, which should be confirmed live in a browser.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> consolidate to a single GTM container, add a complete meta description across templates, and resolve the map embed.</div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">On-Page SEO</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">55</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">88</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        Title tags are brand-consistent site-wide, which is more than most audits find. The deduction comes
+        almost entirely from the accommodation pages: <strong>Deluxe One Bedroom Suite</strong> and
+        <strong>Luxury Villa</strong> each carry a single duplicated paragraph and a phone-call CTA instead of
+        differentiated on-page copy, meaning the pages most likely to convert a shopper have the least content
+        for search or AI engines to work with.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> unique, keyword-relevant copy per room type — layout, amenities, occupancy, view — with a meta description on every template.</div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">Structured Data / AIO</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">40</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">92</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        No LodgingBusiness, Room, or FAQ schema confirmed in rendered markup — flagged for manual Rich Results
+        Test verification rather than treated as certain. More consequential for AIO specifically: the
+        <strong>28-vs-27 room count conflict</strong> is exactly the kind of unresolved entity fact that
+        suppresses AI-generated answer confidence, and none of the hotel's four major travel awards are
+        represented in structured, citable form anywhere on the domain.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> LodgingBusiness + Room + FAQPage schema, one verified room count used everywhere, awards surfaced with Review/Award markup.</div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">Content Depth</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">35</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">85</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        The blog's last substantive posts date to the COVID era and a 2019 award announcement — roughly five
+        years of inactivity. Combined with the thin room pages, the domain is largely running on evergreen
+        homepage and policy content, with no fresh signal to reward repeat crawling from either traditional
+        search or AI training/retrieval crawlers.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> a revived content cadence — local guides, event tie-ins, seasonal offers — replacing the dormant blog.</div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">Site Performance</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">55</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">90</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        Directional estimate pending a live Core Web Vitals / Lighthouse pass. The site runs on the
+        <strong>Bridge</strong> WordPress theme, a heavy multipurpose page-builder theme, stacked with two GTM
+        containers, a Facebook Pixel, a third-party guest-messaging widget, and six separate logo image
+        variants loading in the header alone — a load profile that typically shows up as elevated JS execution
+        time and layout-shift risk on mobile.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> lightweight rebuild off the legacy page-builder stack, image and script consolidation, verified against Core Web Vitals.</div>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-top">
+        <div class="cat-name">Local &amp; Authority</div>
+        <div class="cat-scores">
+          <div class="cat-score-block"><span>Current</span><div class="cat-score-num gold">72</div></div>
+          <div class="cat-score-block"><span>Projected</span><div class="cat-score-num emerald">95</div></div>
+        </div>
+      </div>
+      <div class="cat-body">
+        The strongest category by a wide margin, and the one place the client is already ahead of most
+        prospects Elettro audits: 4.7 stars on Google, 9.3/10 on Booking.com across 376 reviews, TripAdvisor
+        Hall of Fame, and Expedia Insiders Select. The score isn't higher only because that authority is split
+        across <strong>two separate Facebook Pages</strong> and isn't consolidated or reflected on the owned
+        domain itself.
+      </div>
+      <div class="cat-fix"><b>Rebuild fix:</b> consolidate social profiles, reconcile NAP and room-count data everywhere, and surface the review/award record on-site.</div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">04</span><h2>Tech Stack</h2></div>
+    <p class="section-intro">Fingerprinted from rendered markup and asset paths. Items marked Verify Manually could not be confirmed through automated fetch and should be checked live before being cited to the client.</p>
+    <div class="stack-grid">
+      <div class="stack-row">
+        <div class="stack-key">CMS</div>
+        <div class="stack-val">WordPress<span class="confidence conf-confirmed">Confirmed — wp-content/ paths throughout</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Theme</div>
+        <div class="stack-val">Bridge (QantumThemes)<span class="confidence conf-confirmed">Confirmed — /wp-content/themes/bridge/ in logo asset paths</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Tag Management</div>
+        <div class="stack-val">Google Tag Manager ×2<span class="confidence conf-confirmed">Confirmed — GTM-WHXGWF4 &amp; GTM-KBBKZ4Z both firing</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Analytics / Ads</div>
+        <div class="stack-val">Meta (Facebook) Pixel<span class="confidence conf-confirmed">Confirmed — fbpx tracking pixel on page load</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Booking Engine</div>
+        <div class="stack-val">TravelClick / Cendyn CRS<span class="confidence conf-confirmed">Confirmed — reservations.travelclick.com, fully off-domain</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Guest Messaging</div>
+        <div class="stack-val">tcgms.net widget<span class="confidence conf-confirmed">Confirmed — third-party, off-domain</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Maps</div>
+        <div class="stack-val">Ultimate Google Maps (WP plugin)<span class="confidence conf-reported">Reported — shortcode rendering as raw text in fetched markup</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Structured Data</div>
+        <div class="stack-val">Not detected in rendered markup<span class="confidence conf-verify">Verify manually — Google Rich Results Test</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">robots.txt / sitemap.xml</div>
+        <div class="stack-val">Not retrievable via automated fetch<span class="confidence conf-verify">Verify manually — check live in browser</span></div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-key">Hosting signal</div>
+        <div class="stack-val">Standard WP shared/managed hosting profile<span class="confidence conf-reported">Reported — no CDN or edge-cache signal detected</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Elettro, Inc. — SEO / AIO Audit — Prepared for internal pitch use</div>
+    <div>cranesbeachhouse.com — August 18, 2026</div>
+  </footer>
+  <div class="footnote">
+    Scores are directional, based on rendered-markup analysis and public review platform data as of the
+    audit date. Items marked "Verify Manually" — structured data presence, robots.txt/sitemap contents, and
+    the maps shortcode — were not confirmable through automated fetch and should be checked live before
+    inclusion in client-facing claims. Site Performance is a directional estimate pending a live Core Web
+    Vitals / Lighthouse pass.
+  </div>
+
+</div>
+</body>
+</html>
