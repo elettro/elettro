@@ -499,7 +499,7 @@ h3 {
   transform: translateY(-2px);
 }
 
-.related-card span {
+.related-card > span:last-child {
   display: inline-block;
   margin-top: 0.8rem;
   color: var(--cyan);
