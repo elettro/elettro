@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO &amp; AIO Audit — Back In Line Integrated Health</title>
+<style>
+  :root{
+    --bg:#0b0d12;
+    --panel:#12141c;
+    --panel2:#171a24;
+    --border:#232732;
+    --gold:#E8B34C;
+    --gold-soft:#F3C871;
+    --emerald:#3FAE73;
+    --emerald-soft:#5FCB92;
+    --red:#E2645C;
+    --text:#f3f4f7;
+    --muted:#9aa0ad;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  a{color:var(--gold);}
+
+  header{border-bottom:1px solid var(--border);padding:26px 0;background:linear-gradient(180deg,#0e1017,#0b0d12);}
+  .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#c98f2e);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:#0b0d12;font-size:18px;
+  }
+  .brand-name{font-size:14px;color:var(--text);font-weight:700;letter-spacing:0.3px;}
+  .brand-tag{font-size:11.5px;color:var(--muted);}
+  .report-date{font-size:12px;color:var(--muted);text-align:right;line-height:1.6;}
+  .report-date a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);}
+
+  h1{font-size:25px;margin:26px 0 8px;color:#fff;letter-spacing:-0.3px;}
+  .subtitle{font-size:14.5px;color:var(--muted);max-width:680px;line-height:1.6;margin:0 0 14px;}
+  .site-pill{
+    display:inline-flex;align-items:center;gap:8px;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:13px;color:var(--muted);
+  }
+  .site-pill a{color:var(--text);text-decoration:none;font-weight:600;}
+  .site-pill b{color:var(--gold);font-weight:600;}
+
+  section{padding:38px 0;border-bottom:1px solid var(--border);}
+  .section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .section-title{font-size:20px;color:#fff;margin:0 0 8px;}
+  .section-desc{font-size:13.5px;color:var(--muted);max-width:680px;line-height:1.6;margin:0 0 8px;}
+
+  /* GAUGES */
+  .gauge-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;}
+  .gauge-card{
+    flex:1;min-width:190px;background:var(--panel);border:1px solid var(--border);
+    border-radius:16px;padding:22px 18px;text-align:center;
+  }
+  .gauge-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px;}
+  .gauge-card.proj .lbl{color:var(--emerald-soft);}
+  .ring-wrap{position:relative;width:120px;height:120px;margin:0 auto;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-score{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;color:#fff;
+  }
+  .gauge-card .cat{font-size:12.5px;color:var(--muted);margin-top:12px;}
+
+  /* BAR CHART */
+  .legend{display:flex;gap:22px;margin:22px 0 6px;font-size:12.5px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .legend .g{background:var(--gold);} .legend .e{background:var(--emerald);}
+  .bars{display:flex;gap:26px;overflow-x:auto;padding:18px 4px 10px;}
+  .bar-group{display:flex;flex-direction:column;align-items:center;min-width:104px;}
+  .bar-pair{display:flex;align-items:flex-end;gap:6px;height:170px;}
+  .bar{width:26px;border-radius:6px 6px 0 0;position:relative;}
+  .bar.gold{background:linear-gradient(180deg,var(--gold-soft),var(--gold));}
+  .bar.emerald{background:linear-gradient(180deg,var(--emerald-soft),var(--emerald));}
+  .bar .val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11.5px;font-weight:700;color:var(--text);}
+  .bar-name{font-size:11.5px;color:var(--muted);text-align:center;margin-top:12px;max-width:104px;line-height:1.35;}
+
+  /* FINDINGS */
+  .findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;}
+  @media(max-width:720px){.findings-grid{grid-template-columns:1fr;}}
+  .find-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 22px;}
+  .find-card h4{margin:0 0 13px;font-size:13.5px;text-transform:uppercase;letter-spacing:0.7px;display:flex;align-items:center;gap:8px;}
+  .find-card.strength h4{color:var(--emerald);}
+  .find-card.issue h4{color:var(--red);}
+  .find-card ul{margin:0;padding-left:18px;color:#d7dae0;font-size:13.5px;line-height:1.6;}
+  .find-card li{margin-bottom:10px;}
+  .find-card li b{color:#fff;}
+  .tag{display:inline-block;font-size:9.5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;}
+  .tag.high{background:rgba(226,100,92,0.15);color:var(--red);}
+  .tag.med{background:rgba(232,179,76,0.15);color:var(--gold);}
+
+  /* TECH STACK */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px;}
+  .stack-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+  .stack-card .k{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:7px;}
+  .stack-card .v{font-size:14.5px;color:#fff;font-weight:600;line-height:1.4;}
+  .stack-card .v2{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5;}
+
+  /* ENTITY MAP */
+  .entity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px;}
+  @media(max-width:760px){.entity-grid{grid-template-columns:1fr;}}
+  .entity-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;}
+  .entity-card.primary{border-color:rgba(63,174,115,0.4);}
+  .entity-card .dom{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;word-break:break-all;}
+  .entity-card .status{font-size:10.5px;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;margin-bottom:8px;display:inline-block;}
+  .entity-card.primary .status{color:var(--emerald);}
+  .entity-card.leak .status{color:var(--red);}
+  .entity-card p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.55;}
+
+  .methodology{
+    font-size:12px;color:var(--muted);background:var(--panel2);border:1px solid var(--border);
+    border-radius:12px;padding:18px 20px;margin-top:6px;line-height:1.65;
+  }
+
+  footer{padding:30px 0 50px;}
+  .footer-brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .footer-brand .left{display:flex;align-items:center;gap:10px;}
+  .footer-brand .name{font-size:13px;color:var(--text-dim,#d7dae0);}
+  .footer-brand .tag{font-size:11.5px;color:var(--muted);}
+  .footer-brand a{color:var(--muted);font-size:12px;text-decoration:none;border-bottom:1px dotted var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-row">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      <div>
+        <div class="brand-name">Elettro · SEO &amp; AIO Audit</div>
+        <div class="brand-tag">Digital Marketing &amp; Creative Production</div>
+      </div>
+    </div>
+    <div class="report-date">Prepared August 19, 2026<br><a href="https://elettro.com" target="_blank">elettro.com</a></div>
+  </div>
+</header>
+
+<section style="border-bottom:1px solid var(--border);padding-bottom:34px;">
+  <div class="wrap">
+    <div class="section-label">Prospect Audit</div>
+    <h1>Back In Line Integrated Health — Structural SEO &amp; AI Visibility Review</h1>
+    <p class="subtitle">A live audit of the practice's web presence for Drs. Peter &amp; Barbara Marciante, a Plantation, FL chiropractic and regenerative medicine practice, benchmarking current state against a projected Elettro rebuild.</p>
+    <div class="site-pill">🌐 Site audited: <a href="https://backinlinefl.com" target="_blank">backinlinefl.com</a> &nbsp;·&nbsp; Platform: <b>Wix Studio</b></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Overall Scores</div>
+    <div class="section-title">Current Standing vs. Elettro Rebuild</div>
+    <p class="section-desc">Composite scores across crawlability, on-page signals, structured data, content depth, performance, and local authority.</p>
+
+    <div class="gauge-row">
+      <div class="gauge-card">
+        <div class="lbl">Current · SEO</div>
+        <div class="ring-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" stroke="#232732" stroke-width="10" fill="none"/>
+            <circle cx="60" cy="60" r="50" stroke="#E8B34C" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="314.159" stroke-dashoffset="185.35"/>
+          </svg>
+          <div class="ring-score">41</div>
+        </div>
+      </div>
+      <div class="gauge-card">
+        <div class="lbl">Current · AIO</div>
+        <div class="ring-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" stroke="#232732" stroke-width="10" fill="none"/>
+            <circle cx="60" cy="60" r="50" stroke="#E8B34C" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="314.159" stroke-dashoffset="245.04"/>
+          </svg>
+          <div class="ring-score">22</div>
+        </div>
+      </div>
+      <div class="gauge-card proj">
+        <div class="lbl">Elettro Rebuild · SEO</div>
+        <div class="ring-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" stroke="#232732" stroke-width="10" fill="none"/>
+            <circle cx="60" cy="60" r="50" stroke="#3FAE73" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="314.159" stroke-dashoffset="28.27"/>
+          </svg>
+          <div class="ring-score">91</div>
+        </div>
+      </div>
+      <div class="gauge-card proj">
+        <div class="lbl">Elettro Rebuild · AIO</div>
+        <div class="ring-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" stroke="#232732" stroke-width="10" fill="none"/>
+            <circle cx="60" cy="60" r="50" stroke="#3FAE73" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="314.159" stroke-dashoffset="21.99"/>
+          </svg>
+          <div class="ring-score">93</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Category Breakdown</div>
+    <div class="section-title">Six-Dimension Score Comparison</div>
+    <p class="section-desc">Gold bars reflect the live site today. Emerald bars reflect projected scores after an Elettro rebuild.</p>
+    <div class="legend">
+      <span><i class="g"></i> Current</span>
+      <span><i class="e"></i> Elettro Rebuild</span>
+    </div>
+    <div class="bars">
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:38%;"><span class="val">38</span></div>
+          <div class="bar emerald" style="height:92%;"><span class="val">92</span></div>
+        </div>
+        <div class="bar-name">Technical SEO</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:47%;"><span class="val">47</span></div>
+          <div class="bar emerald" style="height:90%;"><span class="val">90</span></div>
+        </div>
+        <div class="bar-name">On-Page SEO</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:19%;"><span class="val">19</span></div>
+          <div class="bar emerald" style="height:95%;"><span class="val">95</span></div>
+        </div>
+        <div class="bar-name">Structured Data / AIO</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:29%;"><span class="val">29</span></div>
+          <div class="bar emerald" style="height:88%;"><span class="val">88</span></div>
+        </div>
+        <div class="bar-name">Content Depth</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:44%;"><span class="val">44</span></div>
+          <div class="bar emerald" style="height:90%;"><span class="val">90</span></div>
+        </div>
+        <div class="bar-name">Site Performance</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-pair">
+          <div class="bar gold" style="height:33%;"><span class="val">33</span></div>
+          <div class="bar emerald" style="height:93%;"><span class="val">93</span></div>
+        </div>
+        <div class="bar-name">Local &amp; Authority</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Entity Fragmentation</div>
+    <div class="section-title">One Practice, Three Live Domains</div>
+    <p class="section-desc">The single biggest issue on this account: the same practice is currently split across three separate, independently-live domains, none of which fully cross-link or consolidate authority.</p>
+    <div class="entity-grid">
+      <div class="entity-card primary">
+        <span class="status">Primary · Live</span>
+        <div class="dom">backinlinefl.com</div>
+        <p>Current Wix Studio site. Homepage and most service pages, but several core pages sit on unedited default slugs (/blank, /blank-1…/blank-5).</p>
+      </div>
+      <div class="entity-card leak">
+        <span class="status">Legacy · Still Live</span>
+        <div class="dom">backinlineonline.com</div>
+        <p>Older Wix Classic site with different design and duplicate/conflicting copy — including an NFL athlete testimonial (Ronnie Brown) that never made it to the current domain.</p>
+      </div>
+      <div class="entity-card leak">
+        <span class="status">Off-Domain Service</span>
+        <div class="dom">regenclinic1.com</div>
+        <p>Hosts the "Regenerative Cellular Therapy" page and the site's Privacy Policy — the practice's highest-value service line lives entirely off the primary domain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Findings</div>
+    <div class="section-title">Strengths &amp; Issues</div>
+    <div class="findings-grid">
+      <div class="find-card strength">
+        <h4>SEO Strengths</h4>
+        <ul>
+          <li>Mobile-responsive viewport meta tag present sitewide</li>
+          <li>Per-page canonical tags correctly implemented</li>
+          <li>Open Graph and Twitter Card metadata present on indexed pages</li>
+          <li>Google Search Console verification already in place</li>
+          <li>Homepage title/description carry primary geo + service keywords ("Chiropractor in Plantation")</li>
+        </ul>
+      </div>
+      <div class="find-card issue">
+        <h4>SEO Issues</h4>
+        <ul>
+          <li><b>Un-renamed URL slugs</b> on core pages — About, Contact, and three service pages live at /blank, /blank-1, /blank-2, /blank-3, /blank-4 <span class="tag high">High</span></li>
+          <li>An unfinished page titled "temp page" is live and indexable at /blank-5 <span class="tag med">Medium</span></li>
+          <li>Privacy Policy and Terms &amp; Conditions footer links both loop back to the homepage instead of real pages <span class="tag med">Medium</span></li>
+          <li>"Client Testimonials" nav item routes to the homepage rather than a dedicated, indexable page <span class="tag med">Medium</span></li>
+          <li>Entity split across three live domains (see Entity Fragmentation above) <span class="tag high">High</span></li>
+        </ul>
+      </div>
+      <div class="find-card strength">
+        <h4>AIO Strengths</h4>
+        <ul>
+          <li>Plain-language facts (owners, tenure, location) that answer engines can extract directly</li>
+          <li>Phone number and address stated consistently in on-page copy</li>
+          <li>Active Instagram presence (5,252 followers) as a citable social signal</li>
+        </ul>
+      </div>
+      <div class="find-card issue">
+        <h4>AIO Issues</h4>
+        <ul>
+          <li>No JSON-LD structured data confirmed anywhere on site — no Physician, MedicalClinic, Service, or FAQPage schema detected <span class="tag high">High · Unconfirmed, pending manual Rich Results Test</span></li>
+          <li>No llms.txt file present <span class="tag med">Medium</span></li>
+          <li>An NFL-athlete video testimonial exists only on the abandoned legacy domain, invisible to AI engines crawling the live site <span class="tag high">High</span></li>
+          <li>Regenerative medicine — the highest-value service line — is siloed on a separate domain, fragmenting topical authority <span class="tag high">High</span></li>
+          <li>Business name varies across the web: "Back In Line Back Chiropractic Center," "Back In Line Integrated Health," "Back in Line Chiropractic Center," "Back In Line Chiropractic Inc" <span class="tag med">Medium</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Content &amp; Trust</div>
+    <div class="section-title">Content Depth &amp; Local Authority</div>
+    <div class="findings-grid">
+      <div class="find-card issue">
+        <h4>Content Depth Gaps</h4>
+        <ul>
+          <li>Service descriptions run 1–3 short marketing sentences per modality, with no depth on conditions treated, technique, or practitioner credentials</li>
+          <li>Stock photography in active use (filenames like <code>shutterstock_1956381193.jpg</code>) rather than real practice photography — a trust gap in a health-and-wellness (YMYL) category</li>
+          <li>A patient testimonial video is embedded as a broken image link pointing to Vimeo — renders as a missing image for both users and crawlers</li>
+          <li>No structured FAQ content on any service page</li>
+        </ul>
+      </div>
+      <div class="find-card issue">
+        <h4>Local &amp; Authority Gaps</h4>
+        <ul>
+          <li>NAP (name/address/phone) inconsistency across directories — at least one third-party listing shows a Deerfield Beach address instead of the actual Plantation location <span class="tag med">Reported</span></li>
+          <li>Active Yelp, Facebook, and YouTube profiles exist, but reviews are not surfaced or schema-marked on the owned domain</li>
+          <li>Four+ business-name variants in circulation across medical directories undermine local pack and AI-citation consistency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Technical Fingerprint</div>
+    <div class="section-title">Current Tech Stack</div>
+    <p class="section-desc">Identified via live meta-generator tags, footer builder credits, and cached historical artifacts.</p>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="k">Platform</div>
+        <div class="v">Wix Studio</div>
+        <div class="v2">Confirmed via meta-generator tag and "Wix Studio" footer builder credit</div>
+      </div>
+      <div class="stack-card">
+        <div class="k">Media / CDN</div>
+        <div class="v">static.wixstatic.com</div>
+        <div class="v2">Wix's native image CDN, responsive fill/crop parameters in use</div>
+      </div>
+      <div class="stack-card">
+        <div class="k">Analytics</div>
+        <div class="v">Google Search Console verified</div>
+        <div class="v2">GA4 presence unconfirmed via fetch — recommend verifying directly</div>
+      </div>
+      <div class="stack-card">
+        <div class="k">Legacy Footprint</div>
+        <div class="v">WordPress / PHP artifacts</div>
+        <div class="v2">Cached wp-content/uploads media URLs still resolve — remnants of a prior CMS before the Wix migration</div>
+      </div>
+      <div class="stack-card">
+        <div class="k">Domains In Play</div>
+        <div class="v">3 live properties</div>
+        <div class="v2">backinlinefl.com, backinlineonline.com, regenclinic1.com</div>
+      </div>
+      <div class="stack-card">
+        <div class="k">Social Integrations</div>
+        <div class="v">FB · IG · YouTube · Yelp</div>
+        <div class="v2">Linked in header/footer; not cross-referenced with schema on-domain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-label">Methodology</div>
+    <div class="methodology">
+      This audit combines live page inspection via automated fetch with supplementary web search for third-party signals (directory listings, review platforms, and technology fingerprinting). Automated fetch strips <code>&lt;script&gt;</code> tag contents, so JSON-LD structured data cannot be confirmed or denied through this method alone — structured-data findings above are marked <b>Unconfirmed</b> and should be verified manually via Google's Rich Results Test or browser View Source before use in final client-facing claims. Site performance figures are directional, based on platform and asset-loading patterns observed rather than a live Lighthouse/PageSpeed Insights or CrUX session — recommend running a live test before finalizing performance claims. NAP inconsistency findings are based on third-party directory listings and should be spot-checked against Google Business Profile before outreach.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-brand">
+    <div class="left">
+      <div class="brand-mark" style="width:30px;height:30px;font-size:14px;">E</div>
+      <div>
+        <div class="name">Elettro, Inc.</div>
+        <div class="tag">South Florida · Digital Marketing &amp; Creative Production</div>
+      </div>
+    </div>
+    <a href="https://elettro.com" target="_blank">elettro.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
