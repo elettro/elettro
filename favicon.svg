@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Elettro">
+  <rect width="64" height="64" rx="12" fill="#060e20"/>
+  <path d="M37 5 11 37h21l-3 22 27-35H35z" fill="#81ecff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+</svg>
