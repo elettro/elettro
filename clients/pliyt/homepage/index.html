@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>Pliyt | Private Autonomous Mobility</title>
+<meta name="description" content="Pliyt reimagines autonomous travel around privacy, comfort and human-centered design.">
+<link rel="preconnect" href="https://framerusercontent.com" crossorigin>
+<style>
+:root{
+  --black:#080808;
+  --ink:#11110f;
+  --cream:#f1efe9;
+  --paper:#e9e6df;
+  --white:#fff;
+  --muted:#aaa79f;
+  --line:rgba(255,255,255,.16);
+  --darkline:rgba(17,17,15,.13);
+  --pad:clamp(20px,4vw,68px);
+  --radius:clamp(20px,2.2vw,36px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--black)}
+body{margin:0;background:var(--black);color:var(--white);font-family:Inter,Helvetica Neue,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+img{display:block;max-width:100%}
+::selection{background:#fff;color:#000}
+
+.topnav{
+  position:fixed;inset:0 0 auto;z-index:100;
+  height:86px;padding:0 var(--pad);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  transition:background .35s ease,border-color .35s ease,color .35s ease,transform .35s ease;
+  border-bottom:1px solid transparent;
+}
+.topnav.scrolled{background:rgba(8,8,8,.74);backdrop-filter:blur(18px);border-color:rgba(255,255,255,.1)}
+.brand{font-weight:700;letter-spacing:.42em;font-size:15px;justify-self:start}
+.navlinks{display:flex;gap:30px;font-size:12px;color:rgba(255,255,255,.74)}
+.navlinks a{transition:color .2s ease}
+.navlinks a:hover{color:#fff}
+.navcta{justify-self:end;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:12px 18px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:background .25s ease,color .25s ease}
+.navcta:hover{background:#fff;color:#000}
+.menu-button{display:none;border:0;background:transparent;color:#fff;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+
+.hero{position:relative;height:125vh;background:#050505}
+.hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.hero-media{position:absolute;inset:0;transform:scale(1.08);will-change:transform}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 54%;filter:saturate(.92) contrast(1.04)}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.48) 0%,rgba(0,0,0,.1) 44%,rgba(0,0,0,.48) 100%),linear-gradient(90deg,rgba(0,0,0,.38),transparent 58%)}
+.hero-content{position:absolute;left:var(--pad);right:var(--pad);bottom:8vh;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.55fr);align-items:end;gap:50px}
+.eyebrow{margin:0 0 20px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.hero h1{font-size:clamp(56px,8.3vw,150px);line-height:.84;letter-spacing:-.065em;font-weight:500;margin:0;max-width:1180px}
+.hero h1 span{display:block}
+.hero-side{justify-self:end;max-width:370px;padding-bottom:8px}
+.hero-side p{margin:0 0 25px;color:rgba(255,255,255,.83);font-size:clamp(15px,1.15vw,19px);line-height:1.55}
+.round-link{display:inline-flex;align-items:center;gap:14px;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+.round-link i{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.38);display:grid;place-items:center;font-style:normal;transition:transform .25s ease,background .25s ease,color .25s ease}
+.round-link:hover i{transform:translateX(4px);background:#fff;color:#000}
+.scroll-tag{position:absolute;right:var(--pad);bottom:26px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);writing-mode:vertical-rl}
+
+.statement{background:var(--cream);color:var(--ink);padding:14vh var(--pad) 13vh}
+.statement-grid{display:grid;grid-template-columns:.46fr 1.54fr;gap:7vw;align-items:start}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#77736d;padding-top:12px}
+.statement h2{margin:0;font-size:clamp(42px,6.6vw,118px);line-height:.91;letter-spacing:-.06em;font-weight:500;max-width:1250px}
+.statement-bottom{margin-top:10vh;display:grid;grid-template-columns:.8fr 1.2fr;gap:7vw;align-items:end}
+.statement-bottom p{grid-column:2;margin:0;max-width:660px;font-size:clamp(18px,1.75vw,28px);line-height:1.42;letter-spacing:-.025em}
+
+.rethink{height:280vh;position:relative;background:#0b0b0b;color:#fff}
+.rethink-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center}
+.rethink-stage{position:absolute;inset:0;display:grid;place-items:center;padding:var(--pad)}
+.rethink-image{width:min(72vw,1120px);height:min(68vh,760px);border-radius:38px;overflow:hidden;transform:scale(.72);will-change:transform,border-radius,width,height}
+.rethink-image img{width:100%;height:100%;object-fit:cover}
+.rethink-mask{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.36));pointer-events:none}
+.rethink-copy{position:absolute;inset:0;padding:var(--pad);display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.rethink-copy .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.58);opacity:0;transform:translateY(20px)}
+.rethink-copy h2{align-self:center;text-align:center;margin:0;font-size:clamp(52px,8vw,138px);line-height:.86;letter-spacing:-.065em;font-weight:500;max-width:1200px;opacity:0;transform:translateY(70px)}
+.rethink-copy h2 span{display:block}
+.rethink-detail{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:end;opacity:0;transform:translateY(35px)}
+.rethink-detail strong{font-size:15px;font-weight:500}
+.rethink-detail p{justify-self:end;margin:0;max-width:430px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.7)}
+
+.human{background:#151410;color:#fff;padding:15vh var(--pad)}
+.human-head{display:grid;grid-template-columns:.44fr 1.56fr;gap:7vw;margin-bottom:9vh}
+.human h2{margin:0;font-size:clamp(48px,7vw,125px);line-height:.88;letter-spacing:-.06em;font-weight:500}
+.human-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px}
+.human-main,.human-small{position:relative;overflow:hidden;border-radius:var(--radius);min-height:760px}
+.human-small{min-height:760px}
+.human-main img,.human-small img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.human-main:hover img,.human-small:hover img{transform:scale(1.035)}
+.media-caption{position:absolute;left:26px;right:26px;bottom:24px;display:flex;justify-content:space-between;gap:20px;align-items:end;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.media-caption strong{font-size:18px;font-weight:500}
+.media-caption span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+
+.features{position:relative;height:480vh;background:var(--cream);color:var(--ink)}
+.features-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.features-top{position:absolute;top:0;left:0;right:0;height:130px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--darkline);z-index:3}
+.features-top h2{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.24em;margin:0}
+.feature-count{font-size:12px;color:#77736d}
+.feature-track{position:absolute;left:0;top:130px;bottom:0;width:400vw;display:flex;will-change:transform}
+.feature-card{width:100vw;flex:0 0 100vw;padding:clamp(20px,3vw,48px) var(--pad) var(--pad);display:grid;grid-template-columns:minmax(330px,.72fr) minmax(0,1.28fr);gap:4vw;align-items:center;border-right:1px solid var(--darkline)}
+.feature-copy{max-width:540px}
+.feature-index{font-size:12px;letter-spacing:.15em;color:#77736d;margin-bottom:22px}
+.feature-copy h3{margin:0 0 24px;font-size:clamp(42px,5vw,88px);line-height:.93;letter-spacing:-.055em;font-weight:500}
+.feature-copy p{margin:0;max-width:440px;font-size:clamp(16px,1.3vw,21px);line-height:1.55;color:#54514c}
+.feature-media{height:min(68vh,760px);overflow:hidden;border-radius:var(--radius);background:#111}
+.feature-media img{width:100%;height:100%;object-fit:cover}
+
+.choice{background:#080808;color:#fff;padding:15vh var(--pad)}
+.choice-head{display:grid;grid-template-columns:.45fr 1.55fr;gap:7vw;align-items:start;margin-bottom:10vh}
+.choice-head h2{margin:0;font-size:clamp(50px,7.4vw,132px);line-height:.88;letter-spacing:-.062em;font-weight:500;max-width:1100px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.choice-card{position:relative;min-height:760px;border-radius:var(--radius);overflow:hidden;background:#191919}
+.choice-card img{width:100%;height:100%;object-fit:cover;transition:transform .75s cubic-bezier(.2,.7,.2,1)}
+.choice-card:hover img{transform:scale(1.04)}
+.choice-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.76))}
+.choice-text{position:absolute;left:30px;right:30px;bottom:30px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end}
+.choice-text h3{margin:0;font-size:clamp(29px,3vw,48px);line-height:.98;letter-spacing:-.045em;font-weight:500}
+.choice-text p{margin:0;color:rgba(255,255,255,.7);font-size:14px;line-height:1.5}
+
+.quotes{background:var(--paper);color:var(--ink);padding:14vh 0 13vh;overflow:hidden}
+.quotes-head{padding:0 var(--pad);display:grid;grid-template-columns:.45fr 1.55fr;gap:7vw;margin-bottom:10vh}
+.quotes h2{margin:0;font-size:clamp(48px,6.5vw,112px);line-height:.9;letter-spacing:-.058em;font-weight:500;max-width:1050px}
+.marquee{display:flex;width:max-content;gap:18px;animation:marquee 42s linear infinite}
+.marquee:hover{animation-play-state:paused}
+.quote-card{width:min(540px,80vw);min-height:330px;padding:34px;border:1px solid var(--darkline);border-radius:28px;background:#f4f2ec;display:flex;flex-direction:column;justify-content:space-between}
+.quote-card blockquote{margin:0;font-size:clamp(24px,2vw,36px);line-height:1.08;letter-spacing:-.035em}
+.quote-person{display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#69665f}
+.quote-person strong{color:var(--ink);font-weight:600}
+@keyframes marquee{to{transform:translateX(calc(-50% - 9px))}}
+
+.waitlist{position:relative;min-height:100vh;display:grid;align-items:end;overflow:hidden;background:#070707}
+.waitlist-bg{position:absolute;inset:0}
+.waitlist-bg img{width:100%;height:100%;object-fit:cover;object-position:center 50%;filter:brightness(.72)}
+.waitlist-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.82))}
+.waitlist-content{position:relative;z-index:2;padding:var(--pad);display:grid;grid-template-columns:1.35fr .65fr;gap:6vw;align-items:end}
+.waitlist h2{font-size:clamp(62px,9vw,158px);line-height:.82;letter-spacing:-.07em;font-weight:500;margin:0}
+.waitlist-panel{padding-bottom:10px}
+.waitlist-panel p{margin:0 0 25px;color:rgba(255,255,255,.76);font-size:16px;line-height:1.55}
+.email-form{display:flex;gap:10px;border-bottom:1px solid rgba(255,255,255,.42);padding-bottom:10px}
+.email-form input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#fff;padding:14px 0;font-size:15px}
+.email-form input::placeholder{color:rgba(255,255,255,.55)}
+.email-form button{border:0;background:#fff;color:#000;border-radius:999px;padding:0 22px;cursor:pointer;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+
+.footer{background:#050505;color:#fff;padding:70px var(--pad) 40px}
+.footer-top{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding-bottom:70px;border-bottom:1px solid rgba(255,255,255,.13)}
+.footer-brand{font-size:clamp(50px,8vw,126px);letter-spacing:.22em;font-weight:600;line-height:1;margin:0}
+.footer-links{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;align-content:end;justify-self:end;width:min(500px,100%)}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.68);padding:8px 0}
+.footer-links a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;gap:20px;padding-top:28px;font-size:11px;color:rgba(255,255,255,.44)}
+
+.reveal{opacity:0;transform:translateY(55px);transition:opacity .85s cubic-bezier(.2,.65,.25,1),transform .85s cubic-bezier(.2,.65,.25,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:980px){
+  .topnav{grid-template-columns:1fr auto;height:72px}
+  .navlinks,.navcta{display:none}
+  .menu-button{display:block;justify-self:end}
+  .hero-content{grid-template-columns:1fr;bottom:7vh;gap:24px}
+  .hero-side{justify-self:start;max-width:500px}
+  .hero h1{font-size:clamp(54px,12vw,105px)}
+  .statement-grid,.human-head,.choice-head,.quotes-head{grid-template-columns:1fr;gap:28px}
+  .statement-bottom{grid-template-columns:1fr}.statement-bottom p{grid-column:1}
+  .human-grid{grid-template-columns:1fr}.human-main,.human-small{min-height:65vh}
+  .feature-card{grid-template-columns:1fr;align-content:center;gap:35px}
+  .feature-media{height:45vh}.feature-copy{max-width:700px}
+  .choice-card{min-height:620px}
+  .choice-text{grid-template-columns:1fr}
+  .waitlist-content{grid-template-columns:1fr;gap:38px}
+  .footer-top{grid-template-columns:1fr}.footer-links{justify-self:start}
+}
+
+@media(max-width:700px){
+  :root{--pad:20px}
+  .brand{font-size:13px}
+  .hero{height:110vh}.hero-side p{font-size:15px}.scroll-tag{display:none}
+  .statement{padding-top:11vh;padding-bottom:11vh}
+  .statement h2{font-size:clamp(43px,13vw,72px)}
+  .rethink{height:auto}.rethink-sticky{position:relative;height:auto;min-height:100vh}.rethink-stage{position:relative;min-height:100vh}.rethink-image{width:100%;height:72vh;transform:none;border-radius:24px}.rethink-copy{padding:32px 24px}.rethink-copy .kicker,.rethink-copy h2,.rethink-detail{opacity:1;transform:none}.rethink-copy h2{font-size:clamp(48px,14vw,78px)}.rethink-detail{grid-template-columns:1fr;gap:10px}.rethink-detail p{justify-self:start}
+  .features{height:auto;padding-bottom:40px}.features-sticky{position:relative;height:auto;overflow:visible}.features-top{position:relative;height:100px}.feature-track{position:relative;top:0;bottom:auto;width:auto;display:block;transform:none!important}.feature-card{width:auto;min-height:auto;padding:60px 20px 25px;display:grid;border-right:0;border-bottom:1px solid var(--darkline)}.feature-media{height:48vh;order:-1}.feature-copy h3{font-size:clamp(42px,12vw,65px)}
+  .choice-grid{grid-template-columns:1fr}.choice-card{min-height:72vh}
+  .quotes{padding-top:11vh}.quote-card{min-height:290px}
+  .waitlist{min-height:92vh}.waitlist h2{font-size:clamp(61px,19vw,106px)}
+  .footer{padding-top:55px}.footer-brand{font-size:clamp(44px,17vw,82px)}.footer-links{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<header class="topnav" id="topnav">
+  <a class="brand" href="#top" aria-label="Pliyt home">PLIYT</a>
+  <nav class="navlinks" aria-label="Primary">
+    <a href="https://www.pliyt.com/mission">Mission</a>
+    <a href="https://www.pliyt.com/features">Features</a>
+    <a href="https://www.pliyt.com/news-media">News &amp; Media</a>
+    <a href="https://www.pliyt.com/about">About</a>
+  </nav>
+  <a class="navcta" href="#waitlist">Join the movement</a>
+  <button class="menu-button" type="button" aria-label="Open navigation" onclick="document.getElementById('waitlist').scrollIntoView()">Join</button>
+</header>
+
+<main id="top">
+<section class="hero" id="hero">
+  <div class="hero-sticky">
+    <div class="hero-media" id="heroMedia">
+      <img src="https://framerusercontent.com/images/7nF6k9ywuAMYuvAPSf9zWHsGM.png?height=1024&amp;width=1536" alt="Pliyt autonomous vehicle driving through a city at dusk">
+    </div>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Human-centered autonomous mobility</p>
+        <h1><span>A New Way</span><span>to Move.</span></h1>
+      </div>
+      <div class="hero-side">
+        <p>Shared mobility redefined for privacy. A self-driving experience crafted around your comfort, quiet and well-being.</p>
+        <a class="round-link" href="#rethink"><i>↓</i> Explore the experience</a>
+      </div>
+    </div>
+    <div class="scroll-tag">Scroll to explore</div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="statement-grid reveal">
+    <div class="section-label">01 / A different starting point</div>
+    <h2>Mobility should adapt to people. Not the other way around.</h2>
+  </div>
+  <div class="statement-bottom reveal">
+    <p>Pliyt reimagines autonomous travel from the inside out. Private when you want privacy. Connected when you choose connection. Calm by design.</p>
+  </div>
+</section>
+
+<section class="rethink" id="rethink">
+  <div class="rethink-sticky">
+    <div class="rethink-stage">
+      <div class="rethink-image" id="rethinkImage">
+        <img src="https://framerusercontent.com/images/RKuSl1b2GgCTlcUI425kCKrjw.jpg?height=1080&amp;width=1920" alt="Pliyt autonomous vehicle in a modern city">
+        <div class="rethink-mask"></div>
+      </div>
+    </div>
+    <div class="rethink-copy">
+      <div class="kicker" id="rethinkKicker">Rethinking mobility from the ground up</div>
+      <h2 id="rethinkTitle"><span>Autonomous Pods.</span><span>Designed for Humans.</span></h2>
+      <div class="rethink-detail" id="rethinkDetail">
+        <strong>Private. Quiet. Seamless.</strong>
+        <p>Built for future cities, Pliyt is designed to feel personal rather than impersonal or data driven.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="human">
+  <div class="human-head reveal">
+    <div class="section-label">02 / Your own space</div>
+    <h2>Travel without giving up your space.</h2>
+  </div>
+  <div class="human-grid">
+    <article class="human-main reveal">
+      <img src="https://framerusercontent.com/images/4JnECGjX3Yq631eWZh4EO6X7WXE.png?height=1024&amp;width=1536" alt="Top view of four private Pliyt passenger pods">
+      <div class="media-caption"><strong>Four personal environments</strong><span>One shared journey</span></div>
+    </article>
+    <article class="human-small reveal">
+      <img src="https://framerusercontent.com/images/rAeox744M25PFuPV92NIF1pI8.webp?height=914&amp;width=1600" alt="Passenger relaxing inside a Pliyt pod">
+      <div class="media-caption"><strong>Comfort built in</strong><span>Your ride, your pace</span></div>
+    </article>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="features-sticky">
+    <div class="features-top"><h2>Features</h2><div class="feature-count"><span id="featureCurrent">01</span> / 04</div></div>
+    <div class="feature-track" id="featureTrack">
+      <article class="feature-card">
+        <div class="feature-copy">
+          <div class="feature-index">01 / Privacy</div>
+          <h3>Your Pod. Your Privacy. Your Space.</h3>
+          <p>Complete in-ride anonymity even in shared trips. Built for privacy without trade-offs.</p>
+        </div>
+        <div class="feature-media"><img src="https://framerusercontent.com/images/bMzu94we9vvPJ8sDJb4c8pxZ6U.webp?height=895&amp;width=1600" alt="Passenger using a mirror inside a private Pliyt pod"></div>
+      </article>
+      <article class="feature-card">
+        <div class="feature-copy">
+          <div class="feature-index">02 / Comfort</div>
+          <h3>A First Class Ride Experience.</h3>
+          <p>First-class comfort and calm, redefined for autonomous travel on the road.</p>
+        </div>
+        <div class="feature-media"><img src="https://framerusercontent.com/images/rAeox744M25PFuPV92NIF1pI8.webp?height=914&amp;width=1600" alt="Passenger reclining comfortably inside a Pliyt pod"></div>
+      </article>
+      <article class="feature-card">
+        <div class="feature-copy">
+          <div class="feature-index">03 / Choice</div>
+          <h3>Designed Around Your Choice.</h3>
+          <p>Safe and private by default, personalized throughout, and shared only by choice.</p>
+        </div>
+        <div class="feature-media"><img src="https://framerusercontent.com/images/i3doAiB1c6JKxVBYtZ0ujyTuds.webp?height=897&amp;width=1600" alt="Two passengers interacting between adjacent Pliyt spaces"></div>
+      </article>
+      <article class="feature-card">
+        <div class="feature-copy">
+          <div class="feature-index">04 / Sustainability</div>
+          <h3>Zero Emissions. Nearly Zero Noise.</h3>
+          <p>Engineered for clean performance and minimal environmental impact in the cities where people live.</p>
+        </div>
+        <div class="feature-media"><img src="https://framerusercontent.com/images/HmruBouluMqncNLLA2Jp7JvIF1M.png?height=1024&amp;width=1536" alt="Pliyt electric autonomous vehicle driving beside a green urban park"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="choice">
+  <div class="choice-head reveal">
+    <div class="section-label">03 / Personal by design</div>
+    <h2>Quiet when you need it. Connected when you want it.</h2>
+  </div>
+  <div class="choice-grid">
+    <article class="choice-card reveal">
+      <img src="https://framerusercontent.com/images/7htApxCMK90ZevE8J3vt9A3ql48.webp?height=895&amp;width=1600" alt="Passenger using headphones inside a private Pliyt cabin">
+      <div class="choice-overlay"></div>
+      <div class="choice-text"><h3>Your entertainment.</h3><p>A personal environment built around how you want to spend the journey.</p></div>
+    </article>
+    <article class="choice-card reveal">
+      <img src="https://framerusercontent.com/images/i3doAiB1c6JKxVBYtZ0ujyTuds.webp?height=897&amp;width=1600" alt="Passengers choosing to connect inside Pliyt">
+      <div class="choice-overlay"></div>
+      <div class="choice-text"><h3>Your choice to connect.</h3><p>Privacy remains the default. Social interaction happens on your terms.</p></div>
+    </article>
+  </div>
+</section>
+
+<section class="quotes">
+  <div class="quotes-head reveal">
+    <div class="section-label">04 / First reactions</div>
+    <h2>People understand the difference when they step inside.</h2>
+  </div>
+  <div class="marquee" aria-label="Customer reactions">
+    <article class="quote-card"><blockquote>“This is the future. One of the slickest things I have seen at CES.”</blockquote><div class="quote-person"><strong>Ken Gibb</strong><span>Las Vegas, NV</span></div></article>
+    <article class="quote-card"><blockquote>“Extremely comfortable and convenient. I could easily sit in this private meeting room.”</blockquote><div class="quote-person"><strong>Klara Svejdova</strong><span>Austria</span></div></article>
+    <article class="quote-card"><blockquote>“This is the best design I’ve seen for privacy. Creative and new.”</blockquote><div class="quote-person"><strong>Dongguan</strong><span>California</span></div></article>
+    <article class="quote-card"><blockquote>“Great innovation and a step forward in ride-sharing technology.”</blockquote><div class="quote-person"><strong>John Stefanou</strong><span>Australia</span></div></article>
+    <article class="quote-card"><blockquote>“This is the future. One of the slickest things I have seen at CES.”</blockquote><div class="quote-person"><strong>Ken Gibb</strong><span>Las Vegas, NV</span></div></article>
+    <article class="quote-card"><blockquote>“Extremely comfortable and convenient. I could easily sit in this private meeting room.”</blockquote><div class="quote-person"><strong>Klara Svejdova</strong><span>Austria</span></div></article>
+    <article class="quote-card"><blockquote>“This is the best design I’ve seen for privacy. Creative and new.”</blockquote><div class="quote-person"><strong>Dongguan</strong><span>California</span></div></article>
+    <article class="quote-card"><blockquote>“Great innovation and a step forward in ride-sharing technology.”</blockquote><div class="quote-person"><strong>John Stefanou</strong><span>Australia</span></div></article>
+  </div>
+</section>
+
+<section class="waitlist" id="waitlist">
+  <div class="waitlist-bg"><img src="https://framerusercontent.com/images/cdSgQwNUSsbO1RfkhBmRFKbGpI.png?height=480&amp;width=648" alt="Pliyt vehicle driving through a city at night"></div>
+  <div class="waitlist-content reveal">
+    <h2>Join the<br>Movement.</h2>
+    <div class="waitlist-panel">
+      <p>Get launch updates, early access opportunities and a closer look at the future of autonomous mobility.</p>
+      <form class="email-form" action="https://linktr.ee/pliyt" method="get">
+        <input type="email" name="email" placeholder="name@email.com" aria-label="Email address">
+        <button type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <p class="footer-brand">PLIYT</p>
+    <div class="footer-links">
+      <a href="https://www.pliyt.com/mission">Mission</a>
+      <a href="https://www.pliyt.com/features">Features</a>
+      <a href="https://www.pliyt.com/news-media">News &amp; Media</a>
+      <a href="https://www.pliyt.com/about">About</a>
+      <a href="https://www.pliyt.com/contact">Contact</a>
+      <a href="https://www.linkedin.com/company/pliyt/">LinkedIn</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Pliyt. All rights reserved.</span><span>Homepage concept build</span></div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.getElementById('topnav');
+  const hero = document.getElementById('hero');
+  const heroMedia = document.getElementById('heroMedia');
+  const rethink = document.getElementById('rethink');
+  const rethinkImage = document.getElementById('rethinkImage');
+  const rethinkKicker = document.getElementById('rethinkKicker');
+  const rethinkTitle = document.getElementById('rethinkTitle');
+  const rethinkDetail = document.getElementById('rethinkDetail');
+  const features = document.getElementById('features');
+  const featureTrack = document.getElementById('featureTrack');
+  const featureCurrent = document.getElementById('featureCurrent');
+  const mobile = () => innerWidth <= 700;
+  const clamp = (n,min=0,max=1) => Math.max(min,Math.min(max,n));
+  const lerp = (a,b,t) => a + (b-a)*t;
+  const progress = el => {
+    const r = el.getBoundingClientRect();
+    const travel = el.offsetHeight - innerHeight;
+    return travel <= 0 ? 0 : clamp(-r.top / travel);
+  };
+
+  if (!reduce) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.14});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  let ticking = false;
+  function render(){
+    ticking = false;
+    nav.classList.toggle('scrolled', scrollY > 24);
+    if (reduce) return;
+
+    const hp = progress(hero);
+    heroMedia.style.transform = `scale(${lerp(1.08,1.18,hp)}) translateY(${lerp(0,-2.5,hp)}%)`;
+
+    if (!mobile()) {
+      const rp = progress(rethink);
+      const imageP = clamp(rp / .72);
+      const imageScale = lerp(.72,1.02,imageP);
+      const radius = lerp(38,0,clamp((rp-.42)/.34));
+      rethinkImage.style.transform = `scale(${imageScale})`;
+      rethinkImage.style.borderRadius = `${radius}px`;
+      const textIn = clamp((rp-.18)/.24);
+      const textOut = clamp((rp-.72)/.22);
+      const textAlpha = clamp(textIn - textOut);
+      rethinkTitle.style.opacity = textAlpha;
+      rethinkTitle.style.transform = `translateY(${lerp(70,0,textIn) - lerp(0,55,textOut)}px)`;
+      rethinkKicker.style.opacity = clamp((rp-.08)/.2) * (1-textOut);
+      rethinkKicker.style.transform = `translateY(${lerp(20,0,clamp((rp-.08)/.2))}px)`;
+      rethinkDetail.style.opacity = clamp((rp-.34)/.22) * (1-textOut);
+      rethinkDetail.style.transform = `translateY(${lerp(35,0,clamp((rp-.34)/.22))}px)`;
+
+      const fp = progress(features);
+      const maxShift = 3 * innerWidth;
+      featureTrack.style.transform = `translate3d(${-maxShift*fp}px,0,0)`;
+      const current = Math.min(4,Math.floor(fp*4)+1);
+      featureCurrent.textContent = String(current).padStart(2,'0');
+    }
+  }
+  function requestRender(){ if(!ticking){ ticking=true; requestAnimationFrame(render); } }
+  addEventListener('scroll',requestRender,{passive:true});
+  addEventListener('resize',requestRender,{passive:true});
+  render();
+})();
+</script>
+</body>
+</html>
