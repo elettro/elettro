@@ -1,4 +1,4 @@
-const PROJECTS = [
+let PROJECTS = [
   { id: "seascape", title: "Seascape Resort & Marina", cats: ["Web"], year: "2024", url: "https://elettro.github.io/seascaperesortmarina", blurb: "Hospitality identity and website for a Florida resort and marina destination.", role: "Design + Build", stack: ["HTML/CSS", "JavaScript", "Brand"] },
   { id: "weightloss", title: "Weight Loss Davie", cats: ["Web"], year: "2024", url: "https://weightlossdavie.com", blurb: "Healthcare website built around clear services, local search, and a focused intake path.", role: "Design + Build", stack: ["HTML/CSS", "Forms", "SEO", "AIO"] },
   { id: "stashbox-band", title: "Stashbox", cats: ["Web", "Music"], year: "2024", url: "https://stashbox.com", blurb: "Band website with releases, video, merchandise, press material, and custom radio.", role: "Design + Build", stack: ["HTML/CSS", "JavaScript", "Audio"] },
@@ -25,6 +25,7 @@ const PROJECTS = [
   { id: "sand", title: "Florida Sand Sculpturist", cats: ["Video", "Other"], year: "2024", url: "https://youtu.be/Qub62f2kJCc", blurb: "Artist promotional video produced on the Florida coastline.", role: "Direction + Edit", stack: ["Documentary", "Edit"] }
 ];
 
+const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSaAEHrD3n5O42KWP3OcM2OwYmV_24CIWSjl41Pz__mQqY0opH14_VDb-F47M63Wn7bhlevfLldj7v5/pub?gid=837156076&single=true&output=csv";
 const FILTERS = ["ALL", "Web", "Video", "Music", "App", "Branding", "Other"];
 const CAT_HUE = { Web: 196, Video: 25, Music: 305, App: 145, Branding: 55, Other: 90 };
 const state = { filter: "ALL", query: "", open: null };
@@ -33,18 +34,140 @@ const root = document.getElementById("root");
 const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character]);
 const pad = (value) => String(value).padStart(2, "0");
 const initials = (title) => title.split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase();
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = "", i = 0, inQ = false;
+  while (i < text.length) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+        inQ = false; i++; continue;
+      }
+      field += c; i++; continue;
+    }
+    if (c === '"') { inQ = true; i++; continue; }
+    if (c === ",") { row.push(field); field = ""; i++; continue; }
+    if (c === "\r") { i++; continue; }
+    if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; i++; continue; }
+    field += c; i++;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  if (!rows.length) return [];
+  const headers = rows[0].map((h) => h.trim());
+  return rows.slice(1).filter((r) => r.some((v) => v.length)).map((r) => {
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (r[idx] ?? "").trim(); });
+    return obj;
+  });
+}
+
+function normalizeSheetRow(raw) {
+  const out = {};
+  Object.entries(raw || {}).forEach(([key, value]) => {
+    out[String(key || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "")] = value;
+  });
+  return {
+    id: out.id || out.slug || "",
+    title: out.title || out.project || out.name || "",
+    categories: out.categories || out.category || out.tags || "",
+    year: out.year || out.date || "",
+    url: out.url || out.link || out.website || "",
+    reportUrl: out.reporturl || out.report || "",
+    blurb: out.blurb || out.description || out.summary || "",
+    role: out.role || "",
+    stack: out.stack || out.tools || "",
+    Background: out.background || out.thumbnail || out.image || "",
+    media: out.media || out.thumbnail || out.image || "",
+    client: out.client || "",
+    overview: out.overview || "",
+    approach: out.approach || "",
+    results: out.results || ""
+  };
+}
+
+function rowToProject(row) {
+  const splitList = (value) => value ? value.split(/\s*[;,]\s*/).filter(Boolean) : [];
+  const cats = splitList(row.categories);
+  return {
+    id: row.id || (row.title || "project").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+    title: row.title,
+    cats,
+    year: row.year || "—",
+    url: row.url,
+    reportUrl: row.reportUrl || "",
+    blurb: row.blurb,
+    role: row.role || "—",
+    stack: splitList(row.stack),
+    Background: row.Background || "",
+    media: (row.media || "").trim(),
+    client: (row.client || "").trim(),
+    overview: (row.overview || "").trim(),
+    approach: (row.approach || "").trim(),
+    results: (row.results || "").trim()
+  };
+}
+
+function normalizeImageUrl(url) {
+  if (!url) return "";
+  const clean = String(url).trim();
+  if (clean.includes("dropbox.com")) {
+    return clean
+      .replace("www.dropbox.com", "dl.dropboxusercontent.com")
+      .replace("?dl=0", "")
+      .replace("?dl=1", "")
+      .replace("&dl=0", "")
+      .replace("&dl=1", "");
+  }
+  return clean;
+}
+
+function resolveMedia(url) {
+  if (!url) return { kind: "none" };
+  const value = String(url).trim();
+  const ytMatch =
+    value.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/i) ||
+    value.match(/youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)([A-Za-z0-9_-]{6,})/i);
+  if (ytMatch) {
+    const id = ytMatch[1];
+    return { kind: "youtube", src: `https://img.youtube.com/vi/${id}/hqdefault.jpg`, ytId: id };
+  }
+  if (/^[A-Za-z0-9_-]{11}$/.test(value)) {
+    return { kind: "youtube", src: `https://img.youtube.com/vi/${value}/hqdefault.jpg`, ytId: value };
+  }
+  if (/^https?:\/\//i.test(value)) return { kind: "img", src: value };
+  return { kind: "none" };
+}
+
 const filteredProjects = () => PROJECTS.filter((project) => {
   const inCategory = state.filter === "ALL" || project.cats.includes(state.filter);
   const searchText = `${project.title} ${project.blurb} ${project.cats.join(" ")}`.toLowerCase();
   return inCategory && (!state.query || searchText.includes(state.query.toLowerCase()));
 });
 
-function thumb(project) {
+function fallbackThumb(project) {
   const hue = CAT_HUE[project.cats[0]] || 60;
   const angle = (project.id.charCodeAt(0) + project.id.length) * 47 % 180;
   return `<div class="thumb thumb-grad portfolio-card__media portfolio-card__media--fallback" style="--hue:${hue};--angle:${angle}deg">
     <div class="thumb-grad-fill" aria-hidden="true"></div><div class="thumb-grad-orb" aria-hidden="true"></div>
     <div class="thumb-letters">${escapeHtml(initials(project.title))}</div><div class="thumb-meta"></div><span class="thumb-year">${escapeHtml(project.year)}</span>
+  </div>`;
+}
+
+function thumb(project) {
+  const hue = CAT_HUE[project.cats[0]] || 60;
+  const background = normalizeImageUrl(project.Background || project.background || project.thumbnail || project.image || "");
+  const mediaRaw = background || project.media || (/youtu\.?be/i.test(project.url || "") ? project.url : "");
+  const media = resolveMedia(mediaRaw);
+  if (media.kind === "none") return fallbackThumb(project);
+
+  const play = media.kind === "youtube"
+    ? `<span class="thumb-play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span>`
+    : "";
+  return `<div class="thumb thumb-media portfolio-card__media" style="--hue:${hue}">
+    <img class="thumb-media-img" src="${escapeHtml(media.src)}" alt="${escapeHtml(project.title || "Portfolio project thumbnail")}" loading="lazy" onerror="this.style.display='none'">
+    <div class="thumb-media-veil" aria-hidden="true"></div>${play}<span class="thumb-year">${escapeHtml(project.year)}</span>
   </div>`;
 }
 
@@ -77,9 +200,10 @@ function panel(project) {
   overlay.setAttribute("role", "dialog");
   overlay.setAttribute("aria-modal", "true");
   overlay.setAttribute("aria-labelledby", "cp-title");
-  overlay.innerHTML = `<aside class="panel"><header class="panel-hd"><div class="panel-hd-left"><span class="panel-eyebrow">Case study · ${escapeHtml(project.cats[0].toLowerCase())}</span><h2 id="cp-title" class="panel-title">${escapeHtml(project.title)}</h2></div><button class="panel-close" data-close aria-label="Close case study">×</button></header>
+  const overview = project.overview || project.blurb;
+  overlay.innerHTML = `<aside class="panel"><header class="panel-hd"><div class="panel-hd-left"><span class="panel-eyebrow">Case study · ${escapeHtml((project.cats[0] || "project").toLowerCase())}</span><h2 id="cp-title" class="panel-title">${escapeHtml(project.title)}</h2></div><button class="panel-close" data-close aria-label="Close case study">×</button></header>
     <div class="panel-hero">${thumb(project)}</div><div class="panel-body"><div class="panel-meta"><div><span class="k">Year</span><span class="v">${escapeHtml(project.year)}</span></div><div><span class="k">Role</span><span class="v">${escapeHtml(project.role)}</span></div><div><span class="k">Category</span><span class="v">${escapeHtml(project.cats.join(" · "))}</span></div></div>
-    <section class="panel-sect"><h4>Overview</h4><p>${escapeHtml(project.blurb)}</p></section><section class="panel-sect"><h4>Stack and deliverables</h4><ul class="chips-list">${project.stack.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></section>
+    <section class="panel-sect"><h4>Overview</h4><p>${escapeHtml(overview)}</p></section><section class="panel-sect"><h4>Stack and deliverables</h4><ul class="chips-list">${project.stack.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></section>
     <div class="panel-actions"><a class="btn btn-primary btn-lg" href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer">Open live project ↗</a><button class="btn btn-ghost btn-lg" data-share>Copy project link</button></div></div></aside>`;
   overlay.addEventListener("click", (event) => { if (event.target === overlay || event.target.closest("[data-close]")) closePanel(); });
   overlay.querySelector("[data-share]").addEventListener("click", async (event) => {
@@ -132,6 +256,25 @@ window.addEventListener("hashchange", () => {
   if (match) openPanel(decodeURIComponent(match[1]), false);
 });
 
+async function loadSheetProjects() {
+  try {
+    const response = await fetch(SHEET_CSV, { mode: "cors" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const rows = parseCSV(await response.text())
+      .map(normalizeSheetRow)
+      .map(rowToProject)
+      .filter((project) => project.title);
+    if (!rows.length) return;
+    PROJECTS = rows;
+    renderApp();
+    const match = location.hash.match(/^#project-(.+)$/);
+    if (match) openPanel(decodeURIComponent(match[1]), false);
+  } catch (error) {
+    console.warn("Portfolio sheet unavailable. Using embedded fallback data.", error);
+  }
+}
+
 renderApp();
 const initialProject = location.hash.match(/^#project-(.+)$/);
 if (initialProject) openPanel(decodeURIComponent(initialProject[1]), false);
+loadSheetProjects();
