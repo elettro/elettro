@@ -1,370 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pliyt.com — SEO & AIO Audit | Elettro</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d10">
+<title>Pliyt Search Visibility Opportunity | SEO + AIO Rebuild Report | Elettro</title>
+<meta name="description" content="Pliyt SEO and AI-search visibility audit showing the current site versus a projected Elettro clean HTML, CSS and JavaScript rebuild.">
 <style>
-  :root{
-    --bg:#0b0d10;
-    --panel:#14171c;
-    --panel-2:#191d23;
-    --line:#262b33;
-    --text:#e9ecf1;
-    --muted:#9aa3b2;
-    --gold:#E8B34C;
-    --gold-dim:#8a6b30;
-    --emerald:#3FAE73;
-    --emerald-dim:#215c3d;
-    --red:#e2665a;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;}
-  .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;}
-
-  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;}
-
-  /* header */
-  header{border-bottom:1px solid var(--line);padding:28px 20px 22px;}
-  .headrow{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;}
-  .brand{display:flex;flex-direction:column;gap:2px;}
-  .brand .mark{font-size:20px;font-weight:800;letter-spacing:2px;color:var(--text);}
-  .brand .mark span{color:var(--gold);}
-  .brand .tag{font-size:11px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;}
-  .meta-block{text-align:right;font-size:12px;color:var(--muted);line-height:1.6;}
-  .meta-block b{color:var(--text);}
-
-  /* client hero */
-  .client-hero{padding:34px 0 10px;}
-  .eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-  h1{font-size:30px;margin:0 0 8px;font-weight:800;letter-spacing:-0.3px;}
-  .sub{color:var(--muted);font-size:14.5px;max-width:640px;line-height:1.6;margin-bottom:18px;}
-  .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
-  .pill{border:1px solid var(--line);background:var(--panel);color:var(--muted);
-    font-size:11.5px;padding:6px 12px;border-radius:100px;letter-spacing:.3px;}
-  .pill b{color:var(--text);font-weight:600;}
-
-  /* composite */
-  .composite{display:flex;gap:16px;margin:34px 0 8px;flex-wrap:wrap;}
-  .comp-card{flex:1;min-width:260px;background:var(--panel);border:1px solid var(--line);
-    border-radius:14px;padding:24px;display:flex;align-items:center;gap:20px;}
-  .comp-card .label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-  .comp-card .cap{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4;}
-  .comp-card .score{font-size:34px;font-weight:800;}
-  .ring-wrap{position:relative;width:110px;height:110px;flex:none;}
-  .ring-wrap svg{transform:rotate(-90deg);width:110px;height:110px;}
-  .ring-track{fill:none;stroke:#22262d;stroke-width:9;}
-  .ring-val{fill:none;stroke-width:9;stroke-linecap:round;
-    animation:ringfill 1.4s cubic-bezier(.4,0,.2,1) forwards;}
-  .ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-size:22px;font-weight:800;font-family:'SFMono-Regular',Consolas,monospace;}
-  @keyframes ringfill{from{stroke-dashoffset:326.7;}}
-
-  .arrow-divider{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:22px;padding:6px 0;}
-
-  /* section titles */
-  .section{margin-top:46px;}
-  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
-  .section-head h2{font-size:18px;margin:0;font-weight:800;letter-spacing:-.2px;}
-  .section-head .note{font-size:12px;color:var(--muted);}
-
-  /* flagship finding */
-  .flagship{background:linear-gradient(145deg,#191410,#14171c 55%);border:1px solid #3a2f1c;
-    border-radius:14px;padding:26px 26px 24px;position:relative;overflow:hidden;}
-  .flagship::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;
-    border-radius:50%;background:radial-gradient(circle,rgba(232,179,76,.14),transparent 70%);}
-  .flagship .tag{display:inline-block;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--gold);border:1px solid var(--gold-dim);border-radius:100px;padding:4px 11px;margin-bottom:12px;}
-  .flagship h3{margin:0 0 10px;font-size:19px;font-weight:800;}
-  .flagship p{margin:0 0 10px;color:#c9cdd5;font-size:14px;line-height:1.65;max-width:720px;}
-  .flagship p:last-child{margin-bottom:0;}
-  .flagship strong{color:var(--text);}
-
-  /* category bars */
-  .cat-grid{display:flex;flex-direction:column;gap:10px;}
-  .cat-row{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-    padding:18px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-  .cat-name{flex:0 0 190px;font-size:13.5px;font-weight:700;}
-  .cat-name .desc{display:block;font-weight:400;color:var(--muted);font-size:11.5px;margin-top:3px;}
-  .bars{flex:1;min-width:220px;display:flex;align-items:flex-end;gap:26px;height:74px;}
-  .barcol{display:flex;flex-direction:column;align-items:center;gap:6px;width:52px;}
-  .bartrack{width:100%;height:52px;background:#1c2027;border-radius:5px;display:flex;align-items:flex-end;overflow:hidden;}
-  .barfill{width:100%;border-radius:5px 5px 0 0;animation:barfill 1.1s cubic-bezier(.4,0,.2,1) forwards;}
-  .barfill.gold{background:linear-gradient(180deg,var(--gold),#a97e2f);}
-  .barfill.emerald{background:linear-gradient(180deg,var(--emerald),#256b47);}
-  @keyframes barfill{from{height:0;}}
-  .barlabel{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;text-align:center;line-height:1.3;}
-  .barscore{flex:0 0 96px;text-align:right;font-family:'SFMono-Regular',Consolas,monospace;font-size:12.5px;color:var(--muted);}
-  .barscore .g{color:var(--gold);font-weight:700;}
-  .barscore .e{color:var(--emerald);font-weight:700;}
-
-  /* findings */
-  .findings-grid{display:grid;grid-template-columns:1fr;gap:22px;}
-  .finding-cat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
-  .finding-cat h4{margin:0 0 12px;font-size:13.5px;letter-spacing:.3px;text-transform:uppercase;color:var(--text);}
-  .finding{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:#c9cdd5;}
-  .finding:first-of-type{border-top:none;}
-  .sev{flex:none;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
-    text-transform:uppercase;height:fit-content;margin-top:1px;}
-  .sev.high{background:rgba(226,102,90,.15);color:var(--red);border:1px solid rgba(226,102,90,.35);}
-  .sev.med{background:rgba(232,179,76,.14);color:var(--gold);border:1px solid rgba(232,179,76,.3);}
-  .sev.pos{background:rgba(63,174,115,.14);color:var(--emerald);border:1px solid rgba(63,174,115,.3);}
-
-  /* tech stack */
-  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-  .stack-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
-  .stack-card .k{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
-  .stack-card .v{font-size:14px;font-weight:700;}
-  .stack-card .d{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5;}
-  .unconfirmed{color:var(--gold);}
-
-  /* press */
-  .press-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
-  .press-card{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
-  .press-card .src{font-size:11px;color:var(--emerald);font-weight:700;letter-spacing:.3px;margin-bottom:4px;}
-  .press-card .title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:4px;}
-  .press-card .date{font-size:11px;color:var(--muted);}
-
-  /* methodology */
-  .method{margin-top:46px;background:var(--panel-2);border:1px dashed var(--line);border-radius:12px;padding:18px 20px;}
-  .method h4{margin:0 0 8px;font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
-  .method p{margin:0 0 8px;font-size:12.5px;color:var(--muted);line-height:1.6;}
-  .method p:last-child{margin-bottom:0;}
-
-  /* cta footer */
-  footer{margin-top:56px;border-top:1px solid var(--line);padding:30px 20px 40px;text-align:center;}
-  footer .fbrand{font-weight:800;letter-spacing:1.5px;font-size:15px;margin-bottom:6px;}
-  footer .fbrand span{color:var(--gold);}
-  footer p{color:var(--muted);font-size:12.5px;margin:0 0 16px;}
-  footer a.cta{display:inline-block;background:var(--gold);color:#1a1400;font-weight:700;font-size:13px;
-    padding:11px 26px;border-radius:100px;text-decoration:none;letter-spacing:.3px;}
-
-  @media(max-width:640px){
-    .meta-block{text-align:left;}
-    .headrow{flex-direction:column;}
-    .cat-name{flex-basis:100%;}
-    .barscore{flex-basis:100%;text-align:left;}
-  }
+:root{--bg:#0b0d10;--panel:#14171c;--panel2:#191d23;--line:#292e37;--text:#f2f4f7;--muted:#9da6b5;--gold:#e8b34c;--green:#49c784;--green2:#92f0ba;--red:#e46d63;--blue:#76b7ff;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% -10%,rgba(73,199,132,.09),transparent 34%),var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}header{border-bottom:1px solid var(--line);padding:24px 0;background:rgba(11,13,16,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:20}.head{display:flex;justify-content:space-between;gap:24px;align-items:center}.brand{font-weight:900;letter-spacing:.16em}.brand span{color:var(--gold)}.meta{font-size:12px;color:var(--muted);text-align:right;line-height:1.55}main{padding:58px 0 90px}.eyebrow{margin:0 0 12px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}h1{margin:0;font-size:clamp(2.8rem,7vw,6.2rem);line-height:.9;letter-spacing:-.06em;max-width:980px}.lead{max-width:790px;margin:24px 0 0;color:#c8ced7;font-size:17px;line-height:1.65}.pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.pill{padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);color:var(--muted);font-size:12px}.pill b{color:var(--text)}.score-hero{margin-top:42px;padding:28px;border:1px solid rgba(73,199,132,.28);border-radius:24px;background:linear-gradient(145deg,rgba(73,199,132,.09),rgba(20,23,28,.96) 48%);box-shadow:0 24px 80px rgba(0,0,0,.25)}.score-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}.score-head h2{margin:0;font-size:clamp(1.7rem,3vw,2.7rem);letter-spacing:-.04em}.score-head p{margin:0;color:var(--muted);font-size:13px;max-width:440px;text-align:right;line-height:1.5}.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.score-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:rgba(9,11,14,.58)}.score-label{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:800}.score-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:10px;margin:16px 0}.score-num{font-size:clamp(2.4rem,5vw,4.2rem);line-height:.9;font-weight:900;letter-spacing:-.06em}.current{color:var(--gold)}.future{color:var(--green2)}.arrow{color:#707987;font-size:24px;padding-bottom:7px}.score-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.lift{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:#dce2e8}.lift strong{color:var(--green2);font-size:17px}.big-callout{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:20px 22px;border-radius:16px;background:#0e1612;border:1px solid rgba(73,199,132,.24)}.big-callout .number{font-size:clamp(3.2rem,7vw,6rem);font-weight:900;color:var(--green2);letter-spacing:-.07em;line-height:.8}.big-callout h3{margin:0 0 6px;font-size:20px}.big-callout p{margin:0;color:#b7c0ca;line-height:1.55;font-size:13px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.03em;border:1px solid var(--line)}.btn.primary{background:var(--green);color:#07120b;border-color:var(--green)}.btn.secondary{background:rgba(255,255,255,.04)}section{margin-top:58px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:18px}.section-head h2{margin:0;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em}.section-head p{margin:0;color:var(--muted);font-size:12px;max-width:430px;text-align:right;line-height:1.5}.truth{padding:24px;border:1px solid #46371d;background:linear-gradient(145deg,#1b1710,#14171c 55%);border-radius:var(--radius)}.truth h3{margin:0 0 10px;font-size:21px}.truth p{margin:0 0 10px;color:#c9ced6;line-height:1.65;font-size:14px}.truth p:last-child{margin-bottom:0}.truth strong{color:#fff}.compare-table{overflow:hidden;border:1px solid var(--line);border-radius:var(--radius)}.row{display:grid;grid-template-columns:1.25fr .65fr .65fr .7fr;align-items:center;gap:12px;padding:16px 18px;border-top:1px solid var(--line);background:var(--panel)}.row:first-child{border-top:0}.row.headrow{background:#101319;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.metric{font-weight:750}.metric small{display:block;color:var(--muted);font-weight:400;margin-top:4px}.old{color:var(--gold);font-weight:900;font-size:18px}.new{color:var(--green2);font-weight:900;font-size:18px}.delta{color:var(--green);font-weight:800}.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.build-card{padding:20px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.build-card .k{color:var(--green2);font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.build-card h3{margin:9px 0 7px;font-size:16px}.build-card p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.55}.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.finding{padding:20px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.finding h3{margin:0 0 12px;font-size:15px}.item{display:grid;grid-template-columns:auto 1fr;gap:9px;padding:9px 0;border-top:1px solid var(--line);color:#c9cfd7;font-size:12.5px;line-height:1.5}.item:first-of-type{border-top:0}.sev{height:max-content;padding:3px 7px;border-radius:5px;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}.sev.high{color:var(--red);border:1px solid rgba(228,109,99,.34);background:rgba(228,109,99,.1)}.sev.pos{color:var(--green2);border:1px solid rgba(73,199,132,.3);background:rgba(73,199,132,.08)}.sev.med{color:var(--gold);border:1px solid rgba(232,179,76,.3);background:rgba(232,179,76,.08)}.press{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.press-card{padding:16px;border:1px solid var(--line);border-radius:13px;background:var(--panel2)}.press-card b{display:block;color:var(--green2);font-size:10px;letter-spacing:.09em}.press-card span{display:block;margin-top:7px;font-size:12px;line-height:1.45}.press-card small{display:block;color:var(--muted);margin-top:8px}.method{padding:20px;border:1px dashed #39404a;border-radius:15px;background:rgba(255,255,255,.025);color:var(--muted);font-size:12px;line-height:1.6}.method strong{color:var(--text)}footer{border-top:1px solid var(--line);padding:34px 0 48px;color:var(--muted);font-size:12px}.footer-row{display:flex;justify-content:space-between;gap:20px}.footer-row b{color:#fff}.note-strong{color:#fff;font-weight:700}@media(max-width:850px){.score-grid,.build-grid{grid-template-columns:1fr}.findings{grid-template-columns:1fr}.press{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr .45fr .45fr .55fr}.score-head,.section-head{align-items:flex-start;flex-direction:column}.score-head p,.section-head p{text-align:left}.meta{display:none}}@media(max-width:560px){.wrap{width:min(100% - 24px,1120px)}header{position:relative}.head{align-items:flex-start}.score-hero{padding:18px}.score-line{gap:6px}.row{grid-template-columns:1.2fr .5fr .5fr}.row .delta{display:none}.row.headrow span:last-child{display:none}.press{grid-template-columns:1fr}.big-callout{grid-template-columns:1fr}.footer-row{flex-direction:column}h1{font-size:3rem}}
 </style>
 </head>
 <body>
+<header><div class="wrap head"><div class="brand">ELETT<span>RO</span></div><div class="meta"><b>Pliyt.com</b><br>SEO + AI Search Visibility Opportunity<br>Audit updated Aug 21, 2026</div></div></header>
+<main class="wrap">
+<p class="eyebrow">Pliyt Website Rebuild Opportunity</p>
+<h1>Strong brand.<br>Underpowered search structure.</h1>
+<p class="lead">Pliyt already has the hard part: a differentiated product, credible leadership, polished creative and national press. The opportunity is to rebuild the website underneath that story so Google and AI answer engines receive the same strong signal that a human visitor does.</p>
+<div class="pillrow"><span class="pill">Current platform: <b>Framer</b></span><span class="pill">Proposed: <b>Clean HTML / CSS / JavaScript</b></span><span class="pill">Reviewed: <b>Home, About, News &amp; Media</b></span><span class="pill">Goal: <b>Search + AI visibility</b></span></div>
 
-<header>
-  <div class="headrow">
-    <div class="brand">
-      <div class="mark">ELETTR<span>O</span></div>
-      <div class="tag">SEO &amp; AIO Diagnostic</div>
-    </div>
-    <div class="meta-block">
-      <div><b>Client:</b> Pliyt</div>
-      <div><b>Domain:</b> pliyt.com</div>
-      <div><b>Audit Date:</b> Aug 21, 2026</div>
-    </div>
+<div class="score-hero">
+  <div class="score-head"><div><p class="eyebrow">The Opportunity</p><h2>Current site vs. Elettro rebuild</h2></div><p>Projected rebuild scores assume the full technical, content, structured-data and entity work described below is implemented.</p></div>
+  <div class="score-grid">
+    <div class="score-card"><div class="score-label">SEO Score</div><div class="score-line"><div class="score-num current">55</div><div class="arrow">→</div><div class="score-num future">93</div></div><div class="score-caption"><span>Current</span><span>Elettro target</span></div><div class="lift"><strong>+38 points</strong><br>Technical SEO, metadata, crawl structure, content architecture and performance control.</div></div>
+    <div class="score-card"><div class="score-label">AIO / AI Search Score</div><div class="score-line"><div class="score-num current">38</div><div class="arrow">→</div><div class="score-num future">90</div></div><div class="score-caption"><span>Current</span><span>Elettro target</span></div><div class="lift"><strong>+52 points</strong><br>Entity clarity, schema, answer-ready content, citations, FAQs and machine-readable relationships.</div></div>
+    <div class="score-card"><div class="score-label">Composite Readiness</div><div class="score-line"><div class="score-num current">50</div><div class="arrow">→</div><div class="score-num future">91</div></div><div class="score-caption"><span>Current</span><span>Elettro target</span></div><div class="lift"><strong>+41 points</strong><br>A projected 82% relative improvement in the composite audit score.</div></div>
   </div>
-</header>
-
-<div class="wrap">
-
-  <div class="client-hero">
-    <div class="eyebrow">Pre-Launch Mobility &amp; Automotive Tech</div>
-    <h1>pliyt.com — SEO &amp; AIO Audit</h1>
-    <p class="sub">Pliyt is a California-based autonomous mobility startup building privacy-first ride pods, unveiled at CES 2026. The brand has earned genuine national press — Forbes, Fox News, MSN, New Atlas — but its own site isn't built to carry that story into search or AI answer engines.</p>
-    <div class="pillrow">
-      <div class="pill">Platform: <b>Framer</b></div>
-      <div class="pill">Pages Reviewed: <b>Home, About, News &amp; Media</b></div>
-      <div class="pill">Stage: <b>Pre-launch waitlist</b></div>
-    </div>
-  </div>
-
-  <div class="composite">
-    <div class="comp-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="ring-track" cx="60" cy="60" r="52"/>
-          <circle class="ring-val" cx="60" cy="60" r="52" stroke="#E8B34C"
-            stroke-dasharray="326.7" stroke-dashoffset="163.4"/>
-        </svg>
-        <div class="ring-num" style="color:#E8B34C;">50</div>
-      </div>
-      <div>
-        <div class="label">Current State</div>
-        <div class="score" style="color:#E8B34C;">50<span style="font-size:16px;color:var(--muted);">/100</span></div>
-        <div class="cap">Composite across six categories, as the site stands today.</div>
-      </div>
-    </div>
-    <div class="comp-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="ring-track" cx="60" cy="60" r="52"/>
-          <circle class="ring-val" cx="60" cy="60" r="52" stroke="#3FAE73"
-            stroke-dasharray="326.7" stroke-dashoffset="29.4"/>
-        </svg>
-        <div class="ring-num" style="color:#3FAE73;">91</div>
-      </div>
-      <div>
-        <div class="label">Elettro Rebuild — Projected</div>
-        <div class="score" style="color:#3FAE73;">91<span style="font-size:16px;color:var(--muted);">/100</span></div>
-        <div class="cap">Standard Elettro benchmark with full technical, entity, and AIO build-out.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="flagship">
-      <span class="tag">Flagship Finding</span>
-      <h3>Great press, generic entity</h3>
-      <p>Pliyt secured four pieces of legitimate national coverage in a single month — <strong>Forbes, Fox News, MSN, New Atlas</strong> — each telling a specific, differentiated story about privacy pods and a leadership team with Waymo, Toyota, and Volkswagen/Porsche pedigree.</p>
-      <p>None of that specificity makes it back onto pliyt.com. Every page on the site — home, about, news &amp; media — ships the identical page title <strong>"Pliyt"</strong> and the identical meta description <strong>"pliyt"</strong>, in lowercase, with no keywords, no differentiation, and nothing for an AI answer engine to extract per page. The site is currently the least informative source about Pliyt on the internet, which is backwards for the domain that should anchor the entity.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Score Breakdown by Category</h2>
-      <div class="note">Shared Cabin (current) vs. Private Pod (Elettro rebuild)</div>
-    </div>
-    <div class="cat-grid">
-
-      <div class="cat-row">
-        <div class="cat-name">Technical SEO<span class="desc">Crawlability, canonicals, indexation</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:58%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:92%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">58</span> → <span class="e">92</span></div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-name">On-Page SEO<span class="desc">Titles, meta, headers</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:28%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:93%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">28</span> → <span class="e">93</span></div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-name">Structured Data / AIO<span class="desc">Schema &amp; answer-engine readiness</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:22%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:90%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">22</span> → <span class="e">90</span></div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-name">Content Depth<span class="desc">Substance, FAQ, team, narrative</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:64%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:88%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">64</span> → <span class="e">88</span></div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-name">Site Performance<span class="desc">Load, images, Core Web Vitals</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:68%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:91%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">68</span> → <span class="e">91</span></div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-name">Authority &amp; Entity<span class="desc">Press, social, entity consolidation</span></div>
-        <div class="bars">
-          <div class="barcol"><div class="bartrack"><div class="barfill gold" style="height:62%;"></div></div><div class="barlabel">Shared<br>Cabin</div></div>
-          <div class="barcol"><div class="bartrack"><div class="barfill emerald" style="height:89%;"></div></div><div class="barlabel">Private<br>Pod</div></div>
-        </div>
-        <div class="barscore"><span class="g">62</span> → <span class="e">89</span></div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head"><h2>Detailed Findings</h2></div>
-    <div class="findings-grid">
-
-      <div class="finding-cat">
-        <h4>Technical SEO</h4>
-        <div class="finding"><span class="sev pos">Positive</span>Per-page canonical tags are present and correctly self-referencing on every page checked.</div>
-        <div class="finding"><span class="sev med">Medium</span>JSON-LD structured data presence is unconfirmed by automated fetch — script tags are stripped during crawl, so a manual Google Rich Results Test is required before any schema claim goes client-facing.</div>
-        <div class="finding"><span class="sev med">Medium</span>Sitemap and robots.txt directives could not be independently verified in this pass; recommend a manual check for a declared sitemap.</div>
-      </div>
-
-      <div class="finding-cat">
-        <h4>On-Page SEO</h4>
-        <div class="finding"><span class="sev high">High</span>Identical page title ("Pliyt") across every page reviewed — home, about, and news &amp; media all return the exact same title string, with no page-specific targeting.</div>
-        <div class="finding"><span class="sev high">High</span>Identical, single-word meta description ("pliyt," lowercase) site-wide. This is the same string reused for the OG and Twitter card descriptions, so the problem repeats in social previews too.</div>
-        <div class="finding"><span class="sev pos">Positive</span>Homepage H1 — "A New Way to Experience Shared Mobility, Redefined for Privacy" — is descriptive and on-message; the gap is metadata, not headline copy.</div>
-      </div>
-
-      <div class="finding-cat">
-        <h4>Structured Data / AIO</h4>
-        <div class="finding"><span class="sev high">High</span>No confirmed structured data despite content that is unusually schema-ready: four named team members with verifiable credentials, a four-question FAQ already written on /about, and a running feed of third-party press citations.</div>
-        <div class="finding"><span class="sev med">Medium</span>Because titles and descriptions are generic site-wide, AI answer engines have no per-page differentiation to draw from even where the underlying page content is strong — the About page and the News &amp; Media page currently look identical to a crawler.</div>
-      </div>
-
-      <div class="finding-cat">
-        <h4>Content Depth</h4>
-        <div class="finding"><span class="sev pos">Positive</span>Team bios name real, checkable industry credentials — ex-Waymo, Toyota, Volkswagen/Porsche, GE, and HELLA leadership — strong material for entity and credibility signals.</div>
-        <div class="finding"><span class="sev pos">Positive</span>A dedicated News &amp; Media page aggregates genuine third-party coverage from Forbes, Fox News, MSN, and New Atlas, published within weeks of the CES 2026 debut.</div>
-        <div class="finding"><span class="sev med">Medium</span>Primary "Join The Movement" CTA routes off-domain to a Linktree link rather than an on-site waitlist form — this sends the site's main conversion action, and any attention it earns, outside pliyt.com.</div>
-      </div>
-
-      <div class="finding-cat">
-        <h4>Site Performance</h4>
-        <div class="finding"><span class="sev pos">Positive</span>Images are served through Framer's CDN with explicit width/height query parameters, indicating responsive image sizing is already in place.</div>
-        <div class="finding"><span class="sev med">Medium</span>Core Web Vitals were not measurable via automated fetch; recommend a manual PageSpeed Insights run on mobile and desktop before finalizing performance claims.</div>
-      </div>
-
-      <div class="finding-cat">
-        <h4>Authority &amp; Entity Signals</h4>
-        <div class="finding"><span class="sev pos">Positive</span>Four pieces of national press coverage landed within a single month of launch — a strong, verifiable authority signal for a pre-launch brand.</div>
-        <div class="finding"><span class="sev pos">Positive</span>Social handles (LinkedIn, Instagram, YouTube) are linked consistently across every page footer.</div>
-        <div class="finding"><span class="sev med">Medium</span>None of this — press, team, socials — is consolidated into machine-readable Organization or Person schema, so the entity graph has to be assembled manually by whatever is reading the site.</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head"><h2>Press Coverage on Record</h2></div>
-    <div class="press-grid">
-      <div class="press-card"><div class="src">FORBES</div><div class="title">Notable Self-Driving Items From CES 2026</div><div class="date">Feb 2, 2026</div></div>
-      <div class="press-card"><div class="src">FOX NEWS</div><div class="title">Private autonomous pods could redefine ride-sharing</div><div class="date">Jan 23, 2026</div></div>
-      <div class="press-card"><div class="src">MSN</div><div class="title">Finally, a taxi that understands introverts</div><div class="date">Jan 15, 2026</div></div>
-      <div class="press-card"><div class="src">NEW ATLAS</div><div class="title">Rideshare without sharing in this autonomous taxi</div><div class="date">Jan 14, 2026</div></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head"><h2>Tech Stack</h2></div>
-    <div class="stack-grid">
-      <div class="stack-card"><div class="k">Platform</div><div class="v">Framer</div><div class="d">Confirmed via meta generator tag (build c9b3949) — a no-code visual site builder with static, CDN-hosted output.</div></div>
-      <div class="stack-card"><div class="k">Asset CDN</div><div class="v">framerusercontent.com</div><div class="d">All images and site assets are served from Framer's own content CDN with responsive width/height variants.</div></div>
-      <div class="stack-card"><div class="k">Site Search</div><div class="v">Framer Native Search</div><div class="d">Two search index JSON files are declared in the page head, indicating Framer's built-in search feature is enabled.</div></div>
-      <div class="stack-card"><div class="k">Waitlist / CTA</div><div class="v">Linktree <span class="unconfirmed">(off-domain)</span></div><div class="d">Primary CTA currently routes to linktr.ee/pliyt rather than an embedded on-site form.</div></div>
-      <div class="stack-card"><div class="k">Analytics</div><div class="v" class="unconfirmed">Unconfirmed</div><div class="d">Script-based tags are stripped by automated fetch; presence of GA4/GTM requires a manual view-source check.</div></div>
-      <div class="stack-card"><div class="k">Structured Data</div><div class="v">Unconfirmed</div><div class="d">No JSON-LD visible via automated crawl. Requires Google Rich Results Test to confirm before client-facing claims.</div></div>
-    </div>
-  </div>
-
-  <div class="method">
-    <h4>Methodology</h4>
-    <p>Scores are derived from a live homepage and sub-page fetch (Home, About, News &amp; Media), meta and header inspection, and supplementary web search for press and entity signals. Automated fetch strips &lt;script&gt; tags, so any structured data (JSON-LD), analytics, or third-party embeds are marked "unconfirmed" and require manual verification via Google Rich Results Test and view-source before being used in client-facing materials.</p>
-    <p>Projected scores represent Elettro's standard rebuild benchmark (90–92 composite) assuming full technical SEO cleanup, unique per-page metadata, Organization/Person/FAQPage schema implementation, and on-domain conversion capture. This is a directional manual audit, not an automated crawler score.</p>
-  </div>
-
+  <div class="big-callout"><div class="number">+52</div><div><h3>The largest upside is AI-search readiness.</h3><p>Pliyt has unusually strong source material for AI discovery: named leadership, recognizable prior employers, a clear category story, FAQs and national press. Much of it is not consolidated into a machine-readable entity structure today.</p></div></div>
+  <div class="actions"><a class="btn primary" href="./homepage/">View the clean-code homepage demo</a><a class="btn secondary" href="#breakdown">See the score breakdown</a></div>
 </div>
 
-<footer>
-  <div class="fbrand">ELETTR<span>O</span></div>
-  <p>Digital marketing, web development &amp; creative production — South Florida &amp; beyond.</p>
-  <a class="cta" href="https://elettro.com" target="_blank" rel="noopener">elettro.com</a>
-</footer>
+<section><div class="truth"><p class="eyebrow">Important distinction</p><h3>The score lift does not come from changing platforms by itself.</h3><p>Framer is capable of producing a visually strong website. The opportunity comes from <strong>how much control Elettro gets over every search-facing layer</strong> when the site is rebuilt directly in semantic HTML, CSS and JavaScript.</p><p>A clean-code rebuild gives the development team direct control over page structure, metadata, internal linking, schema graphs, crawl behavior, image delivery, performance budgets, conversion paths and future AI-search optimizations without working around a visual-builder abstraction.</p></div></section>
 
+<section id="breakdown"><div class="section-head"><h2>Where the score lift comes from</h2><p>The original six-category audit is retained below, now presented as a direct current-versus-rebuild comparison.</p></div>
+<div class="compare-table">
+<div class="row headrow"><span>Category</span><span>Current</span><span>Rebuild</span><span>Lift</span></div>
+<div class="row"><div class="metric">Technical SEO<small>Crawlability, canonicals, indexation</small></div><div class="old">58</div><div class="new">92</div><div class="delta">+34</div></div>
+<div class="row"><div class="metric">On-Page SEO<small>Titles, descriptions, headers, page targeting</small></div><div class="old">28</div><div class="new">93</div><div class="delta">+65</div></div>
+<div class="row"><div class="metric">Structured Data / AIO<small>Schema and answer-engine readiness</small></div><div class="old">22</div><div class="new">90</div><div class="delta">+68</div></div>
+<div class="row"><div class="metric">Content Depth<small>Substance, FAQs, team, narrative</small></div><div class="old">64</div><div class="new">88</div><div class="delta">+24</div></div>
+<div class="row"><div class="metric">Site Performance<small>Load behavior, images, Core Web Vitals</small></div><div class="old">68</div><div class="new">91</div><div class="delta">+23</div></div>
+<div class="row"><div class="metric">Authority &amp; Entity<small>Press, people, profiles and entity consolidation</small></div><div class="old">62</div><div class="new">89</div><div class="delta">+27</div></div>
+</div></section>
+
+<section><div class="section-head"><h2>What the Elettro rebuild changes</h2><p>Clean code is the foundation. The implementation work is what converts that flexibility into search visibility.</p></div><div class="build-grid">
+<div class="build-card"><div class="k">01 / Semantic Foundation</div><h3>Search-first HTML architecture</h3><p>One clear H1, logical H2/H3 hierarchy, descriptive landmarks, crawlable text, accessible navigation, deliberate internal links and page-specific topical targeting.</p></div>
+<div class="build-card"><div class="k">02 / Metadata</div><h3>Every page gets its own job</h3><p>Unique titles, descriptions, canonicals, Open Graph data and social metadata replace the current repeated generic “Pliyt” metadata.</p></div>
+<div class="build-card"><div class="k">03 / Entity Graph</div><h3>Make Pliyt machine-readable</h3><p>Organization, Person, FAQPage, Article, BreadcrumbList and relevant product/service schema connect the company, leadership, press and core concepts.</p></div>
+<div class="build-card"><div class="k">04 / AI Answerability</div><h3>Give AI systems quotable answers</h3><p>Concise explanatory copy, FAQs, leadership facts, product definitions and supporting citations make the site easier to retrieve and summarize accurately.</p></div>
+<div class="build-card"><div class="k">05 / Performance</div><h3>Control the payload</h3><p>Purpose-sized assets, responsive images, minimal JavaScript, deferred noncritical behavior and explicit performance budgets protect the premium motion experience.</p></div>
+<div class="build-card"><div class="k">06 / Ownership</div><h3>Own the structure</h3><p>The website becomes a portable codebase rather than a presentation tied to a visual-builder runtime, giving Pliyt more freedom for future integrations and optimization.</p></div>
+</div></section>
+
+<section><div class="section-head"><h2>Why Pliyt has more upside than a typical site</h2></div><div class="truth"><h3>Great press. Generic entity presentation.</h3><p>Pliyt secured legitimate national coverage from <strong>Forbes, Fox News, MSN and New Atlas</strong>. Those stories describe a distinctive privacy-first mobility concept and a leadership team with experience connected to Waymo, Toyota, Volkswagen/Porsche, GE and HELLA.</p><p>On the website pages reviewed, the page title is repeatedly <strong>“Pliyt”</strong> and the meta description is the single word <strong>“pliyt”</strong>. That means the owned domain is giving search engines less context than the third-party publications covering the company.</p><p>The rebuild opportunity is to make <strong>pliyt.com the strongest source on the internet for understanding Pliyt</strong>.</p></div></section>
+
+<section><div class="section-head"><h2>Detailed findings</h2></div><div class="findings">
+<div class="finding"><h3>On-Page SEO</h3><div class="item"><span class="sev high">High</span><span>Identical page title “Pliyt” across the Home, About and News &amp; Media pages reviewed.</span></div><div class="item"><span class="sev high">High</span><span>Identical single-word meta description “pliyt” reused site-wide and repeated in social preview metadata.</span></div><div class="item"><span class="sev pos">Positive</span><span>The homepage H1 is descriptive and differentiated. The core brand messaging is stronger than the metadata surrounding it.</span></div></div>
+<div class="finding"><h3>Structured Data / AI Search</h3><div class="item"><span class="sev high">High</span><span>No structured-data implementation was confirmed in the automated crawl despite schema-ready team, FAQ and press content.</span></div><div class="item"><span class="sev med">Medium</span><span>Generic titles and descriptions reduce page-level differentiation for search and answer engines.</span></div><div class="item"><span class="sev pos">Positive</span><span>Pliyt already has strong entity ingredients: named executives, recognized companies, FAQs and credible press.</span></div></div>
+<div class="finding"><h3>Authority &amp; Content</h3><div class="item"><span class="sev pos">Positive</span><span>Team bios contain real industry credentials connected to Waymo, Toyota, Volkswagen/Porsche, GE and HELLA.</span></div><div class="item"><span class="sev pos">Positive</span><span>News &amp; Media aggregates national coverage from Forbes, Fox News, MSN and New Atlas.</span></div><div class="item"><span class="sev med">Medium</span><span>The primary “Join The Movement” action routes off-domain to Linktree instead of capturing conversion activity directly on pliyt.com.</span></div></div>
+<div class="finding"><h3>Technical / Performance</h3><div class="item"><span class="sev pos">Positive</span><span>Self-referencing canonical tags were present on the pages checked.</span></div><div class="item"><span class="sev pos">Positive</span><span>Framer serves responsive image variants through its asset CDN.</span></div><div class="item"><span class="sev med">Medium</span><span>Core Web Vitals and script-delivered schema require browser-based verification before making absolute performance claims.</span></div></div>
+</div></section>
+
+<section><div class="section-head"><h2>Press authority already on record</h2><p>This authority is valuable. The rebuild would connect it more deliberately to Pliyt’s owned entity.</p></div><div class="press"><div class="press-card"><b>FORBES</b><span>Notable Self-Driving Items From CES 2026</span><small>Feb 2, 2026</small></div><div class="press-card"><b>FOX NEWS</b><span>Private autonomous pods could redefine ride-sharing</span><small>Jan 23, 2026</small></div><div class="press-card"><b>MSN</b><span>Finally, a taxi that understands introverts</span><small>Jan 15, 2026</small></div><div class="press-card"><b>NEW ATLAS</b><span>Rideshare without sharing in this autonomous taxi</span><small>Jan 14, 2026</small></div></div></section>
+
+<section><div class="method"><strong>Scoring methodology.</strong> This is a directional Elettro manual audit based on the live Home, About and News &amp; Media pages, page metadata and headings, site structure, available press/entity signals and implementation inspection. SEO 55 and AIO 38 are summary scores derived from the detailed category findings above. Projected scores are implementation targets, not guarantees of ranking position or traffic. They assume a full clean-code rebuild with unique metadata, technical cleanup, structured data, entity consolidation, answer-ready content, on-domain conversion paths and ongoing validation. Script-delivered analytics or JSON-LD that automated fetching does not expose should be manually verified in a browser before final technical sign-off.</div></section>
+
+<section><div class="score-hero"><div class="score-head"><div><p class="eyebrow">Proof of concept</p><h2>The animation does not have to disappear.</h2></div><p>Elettro rebuilt the homepage interaction concept in clean HTML, CSS and JavaScript to demonstrate that technical control and premium movement can coexist.</p></div><div class="actions"><a class="btn primary" href="./homepage/">Open Pliyt homepage demo</a></div></div></section>
+</main>
+<footer><div class="wrap footer-row"><div><b>ELETTRO</b><br>Digital production, web development and search optimization.</div><div>Prepared for Pliyt<br>Aug 21, 2026</div></div></footer>
 </body>
 </html>
