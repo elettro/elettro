@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — Revolution Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141318;
+    --panel:#1D1B23;
+    --panel-2:#242229;
+    --line:#332F3C;
+    --text:#EFEBE6;
+    --muted:#9C97A8;
+    --pink:#FF2E63;
+    --pink-dim:#5C2334;
+    --amber:#FFC145;
+    --amber-dim:#4A3B1C;
+    --teal:#5EC8C0;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.02em;
+    line-height:0.95;
+  }
+  a{color:var(--teal);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:76px 24px 64px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 700px 400px at 15% -10%, rgba(255,46,99,0.22), transparent 60%),
+      radial-gradient(ellipse 600px 380px at 90% 0%, rgba(255,193,69,0.14), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:880px; margin:0 auto; position:relative;}
+  .kicker{
+    font-size:13px;
+    color:var(--muted);
+    margin:0 0 18px;
+    font-weight:600;
+  }
+  .kicker span{color:var(--pink);}
+  h1.title{
+    font-size:clamp(46px, 8vw, 84px);
+    margin:0 0 6px;
+    color:var(--text);
+  }
+  .subtitle{
+    font-size:18px;
+    color:var(--muted);
+    max-width:60ch;
+    margin:0 0 28px;
+  }
+  .subtitle strong{color:var(--text); font-weight:600;}
+
+  .field-note{
+    display:flex;
+    gap:14px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:3px solid var(--amber);
+    padding:16px 18px;
+    max-width:64ch;
+    font-size:14.5px;
+    color:var(--muted);
+  }
+  .field-note .mark{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px;
+    color:var(--amber);
+    flex-shrink:0;
+    line-height:1.3;
+  }
+  .field-note strong{color:var(--text);}
+
+  /* ===== TICKET STUBS ===== */
+  .tickets{
+    max-width:880px;
+    margin:56px auto 0;
+    padding:0 24px 8px;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:0;
+    align-items:center;
+  }
+  .ticket{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:28px 26px 24px;
+    position:relative;
+  }
+  .ticket::before, .ticket::after{
+    content:"";
+    position:absolute;
+    width:22px; height:22px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:50%;
+    top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{left:-11px;}
+  .ticket::after{right:-11px;}
+  .ticket .tag{
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .ticket .score{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:76px;
+    line-height:0.9;
+  }
+  .ticket.current .score{color:var(--pink);}
+  .ticket.target .score{color:var(--amber);}
+  .ticket .outof{font-size:16px; color:var(--muted); font-weight:500; margin-left:4px;}
+  .ticket .desc{font-size:13.5px; color:var(--muted); margin-top:8px;}
+  .tickets .arrow{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:34px;
+    color:var(--muted);
+    padding:0 18px;
+  }
+
+  /* ===== SECTIONS ===== */
+  main{max-width:880px; margin:0 auto; padding:64px 24px 40px;}
+  section{margin-bottom:64px;}
+  section:last-of-type{margin-bottom:0;}
+  h2.section-head{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:36px;
+    letter-spacing:0.01em;
+    margin:0 0 6px;
+    color:var(--text);
+  }
+  .section-sub{color:var(--muted); font-size:15px; margin:0 0 28px; max-width:64ch;}
+
+  .tear{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin:64px 0;
+  }
+  .tear .line{flex:1; border-top:1px dashed var(--line);}
+  .tear .dot{width:6px; height:6px; border-radius:50%; background:var(--line);}
+
+  /* framework grid */
+  .framework{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .framework .cell{background:var(--panel); padding:22px 24px;}
+  .framework .cell .pts{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:15px;
+    color:var(--teal);
+    margin-bottom:8px;
+  }
+  .framework .cell h3{margin:0 0 6px; font-size:16px; font-weight:700;}
+  .framework .cell p{margin:0; font-size:13.5px; color:var(--muted);}
+
+  /* rider table */
+  .rider{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14.5px;
+  }
+  .rider th{
+    text-align:left;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    color:var(--muted);
+    padding:0 16px 12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .rider td{
+    padding:16px 16px 16px 0;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  .rider tr:last-child td{border-bottom:none;}
+  .rider .layer{
+    font-weight:700;
+    color:var(--text);
+    white-space:nowrap;
+    width:140px;
+  }
+  .rider .running{
+    color:var(--amber);
+    font-weight:600;
+    width:220px;
+  }
+  .rider .why{color:var(--muted);}
+  .rider-tag{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    color:var(--teal);
+    border:1px solid var(--teal);
+    padding:1px 6px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+
+  /* bars */
+  .bar-row{margin-bottom:22px;}
+  .bar-row .bar-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:7px;
+  }
+  .bar-track{
+    height:10px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .bar-fill{height:100%; position:absolute; top:0; left:0;}
+  .bar-fill.now{background:var(--pink); z-index:2;}
+  .bar-fill.target{background:var(--amber); opacity:0.35; z-index:1;}
+  .bar-legend{display:flex; gap:20px; font-size:13px; color:var(--muted); margin-top:20px;}
+  .bar-legend span{display:inline-flex; align-items:center; gap:7px;}
+  .swatch{width:11px; height:11px; display:inline-block;}
+  .swatch.now{background:var(--pink);}
+  .swatch.target{background:var(--amber); opacity:0.55;}
+
+  /* findings */
+  .finding{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:28px 28px 30px;
+    margin-bottom:20px;
+  }
+  .finding-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+  .finding-head h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px;
+    margin:0;
+  }
+  .finding-head .score-pill{
+    font-size:13px;
+    font-weight:700;
+    color:var(--pink);
+    border:1px solid var(--pink-dim);
+    background:rgba(255,46,99,0.08);
+    padding:4px 10px;
+  }
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:640px){ .cols{grid-template-columns:1fr;} .framework{grid-template-columns:1fr;} .tickets{grid-template-columns:1fr; gap:16px;} .tickets .arrow{transform:rotate(90deg); justify-self:center;} }
+  .col-label{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    margin-bottom:10px;
+  }
+  .col-label.good{color:var(--teal);}
+  .col-label.gap{color:var(--pink);}
+  ul.list{margin:0; padding:0; list-style:none;}
+  ul.list li{
+    font-size:14.5px;
+    color:var(--text);
+    padding-left:18px;
+    position:relative;
+    margin-bottom:10px;
+  }
+  ul.list li::before{
+    content:"";
+    position:absolute;
+    left:0; top:8px;
+    width:6px; height:6px;
+  }
+  .col-good li::before{background:var(--teal);}
+  .col-gap li::before{background:var(--pink);}
+
+  /* roadmap */
+  .roadmap{border-top:1px solid var(--line);}
+  .step{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:18px;
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .step .num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:32px;
+    color:var(--panel-2);
+    -webkit-text-stroke:1px var(--muted);
+    color:transparent;
+  }
+  .step h4{margin:0 0 6px; font-size:16px; font-weight:700;}
+  .step p{margin:0; font-size:14.5px; color:var(--muted);}
+  .step .impact{
+    display:inline-block;
+    margin-top:8px;
+    font-size:12px;
+    font-weight:700;
+    color:var(--amber);
+  }
+
+  .phase-label{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:17px;
+    letter-spacing:0.04em;
+    color:var(--teal);
+    margin:0 0 4px;
+    padding-top:8px;
+  }
+  .roadmap-group + .roadmap-group .phase-label{margin-top:8px;}
+  .phase-sub{font-size:13px; color:var(--muted); margin:0 0 4px;}
+  .timeframe{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    padding:2px 7px;
+    margin-left:10px;
+    vertical-align:middle;
+  }
+  .timeframe.build{color:var(--teal); border:1px solid var(--teal);}
+  .timeframe.ongoing{color:var(--pink); border:1px solid var(--pink);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 24px 60px;
+  }
+  footer .inner{max-width:880px; margin:0 auto;}
+  footer p{font-size:13px; color:var(--muted); max-width:70ch;}
+  footer .prepared{font-size:13px; color:var(--muted); margin-top:24px;}
+  footer .prepared strong{color:var(--text);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="kicker">SEO &amp; AIO AUDIT <span>·</span> jointherevolution.net</p>
+    <h1 class="title display">Revolution Live</h1>
+    <p class="subtitle">A structural read on how the venue's own site performs today for traditional search and AI answer engines — and what a rebuild could realistically reach.</p>
+    <div class="field-note">
+      <span class="mark">i</span>
+      <div><strong>How to read this:</strong> this audit is built from a static crawl of the live pages, not a rendered browser or Google's own tools. Anywhere content might be injected by JavaScript — schema markup in particular — treat the finding as "not visible in this crawl," not confirmed absent. Verify with <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google's Rich Results Test</a> and <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener">PageSpeed Insights</a> before acting on the technical findings.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tickets">
+  <div class="ticket current">
+    <div class="tag">ADMIT ONE — CURRENT STATE</div>
+    <div class="score">41<span class="outof">/ 100</span></div>
+    <div class="desc">Functional venue site with strong native "About" copy, weak technical and AI-readiness foundations.</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="ticket target">
+    <div class="tag">ADMIT ONE — REDESIGN TARGET</div>
+    <div class="score">95<span class="outof">/ 100</span></div>
+    <div class="desc">Full path — redesign fixes plus sustained post-launch work. The last few points are earned authority, not build work, and take months regardless of how good the rebuild is.</div>
+  </div>
+</div>
+
+<main>
+
+  <section id="framework">
+    <h2 class="section-head display">The Framework</h2>
+    <p class="section-sub">There's no single certified "SEO/AIO score" — no search engine publishes one. This is a 100-point rubric split across four areas that map to how both traditional search and AI answer engines actually evaluate a site.</p>
+    <div class="framework">
+      <div class="cell">
+        <div class="pts">25 PTS</div>
+        <h3>Technical SEO</h3>
+        <p>Crawlability, page speed, Core Web Vitals, mobile experience, structured-data pipeline.</p>
+      </div>
+      <div class="cell">
+        <div class="pts">25 PTS</div>
+        <h3>On-Page Content</h3>
+        <p>Title tags, meta descriptions, heading structure, content depth and originality, freshness.</p>
+      </div>
+      <div class="cell">
+        <div class="pts">25 PTS</div>
+        <h3>AIO Readiness</h3>
+        <p>Schema.org markup (Event, LocalBusiness, FAQ), direct-answer content, entity clarity for AI engines.</p>
+      </div>
+      <div class="cell">
+        <div class="pts">25 PTS</div>
+        <h3>Local / Off-Page</h3>
+        <p>NAP consistency, review and citation signals, local pack strength, third-party authority.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scores">
+    <h2 class="section-head display">Score by Category</h2>
+    <p class="section-sub">Current state against the realistic redesign target, per category.</p>
+
+    <div class="bar-row">
+      <div class="bar-label"><span>Technical SEO</span><span>12 → 24</span></div>
+      <div class="bar-track"><div class="bar-fill target" style="width:96%"></div><div class="bar-fill now" style="width:48%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"><span>On-Page Content</span><span>13 → 24</span></div>
+      <div class="bar-track"><div class="bar-fill target" style="width:96%"></div><div class="bar-fill now" style="width:52%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"><span>AIO Readiness</span><span>6 → 24</span></div>
+      <div class="bar-track"><div class="bar-fill target" style="width:96%"></div><div class="bar-fill now" style="width:24%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"><span>Local / Off-Page</span><span>10 → 23</span></div>
+      <div class="bar-track"><div class="bar-fill target" style="width:92%"></div><div class="bar-fill now" style="width:40%"></div></div>
+    </div>
+
+    <div class="bar-legend">
+      <span><span class="swatch now"></span>Current</span>
+      <span><span class="swatch target"></span>Redesign target</span>
+    </div>
+  </section>
+
+  <div class="tear"><div class="dot"></div><div class="line"></div><div class="dot"></div></div>
+
+  <section id="findings">
+    <h2 class="section-head display">The Findings</h2>
+    <p class="section-sub">What's already working, and what's leaving points on the table — by category.</p>
+
+    <div class="finding">
+      <div class="finding-head">
+        <h3>Technical SEO</h3>
+        <span class="score-pill">12 / 25</span>
+      </div>
+      <div class="cols">
+        <div>
+          <div class="col-label good">WORKING</div>
+          <ul class="list col-good">
+            <li>Robots meta correctly set to index/follow, no crawl blockers found</li>
+            <li>Mobile viewport tag present</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label gap">GAPS</div>
+          <ul class="list col-gap">
+            <li>Revolution Slider plugin — historically linked to poor Core Web Vitals; verify with PageSpeed Insights</li>
+            <li>Dozens of uncompressed event-flyer images stacked on one homepage</li>
+            <li>Google Maps iframe and Tripleseat booking widget add further page weight</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <h3>On-Page Content</h3>
+        <span class="score-pill">13 / 25</span>
+      </div>
+      <div class="cols">
+        <div>
+          <div class="col-label good">WORKING</div>
+          <ul class="list col-good">
+            <li>Genuinely strong, unique "About" copy — real history, named artists, real awards</li>
+            <li>Clean, descriptive URL structure (/concerts/[event-slug]/)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label gap">GAPS</div>
+          <ul class="list col-gap">
+            <li>Title tag duplicated: "Revolution Live - Revolution Live" — no city or venue-type keyword</li>
+            <li>Meta description is an auto-truncated WordPress excerpt ending mid-sentence</li>
+            <li>Per-event descriptions are thin (1–2 sentences before the page bounces to a third-party ticket link)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <h3>AIO Readiness</h3>
+        <span class="score-pill">6 / 25</span>
+      </div>
+      <div class="cols">
+        <div>
+          <div class="col-label good">WORKING</div>
+          <ul class="list col-good">
+            <li>Event dates, times, and prices are present as readable, crawlable text</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label gap">GAPS</div>
+          <ul class="list col-gap">
+            <li>No visible Event schema (schema.org/Event) — the single highest-value fix available for a venue</li>
+            <li>No FAQ content for age policy, re-entry, bag policy, parking, or will-call</li>
+            <li>No LocalBusiness/EntertainmentVenue schema found on the venue-info page</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <h3>Local / Off-Page</h3>
+        <span class="score-pill">10 / 25</span>
+      </div>
+      <div class="cols">
+        <div>
+          <div class="col-label good">WORKING</div>
+          <ul class="list col-good">
+            <li>Social profiles linked (Facebook, X, Instagram)</li>
+            <li>Strong presence across major ticketing platforms (Ticketmaster, Universe)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label gap">GAPS</div>
+          <ul class="list col-gap">
+            <li>Address and phone number were findable via a third-party aggregator, not clearly on the venue's own homepage</li>
+            <li>Third-party sites are currently the more authoritative source for the venue's own core facts</li>
+            <li>No on-site review aggregation or Review/AggregateRating schema</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tear"><div class="dot"></div><div class="line"></div><div class="dot"></div></div>
+
+  <section id="stack">
+    <h2 class="section-head display">The Technical Rider</h2>
+    <p class="section-sub">What's currently plugged in, detected directly from the live markup. Items marked <span class="rider-tag">CONFIRMED</span> were observed in the crawl; hosting, CDN, and caching layer aren't visible from content alone and would need a dedicated scan (e.g. Wappalyzer/BuiltWith or server-header inspection) to confirm.</p>
+
+    <table class="rider">
+      <thead>
+        <tr><th>Layer</th><th>Running</th><th>Why it matters</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="layer">CMS</td>
+          <td class="running">WordPress 6.9.7<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Confirmed via generator meta tag. Mature and well-supported — the platform itself isn't the risk, the plugin choices on top of it are.</td>
+        </tr>
+        <tr>
+          <td class="layer">Theme</td>
+          <td class="running">Custom-built theme<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Bespoke theme (not an off-the-shelf template), asset paths named "revolution-live." Footer credits the build to agency <strong style="color:var(--text)">Q Branch</strong> ("Web Machines by Q Branch").</td>
+        </tr>
+        <tr>
+          <td class="layer">Homepage slider</td>
+          <td class="running">Revolution Slider<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Powers the Private Events carousel. Historically one of the most common causes of poor Core Web Vitals on WordPress sites — this is the plugin behind the Technical SEO score gap. Verify actual impact with PageSpeed Insights.</td>
+        </tr>
+        <tr>
+          <td class="layer">Private events</td>
+          <td class="running">Tripleseat<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Third-party booking software embedded for private/corporate event inquiries — standard for hospitality venues, no SEO impact on its own.</td>
+        </tr>
+        <tr>
+          <td class="layer">Ticketing</td>
+          <td class="running">Ticketmaster + Universe<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Primary and secondary ticketing partners. Most of the actual purchase journey happens off-domain, which is normal — but it's also part of why third-party sites currently outrank the venue's own domain for event and NAP data.</td>
+        </tr>
+        <tr>
+          <td class="layer">Ad tracking</td>
+          <td class="running">Meta (Facebook) Pixel<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Present via noscript tag, plus a Facebook domain-verification meta tag confirming Meta Business Manager ownership. Part of the paid-social stack, not SEO — noted for the full picture.</td>
+        </tr>
+        <tr>
+          <td class="layer">Maps</td>
+          <td class="running">Google Maps (iframe)<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Embedded for directions, but not backed by matching address text or LocalBusiness schema on the page — ties directly back to the NAP gap in the Local/Off-Page findings.</td>
+        </tr>
+        <tr>
+          <td class="layer">Music embeds</td>
+          <td class="running">Spotify artist links<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">Each concert listing links out to the artist's Spotify page ("Listen Now"). Nice UX touch, no SEO weight either way.</td>
+        </tr>
+        <tr>
+          <td class="layer">App association</td>
+          <td class="running">Apple Smart App Banner + affiliate tag<span class="rider-tag">CONFIRMED</span></td>
+          <td class="why">iTunes app-id and affiliate-data present in the head. Minor, likely a legacy tag from an earlier app-install campaign.</td>
+        </tr>
+        <tr>
+          <td class="layer">Hosting / CDN</td>
+          <td class="running" style="color:var(--muted); font-weight:400;">Not visible from crawl</td>
+          <td class="why">Can't be confirmed from page content alone. Worth pulling response headers or running a BuiltWith scan before making performance recommendations that assume a specific host.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="tear"><div class="dot"></div><div class="line"></div><div class="dot"></div></div>
+
+  <section id="roadmap">
+    <h2 class="section-head display">Path to 95</h2>
+    <p class="section-sub">Thirteen steps, in two phases. The first nine are build work — done once, in the redesign. The last four are earned, not built — they run for months after launch, and no rebuild can shortcut them. That split is the honest answer to "how do we get to 95," not a reason to skip the last phase.</p>
+
+    <div class="roadmap-group">
+      <div class="phase-label">PHASE ONE — Built Into The Redesign</div>
+      <p class="phase-sub">Ships with the site. Gets the score from 41 to roughly 78–82.</p>
+      <div class="roadmap">
+        <div class="step">
+          <div class="num">01</div>
+          <div>
+            <h4>Event schema on every concert page<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>startDate, location, offers (price/availability), performer — structured for Google Rich Results and pulled directly by AI answer engines for "concerts in Fort Lauderdale this weekend"-type queries. Single biggest jump on the whole board.</p>
+            <span class="impact">+ AIO Readiness</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <div>
+            <h4>LocalBusiness / EntertainmentVenue schema, site-wide<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>NAP, hours, and policies published on the venue's own Info page — starts reclaiming authority currently held by third-party aggregators.</p>
+            <span class="impact">+ Local / Off-Page</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <div>
+            <h4>FAQPage content and schema<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Age policy, parking, re-entry, bag policy, will-call — answers real questions and gives AI engines a direct-answer target.</p>
+            <span class="impact">+ AIO Readiness</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">04</div>
+          <div>
+            <h4>Unique title tags and hand-written meta descriptions<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Per-template, keyword-specific, no duplication of the brand name, no auto-truncated excerpts.</p>
+            <span class="impact">+ On-Page Content</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">05</div>
+          <div>
+            <h4>Image compression, lazy-loading, replace Revolution Slider<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Removes the plugin most likely responsible for the Core Web Vitals cost identified in the Technical Rider.</p>
+            <span class="impact">+ Technical SEO</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">06</div>
+          <div>
+            <h4>Modern caching, CDN, and deferred third-party scripts<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Load the Meta Pixel, Google Maps embed, and Tripleseat widget async/deferred so they stop blocking render.</p>
+            <span class="impact">+ Technical SEO</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">07</div>
+          <div>
+            <h4>Breadcrumb schema and a clean heading hierarchy<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>One H1 per page, logical H2/H3 nesting site-wide — currently inconsistent across templates.</p>
+            <span class="impact">+ On-Page / AIO</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">08</div>
+          <div>
+            <h4>Confirm AI-crawler access<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Check robots.txt doesn't block GPTBot, PerplexityBot, or ClaudeBot, and that event content is server-rendered rather than gated behind client-side JavaScript.</p>
+            <span class="impact">+ AIO Readiness</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">09</div>
+          <div>
+            <h4>Keep the "About" copy as-is<span class="timeframe build">AT REDESIGN</span></h4>
+            <p>Already doing real work for both traditional SEO and AI-engine trust signals — don't touch it.</p>
+            <span class="impact">Preserve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-group">
+      <div class="phase-label">PHASE TWO — Ongoing, Post-Launch</div>
+      <p class="phase-sub">Can't be shipped in a redesign. Closes the remaining gap to 95, over roughly 3–6 months.</p>
+      <div class="roadmap">
+        <div class="step">
+          <div class="num">10</div>
+          <div>
+            <h4>Google Business Profile optimization + review-generation campaign<span class="timeframe ongoing">ONGOING</span></h4>
+            <p>Actively prompt post-show attendees for reviews. Feeds Review/AggregateRating schema and directly drives local pack ranking — the single highest-leverage ongoing item.</p>
+            <span class="impact">+ Local / Off-Page</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">11</div>
+          <div>
+            <h4>Citation consistency audit across event aggregators<span class="timeframe ongoing">ONGOING</span></h4>
+            <p>Match name, address, and phone exactly across Bandsintown, Songkick, Yelp, and the ticketing partners already in the Technical Rider — inconsistent NAP across these actively undermines the schema work from Phase One.</p>
+            <span class="impact">+ Local / Off-Page</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">12</div>
+          <div>
+            <h4>Recurring content cadence<span class="timeframe ongoing">ONGOING</span></h4>
+            <p>Genre round-ups, "best venues in Fort Lauderdale"-style guides, recap posts — builds the topical authority a one-time redesign can't manufacture on its own.</p>
+            <span class="impact">+ On-Page Content</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">13</div>
+          <div>
+            <h4>Earned backlinks and local press<span class="timeframe ongoing">ONGOING</span></h4>
+            <p>Local press coverage, music-blog mentions, artist/label site links. This is genuine off-page authority — it takes months of accumulation no matter how good the rebuild is, and it's the item most likely to determine whether the site actually reaches 95 or settles closer to 85.</p>
+            <span class="impact">+ Local / Off-Page</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <p>This scoring rubric is a custom framework, not a certified or externally benchmarked score from Google or any search authority. Technical and schema findings are based on a static HTML crawl and should be independently verified with Google's Rich Results Test and PageSpeed Insights before being presented as fact to a client or used to prioritize development work.</p>
+    <p class="prepared"><strong>Site audited:</strong> jointherevolution.net · <strong>Date:</strong> September 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
