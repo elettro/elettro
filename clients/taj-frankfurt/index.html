@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & AIO Audit — Taj Hessischer Hof Frankfurt | Elettro</title>
+<style>
+  :root{
+    --bg:#0c0e12;
+    --panel:#15181e;
+    --panel2:#1b1f27;
+    --border:#2a2f3a;
+    --text:#e9ecf1;
+    --muted:#9aa3b2;
+    --gold:#E8B34C;
+    --gold-dim:rgba(232,179,76,0.15);
+    --emerald:#3FAE73;
+    --emerald-dim:rgba(63,174,115,0.15);
+    --red:#e0596b;
+    --orange:#e0a15c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+
+  /* HEADER */
+  header{
+    padding:48px 24px 36px;
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#12151b 0%, var(--bg) 100%);
+  }
+  .header-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+  .brand{font-size:13px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:600;}
+  h1{font-size:30px;margin:10px 0 6px;font-weight:700;letter-spacing:-0.3px;}
+  .subtitle{color:var(--muted);font-size:15px;}
+  .subtitle a{color:var(--muted);}
+  .meta-block{text-align:right;color:var(--muted);font-size:13px;}
+  .meta-block div{margin-bottom:3px;}
+
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--border);}
+  .section-label{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  h2{font-size:22px;margin:0 0 28px;font-weight:700;}
+
+  /* HERO SCORES */
+  .hero-grid{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:20px 0 10px;}
+  .hero-item{text-align:center;}
+  .hero-ring-label{margin-top:14px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;}
+  .hero-ring-value{font-size:15px;margin-top:4px;font-weight:700;}
+  .hero-arrow{display:flex;flex-direction:column;align-items:center;color:var(--muted);}
+  .delta-badge{
+    background:var(--emerald-dim);
+    color:var(--emerald);
+    border:1px solid rgba(63,174,115,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:14px;
+    margin-top:8px;
+  }
+  .hero-arrow svg{width:40px;height:40px;margin-bottom:6px;}
+
+  svg.ring{transform:rotate(-90deg);}
+  .ring-track{fill:none;stroke:var(--border);stroke-width:10;}
+  .ring-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1);}
+  .ring-num{
+    font-size:30px;font-weight:800;fill:var(--text);
+    transform:rotate(90deg);
+  }
+  .ring-wrap{position:relative;width:160px;height:160px;}
+  .ring-center{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:34px;font-weight:800;
+  }
+
+  /* CATEGORY GAUGES */
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:820px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.cat-grid{grid-template-columns:1fr;}}
+  .cat-card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px 20px;
+    text-align:center;
+  }
+  .cat-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 14px;}
+  .cat-ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;}
+  .cat-name{font-weight:700;font-size:15px;margin-bottom:4px;}
+  .cat-blurb{color:var(--muted);font-size:12.5px;line-height:1.45;min-height:52px;}
+  .cat-delta{font-size:12px;color:var(--emerald);font-weight:700;margin-top:8px;}
+
+  /* BAR CHART */
+  .bar-chart{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:36px 30px 16px;
+  }
+  .bars-row{display:flex;justify-content:space-between;align-items:flex-end;height:260px;gap:14px;}
+  .bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
+  .bar-pair{display:flex;align-items:flex-end;gap:6px;height:100%;width:100%;justify-content:center;}
+  .bar{width:26px;border-radius:5px 5px 0 0;position:relative;height:0;transition:height 1.2s cubic-bezier(.4,0,.2,1);}
+  .bar.current{background:var(--gold);}
+  .bar.projected{background:var(--emerald);}
+  .bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
+  .bar-label{margin-top:12px;font-size:11.5px;color:var(--muted);text-align:center;max-width:110px;line-height:1.3;}
+  .legend{display:flex;gap:26px;justify-content:center;margin-top:26px;font-size:13px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:8px;}
+  .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* FINDINGS */
+  .findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:760px){.findings-grid{grid-template-columns:1fr;}}
+  .finding{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-left:3px solid var(--border);
+    border-radius:10px;
+    padding:18px 20px;
+  }
+  .finding.critical{border-left-color:var(--red);}
+  .finding.high{border-left-color:var(--orange);}
+  .finding.medium{border-left-color:var(--gold);}
+  .finding.positive{border-left-color:var(--emerald);}
+  .tag{
+    display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;margin-bottom:10px;
+  }
+  .tag.critical{background:rgba(224,89,107,0.15);color:var(--red);}
+  .tag.high{background:rgba(224,161,92,0.18);color:var(--orange);}
+  .tag.medium{background:var(--gold-dim);color:var(--gold);}
+  .tag.positive{background:var(--emerald-dim);color:var(--emerald);}
+  .finding h3{font-size:14.5px;margin:0 0 6px;font-weight:700;}
+  .finding p{margin:0;font-size:13px;color:var(--muted);line-height:1.5;}
+
+  /* TECH STACK */
+  .stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:760px){.stack-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.stack-grid{grid-template-columns:1fr;}}
+  .stack-card{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+  }
+  .stack-role{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .stack-name{font-size:16px;font-weight:700;margin-bottom:8px;}
+  .stack-detail{font-size:12.5px;color:var(--muted);line-height:1.5;}
+  .stack-detail code{color:var(--text);background:#0d1015;padding:1px 5px;border-radius:4px;font-size:11.5px;}
+
+  /* METHODOLOGY */
+  .methodology{
+    background:var(--panel);
+    border:1px dashed var(--border);
+    border-radius:12px;
+    padding:22px 24px;
+    color:var(--muted);
+    font-size:12.5px;
+    line-height:1.7;
+  }
+  .methodology strong{color:var(--text);}
+
+  footer{
+    padding:32px 24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12.5px;
+    border-top:1px solid var(--border);
+  }
+  footer .gold{color:var(--gold);font-weight:700;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="brand">Elettro · SEO &amp; AIO Audit</div>
+      <h1>Taj Hessischer Hof Frankfurt</h1>
+      <div class="subtitle"><a href="https://www.taj-hessischer-hof.com/" target="_blank" rel="noopener">taj-hessischer-hof.com</a> — Luxury Hotel, Frankfurt am Main, Germany</div>
+    </div>
+    <div class="meta-block">
+      <div>Prepared for: Elettro pitch deliverable</div>
+      <div>Audit date: September 5, 2026</div>
+      <div>Verticals: Hospitality / 5-Star Luxury</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section>
+    <div class="section-label" style="text-align:center;">Overall Score</div>
+    <h2 style="text-align:center;">Current State vs. Elettro Rebuild Projection</h2>
+    <div class="hero-grid">
+      <div class="hero-item">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 160 160" width="160" height="160">
+            <circle class="ring-track" cx="80" cy="80" r="70"></circle>
+            <circle class="ring-fill" id="ringOverallCurrent" cx="80" cy="80" r="70" stroke="var(--gold)"
+              stroke-dasharray="439.8" stroke-dashoffset="439.8"></circle>
+          </svg>
+          <div class="ring-center" style="color:var(--gold);">58</div>
+        </div>
+        <div class="hero-ring-label">Current Score</div>
+      </div>
+
+      <div class="hero-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="delta-badge">+35 pts</div>
+      </div>
+
+      <div class="hero-item">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 160 160" width="160" height="160">
+            <circle class="ring-track" cx="80" cy="80" r="70"></circle>
+            <circle class="ring-fill" id="ringOverallProjected" cx="80" cy="80" r="70" stroke="var(--emerald)"
+              stroke-dasharray="439.8" stroke-dashoffset="439.8"></circle>
+          </svg>
+          <div class="ring-center" style="color:var(--emerald);">93</div>
+        </div>
+        <div class="hero-ring-label">Elettro Rebuild Projection</div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;max-width:640px;margin:24px auto 0;">
+      A globally recognized 5-star brand (IHCL / Taj) sitting on a solid hospitality CMS foundation — but leaving significant AIO, content-depth, and trust points on the table. This is a strong, winnable rebuild story.
+    </p>
+  </section>
+
+  <!-- CATEGORY GAUGES -->
+  <section>
+    <div class="section-label">Category Breakdown</div>
+    <h2>Current Score by Category</h2>
+    <div class="cat-grid" id="catGrid">
+      <!-- filled by JS -->
+    </div>
+  </section>
+
+  <!-- BAR CHART -->
+  <section>
+    <div class="section-label">Current vs. Projected</div>
+    <h2>Elettro Rebuild Impact by Category</h2>
+    <div class="bar-chart">
+      <div class="bars-row" id="barsRow"></div>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--gold);"></span>Current</span>
+        <span><span class="swatch" style="background:var(--emerald);"></span>Elettro Rebuild Projection</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINDINGS -->
+  <section>
+    <div class="section-label">Findings</div>
+    <h2>Key Issues &amp; Opportunities</h2>
+    <div class="findings-grid">
+
+      <div class="finding critical">
+        <span class="tag critical">Unconfirmed / Critical</span>
+        <h3>Structured data (JSON-LD) not confirmed</h3>
+        <p>No Hotel, Room, FAQPage, or Review schema is visible in the static server response. Script tag stripping on automated fetch means this cannot be fully confirmed — flagged for verification via Google Rich Results Test before use in client materials. If genuinely absent, this is the single largest AIO gap: a global luxury brand with no machine-readable entity markup.</p>
+      </div>
+
+      <div class="finding high">
+        <span class="tag high">High</span>
+        <h3>Accommodations page is content-thin</h3>
+        <p>The site's primary conversion page (room types) renders almost no static text — no per-room descriptions, square footage, or rates in the delivered HTML. Heavy reliance on client-side rendering for core content risks incomplete indexing by AI crawlers and answer engines that don't execute JavaScript.</p>
+      </div>
+
+      <div class="finding high">
+        <span class="tag high">High</span>
+        <h3>Mislabeled social icons undermine trust</h3>
+        <p>The footer "Yelp" icon links to a third-party job board (hotelcareer.com), and the "TikTok" icon links to a WhatsApp channel invite — neither points to an actual Yelp or TikTok profile. A brand-consistency defect on a flagship 5-star property's site.</p>
+      </div>
+
+      <div class="finding medium">
+        <span class="tag medium">Medium</span>
+        <h3>Generic, branded-only title tags</h3>
+        <p>Every page title ends in "Taj Hessischer Hof Hotel | Official Website" without a primary keyword (e.g., "Luxury Hotel Frankfurt") positioned where search engines and LLMs weight it most heavily.</p>
+      </div>
+
+      <div class="finding medium">
+        <span class="tag medium">Medium</span>
+        <h3>No machine-readable sitemap detected</h3>
+        <p>The footer "Sitemap" link routes to a human-readable HTML page rather than sitemap.xml, which can slow discovery and indexing of deeper pages (dining, meetings, wellness sub-pages).</p>
+      </div>
+
+      <div class="finding medium">
+        <span class="tag medium">Medium</span>
+        <h3>Duplicate gallery image markup</h3>
+        <p>The homepage photo gallery appears to render its full image set twice in the DOM (consistent with an infinite-loop slider pattern), inflating page weight and duplicating alt-text signals. Recommend confirming via PageSpeed Insights.</p>
+      </div>
+
+      <div class="finding positive">
+        <span class="tag positive">Positive</span>
+        <h3>Strong off-site entity presence</h3>
+        <p>Active hospitality press coverage (IHCL, Travel Trade Journal) and listings across major OTA/aggregator platforms reinforce brand entity signals independent of on-site schema — a real asset to build the AIO strategy on top of.</p>
+      </div>
+
+      <div class="finding positive">
+        <span class="tag positive">Positive</span>
+        <h3>Clean NAP and legal entity consistency</h3>
+        <p>Address, phone, and registered legal entity (IH Hospitality GmbH) are consistently presented in the footer and legal notice — a solid Local &amp; Authority foundation to formalize with matching schema and GBP alignment.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section>
+    <div class="section-label">Technology Fingerprint</div>
+    <h2>Current Tech Stack</h2>
+    <div class="stack-grid">
+
+      <div class="stack-card">
+        <div class="stack-role">CMS / Platform</div>
+        <div class="stack-name">Tambourine (Symphony)</div>
+        <div class="stack-detail">Hospitality-vertical website platform. Confirmed via footer credit "Hotel Website Design By Tambourine" and asset domain <code>symphony.cdn.tambourine.com</code>.</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-role">Booking Engine</div>
+        <div class="stack-name">Sabre SynXis CRS</div>
+        <div class="stack-detail">Reservations route to <code>be.synxis.com</code> (Hotel 97281, Chain 21305) — the industry-standard hospitality CRS, common across independent and branded hotels.</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-role">E-Commerce</div>
+        <div class="stack-name">Shopin1</div>
+        <div class="stack-detail">Gift voucher storefront hosted on a Shopin1 subdomain, separate from the primary domain — a fragmentation point for entity/brand consistency.</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-role">Tag Management</div>
+        <div class="stack-name">Google Tag Manager</div>
+        <div class="stack-detail">Container <code>GTM-M89F8RHN</code> present sitewide. Underlying tag configuration (pixels, conversion events) not visible via static fetch — unconfirmed.</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-role">Asset Delivery</div>
+        <div class="stack-name">Tambourine Symphony CDN</div>
+        <div class="stack-detail">All imagery served from <code>symphony.cdn.tambourine.com</code>. No modern format (AVIF/WebP) or responsive srcset confirmed in static markup.</div>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-role">Localization</div>
+        <div class="stack-name">EN / DE Toggle</div>
+        <div class="stack-detail">Native language switcher present in header. hreflang tag implementation not visible via static fetch — unconfirmed, recommend verification.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section>
+    <div class="methodology">
+      <strong>Methodology &amp; Disclaimer:</strong> Scores are derived from a live homepage and interior-page fetch, tech stack fingerprinting (meta tags, CDN/asset patterns, footer credits, booking/ecommerce integrations), and manual review against six weighted categories: Technical SEO, On-Page SEO, Structured Data/AIO, Content Depth, Site Performance, and Local &amp; Authority. Automated fetch strips inline &lt;script&gt; tags, so JSON-LD structured data, pixel tracking configuration, and some client-side-rendered content <strong>cannot be confirmed</strong> and are flagged accordingly — verify via Google Rich Results Test, Google Search Console, and PageSpeed Insights before presenting findings to the client. Elettro rebuild projections represent realistic, achievable targets based on Elettro's standard technical and content build practices, not guarantees of specific search rankings.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Prepared by <span class="gold">Elettro</span> — Digital Marketing, Web Development &amp; Creative Production · elettro.com
+</footer>
+
+<script>
+  const categories = [
+    { name: "Technical SEO", current: 66, projected: 94, blurb: "Solid CMS foundation, no confirmed XML sitemap." },
+    { name: "On-Page SEO", current: 58, projected: 93, blurb: "Generic titles; keyword equity buried in URLs." },
+    { name: "Structured Data / AIO", current: 42, projected: 95, blurb: "No confirmed schema — the flagship rebuild lever." },
+    { name: "Content Depth", current: 48, projected: 91, blurb: "Thin room-level and amenity content sitewide." },
+    { name: "Site Performance", current: 60, projected: 92, blurb: "Heavy imagery, possible duplicate DOM assets." },
+    { name: "Local & Authority", current: 74, projected: 93, blurb: "Strong brand backing, undercut by broken social links." },
+  ];
+
+  const catGrid = document.getElementById('catGrid');
+  const barsRow = document.getElementById('barsRow');
+  const R = 50; // radius for small rings
+  const C = 2 * Math.PI * R;
+
+  categories.forEach((cat, i) => {
+    // category ring card
+    const card = document.createElement('div');
+    card.className = 'cat-card';
+    card.innerHTML = `
+      <div class="cat-ring-wrap">
+        <svg class="ring" viewBox="0 0 120 120" width="120" height="120">
+          <circle class="ring-track" cx="60" cy="60" r="${R}"></circle>
+          <circle class="ring-fill" data-current="${cat.current}" cx="60" cy="60" r="${R}" stroke="var(--gold)"
+            stroke-dasharray="${C}" stroke-dashoffset="${C}"></circle>
+        </svg>
+        <div class="cat-ring-center" style="color:var(--gold);">${cat.current}</div>
+      </div>
+      <div class="cat-name">${cat.name}</div>
+      <div class="cat-blurb">${cat.blurb}</div>
+      <div class="cat-delta">→ ${cat.projected} projected</div>
+    `;
+    catGrid.appendChild(card);
+
+    // bar pair
+    const group = document.createElement('div');
+    group.className = 'bar-group';
+    group.innerHTML = `
+      <div class="bar-pair">
+        <div class="bar current" data-val="${cat.current}"><span class="bar-value">${cat.current}</span></div>
+        <div class="bar projected" data-val="${cat.projected}"><span class="bar-value">${cat.projected}</span></div>
+      </div>
+      <div class="bar-label">${cat.name}</div>
+    `;
+    barsRow.appendChild(group);
+  });
+
+  function animate() {
+    // overall rings
+    const overallC = 439.8;
+    document.getElementById('ringOverallCurrent').style.strokeDashoffset = overallC - (overallC * 58/100);
+    document.getElementById('ringOverallProjected').style.strokeDashoffset = overallC - (overallC * 93/100);
+
+    // category rings
+    document.querySelectorAll('.cat-ring-wrap .ring-fill').forEach(el => {
+      const val = parseFloat(el.dataset.current);
+      el.style.strokeDashoffset = C - (C * val/100);
+    });
+
+    // bars
+    document.querySelectorAll('.bar').forEach(el => {
+      const val = parseFloat(el.dataset.val);
+      el.style.height = val + '%';
+    });
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animate();
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  io.observe(document.body);
+
+  window.addEventListener('load', () => setTimeout(animate, 200));
+</script>
+
+</body>
+</html>
