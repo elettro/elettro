@@ -1,1 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Finesse Xperience — SEO &amp; AIO Audit | Elettro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0b0e14;
+    --panel:#141822;
+    --panel-2:#1a1f2c;
+    --line:#262c3d;
+    --text-primary:#f3f1ec;
+    --text-muted:#99a1b5;
+    --text-dim:#5c6478;
+    --gold:#e8b34c;
+    --gold-dim:#8a6a2c;
+    --gold-glow:rgba(232,179,76,0.14);
+    --emerald:#3fae73;
+    --emerald-dim:#276e48;
+    --emerald-glow:rgba(63,174,115,0.14);
+    --lavender:#c9a8d9;
+    --red:#d9694f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg-deep);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 12% -8%, var(--gold-glow), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 88% 8%, var(--emerald-glow), transparent 55%);
+    color:var(--text-primary);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 28px 100px;}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
 
+  /* ===== Masthead ===== */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:30px 0;border-bottom:1px solid var(--line);margin-bottom:56px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--gold),var(--emerald));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:#0b0e14;
+  }
+  .brand-name{font-family:'Fraunces',serif;font-size:18px;font-weight:600;}
+  .brand-tag{font-size:11px;color:var(--text-dim);letter-spacing:.04em;margin-top:1px;}
+  .masthead-right{text-align:right;font-size:12.5px;color:var(--text-muted);}
+  .masthead-right .doc-type{color:var(--gold);font-weight:600;}
+
+  /* ===== Hero ===== */
+  .hero{padding:8px 0 46px;}
+  .hero .eyebrow{color:var(--text-muted);font-size:13.5px;margin-bottom:14px;}
+  .hero .eyebrow strong{color:var(--text-primary);}
+  .hero h1{font-size:clamp(32px,4.4vw,46px);line-height:1.14;max-width:700px;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero p.lede{max-width:620px;color:var(--text-muted);font-size:16px;margin-top:18px;}
+
+  /* ===== Score rings ===== */
+  .score-row{display:flex;gap:20px;margin-top:46px;flex-wrap:wrap;}
+  .ring-card{
+    flex:1;min-width:260px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:28px;display:flex;align-items:center;gap:22px;
+  }
+  .ring-card svg{flex-shrink:0;}
+  .ring-label{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .ring-score{font-family:'Fraunces',serif;font-size:40px;font-weight:600;line-height:1;}
+  .ring-note{font-size:12.5px;color:var(--text-dim);margin-top:6px;}
+  .ring-card.current .ring-score{color:var(--gold);}
+  .ring-card.projected .ring-score{color:var(--emerald);}
+  .delta-pill{
+    display:inline-flex;align-items:center;gap:6px;background:var(--emerald-glow);
+    border:1px solid var(--emerald-dim);color:var(--emerald);padding:5px 12px;
+    border-radius:999px;font-size:12.5px;font-weight:600;margin-top:16px;
+  }
+
+  /* ===== Section framing ===== */
+  section{margin-top:76px;}
+  .section-head{margin-bottom:26px;}
+  .section-kicker{font-size:12.5px;color:var(--gold);letter-spacing:.04em;margin-bottom:8px;}
+  .section-head h2{font-size:28px;}
+  .section-head p{color:var(--text-muted);font-size:15px;max-width:640px;margin-top:10px;}
+
+  /* ===== Flagship finding ===== */
+  .flagship{
+    background:linear-gradient(150deg,var(--panel) 0%,var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:12px;padding:30px 32px;
+  }
+  .flagship .tag{font-size:11.5px;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;font-weight:600;}
+  .flagship h3{font-size:22px;margin-top:10px;max-width:560px;}
+  .flagship p{color:var(--text-muted);font-size:15px;margin-top:12px;max-width:620px;}
+  .name-variants{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .name-variants span{
+    background:var(--bg-deep);border:1px solid var(--line);border-radius:8px;
+    padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-primary);
+  }
+  .name-variants span small{display:block;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:10.5px;margin-top:2px;}
+
+  /* ===== Category bars ===== */
+  .cat-grid{display:flex;flex-direction:column;gap:22px;}
+  .cat-row{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:20px 24px;
+  }
+  .cat-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .cat-name{font-size:15.5px;font-weight:600;}
+  .cat-scores{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-muted);}
+  .cat-scores b.g{color:var(--gold);}
+  .cat-scores b.e{color:var(--emerald);}
+  .bars{display:flex;flex-direction:column;gap:7px;}
+  .bar-track{background:var(--bg-deep);border-radius:6px;height:10px;overflow:hidden;position:relative;}
+  .bar-fill{height:10px;border-radius:6px;transition:width 1.2s ease;}
+  .bar-fill.current{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+  .bar-fill.projected{background:linear-gradient(90deg,var(--emerald-dim),var(--emerald));}
+
+  /* ===== Findings ===== */
+  .findings-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media(max-width:720px){.findings-cols{grid-template-columns:1fr;}}
+  .findings-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:16px;}
+  .finding{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;margin-bottom:12px;
+  }
+  .finding .sev{
+    display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+    padding:3px 8px;border-radius:5px;text-transform:uppercase;margin-bottom:9px;
+  }
+  .sev.critical{background:rgba(217,105,79,.16);color:var(--red);}
+  .sev.high{background:var(--gold-glow);color:var(--gold);}
+  .sev.medium{background:rgba(153,161,181,.14);color:var(--text-muted);}
+  .sev.low{background:rgba(153,161,181,.08);color:var(--text-dim);}
+  .sev.good{background:var(--emerald-glow);color:var(--emerald);}
+  .finding p{margin:0;font-size:14px;color:var(--text-primary);}
+  .finding p.detail{color:var(--text-muted);font-size:13px;margin-top:6px;}
+
+  /* ===== Tech stack ===== */
+  .stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:720px){.stack-grid{grid-template-columns:1fr 1fr;}}
+  .stack-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;
+  }
+  .stack-card .k{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .stack-card .v{font-size:14.5px;font-weight:600;}
+  .stack-card .v small{display:block;font-weight:400;color:var(--text-muted);font-size:12px;margin-top:3px;}
+  .unconfirmed{color:var(--text-dim);font-style:italic;}
+
+  /* ===== Comparison table ===== */
+  .comp-table{width:100%;border-collapse:collapse;margin-top:6px;}
+  .comp-table th,.comp-table td{
+    text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top;
+  }
+  .comp-table th{
+    font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;color:var(--text-muted);
+    text-transform:none;
+  }
+  .comp-table th.godaddy{color:var(--gold);}
+  .comp-table th.elettro{color:var(--emerald);}
+  .comp-table td.dim{color:var(--text-primary);font-weight:600;width:26%;}
+  .comp-table td{color:var(--text-muted);}
+  .comp-note{
+    margin-top:20px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;font-size:13.5px;color:var(--text-muted);
+  }
+  .comp-note b{color:var(--text-primary);}
+
+  /* ===== Methodology ===== */
+  .method{
+    background:var(--panel);border:1px dashed var(--line);border-radius:10px;
+    padding:20px 22px;font-size:13px;color:var(--text-dim);line-height:1.65;
+  }
+  .method b{color:var(--text-muted);}
+
+  /* ===== CTA / footer ===== */
+  .cta{
+    margin-top:90px;background:linear-gradient(135deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);border-radius:16px;padding:44px 40px;text-align:center;
+  }
+  .cta h2{font-size:30px;max-width:560px;margin:0 auto;}
+  .cta p{color:var(--text-muted);font-size:15px;margin-top:12px;max-width:480px;margin-left:auto;margin-right:auto;}
+  .cta-buttons{display:flex;gap:14px;justify-content:center;margin-top:26px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:9px;
+    font-size:14.5px;font-weight:600;text-decoration:none;
+  }
+  .btn.primary{background:var(--emerald);color:#0b0e14;}
+  .btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text-primary);}
+  footer{
+    margin-top:56px;padding-top:28px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-size:12.5px;color:var(--text-dim);
+  }
+  footer .f-brand{display:flex;align-items:center;gap:9px;}
+  footer .f-brand-mark{
+    width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--gold),var(--emerald));
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="brand">
+      <div class="brand-mark">e</div>
+      <div>
+        <div class="brand-name">Elettro</div>
+        <div class="brand-tag">Digital Production &amp; Creative Agency</div>
+      </div>
+    </div>
+    <div class="masthead-right">
+      <div class="doc-type">SEO &amp; AIO Audit</div>
+      <div>Prepared for The Finesse Xperience · thefinessexperience.com</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Digital presence audit &middot; <strong>The Finesse Xperience</strong> (Finesse Corporate Wellness) &middot; Miami, FL</div>
+    <h1>Eight years of real hotel partnerships, and <em>zero</em> footprint anywhere the search finds it.</h1>
+    <p class="lede">A scored look at how thefinessexperience.com performs today across traditional SEO and AI answer-engine readiness — and what the same content looks like on a platform built to be found.</p>
+
+    <div class="score-row">
+      <div class="ring-card current">
+        <svg width="104" height="104" viewBox="0 0 104 104">
+          <circle cx="52" cy="52" r="44" fill="none" stroke="#232838" stroke-width="10"/>
+          <circle cx="52" cy="52" r="44" fill="none" stroke="#e8b34c" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="179.7"
+            transform="rotate(-90 52 52)"/>
+        </svg>
+        <div>
+          <div class="ring-label">Current Score</div>
+          <div class="ring-score">35<span style="font-size:20px;color:var(--text-dim);">/100</span></div>
+          <div class="ring-note">GoDaddy Website Builder build</div>
+        </div>
+      </div>
+      <div class="ring-card projected">
+        <svg width="104" height="104" viewBox="0 0 104 104">
+          <circle cx="52" cy="52" r="44" fill="none" stroke="#232838" stroke-width="10"/>
+          <circle cx="52" cy="52" r="44" fill="none" stroke="#3fae73" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="30.4"
+            transform="rotate(-90 52 52)"/>
+        </svg>
+        <div>
+          <div class="ring-label">Elettro Rebuild Projection</div>
+          <div class="ring-score">89<span style="font-size:20px;color:var(--text-dim);">/100</span></div>
+          <div class="delta-pill">&#8593; +54 points</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FLAGSHIP FINDING ===== -->
+  <section>
+    <div class="flagship">
+      <div class="tag">Flagship Finding</div>
+      <h3>The business doesn't fully agree with itself on what it's called — and no one outside the domain is citing it either way.</h3>
+      <p>Search and AI answer engines resolve identity from consistent naming and third-party corroboration. The Finesse Xperience has neither: the site uses three different name forms across its own pages, and a multi-source search (Google, hospitality trade press, review platforms, business directories) turned up no citations of the business anywhere outside its own domain and social handles — despite About Us copy describing years of hotel and luxury-residence partnerships with specific, quantified outcomes.</p>
+      <div class="name-variants">
+        <span>Finesse Corporate Wellness<small>logo &amp; &lt;title&gt; tag</small></span>
+        <span>The Finesse Xperience<small>body copy, social handles, copyright</small></span>
+        <span>Finesse<small>section headers</small></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCORING ===== -->
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">Scoring Breakdown</div>
+      <h2>Six categories, current vs. projected</h2>
+      <p>Each category weighted equally toward the overall score. Current figures reflect verifiable on-site evidence gathered via live fetch and supplementary search — not an automated crawler score.</p>
+    </div>
+    <div class="cat-grid">
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">Technical SEO</span><span class="cat-scores"><b class="g">40</b> &rarr; <b class="e">92</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:40%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:92%"></div></div>
+        </div>
+      </div>
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">On-Page SEO</span><span class="cat-scores"><b class="g">38</b> &rarr; <b class="e">90</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:38%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">Structured Data / AIO</span><span class="cat-scores"><b class="g">15</b> &rarr; <b class="e">90</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:15%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">Content Depth</span><span class="cat-scores"><b class="g">48</b> &rarr; <b class="e">85</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:48%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:85%"></div></div>
+        </div>
+      </div>
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">Site Performance</span><span class="cat-scores"><b class="g">45</b> &rarr; <b class="e">90</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:45%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="cat-row">
+        <div class="cat-row-top"><span class="cat-name">Local &amp; Authority</span><span class="cat-scores"><b class="g">25</b> &rarr; <b class="e">88</b></span></div>
+        <div class="bars">
+          <div class="bar-track"><div class="bar-fill current" style="width:25%"></div></div>
+          <div class="bar-track"><div class="bar-fill projected" style="width:88%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FINDINGS ===== -->
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">Site Findings</div>
+      <h2>What's working, what's costing them</h2>
+    </div>
+    <div class="findings-cols">
+      <div class="findings-col">
+        <h4>Strengths</h4>
+        <div class="finding"><span class="sev good">Good</span><p>Consistent @TheFinesseXperience handle across Facebook, Instagram, LinkedIn and YouTube — one clean entity across social platforms.</p></div>
+        <div class="finding"><span class="sev good">Good</span><p>Click-to-call tel: link present sitewide — low-friction mobile contact path already in place.</p></div>
+        <div class="finding"><span class="sev good">Good</span><p>About Us copy is genuine narrative content with specific, quantified claims (resort-fee complaints cut by more than half, hotel rankings moved from the 60s into the 30s) — real copy, not filler.</p></div>
+        <div class="finding"><span class="sev good">Good</span><p>A real six-category service taxonomy already exists — Fitness, Dance &amp; Choreography, Games &amp; Activities, Team Building, Children's Programming, Spa Services — good bones for structured content.</p></div>
+        <div class="finding"><span class="sev good">Good</span><p>Dedicated FAQ and Testimonials pages already exist as standalone URLs — the architecture is AIO-ready, it just has no schema wired to it yet.</p></div>
+      </div>
+      <div class="findings-col">
+        <h4>Issues</h4>
+        <div class="finding"><span class="sev critical">Critical</span><p>Zero third-party authority footprint.</p><p class="detail">Multi-source search (Google, hospitality trade press, review platforms, directories) surfaced no citations of the business anywhere off-domain, despite years of claimed hotel and luxury-residence partnerships.</p></div>
+        <div class="finding"><span class="sev critical">Critical</span><p>No structured data detected.</p><p class="detail">No FAQPage schema despite a dedicated FAQ page, no LocalBusiness/Organization schema, no Service schema for the six listed categories. Unconfirmed via automated fetch — flagged for manual Rich Results Test verification before citing to the client.</p></div>
+        <div class="finding"><span class="sev high">High</span><p>Brand/entity name fragmentation across the site itself (see flagship finding above) — fragments how search and AI answer engines resolve the entity.</p></div>
+        <div class="finding"><span class="sev high">High</span><p>Broken image references sitewide.</p><p class="detail">Homepage and Services teaser cards render empty image tags with no source, and the homepage photo gallery is built on non-functional <span class="mono">javascript:</span> href markup that doesn't resolve.</p></div>
+        <div class="finding"><span class="sev medium">Medium</span><p>Duplicate heading text on the Services page — "Dance &amp; Choreography" and "Games &amp; Activities" headers each repeat 2–3 times, a page-builder templating artifact that muddies heading hierarchy.</p></div>
+        <div class="finding"><span class="sev medium">Medium</span><p>Identical meta description reused verbatim across Home, About, and Services — no page-specific targeting.</p></div>
+        <div class="finding"><span class="sev medium">Medium</span><p>Copyright footer still reads 2018 — no visible content refresh signal in roughly eight years.</p></div>
+        <div class="finding"><span class="sev low">Low</span><p>Platform ceiling: the page-builder offers no sitemap control and no server-side rendering, capping technical SEO regardless of on-page fixes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH STACK ===== -->
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">Tech Stack</div>
+      <h2>What it's actually built on</h2>
+      <p>Confirmed via live markup fingerprinting. Items marked unconfirmed require manual verification (structured data is stripped by automated fetch tools sitewide).</p>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card"><div class="k">Platform</div><div class="v">GoDaddy Website Builder<small>v8.0.0000 · Starfield Technologies engine</small></div></div>
+      <div class="stack-card"><div class="k">Image Delivery</div><div class="v">wsimg.com CDN<small>GoDaddy's native image service</small></div></div>
+      <div class="stack-card"><div class="k">Video</div><div class="v">YouTube iframe embed<small>no native hosting or video schema</small></div></div>
+      <div class="stack-card"><div class="k">Contact</div><div class="v">Click-to-call tel: link<small>(786) 412-5380</small></div></div>
+      <div class="stack-card"><div class="k">Social</div><div class="v">4 platforms, 1 handle<small>Facebook, Instagram, LinkedIn, YouTube</small></div></div>
+      <div class="stack-card"><div class="k">Analytics / Tags</div><div class="v unconfirmed">Unconfirmed<small>none visible in fetched markup — verify manually</small></div></div>
+      <div class="stack-card"><div class="k">Structured Data</div><div class="v unconfirmed">Unconfirmed<small>script-stripped by fetch — verify via Rich Results Test</small></div></div>
+      <div class="stack-card"><div class="k">Sitemap / robots.txt</div><div class="v unconfirmed">Not independently verified<small>platform offers no manual sitemap control</small></div></div>
+      <div class="stack-card"><div class="k">Last Refresh Signal</div><div class="v">2018<small>copyright year, footer-wide</small></div></div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">The Rebuild</div>
+      <h2>Page builder vs. an Elettro custom build</h2>
+      <p>GoDaddy Website Builder is a legitimate starting point — it got Finesse online with zero technical overhead and a bundled low monthly cost, and a non-technical team can self-edit copy without a developer. The ceiling is where it becomes a liability.</p>
+    </div>
+    <table class="comp-table">
+      <tr><th></th><th class="godaddy">GoDaddy Website Builder</th><th class="elettro">Elettro Build</th></tr>
+      <tr><td class="dim">Structured data / AIO</td><td>No manual schema access — Finesse's FAQ and service pages are invisible to AI answer engines regardless of content quality</td><td>FAQPage, LocalBusiness, and Service schema wired to the content that already exists</td></tr>
+      <tr><td class="dim">Entity consistency</td><td>Brand name varies by page (logo vs. body vs. headers) with no central control</td><td>One entity name, enforced sitewide and in schema — what search and AI engines resolve</td></tr>
+      <tr><td class="dim">Content architecture</td><td>Good page taxonomy, undermined by broken images and duplicate headings the builder itself introduced</td><td>Same service taxonomy, rebuilt clean — no templating artifacts</td></tr>
+      <tr><td class="dim">Performance control</td><td>No control over render path, image optimization, or script loading</td><td>Full control over Core Web Vitals — lazy-loading, compression, caching set deliberately</td></tr>
+      <tr><td class="dim">Code ownership</td><td>Locked to GoDaddy's builder and hosting — no portability</td><td>Client owns the repo; Dean/Elettro invited as collaborator</td></tr>
+      <tr><td class="dim">Iteration speed</td><td>Builder's drag-and-drop editor, one page at a time</td><td>Direct code access — sitewide changes ship fast, no builder lag</td></tr>
+      <tr><td class="dim">Cost structure</td><td>Low flat monthly fee, no setup cost</td><td>One-time build + monthly retainer, scoped to what the site actually needs</td></tr>
+    </table>
+    <div class="comp-note"><b>Pitch framing:</b> the strongest argument here isn't abstract feature comparison — it's that Finesse already has the content (real client outcomes, a real service taxonomy, a real FAQ) and the platform is actively hiding it from the systems that would surface it.</div>
+  </section>
+
+  <!-- ===== METHODOLOGY ===== -->
+  <section>
+    <div class="method">
+      <b>Methodology:</b> Scores are a directional planning estimate from a manual audit — live site fetch, tech stack fingerprinting, and supplementary web search across third-party sources — not an automated crawler score (e.g. Screaming Frog, Ahrefs, SEMrush). Structured data findings are marked unconfirmed because script tags are stripped by automated fetch tools; verify via Google Rich Results Test before use in further client-facing materials. Projected scores reflect typical outcomes for sites with comparable starting conditions once Elettro's standard SEO + AIO scope is applied.
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <div class="cta">
+    <h2>Built to be found, not just to be online.</h2>
+    <p>Elettro turns audits like this one into a rebuild scoped to what a site actually needs — schema, architecture, and a platform that doesn't hide the content already there.</p>
+    <div class="cta-buttons">
+      <a class="btn primary" href="https://www.elettro.com/contact-us">Get in Touch</a>
+      <a class="btn secondary" href="https://www.elettro.com">Visit elettro.com</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">
+      <div class="f-brand-mark"></div>
+      <span>Elettro Interactive — Digital Production &amp; Creative Agency</span>
+    </div>
+    <div>Report prepared for internal pitch use · Not for redistribution</div>
+  </footer>
+
+</div>
+</body>
+</html>
