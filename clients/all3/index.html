@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All3.com — SEO &amp; AIO Audit | Elettro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF0EE; --panel:#FFFFFF; --ink:#1B2226; --muted:#5B666C; --line:#D5DAD8;
+  --timber:#B8732E; --robot:#1F8A8F; --crit:#B3372B; --warn:#B8732E; --ok:#3C7A4B;
+  --track:#E3E7E5;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#13191C; --panel:#1C2428; --ink:#E8ECEA; --muted:#98A4A8; --line:#2C373C;
+    --timber:#E0A458; --robot:#5FC4C9; --crit:#E0685A; --warn:#E0A458; --ok:#7CBF8B; --track:#2A3439;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13191C; --panel:#1C2428; --ink:#E8ECEA; --muted:#98A4A8; --line:#2C373C;
+  --timber:#E0A458; --robot:#5FC4C9; --crit:#E0685A; --warn:#E0A458; --ok:#7CBF8B; --track:#2A3439;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.55;font-variation-settings:"wdth" 100}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 64px}
+header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:28px}
+h1{font-size:clamp(2.2rem,6vw,4rem);line-height:.95;margin:0;font-weight:800;font-variation-settings:"wdth" 70;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:10px 0 0;max-width:60ch}
+.meta{text-align:right;color:var(--muted);font-size:.9rem}
+.meta strong{color:var(--ink);display:block;font-size:1rem}
+h2{font-size:1.5rem;font-variation-settings:"wdth" 80;font-weight:750;margin:0 0 14px}
+section{margin-top:36px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px}
+/* Gauges */
+.gauges{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gauge{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px;text-align:center}
+.gauge svg{width:100%;max-width:150px;height:auto;display:block;margin:0 auto}
+.gauge .lbl{font-weight:650;margin-top:8px}
+.gauge .note{color:var(--muted);font-size:.85rem}
+.ring-track{stroke:var(--track)}
+.num{font-family:"Archivo",sans-serif;font-weight:800;font-size:34px;fill:var(--ink);font-variation-settings:"wdth" 75}
+.delta{margin-top:14px;padding:14px 18px;border-left:4px solid var(--robot);background:var(--panel);border-radius:0 6px 6px 0}
+/* Bars */
+.bars{display:grid;gap:18px}
+.bar-row{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
+.bar-name{font-weight:650}
+.bar-name small{display:block;color:var(--muted);font-weight:400}
+.pair{display:grid;gap:6px}
+.track{position:relative;height:14px;background:var(--track);border-radius:3px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;height:14px;border-radius:3px}
+.fill.now{background:var(--timber)}
+.fill.proj{background:var(--robot)}
+.bar-val{display:grid;grid-template-columns:1fr 42px;gap:8px;align-items:center;font-size:.85rem;font-weight:700}
+.legend{display:flex;gap:20px;color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.legend .l-now::before{background:var(--timber)}
+.legend .l-proj::before{background:var(--robot)}
+/* Findings */
+.flag{border:2px solid var(--crit);border-radius:6px;padding:22px;background:var(--panel)}
+.flag h3{margin:0 0 8px;font-size:1.25rem;font-variation-settings:"wdth" 85}
+.flag table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+.flag td,.flag th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.flag th{color:var(--muted);font-weight:600}
+.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.finding{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px}
+.finding h4{margin:0 0 6px;font-size:1.02rem}
+.finding p{margin:0;color:var(--muted);font-size:.94rem}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:3px;margin-bottom:8px;color:#fff}
+.tag.crit{background:var(--crit)} .tag.warn{background:var(--warn)} .tag.ok{background:var(--ok)}
+:root[data-theme="dark"] .tag, :root:not([data-theme="light"]) .tag{color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag{color:#13191C}}
+.unconf{font-size:.8rem;font-weight:700;color:var(--warn)}
+/* Stack */
+.stack{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);border-radius:6px;background:var(--panel);overflow:hidden}
+.stack div{padding:14px 18px;border-bottom:1px solid var(--line)}
+.stack div:nth-child(odd){border-right:1px solid var(--line)}
+.stack dt{color:var(--muted);font-size:.85rem}
+.stack dd{margin:2px 0 0;font-weight:650}
+.stack dd em{font-style:normal;font-weight:400;color:var(--muted);font-size:.88rem}
+.plan{counter-reset:s;display:grid;gap:10px;padding:0;list-style:none;margin:0}
+.plan li{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 18px 14px 56px;position:relative}
+.plan li::before{counter-increment:s;content:counter(s);position:absolute;left:18px;top:12px;font-weight:800;font-size:1.3rem;color:var(--robot)}
+.plan b{display:block}
+.method{color:var(--muted);font-size:.88rem;border-top:1px solid var(--line);padding-top:18px;margin-top:40px}
+.overflow{overflow-x:auto}
+@media (max-width:760px){
+  header{grid-template-columns:1fr}.meta{text-align:left}
+  .gauges{grid-template-columns:repeat(2,1fr)}
+  .bar-row{grid-template-columns:1fr;gap:6px}
+  .findings,.stack{grid-template-columns:1fr}
+  .stack div:nth-child(odd){border-right:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fill{animation:grow 900ms cubic-bezier(.2,.7,.2,1) both}
+  @keyframes grow{from{width:0}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>All3.com<br>search &amp; AI visibility audit</h1>
+    <p class="sub">Robotic timber construction, Zug / Berlin / London / Belgrade. Strong product story and press, but the site tells search engines and AI assistants two different numbers about its core promise.</p>
+  </div>
+  <div class="meta"><strong>Elettro Interactive</strong>AIO Authority division<br>25 September 2026</div>
+</header>
+
+<section aria-labelledby="scores">
+  <h2 id="scores">Scores</h2>
+  <div class="gauges">
+    <div class="gauge">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Current SEO score 56 of 100"><circle class="ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--timber)" stroke-width="12" stroke-linecap="round" stroke-dasharray="175.9 314.16" transform="rotate(-90 60 60)"/><text x="60" y="72" text-anchor="middle" class="num">56</text></svg>
+      <div class="lbl">SEO score</div><div class="note">Current</div>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Current AIO score 54 of 100"><circle class="ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--timber)" stroke-width="12" stroke-linecap="round" stroke-dasharray="169.6 314.16" transform="rotate(-90 60 60)"/><text x="60" y="72" text-anchor="middle" class="num">54</text></svg>
+      <div class="lbl">AIO score</div><div class="note">Current</div>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Projected SEO score 84 of 100"><circle class="ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--robot)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.9 314.16" transform="rotate(-90 60 60)"/><text x="60" y="72" text-anchor="middle" class="num">84</text></svg>
+      <div class="lbl">SEO score</div><div class="note">After Elettro rebuild</div>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120" role="img" aria-label="Projected AIO score 83 of 100"><circle class="ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--robot)" stroke-width="12" stroke-linecap="round" stroke-dasharray="260.8 314.16" transform="rotate(-90 60 60)"/><text x="60" y="72" text-anchor="middle" class="num">83</text></svg>
+      <div class="lbl">AIO score</div><div class="note">After Elettro rebuild</div>
+    </div>
+  </div>
+  <p class="delta"><b>+28 SEO / +29 AIO.</b> Most of the gain is metadata, schema and claim alignment on pages that already exist. The content is good; it just isn't packaged for machines.</p>
+</section>
+
+<section aria-labelledby="cats">
+  <h2 id="cats">Six-category breakdown</h2>
+  <div class="panel">
+    <div class="legend"><span class="l-now">Current</span><span class="l-proj">Projected</span></div>
+    <div class="bars">
+      <div class="bar-row"><div class="bar-name">Technical SEO<small>20% weight</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:64%"></div></div>64</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:88%"></div></div>88</div></div></div>
+      <div class="bar-row"><div class="bar-name">On-Page SEO<small>20% weight</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:42%"></div></div>42</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:90%"></div></div>90</div></div></div>
+      <div class="bar-row"><div class="bar-name">Structured Data / AIO<small>20% weight</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:44%"></div></div>44</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:85%"></div></div>85</div></div></div>
+      <div class="bar-row"><div class="bar-name">Content Depth<small>15% weight</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:74%"></div></div>74</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:82%"></div></div>82</div></div></div>
+      <div class="bar-row"><div class="bar-name">Site Performance<small>15% weight · estimated</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:55%"></div></div>55</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:80%"></div></div>80</div></div></div>
+      <div class="bar-row"><div class="bar-name">Local &amp; Authority<small>10% weight</small></div><div class="pair">
+        <div class="bar-val"><div class="track"><div class="fill now" style="width:68%"></div></div>68</div>
+        <div class="bar-val"><div class="track"><div class="fill proj" style="width:74%"></div></div>74</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="flagship">
+  <h2 id="flagship">Flagship finding: claim fragmentation</h2>
+  <div class="flag">
+    <h3>The site says 10%. Its own press release and the press say 30%.</h3>
+    <p>The homepage, nav and /less-cost page promise a guaranteed minimum 10% cost reduction. The WaVe-X press release on the same domain and third-party coverage of the seed round (RoboticsTomorrow) cite "up to 30%". Both can be true (floor vs ceiling), but nothing on the site reconciles them. AI assistants synthesize from all of these sources and will quote whichever number they hit first, or blend them.</p>
+    <div class="overflow"><table>
+      <thead><tr><th>Source</th><th>Cost claim</th><th>Framing</th></tr></thead>
+      <tbody>
+        <tr><td>all3.com homepage + nav</td><td>10%</td><td>"10% less cost"</td></tr>
+        <tr><td>all3.com/less-cost</td><td>≥10%</td><td>Guaranteed at contract stage</td></tr>
+        <tr><td>all3.com/news (WaVe-X release)</td><td>up to 30%</td><td>Model ceiling</td></tr>
+        <tr><td>RoboticsTomorrow (seed round coverage)</td><td>up to 30%</td><td>Model ceiling</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Fix:</b> one canonical claim sentence used everywhere, e.g. "guaranteed 10% minimum, up to 30%", added to /less-cost, the FAQ, Organization schema description and the press-release boilerplate.</p>
+  </div>
+</section>
+
+<section aria-labelledby="find">
+  <h2 id="find">Findings</h2>
+  <div class="findings">
+    <div class="finding"><span class="tag crit">Critical</span><h4>Homepage title is just "All3"</h4><p>No category, no keyword, no meta description. The brand's most-linked page tells Google nothing about robotic or timber construction. Core pages (/less-cost, /mantis, /faq) follow the same pattern: bare titles, no descriptions.</p></div>
+    <div class="finding"><span class="tag crit">Critical</span><h4>FAQ is AIO gold with no confirmed markup</h4><p>18 long-form Q&amp;As on CLT fire safety, timber supply, factories and pricing model. This is exactly what AI assistants lift. FAQPage schema <span class="unconf">unconfirmed</span> and the page has no meta description.</p></div>
+    <div class="finding"><span class="tag warn">High</span><h4>Social previews are text-only</h4><p>Twitter card is "summary" with no image on every page checked; og:image not detected. LinkedIn is the only social channel, so every shared link lands as a bare title.</p></div>
+    <div class="finding"><span class="tag warn">High</span><h4>Alt text leaks and placeholders</h4><p>English FAQ images carry German alt text ("Holz als Baustoff", "Installationszeit…", "Sigel"). Others read "Image description" and "Gallery slide". A visible "Enter some text..." placeholder renders on news articles.</p></div>
+    <div class="finding"><span class="tag warn">High</span><h4>Mixed-case, inconsistent news URLs</h4><p>/news/WaVe-X-invests-in-all3, /news/all3-awarded-grant-from-Innovate-UK, /news/All3-mantis-revealed. Case-sensitive paths risk duplicate URLs and broken inbound links.</p></div>
+    <div class="finding"><span class="tag warn">Medium</span><h4>Offices invisible on-site</h4><p>Zug, Berlin, London and Belgrade appear only in press boilerplate. No Organization/address signals in the footer, which weakens entity confidence for "construction robotics Germany" style queries.</p></div>
+    <div class="finding"><span class="tag warn">Medium</span><h4>Heavy media on first paint</h4><p>1920px autoplay hero video, gallery images served at 3840px width, a client-loaded 360° viewer ("Loading…"), plus GTM and a Builder.io tracking pixel. Performance score is estimated; confirm with PageSpeed Insights.</p></div>
+    <div class="finding"><span class="tag warn">Medium</span><h4>EN/DE toggle, hreflang unverified</h4><p>German market is the first commercial market. If hreflang pairs are missing, DE pages compete with EN pages instead of serving German searchers. <span class="unconf">unconfirmed</span></p></div>
+    <div class="finding"><span class="tag ok">Strength</span><h4>News articles are done right</h4><p>Descriptive titles, meta descriptions, og:type article and published_time. Proof the CMS can do it; the core pages just weren't configured.</p></div>
+    <div class="finding"><span class="tag ok">Strength</span><h4>Real third-party authority</h4><p>$25M seed (RTP Global), WaVe-X / WALTER GROUP investment, Innovate UK grant, Automate.org feature, a running podcast series. Authority is not the bottleneck.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="stack">
+  <h2 id="stack">Tech stack</h2>
+  <dl class="stack">
+    <div><dt>CMS</dt><dd>Builder.io (headless visual CMS) <em>confirmed via image API + tracking pixel</em></dd></div>
+    <div><dt>Front-end</dt><dd>Server-rendered JS framework <em>unconfirmed; Builder.io typically pairs with Next.js</em></dd></div>
+    <div><dt>Images</dt><dd>Builder.io Image API, WebP <em>up to 3840px widths</em></dd></div>
+    <div><dt>Video</dt><dd>Self-hosted AV1 MP4 <em>1920px hero</em></dd></div>
+    <div><dt>Tags &amp; analytics</dt><dd>Google Tag Manager <em>GTM-KFMFWT4P</em>, Builder.io pixel</dd></div>
+    <div><dt>Consent</dt><dd>Custom 3-option cookie banner</dd></div>
+    <div><dt>Localization</dt><dd>EN / DE toggle <em>hreflang unconfirmed</em></dd></div>
+    <div><dt>Social / off-site</dt><dd>LinkedIn only</dd></div>
+  </dl>
+</section>
+
+<section aria-labelledby="plan">
+  <h2 id="plan">What the Elettro rebuild changes</h2>
+  <ol class="plan">
+    <li><b>Claim alignment</b>One canonical cost / time / CO₂ statement across site, schema and press boilerplate.</li>
+    <li><b>Metadata on every core page</b>Keyword-led titles and descriptions for home, the three benefit pages, Mantis, factory, RTA, FAQ, About. og:image and large-image cards throughout.</li>
+    <li><b>Schema layer</b>Organization (with all four offices, founders, funding sameAs), Product for Mantis / RTA / Robofactory, FAQPage, NewsArticle, VideoObject for The Constructivist.</li>
+    <li><b>AIO packaging</b>Answer-first summaries on each benefit page, llms.txt, a spec sheet page for Mantis (payload, reach, doorway fit) that assistants can quote.</li>
+    <li><b>Hygiene</b>Lowercase URL redirects, EN/DE alt-text split, placeholder removal, hreflang pairs, responsive image sizes, poster-first hero video.</li>
+  </ol>
+</section>
+
+<p class="method"><b>Methodology.</b> Scores are Elettro's six-category weighted composite from a live fetch of all3.com, /faq, /less-cost and a news article on 25 Sep 2026, plus off-site search. SEO score weights all six categories; AIO score weights Structured Data/AIO 40%, Content Depth, On-Page and Authority 20% each. JSON-LD cannot be read by automated fetch, so all schema findings are marked unconfirmed and should be verified in Google's Rich Results Test. Performance is estimated from page weight signals, not lab data. Projections assume the rebuild scope above and exclude new off-site PR.</p>
+
+</div>
+</body>
+</html>
