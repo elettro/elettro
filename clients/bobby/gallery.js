@@ -82,7 +82,7 @@ function applyFilters() {
   const query = document.getElementById('search').value.trim().toLowerCase(); const status = document.getElementById('status-filter').value; let visible = 0;
   for (const item of items) { const match = (!query || `${item.id} ${item.title} ${item.filename}`.toLowerCase().includes(query)) && (status === 'all' || current(item.id).status === status); document.getElementById(item.id).hidden = !match; if (match) visible++; }
   document.getElementById('visible-count').textContent = `${visible} of ${items.length} items`;
-  for (const section of document.querySelectorAll('.collection:not(.pina)')) { const sectionItems = section.querySelectorAll('[data-item-id]'); section.hidden = sectionItems.length > 0 && [...sectionItems].every(n => n.hidden); }
+  for (const section of document.querySelectorAll('.collection:not(.pina):not(.feature-row)')) { const sectionItems = section.querySelectorAll('[data-item-id]'); section.hidden = sectionItems.length > 0 && [...sectionItems].every(n => n.hidden); }
   document.getElementById('pop-that-pina').hidden = Boolean(query) || status !== 'all';
 }
 function updateSummary() {
@@ -100,20 +100,10 @@ document.getElementById('status-filter').addEventListener('change', applyFilters
 document.getElementById('export-review').addEventListener('click', () => { if (!items.length) return toast('The collection is still loading.'); const url = URL.createObjectURL(new Blob([summaryText()], { type: 'text/plain;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = `bobby-rompe-review-${new Date().toISOString().slice(0, 10)}.txt`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); toast('Review exported. Share the downloaded file.'); });
 document.getElementById('copy-review').addEventListener('click', async () => { if (!items.length) return toast('The collection is still loading.'); try { await navigator.clipboard.writeText(summaryText()); toast('Review summary copied.'); } catch { toast('Please use Export review to download your summary.'); } });
 fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error('Gallery unavailable'); return r.json(); }).then(data => { if (!Array.isArray(data) || data.some(item => !item.src)) throw new Error('Media preparation in progress'); items = data; items.forEach(render);
-  const wife = document.getElementById('LIM-15');
-  const moj = items.find(i => i.id === 'MOJ-17');
-  if (wife && moj) {
-    const companion = el('a', 'media-card paired-feature', '');
-    companion.href = '#MOJ-17';
-    companion.setAttribute('aria-label', 'View Mojito Mágico Angry Wife, Great one');
-    const upper = el('div', 'paired-feature-visual');
-    upper.append(el('span', 'paired-feature-badge', 'MOJITO MÁGICO'));
-    upper.append(el('span', 'paired-feature-play', '▶'));
-    const info = el('div', 'card-body');
-    info.append(el('h3', 'card-title', 'Angry Wife · Mojito Mágico'));
-    info.append(el('p', 'source-folder', 'Same concept · Mojito Mágico flavor'));
-    info.append(el('span', 'feature-great-one', 'Great one ↗'));
-    companion.append(upper, info);
-    wife.insertAdjacentElement('afterend', companion);
+  // Move existing full player cards into the featured row without duplicating entries.
+  const featuredGrid = document.querySelector('[data-featured="angry-wife"]');
+  for (const id of ['LIM-15','LIM-17','MOJ-17','LIM-04']) {
+    const card = document.getElementById(id);
+    if (card && featuredGrid) featuredGrid.append(card);
   }
   document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
