@@ -16,8 +16,14 @@
 
 .dropbox-link{display:inline-block;color:var(--lime,#d2ff37);font-weight:700;margin:8px 0 16px}.player-wrap video{min-height:260px;background:radial-gradient(ellipse at center,#373a22,#0c0e0c)}
 
+
+/* Preview only: retain the existing layout and approval controls. */
+.player-wrap{isolation:isolate}
+.player-wrap .first-frame-preview{position:absolute;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none;color:var(--lime);font-family:'Barlow Condensed',Impact,sans-serif;font-size:52px;font-weight:800;background:radial-gradient(ellipse at 55% 36%,#5a693c,#252e22 46%,#111812 100%);text-shadow:0 3px 14px #0009}
+.player-wrap.first-frame-ready .first-frame-preview{display:none}
+.player-wrap .video-ref,.player-wrap .duration{z-index:2}
 </style>
-<script src="gallery.js?v=dropbox-20261016" defer></script>
+<script src="gallery.js?v=firstframe-20261016b" defer></script>
 </head>
 <body>
 <a class="skip" href="#gallery">Skip to gallery</a>
