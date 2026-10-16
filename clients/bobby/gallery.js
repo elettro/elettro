@@ -32,6 +32,36 @@ function addFileDetail(parent, item) {
   const detail = el('details', 'file-detail'); detail.append(el('summary', '', 'Original filename'), el('p', '', item.filename)); parent.append(detail);
 }
 function pauseOthers(player) { document.querySelectorAll('video,audio').forEach(other => { if (other !== player) other.pause(); }); }
+// Show an actual opening video frame when the player enters the viewport.
+// Keep a branded still fallback if Dropbox cannot deliver a seekable video frame.
+const firstFrameObserver = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver((entries, observer) => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    const video = entry.target;
+    observer.unobserve(video);
+    if (video.preload === 'none' && video.paused) {
+      video.preload = 'metadata';
+      video.load();
+    }
+  }
+}, { rootMargin: '350px 0px' }) : null;
+function prepareOpeningFrame(player, wrap, item) {
+  if (item.poster) { player.poster = item.poster; player.src = item.src; return; }
+  wrap.append(el('div', 'first-frame-preview', '▶'));
+  player.preload = 'none';
+  player.src = item.src + (item.src.includes('#') ? '' : '#t=0.08');
+  const ready = () => wrap.classList.add('first-frame-ready');
+  player.addEventListener('loadeddata', ready, { once: true });
+  player.addEventListener('seeked', ready, { once: true });
+  player.addEventListener('play', ready, { once: true });
+  player.addEventListener('loadedmetadata', () => {
+    if (player.paused && player.readyState < 2) {
+      try { player.currentTime = Math.min(0.08, Math.max(0, player.duration - 0.01)); } catch (_) {}
+    }
+  }, { once: true });
+  if (firstFrameObserver) firstFrameObserver.observe(player);
+  else player.preload = 'metadata';
+}
 function render(item) {
   const article = el('article', item.type === 'audio' ? 'audio-card' : 'media-card'); article.id = item.id; article.dataset.itemId = item.id;
   if (item.type === 'audio') {
@@ -40,7 +70,7 @@ function render(item) {
     const player = el('audio'); player.controls = true; player.preload = 'none'; player.src = item.src; player.setAttribute('aria-label', `${item.id}: ${item.title}`); player.addEventListener('play', () => pauseOthers(player)); body.append(player); addFileDetail(body, item); article.append(body); addReview(article, item);
     document.querySelector(`[data-audio="${item.section}"]`).append(article);
   } else {
-    const wrap = el('div', 'player-wrap'); const player = el('video'); player.controls = true; player.playsInline = true; player.preload = 'none'; if (item.poster) player.poster = item.poster; player.src = item.src; player.setAttribute('aria-label', `${item.id}: ${item.title}`); player.addEventListener('play', () => pauseOthers(player));
+    const wrap = el('div', 'player-wrap'); const player = el('video'); player.controls = true; player.playsInline = true; prepareOpeningFrame(player, wrap, item); player.setAttribute('aria-label', `${item.id}: ${item.title}`); player.addEventListener('play', () => pauseOthers(player));
     player.append(el('p', '', 'Your browser does not support this video.'));
     wrap.append(player, el('span', 'video-ref', item.id)); if (item.duration) wrap.append(el('span', 'duration', duration(item.duration)));
     const body = el('div', 'card-body'); body.append(el('h3', 'card-title', item.title));
