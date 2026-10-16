@@ -74,7 +74,7 @@ function render(item) {
     player.append(el('p', '', 'Your browser does not support this video.'));
     wrap.append(player, el('span', 'video-ref', item.id)); if (item.duration) wrap.append(el('span', 'duration', duration(item.duration)));
     const body = el('div', 'card-body'); body.append(el('h3', 'card-title', item.title));
-    const folder = (item.sourcePath || '').split('/').slice(1, -1).join(' / '); body.append(el('p', 'source-folder', folder || (item.section === 'fun' ? 'Just for Fun / Finished cut' : 'Rompe / Brand film')));
+    const folder = (item.sourcePath || '').split('/').slice(1, -1).join(' / '); body.append(el('p', 'source-folder', folder || (item.section === 'fun' ? 'Just for Fun / Finished cut' : 'Rompe / Brand film'))); if (item.reviewHighlight) { const feature = el('a', 'feature-great-one', item.reviewHighlight + ' ↗'); feature.href = item.sourceUrl; feature.target = '_blank'; feature.rel = 'noopener noreferrer'; feature.title = item.note || item.title; body.append(feature); article.classList.add('featured-clip'); }
     const original = el('a', 'dropbox-link', 'Open in Dropbox ↗'); original.href = item.sourceUrl; original.target = '_blank'; original.rel = 'noopener'; body.append(original); addFileDetail(body, item); addReview(body, item); article.append(wrap, body); document.querySelector(`[data-section="${item.section}"]`).append(article);
   }
 }
