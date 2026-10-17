@@ -102,7 +102,7 @@ document.getElementById('copy-review').addEventListener('click', async () => { i
 fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error('Gallery unavailable'); return r.json(); }).then(data => { if (!Array.isArray(data) || data.some(item => !item.src)) throw new Error('Media preparation in progress'); items = data; items.forEach(render);
   // Move existing full player cards into the featured row without duplicating entries.
   const featuredGrid = document.querySelector('[data-featured="angry-wife"]');
-  for (const id of ['LIM-15','LIM-17','MOJ-17','LIM-04']) {
+  for (const id of ['LIM-15','LIM-17','LIM-04']) {
     const card = document.getElementById(id);
     if (card && featuredGrid) featuredGrid.append(card);
   }
