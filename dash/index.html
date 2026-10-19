@@ -222,12 +222,21 @@ document.getElementById("stamp").textContent = stamp;
 }
 
 
-// ---- Live feed from Elettro OS: checked every 60 s; the race only re-runs when a number changes ----
+// ---- Live feed from Elettro OS: checked on every page load and then every 30 min; the race only re-runs when a number changes ----
 const FEED = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/connections";
 const BRAND = new URLSearchParams(location.search).get("brand") || "stashbox";
-let lastKey = "";
-render("Snapshot 261019 · waiting for the live feed");
+const EVERY = 30 * 60 * 1000;
+const hhmm = (d) => d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+let lastKey = "", source = "Snapshot 261019", checkedAt = null, nextAt = Date.now() + EVERY;
+render(source);
+function tick() {
+  const left = Math.max(0, Math.round((nextAt - Date.now()) / 1000));
+  const mm = String(Math.floor(left / 60)).padStart(2, "0"), ss = String(left % 60).padStart(2, "0");
+  document.getElementById("stamp").textContent =
+    `${source} · last updated ${checkedAt ? hhmm(checkedAt) : "…"} · next update in ${mm}:${ss}`;
+}
 async function pull() {
+  nextAt = Date.now() + EVERY;
   try {
     const res = await fetch(FEED, { cache: "no-store" });
     if (!res.ok) throw new Error(res.status);
@@ -241,16 +250,18 @@ async function pull() {
       if (p.handle) r.handle = p.handle;
       if (p.note) r.note = p.note;
     }
+    source = `LIVE · ${brand.name}`;
     const key = JSON.stringify(STATUS.map((r) => r.done));
-    const when = new Date(feed.generatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    if (key !== lastKey) { lastKey = key; render(`LIVE · ${brand.name} · updated ${when}`); }
-    else document.getElementById("stamp").textContent = `LIVE · ${brand.name} · updated ${when}`;
+    if (key !== lastKey) { lastKey = key; render(source); }
   } catch {
     // Feed not reachable yet: keep showing the last good numbers.
+    if (!lastKey) source = "Snapshot 261019 · live feed offline";
   }
+  checkedAt = new Date();
+  tick();
 }
 pull();
-setInterval(pull, 60000);
+setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
 </script>
 </body>
 </html>
