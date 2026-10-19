@@ -93,7 +93,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
       <h1>The <em>Connection</em><br><span>Grand Prix</span></h1>
       <p class="sub">Ten networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
     </div>
-    <div class="total"><div class="n" id="total">0%</div><div class="l">Whole grid · average</div></div>
+    <div class="total"><div class="n" id="total">0%</div><div class="l">Whole grid · average</div><div class="l" id="visits" style="margin-top:6px"></div></div>
   </header>
 
   <div class="ticker"><div id="ticker"></div></div>
@@ -261,6 +261,13 @@ async function pull() {
   tick();
 }
 pull();
+
+// ---- Visit counter: every page load counts one visit (free Abacus counter, no account) ----
+fetch("https://abacus.jasoncameron.dev/hit/elettro-com/dash-visits")
+  .then((r) => r.json())
+  .then((d) => { if (d.value) document.getElementById("visits").textContent = `${d.value.toLocaleString()} visits`; })
+  .catch(() => {});
+
 setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
 </script>
 </body>
