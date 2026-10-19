@@ -128,40 +128,41 @@ const CHECKPOINTS = [
 
 // ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-19. ----
 const STATUS = [
-  { name: "YouTube", handle: "@stashboxband", code: "YT", color: "#ff3b3b",
+  { name: "YouTube", dest: "youtube", handle: "@stashboxband", code: "YT", color: "#ff3b3b",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "First in line for automation. 3 Shorts/day in the approved month plan." },
-  { name: "Instagram", handle: "@stashboxmusic", code: "IG", color: "#ff5fd2",
+  { name: "Instagram", dest: "instagram", handle: "@stashboxmusic", code: "IG", color: "#ff5fd2",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.33 },
     note: "Meta Business is set up through the stashbox.ai Shopify channel (pixel + domain verified); publishing permissions not requested yet." },
-  { name: "Facebook", handle: "/Stashboxband", code: "FB", color: "#3b8bff",
+  { name: "Facebook", dest: "facebook", handle: "/Stashboxband", code: "FB", color: "#3b8bff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.33 },
     note: "Same Meta Business as Instagram; one Meta app will cover both. 2 Reels/day planned." },
-  { name: "TikTok", handle: "@stashboxmusic", code: "TT", color: "#22e6ff",
+  { name: "TikTok", dest: "tiktok", handle: "@stashboxmusic", code: "TT", color: "#22e6ff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "Biggest cadence: 6/day, 40% exploration. Content Posting API needs TikTok's app audit." },
-  { name: "X", handle: "handle to confirm", code: "X", color: "#d7ff1f",
+  { name: "X", dest: "x", handle: "handle to confirm", code: "X", color: "#d7ff1f",
     done: { strategy: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
-  { name: "LinkedIn", handle: "page to confirm", code: "in", color: "#4fb3ff",
+  { name: "LinkedIn", dest: "linkedin", handle: "page to confirm", code: "in", color: "#4fb3ff",
     done: { strategy: 1, content: 0.5 },
     note: "Radio Blog B2B set rendered (216 files incl. LinkedIn PDFs) and filed; not tagged or planned yet." },
-  { name: "Threads", handle: "@stashboxmusic?", code: "TH", color: "#c9c4ff",
+  { name: "Threads", dest: "threads", handle: "@stashboxmusic?", code: "TH", color: "#c9c4ff",
     done: { strategy: 1 },
     note: "Rides on the Meta app once Instagram is connected." },
-  { name: "Pinterest", handle: "account to confirm", code: "P", color: "#ff4f6b",
+  { name: "Pinterest", dest: "pinterest", handle: "account to confirm", code: "P", color: "#ff4f6b",
     done: { strategy: 1 },
     note: "Natural fit for 555 stashbox.ai products and song artwork." },
-  { name: "Google Business", handle: "profile to confirm", code: "G", color: "#ffc83d",
+  { name: "Google Business", dest: "gmb", handle: "profile to confirm", code: "G", color: "#ffc83d",
     done: { strategy: 1 },
     note: "South Florida bookings: Book / Learn more buttons." },
-  { name: "Reddit", handle: "handoff only", code: "R", color: "#ff7a2e",
+  { name: "Reddit", dest: "reddit", handle: "handoff only", code: "R", color: "#ff7a2e",
     done: { strategy: 1 },
     note: "Planned as manual handoff, never auto-posted." },
 ];
 
 const pctOf = (r) => Math.round(CHECKPOINTS.reduce((s, c) => s + c.w * (r.done[c.key] || 0), 0));
 const nextOf = (r) => CHECKPOINTS.find((c) => (r.done[c.key] || 0) < 1);
+function render(stamp) {
 STATUS.forEach((r) => (r.pct = pctOf(r)));
 const field = [...STATUS].sort((a, b) => b.pct - a.pct || a.name.localeCompare(b.name));
 
@@ -200,7 +201,7 @@ requestAnimationFrame(() => setTimeout(() => {
 
 // overall counter
 const avg = Math.round(STATUS.reduce((s, r) => s + r.pct, 0) / STATUS.length);
-let t0; const tick = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1800); document.getElementById("total").textContent = Math.round(avg * k) + "%"; if (k < 1) requestAnimationFrame(tick); };
+let t0 = null; const tick = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1800); document.getElementById("total").textContent = Math.round(avg * k) + "%"; if (k < 1) requestAnimationFrame(tick); };
 requestAnimationFrame(tick);
 
 // how many racers have cleared each checkpoint
@@ -217,7 +218,39 @@ document.getElementById("pits").innerHTML = field.map((r) => `<div class="pit" s
 const leader = field[0], liveCount = STATUS.filter((r) => r.done.live >= 1).length;
 const msg = `LEADER: ${leader.name.toUpperCase()} ${leader.pct}%  ✦  LIVE NETWORKS: ${liveCount}/10  ✦  NEXT GATE FOR THE PACK: DEVELOPER APP + API ACCESS  ✦  AUTOMATION ORDER: YOUTUBE → META → TIKTOK  ✦  MONTH PLAN: 504 POSTS APPROVED  ✦  `;
 document.getElementById("ticker").textContent = msg.repeat(4);
-document.getElementById("stamp").textContent = "Last checked 261019";
+document.getElementById("stamp").textContent = stamp;
+}
+
+
+// ---- Live feed from Elettro OS: checked every 60 s; the race only re-runs when a number changes ----
+const FEED = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/connections";
+const BRAND = new URLSearchParams(location.search).get("brand") || "stashbox";
+let lastKey = "";
+render("Snapshot 261019 · waiting for the live feed");
+async function pull() {
+  try {
+    const res = await fetch(FEED, { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    const feed = await res.json();
+    const brand = (feed.brands || []).find((b) => b.slug === BRAND);
+    if (!brand) throw new Error("brand missing");
+    for (const p of brand.profiles) {
+      const r = STATUS.find((x) => x.dest === p.destination);
+      if (!r) continue;
+      r.done = p.done;
+      if (p.handle) r.handle = p.handle;
+      if (p.note) r.note = p.note;
+    }
+    const key = JSON.stringify(STATUS.map((r) => r.done));
+    const when = new Date(feed.generatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    if (key !== lastKey) { lastKey = key; render(`LIVE · ${brand.name} · updated ${when}`); }
+    else document.getElementById("stamp").textContent = `LIVE · ${brand.name} · updated ${when}`;
+  } catch {
+    // Feed not reachable yet: keep showing the last good numbers.
+  }
+}
+pull();
+setInterval(pull, 60000);
 </script>
 </body>
 </html>
