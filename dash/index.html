@@ -129,8 +129,8 @@ const CHECKPOINTS = [
 // ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-20. ----
 const STATUS = [
   { name: "YouTube", dest: "youtube", handle: "@stashboxband", code: "YT", color: "#ff3b3b",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
-    note: "First in line for automation. 3 Shorts/day in the approved month plan." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, api: 0.5, oauth: 1, test: 1 },
+    note: "FIRST UPLOAD via Elettro OS 261020 (private test on @stashboxband, upload worker live). Planner page + publishing loop built. Public uploads wait on the Google audit (draft ready)." },
   { name: "Instagram", dest: "instagram", handle: "@stashboxmusic", code: "IG", color: "#ff5fd2",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.33 },
     note: "Meta Business is set up through the stashbox.ai Shopify channel (pixel + domain verified); publishing permissions not requested yet." },
@@ -138,8 +138,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.33 },
     note: "Same Meta Business as Instagram; one Meta app will cover both. 2 Reels/day planned." },
   { name: "TikTok", dest: "tiktok", handle: "@stashboxmusic", code: "TT", color: "#22e6ff",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
-    note: "Biggest cadence: 6/day, 40% exploration. Content Posting API needs TikTok's app audit." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, api: 0.5, oauth: 1, test: 1 },
+    note: "CONNECTED 261020 as @stashboxmusic. First post via Elettro OS 261020 (inbox draft, posted by Dean). Token refresh + planner tick run every 15 min; review card live. Public direct posts with captions wait on TikTok app review (demo video next)." },
   { name: "X", dest: "x", handle: "handle to confirm", code: "X", color: "#d7ff1f",
     done: { strategy: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
