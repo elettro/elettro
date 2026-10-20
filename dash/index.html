@@ -126,7 +126,7 @@ const CHECKPOINTS = [
   { key: "live", label: "Auto-publishing + metrics live", w: 10 },
 ];
 
-// ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-19. ----
+// ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-20. ----
 const STATUS = [
   { name: "YouTube", dest: "youtube", handle: "@stashboxband", code: "YT", color: "#ff3b3b",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
@@ -143,12 +143,12 @@ const STATUS = [
   { name: "X", dest: "x", handle: "handle to confirm", code: "X", color: "#d7ff1f",
     done: { strategy: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
-  { name: "LinkedIn", dest: "linkedin", handle: "page to confirm", code: "in", color: "#4fb3ff",
-    done: { strategy: 1, content: 0.5 },
-    note: "Radio Blog B2B set rendered (216 files incl. LinkedIn PDFs) and filed; not tagged or planned yet." },
-  { name: "Threads", dest: "threads", handle: "@stashboxmusic?", code: "TH", color: "#c9c4ff",
-    done: { strategy: 1 },
-    note: "Rides on the Meta app once Instagram is connected." },
+  { name: "LinkedIn", dest: "linkedin", handle: "Dean Palermo (via Elettro)", code: "in", color: "#4fb3ff",
+    done: { strategy: 1, content: 1, api: 0.5 },
+    note: "Dean's profile connected under Elettro 261019 and the first API post went live. Company pages wait on LinkedIn's review." },
+  { name: "Threads", dest: "threads", handle: "@stashboxmusic", code: "TH", color: "#c9c4ff",
+    done: { strategy: 1, account: 1, planner: 1, content: 1, api: 1, oauth: 1 },
+    note: "CONNECTED 261020 as @stashboxmusic (token good to 261219). Next: auto token refresh + publish adapter, then first test post." },
   { name: "Pinterest", dest: "pinterest", handle: "account to confirm", code: "P", color: "#ff4f6b",
     done: { strategy: 1 },
     note: "Natural fit for 555 stashbox.ai products and song artwork." },
@@ -227,7 +227,7 @@ const FEED = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/conn
 const BRAND = new URLSearchParams(location.search).get("brand") || "stashbox";
 const EVERY = 30 * 60 * 1000;
 const hhmm = (d) => d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-let lastKey = "", source = "Snapshot 261019", checkedAt = null, nextAt = Date.now() + EVERY;
+let lastKey = "", source = "Snapshot 261020", checkedAt = null, nextAt = Date.now() + EVERY;
 render(source);
 function tick() {
   const left = Math.max(0, Math.round((nextAt - Date.now()) / 1000));
@@ -255,7 +255,7 @@ async function pull() {
     if (key !== lastKey) { lastKey = key; render(source); }
   } catch {
     // Feed not reachable yet: keep showing the last good numbers.
-    if (!lastKey) source = "Snapshot 261019 · live feed offline";
+    if (!lastKey) source = "Snapshot 261020 · live feed offline";
   }
   checkedAt = new Date();
   tick();
