@@ -91,7 +91,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
     <div>
       <div class="kicker">Elettro OS × Stashbox · Live connection race</div>
       <h1>The <em>Connection</em><br><span>Grand Prix</span></h1>
-      <p class="sub">Ten networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
+      <p class="sub">Nine networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
     </div>
     <div class="total"><div class="n" id="total">0%</div><div class="l">Whole grid · average</div><div class="l" id="visits" style="margin-top:6px"></div></div>
   </header>
@@ -155,9 +155,6 @@ const STATUS = [
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, api: 0.5 },
     note: "SUBMITTED for approval 261020: Google Business Profile API access (case 6-8427000042222, one request covers all brands). Review 7-10 days, approval approx 261027." },
-  { name: "Reddit", dest: "reddit", handle: "handoff only", code: "R", color: "#ff7a2e",
-    done: { strategy: 1 },
-    note: "Planned as manual handoff, never auto-posted." },
 ];
 
 const pctOf = (r) => Math.round(CHECKPOINTS.reduce((s, c) => s + c.w * (r.done[c.key] || 0), 0));
