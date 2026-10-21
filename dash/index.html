@@ -119,7 +119,7 @@ const CHECKPOINTS = [
   { key: "planner", label: "In the planner with a cadence", w: 10 },
   { key: "content", label: "Content pool tagged + ready", w: 10 },
   { key: "copy", label: "Captions engine", w: 10 },
-  { key: "plan", label: "Month plan approved", w: 10 },
+  { key: "plan", label: "First week scheduled", w: 10 },
   { key: "api", label: "Developer app + API access", w: 15 },
   { key: "oauth", label: "OAuth connected to Elettro OS", w: 15 },
   { key: "test", label: "First test post via API", w: 10 },
@@ -213,7 +213,7 @@ document.getElementById("pits").innerHTML = field.map((r) => `<div class="pit" s
   <div class="note">${r.note}</div></div>`).join("");
 
 const leader = field[0], liveCount = STATUS.filter((r) => r.done.live >= 1).length;
-const msg = `LEADER: ${leader.name.toUpperCase()} ${leader.pct}%  ✦  LIVE NETWORKS: ${liveCount}/10  ✦  NEXT GATE FOR THE PACK: DEVELOPER APP + API ACCESS  ✦  AUTOMATION ORDER: YOUTUBE → META → TIKTOK  ✦  MONTH PLAN: 504 POSTS APPROVED  ✦  `;
+const msg = `LEADER: ${leader.name.toUpperCase()} ${leader.pct}%  ✦  LIVE NETWORKS: ${liveCount}/${STATUS.length}  ✦  NEXT GATE FOR THE PACK: DEVELOPER APP + API ACCESS  ✦  AUTOMATION ORDER: YOUTUBE → META → TIKTOK  ✦  MONTH PLAN: 504 POSTS APPROVED  ✦  `;
 document.getElementById("ticker").textContent = msg.repeat(4);
 document.getElementById("stamp").textContent = stamp;
 }
