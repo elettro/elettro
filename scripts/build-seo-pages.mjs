@@ -910,6 +910,7 @@ function buildPage(page) {
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/seo-pages.css" />
   <script type="application/ld+json">${schema}</script>
+<script src="/js/os-login.js" defer></script>
 </head>
 <body>
 ${header()}
