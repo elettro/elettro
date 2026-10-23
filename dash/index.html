@@ -105,7 +105,8 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
   .lane{grid-template-columns:1fr 64px;row-gap:4px}
   .who{grid-column:1/-1}.road{grid-column:1}.pct{font-size:26px}.next{display:none}
 }
-@media (prefers-reduced-motion:reduce){.ticker div,.car .smoke i,.dam .waveA,.dam .waveB,.dam .buoy,.dam .drip,.dam .jet{animation:none}.car,.trail{transition:none}}
+@media (prefers-reduced-motion:reduce){.ticker div,.car .smoke i{animation:none}.car,.trail{transition:none}}
+@media (prefers-reduced-motion:reduce){.dam .waveA,.dam .waveB,.dam .buoy,.dam .drip,.dam .jet{animation:none}}
 </style>
 </head>
 <body>
