@@ -258,6 +258,7 @@ const WAITING = [
   { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "gmb", name: "Google Business", what: "API access (case 6-8427000042222), approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok", what: "Production review for public posts", since: "2026-10-21T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "youtube", name: "YouTube", what: "Google app verification and API audit (public uploads)", since: "2026-10-22T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "pinterest", name: "Pinterest", what: "Standard access, demo video sent", since: "2026-10-23T11:38:00-04:00", exact: true, state: "waiting" }
 ];
 const damMs = (w) => Math.max(0, Date.now() - new Date(w.since).getTime());
@@ -283,12 +284,12 @@ function renderDam() {
   const wy = Math.round(ground - level * (ground - top));
   const wave = (y, amp, len, ph) => { let d = `M${-400 + ph} ${y}`; for (let x = -400 + ph; x < W + 400; x += len) d += ` q${len / 4} ${-amp} ${len / 2} 0 t${len / 2} 0`; return d + ` V${ground} H${-400} Z`; };
   const buoys = waiting.map((w, i) => {
-    const x = 90 + i * (560 / Math.max(1, waiting.length)) + 40, c = col(w.dest);
+    const x = 80 + i * (600 / Math.max(1, waiting.length)) + 40, c = col(w.dest);
     return `<g transform="translate(${x} ${wy - 12})"><g class="buoy" style="animation-delay:${i * 0.6}s">
       <line x1="0" y1="-62" x2="0" y2="4" stroke="#0b0b10" stroke-width="3"/>
       <path d="M0 -62 L66 -50 L0 -38 Z" fill="${c}" stroke="#0b0b10" stroke-width="2"/>
       <ellipse cx="0" cy="8" rx="20" ry="9" fill="${c}" stroke="#0b0b10" stroke-width="2"/>
-      <text x="0" y="-70" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--ink)">${w.name}</text>
+      <text x="0" y="-70" text-anchor="middle" font-family="Inter" font-weight="800" font-size="14" fill="var(--ink)">${w.name}</text>
       <text x="0" y="34" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="12" fill="#04141c">sent ${damWhen(w)}</text>
       <text class="cnt" data-since="${w.since}" x="0" y="51" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="13" fill="#04141c">${damClock(damMs(w))}</text></g></g>`;
   }).join("");
