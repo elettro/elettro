@@ -184,8 +184,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, content: 1, api: 0.5, oauth: 1 },
     note: "APPROVED 261020: Pinterest app Elettro OS (id 1627333) has Trial access, the first network to approve. Connect code live 261021. Full API credit after Standard access (demo video)." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
-    done: { strategy: 1, account: 1, content: 1, api: 0.5 },
-    note: "SUBMITTED for approval 261020: Google Business Profile API access (case 6-8427000042222, one request covers all brands). Review 7-10 days, approval approx 261027." },
+    done: { strategy: 1, account: 1, content: 1, api: 1 },
+    note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (case 6-8427000042222, 300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
 ];
 
 const pctOf = (r) => Math.round(CHECKPOINTS.reduce((s, c) => s + c.w * (r.done[c.key] || 0), 0));
@@ -256,7 +256,7 @@ renderDam();
 // Edit this list when a request is sent or approved. exact:false = only the date is known (counter starts at noon that day).
 const WAITING = [
   { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
-  { dest: "gmb", name: "Google Business", what: "API access (case 6-8427000042222), Google says 7 to 10 business days", since: "2026-10-20T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "gmb", name: "Google Business", what: "API access (case 6-8427000042222), approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok", what: "Production review for public posts", since: "2026-10-21T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "pinterest", name: "Pinterest", what: "Standard access, demo video sent", since: "2026-10-23T11:38:00-04:00", exact: true, state: "waiting" }
 ];
@@ -294,6 +294,12 @@ function renderDam() {
   }).join("");
   const posts = waiting.flatMap((w, i) => [0, 1, 2].map((k) => `<rect x="${60 + i * 150 + k * 34}" y="${ground - 34 - k * 6}" width="26" height="34" rx="4" fill="${col(w.dest)}" opacity=".55" stroke="#0b0b10" stroke-width="1.5"/>`)).join("");
   const jet = open.length ? `<path class="jet" d="M${damX + 36} 330 Q 880 330 960 372" fill="none" stroke="#22e6ff" stroke-width="12" stroke-linecap="round" opacity=".85"/>` : "";
+  const houseCols = open.map((w) => col(w.dest));
+  const house = (x, y, c) => `<g transform="translate(${x} ${y})"><rect x="0" y="8" width="22" height="16" fill="${c}" stroke="#0b0b10" stroke-width="2"/><path d="M-3 9 L11 -3 L25 9 Z" fill="#3a3a4c" stroke="#0b0b10" stroke-width="2"/><rect x="8" y="14" width="6" height="10" fill="#0b0b10"/></g>`;
+  const valley = open.length ? `<path d="M${damX + 120} ${ground - 24} Q ${damX + 260} ${ground - 30} ${damX + 330} ${ground - 14} T ${W} ${ground - 10} V${ground + 8} H${damX + 130} Z" fill="url(#wg)" opacity=".9"/>
+    <path class="waveA" d="M${damX + 150} ${ground - 8} q20 -5 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#fff" stroke-width="2" opacity=".5"/>
+    ${[0, 1, 2, 3, 4].map((i) => house(damX + 190 + i * 100, ground - 54 - (i % 2) * 6, houseCols[i % houseCols.length])).join("")}
+    ${[0, 1, 2, 3].map((i) => house(damX + 240 + i * 100, ground - 96 + (i % 2) * 8, houseCols[(i + 1) % houseCols.length])).join("")}` : "";
   const drips = waiting.length ? [0, 0.8, 1.6].map((d) => `<circle class="drip" style="animation-delay:${d}s" cx="${damX + 42 + d * 6}" cy="${ground - 52}" r="3.5" fill="#22e6ff"/>`).join("") : "";
   const stress = Math.round(level * 100);
   const cracks = (level > 0.7 ? `<path d="M${damX + 30} ${crest + 4} l10 24 l-8 16 l12 22" stroke="#0b0b10" stroke-width="3" fill="none"/>` : "")
@@ -313,9 +319,9 @@ function renderDam() {
       <rect x="10" y="28" width="32" height="28" rx="4" fill="#0b0b10"/><path d="M15 28 v-8 a11 11 0 0 1 22 0 v8" fill="none" stroke="#0b0b10" stroke-width="4"/>
       <text x="26" y="-8" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" fill="var(--ink)">${open.length ? "GATE OPEN" : "APPROVAL GATE"}</text></g>
     <text x="${damX + 40}" y="${crest - 12}" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="13" fill="${level > 0.8 ? "#ff2e88" : "var(--cyan)"}">PRESSURE ${stress}%</text>
-    ${jet}${drips}
+    ${valley}${jet}${drips}
     <path d="M${damX + 130} ${ground} Q ${damX + 330} ${ground - 8} ${W} ${ground}" stroke="var(--line)" stroke-width="4" fill="none" stroke-dasharray="3 9"/>
-    <text x="${damX + 260}" y="${ground + 42}" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="var(--dim)">PUBLIC POSTING (dry until the gate opens)</text>
+    <text x="${damX + 260}" y="${ground + 42}" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="var(--dim)">${open.length ? "PUBLIC POSTING: the valley is flowing" : "PUBLIC POSTING (dry until the gate opens)"}</text>
     <text x="24" y="${ground + 42}" font-family="Inter" font-weight="800" font-size="17" fill="var(--cyan)">BUILT, TESTED, QUEUED: waiting for approval</text>
     ${buoys}</svg>`;
   document.getElementById("damWaits").innerHTML = WAITING.map((w) => `<div class="wait ${w.state}" style="--c:${col(w.dest)}"><b>${w.name}</b>
