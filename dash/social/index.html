@@ -217,8 +217,8 @@ const POSTS = [
  { id:"p9", plat:"LinkedIn", color:"#4fb3ff", fmt:"Text post + pit board image", title:"Honest status", power:"STATUS TRACKING",
    slot:"Proposed: Mon 261102 · 09:00 ET",
    copy:"Most dashboards show you the wins. Ours shows the whole pit lane.\n\nWhen a network is waiting on an app review, the board says so, with the date we submitted. When a car stalls, you can see which checkpoint it's stuck on.\n\nWe built it for ourselves first. If you want the same view across your own channels, that's Elettro OS.\n\nelettro.com/dash",
-   vis: () => `<div class="vis v191" style="padding:14px"><div class="m" style="color:#ffc83d">Pit board · waiting on review</div>
-     <div class="a" style="font-size:30px;margin:6px 0 8px">Waiting on <span style="color:#ffc83d">approval</span></div>
+   vis: () => `<div class="vis v191" style="padding:14px;aspect-ratio:1.15/1"><div class="m" style="color:#ffc83d">Pit board · waiting on review</div>
+     <div class="a" style="font-size:28px;margin:8px 0 12px">Waiting on <span style="color:#ffc83d">approval</span></div>
      <div class="ck h"><b>◐</b>Developer app + API access — submitted</div><div class="ck n"><b>·</b>OAuth connected to Elettro OS</div>
      <div class="ck n"><b>·</b>Auto-publishing + metrics live</div></div>` },
 
@@ -242,8 +242,8 @@ const POSTS = [
  { id:"p12", plat:"LinkedIn", color:"#4fb3ff", fmt:"Image post · 1.91:1", title:"Volume, by the numbers", power:"MULTI-NETWORK PUBLISHING",
    slot:"Proposed: Fri 261106 · 09:00 ET",
    copy:"{pub} posts out. {nets} networks. {days} days. One system.\n\nThat is about {perday} posts a day across Instagram, Facebook, YouTube, TikTok and Threads, each with its own format and caption, and every one counted in a publishing ledger we can audit.\n\nThe race to 1,000 is on a public dashboard if you want to watch it: elettro.com/dash",
-   vis: () => `<div class="vis v191" style="padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:center;text-align:center">
-     ${[[Q.pub,"posts out"],[Q.nets,"networks"],[Q.perday,"posts a day"]].map(([n,l])=>`<div><div class="a" style="font-size:54px;color:#d7ff1f">${n}</div><div class="m">${l}</div></div>`).join("")}
+   vis: () => `<div class="vis v191" style="padding:14px 10px;aspect-ratio:1.4/1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:center;text-align:center">
+     ${[[Q.pub,"posts out"],[Q.nets,"networks"],[Q.perday,"posts a day"]].map(([n,l])=>`<div><div class="a" style="font-size:46px;color:#d7ff1f">${n}</div><div class="m" style="font-size:8px">${l}</div></div>`).join("")}
      <div class="m" style="grid-column:1/-1;color:#8d8a9e">Live from the Elettro OS ledger</div></div>` },
 
  { id:"p13", plat:"Threads", color:"#c9c4ff", fmt:"Text + image", title:"Receipts", power:"SCHEDULER",
