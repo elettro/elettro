@@ -109,6 +109,110 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
   .prace .next{display:block}
 }
 @media (prefers-reduced-motion:reduce){.ticker div,.car .smoke i{animation:none}.car,.trail,.ghost{transition:none}}
+/* ---- Plug-in Matrix: brand x network ---- */
+:root{ --ok:#3dff9a; --warn:#ffc83d; --bad:#ff4d4d; --off:#5c5a6e; }
+.mx-head{margin:54px 0 14px;padding-top:26px;border-top:3px solid var(--ink)}
+.mx-head h2{margin:8px 0 0;font-size:clamp(40px,6.5vw,76px);line-height:.9}
+.mx-head h2 span{-webkit-text-stroke:1.5px var(--ink);color:transparent}
+.mx-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 14px}
+.mx-tile{--c:var(--ink);font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--lane);border:2px solid var(--line);border-radius:12px;padding:10px 12px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.mx-tile:hover{transform:translateY(-2px);border-color:var(--c)}
+.mx-tile.on{border-color:var(--c);box-shadow:0 0 0 2px var(--c) inset}
+.mx-tile b{display:block;font:400 38px/1 Anton,sans-serif;color:var(--c)}
+.mx-tile span{font:700 10px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.mx-tile i{position:absolute;left:0;bottom:0;height:3px;background:var(--c);width:0;transition:width 1.6s cubic-bezier(.2,.9,.2,1)}
+.mx-scroll{overflow-x:auto;padding-bottom:6px}
+.mx{min-width:860px;background:var(--asphalt);border:2px solid var(--line);border-radius:18px;padding:12px 12px 8px}
+.mx-row{display:grid;grid-template-columns:150px repeat(9,minmax(70px,1fr)) 78px;gap:6px;align-items:center;padding:5px 0;border-top:1px dashed var(--line)}
+.mx-row.hd{border-top:0;padding-top:0;align-items:end}
+.mx-row.ft{padding-bottom:0}
+.mx-brand{display:flex;gap:9px;align-items:center;min-width:0;position:sticky;left:0}
+.mx-brand .badge{width:32px;height:32px;font-size:11px;border-radius:9px}
+.mx-brand .nm{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mx-brand .sm{font:500 10px "JetBrains Mono",monospace;color:var(--dim)}
+.mx-col{display:grid;justify-items:center;gap:3px;text-align:center}
+.mx-col .badge{width:30px;height:30px;font-size:11px;border-radius:9px;box-shadow:2px 2px 0 var(--ink)}
+.mx-col .cn{font:700 9px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--dim);text-transform:uppercase;white-space:nowrap}
+.mx-col .tag{font:700 8px "JetBrains Mono",monospace;letter-spacing:.1em;color:#0b0b10;background:var(--warn);border-radius:4px;padding:1px 4px}
+.mx-sum{text-align:center;font:400 22px/1 Anton,sans-serif}
+.mx-sum small{display:block;font:700 9px "JetBrains Mono",monospace;letter-spacing:.1em;color:var(--dim);margin-top:2px}
+.mx-sum .bar{height:4px;border-radius:4px;background:var(--line);margin-top:5px;overflow:hidden}
+.mx-sum .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width 1.6s cubic-bezier(.2,.9,.2,1)}
+.mx-colsum{text-align:center;font:700 11px "JetBrains Mono",monospace;color:var(--dim)}
+.mx-colsum b{color:var(--ink)}
+
+.cell{--c:var(--off);appearance:none;border:0;background:none;padding:0;cursor:pointer;position:relative;justify-self:center;width:62px;height:62px;border-radius:50%;color:var(--ink);
+  opacity:0;transform:scale(.4);animation:cellin .55s cubic-bezier(.2,1.4,.4,1) forwards;animation-delay:calc(var(--i) * 28ms + 150ms);transition:filter .25s,opacity .25s}
+@keyframes cellin{to{opacity:1;transform:scale(1)}}
+.cell.dim{opacity:.13 !important;filter:grayscale(1)}
+.cell:hover,.cell:focus-visible,.cell.sel{outline:none;z-index:2}
+.cell svg{display:block;width:100%;height:100%;overflow:visible;transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.cell:hover svg,.cell:focus-visible svg,.cell.sel svg{transform:scale(1.22)}
+.cell .halo{fill:var(--c);opacity:0}
+.cell .ring-bg{fill:none;stroke:var(--line);stroke-width:5}
+.cell .ring{fill:none;stroke:var(--c);stroke-width:5;stroke-linecap:round;transform:rotate(-90deg);transform-origin:32px 32px;stroke-dasharray:0 100;transition:stroke-dasharray 1.8s cubic-bezier(.2,.9,.2,1) calc(var(--i) * 28ms + 300ms)}
+.cell .face{fill:var(--lane);stroke:none}
+.cell .cd{font:800 9px Inter,sans-serif;fill:var(--dim);text-anchor:middle}
+.cell .pc{font:700 8.5px "JetBrains Mono",monospace;fill:var(--dim);text-anchor:middle}
+.cell .skt{fill:none;stroke:var(--dim);stroke-width:2.2}
+.cell .hole{fill:var(--dim)}
+.cell .plug{transition:transform .5s}
+.cell .plug rect.body{fill:var(--c);stroke:#0b0b10;stroke-width:1.5}
+.cell .plug rect.prong{fill:var(--ink)}
+.cell .plug path{fill:none;stroke:var(--c);stroke-width:2.5;stroke-linecap:round}
+.cell .spark{fill:var(--c);opacity:0}
+.cell .orbit{transform-origin:32px 32px;transform-box:view-box}
+
+/* live: green-white hot, orbiting spark + glow */
+.s-live{--c:var(--ok)}
+.s-live .plug{transform:translateX(6px)}
+.s-live .halo{animation:halo 2.4s ease-in-out infinite}
+.s-live .spark{opacity:1}
+.s-live .orbit{animation:orbit 2.2s linear infinite}
+.s-live .cd,.s-live .pc,.s-plugged .cd,.s-plugged .pc{fill:var(--ink)}
+.s-live .face{fill:color-mix(in srgb,var(--ok) 18%,var(--lane))}
+/* plugged: platform colour, slow orbit */
+.s-plugged{--c:var(--cyan)}
+.s-plugged .plug{transform:translateX(6px)}
+.s-plugged .spark{opacity:.9}
+.s-plugged .orbit{animation:orbit 6s linear infinite}
+.s-plugged .skt{stroke:var(--c)}.s-plugged .hole{fill:var(--c)}
+.s-plugged .face{fill:color-mix(in srgb,var(--c) 14%,var(--lane))}
+/* wiring: the plug keeps reaching for the socket */
+.s-wiring{--c:var(--warn)}
+.s-wiring .plug{animation:reach 2.4s ease-in-out infinite}
+.s-wiring .skt{stroke:var(--warn)}
+/* expired: token died, plug popped out and jitters */
+.s-expired{--c:var(--bad)}
+.s-expired .plug{transform:translateX(-5px);animation:loose 3s ease-in-out infinite}
+.s-expired .skt{stroke:var(--bad)}
+/* unplugged: dim, dashed, cord hanging */
+.s-unplugged .ring-bg,.s-missing .ring-bg{stroke-dasharray:3 5;stroke:var(--off)}
+.s-unplugged .plug,.s-missing .plug{transform:translateX(-9px);opacity:.45}
+.s-unplugged .plug rect.body,.s-missing .plug rect.body{fill:var(--off)}
+.s-unplugged .plug path,.s-missing .plug path{stroke:var(--off)}
+.s-unplugged .spark{opacity:0}
+.s-missing .plug,.s-missing .skt,.s-missing .hole{opacity:.25}
+.s-unplugged:hover .plug{transform:translateX(-3px)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes halo{0%,100%{opacity:0;transform:scale(.9)}50%{opacity:.22;transform:scale(1.08)}}
+.cell .halo{transform-origin:32px 32px;transform-box:view-box}
+@keyframes reach{0%,100%{transform:translateX(-8px)}55%,70%{transform:translateX(1px)}}
+@keyframes loose{0%,82%,100%{transform:translateX(-5px)}88%{transform:translateX(-3px)}94%{transform:translateX(-6px)}}
+
+.mx-detail{margin-top:12px;background:var(--lane);border:2px solid var(--line);border-left:6px solid var(--c,var(--line));border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 16px;align-items:center;min-height:92px;transition:border-color .25s}
+.mx-detail .big{font:400 44px/1 Anton,sans-serif;color:var(--c,var(--dim))}
+.mx-detail .t{font-weight:800;font-size:16px}
+.mx-detail .t em{font:700 10px "JetBrains Mono",monospace;font-style:normal;letter-spacing:.14em;color:#0b0b10;background:var(--c,var(--dim));border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+.mx-detail .m{font:500 12px "JetBrains Mono",monospace;color:var(--dim)}
+.mx-detail .n{grid-column:1/-1;font-size:13px;color:var(--dim);border-top:1px dashed var(--line);padding-top:8px}
+.mx-detail .dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:200px}
+.mx-detail .dots i{width:14px;height:14px;border-radius:4px;background:var(--line);display:block}
+.mx-detail .dots i.ok{background:var(--ok)}.mx-detail .dots i.half{background:linear-gradient(90deg,var(--warn) 50%,var(--line) 50%)}
+.mx-key{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font:500 11px "JetBrains Mono",monospace;color:var(--dim)}
+.mx-key b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:var(--c)}
+@media (max-width:760px){.mx-detail{grid-template-columns:auto 1fr}.mx-detail .dots{display:none}}
+@media (prefers-reduced-motion:reduce){.cell{animation:none;opacity:1;transform:none}.cell .orbit,.cell .plug,.cell .halo{animation:none !important}.cell .ring{transition:none}}
 </style>
 </head>
 <body>
@@ -151,6 +255,18 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
       <div class="scale"><span>BRAND</span><div class="marks" id="prMarksB"></div><span style="text-align:right">POSTS</span></div>
       <div id="prBrand"></div></section>
     <p class="pr-note" id="prNote"></p>
+  </section>
+
+  <section id="matrix" aria-label="Plug-in matrix">
+    <div class="mx-head">
+      <div class="kicker">Elettro OS · Every brand × every network</div>
+      <h2>The <em>Plug-In</em> <span>Matrix</span></h2>
+      <p class="sub">One profile per network for every brand. A plug seated in its socket means that profile is connected to Elettro OS; a plug that keeps reaching is being wired; a hanging cord is not connected. Tap a status to filter, tap a cell for details.</p>
+    </div>
+    <div class="mx-tiles" id="mxTiles"></div>
+    <div class="mx-scroll"><div class="mx" id="mx"><div style="padding:30px;text-align:center;color:var(--dim);font:500 12px 'JetBrains Mono',monospace">Plugging in the grid…</div></div></div>
+    <div class="mx-detail" id="mxDetail"><div class="big">?</div><div><div class="t">Hover or tap any cell</div><div class="m">brand · network · status</div></div><div></div></div>
+    <div class="mx-key" id="mxKey"></div>
   </section>
 
   <footer><span id="stamp"></span><span>Status from the EPE repo (develop) + Elettro OS DEV · edit STATUS in this file to move a racer</span></footer>
@@ -398,6 +514,127 @@ async function pullRace() {
 renderRace(); pullRace(); raceClock();
 setInterval(raceClock, 1000);
 setInterval(pullRace, EVERY);
+
+// ---- Plug-In Matrix: every brand x every network, pulled from the same connections feed ----
+const PAUSED = { x: "PAUSED" };
+const LEVELS = {
+  live:      { label: "Live",        color: "var(--ok)",   blurb: "Connected and auto-publishing" },
+  plugged:   { label: "Plugged in",  color: "var(--cyan)", blurb: "Connected to Elettro OS" },
+  wiring:    { label: "Wiring",      color: "var(--warn)", blurb: "Developer app / API in progress" },
+  expired:   { label: "Token expired", color: "var(--bad)", blurb: "Was connected, needs reconnecting" },
+  unplugged: { label: "Unplugged",   color: "var(--off)",  blurb: "Not connected yet" },
+};
+const LEVEL_ORDER = ["live", "plugged", "wiring", "expired", "unplugged"];
+let mxBrands = [], mxKey = "", mxFilter = null, mxLive = false;
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function levelOf(p) {
+  if (!p) return "missing";
+  const d = p.done || {};
+  if (d.oauth >= 1) {
+    if (p.tokenExpiresAt && new Date(p.tokenExpiresAt) < new Date()) return "expired";
+    return d.live >= 1 ? "live" : "plugged";
+  }
+  return (d.api > 0 || d.oauth > 0) ? "wiring" : "unplugged";
+}
+function cellSvg(color, code, pct) {
+  return `<svg viewBox="0 0 64 64" aria-hidden="true">
+    <circle class="halo" cx="32" cy="32" r="31"/>
+    <circle class="face" cx="32" cy="32" r="25"/>
+    <circle class="ring-bg" cx="32" cy="32" r="28"/>
+    <circle class="ring" cx="32" cy="32" r="28" pathLength="100" data-p="${pct}"/>
+    <text class="cd" x="32" y="19">${code}</text>
+    <rect class="skt" x="34" y="25" width="13" height="15" rx="3.5"/>
+    <circle class="hole" cx="41" cy="30" r="1.5"/><circle class="hole" cx="41" cy="35" r="1.5"/>
+    <g class="plug"><path d="M13 32.5 C8 32.5 8 38 3 38"/><rect class="body" x="13" y="25" width="12" height="15" rx="3.5"/>
+      <rect class="prong" x="25" y="28" width="9" height="2.6" rx="1"/><rect class="prong" x="25" y="34.4" width="9" height="2.6" rx="1"/></g>
+    <g class="orbit"><circle class="spark" cx="32" cy="4" r="2.6"/></g>
+    <text class="pc" x="32" y="53">${pct}%</text></svg>`;
+}
+function renderMatrix() {
+  const cols = STATUS; // the nine networks the dashboard races
+  const rows = mxBrands.map((b, bi) => {
+    const cells = cols.map((c) => {
+      const p = b.profiles.find((x) => x.destination === c.dest);
+      return { c, p, lv: levelOf(p) };
+    });
+    return { b, bi, cells, plugged: cells.filter((x) => x.lv === "live" || x.lv === "plugged").length };
+  }).sort((a, z) => z.plugged - a.plugged || z.b.pct - a.b.pct || a.b.name.localeCompare(z.b.name));
+  const counts = Object.fromEntries(LEVEL_ORDER.map((l) => [l, 0]));
+  rows.forEach((r) => r.cells.forEach((x) => { if (counts[x.lv] !== undefined) counts[x.lv]++; }));
+  const total = rows.length * cols.length, up = counts.live + counts.plugged;
+
+  document.getElementById("mxTiles").innerHTML =
+    `<button class="mx-tile ${mxFilter === null ? "on" : ""}" data-f="" style="--c:var(--ink)"><b data-n="${up}">0</b><span>of ${total} profiles plugged in</span><i style="width:${total ? (up / total) * 100 : 0}%"></i></button>` +
+    LEVEL_ORDER.map((l) => `<button class="mx-tile ${mxFilter === l ? "on" : ""}" data-f="${l}" style="--c:${LEVELS[l].color}"><b data-n="${counts[l]}">0</b><span>${LEVELS[l].label}</span><i style="width:${total ? (counts[l] / total) * 100 : 0}%"></i></button>`).join("");
+  document.getElementById("mxKey").innerHTML = LEVEL_ORDER.map((l) => `<span><b style="--c:${LEVELS[l].color}"></b>${LEVELS[l].label}: ${LEVELS[l].blurb}</span>`).join("");
+
+  let i = 0;
+  const head = `<div class="mx-row hd"><div class="mx-brand"><span class="kicker" style="font-size:10px">BRAND ↓ / NETWORK →</span></div>` +
+    cols.map((c) => `<div class="mx-col"><div class="badge" style="background:${c.color}">${c.code}</div><div class="cn">${esc(c.name.replace("Google Business", "GBP"))}</div>${PAUSED[c.dest] ? `<span class="tag">${PAUSED[c.dest]}</span>` : ""}</div>`).join("") +
+    `<div class="mx-colsum">PLUGGED</div></div>`;
+  const body = rows.map((r) => `<div class="mx-row">
+      <div class="mx-brand"><div class="badge" style="background:${BRAND_COLORS[r.bi % BRAND_COLORS.length]}">${esc(r.b.name.slice(0, 2).toUpperCase())}</div>
+        <div style="min-width:0"><div class="nm">${esc(r.b.name)}</div><div class="sm">${r.b.pct}% overall</div></div></div>
+      ${r.cells.map((x) => { const pct = x.p ? x.p.pct : 0;
+        return `<button class="cell s-${x.lv}" data-s="${x.lv}" data-b="${esc(r.b.slug)}" data-d="${x.c.dest}" style="--i:${i++}" aria-label="${esc(r.b.name)} ${esc(x.c.name)}: ${LEVELS[x.lv] ? LEVELS[x.lv].label : "No profile"}">${cellSvg(x.c.color, x.c.code, pct)}</button>`; }).join("")}
+      <div class="mx-sum">${r.plugged}<small>OF ${cols.length}</small><div class="bar"><i data-w="${(r.plugged / cols.length) * 100}"></i></div></div></div>`).join("");
+  const foot = `<div class="mx-row ft"><div class="mx-brand"><span class="kicker" style="font-size:10px;color:var(--dim)">PLUGGED PER NETWORK</span></div>` +
+    cols.map((c, ci) => `<div class="mx-colsum"><b>${rows.filter((r) => ["live", "plugged"].includes(r.cells[ci].lv)).length}</b>/${rows.length}</div>`).join("") + `<div></div></div>`;
+  document.getElementById("mx").innerHTML = head + body + foot;
+
+  // animate: rings fill, row bars grow, tile numbers count up
+  requestAnimationFrame(() => setTimeout(() => {
+    document.querySelectorAll("#mx .ring").forEach((el) => { el.style.strokeDasharray = `${el.dataset.p} 100`; });
+    document.querySelectorAll("#mx .bar i").forEach((el) => { el.style.width = el.dataset.w + "%"; });
+  }, 60));
+  let t0 = null;
+  const step = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1400);
+    document.querySelectorAll("#mxTiles b").forEach((b) => { b.textContent = Math.round(+b.dataset.n * (1 - Math.pow(1 - k, 3))); });
+    if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+  applyMxFilter();
+}
+function applyMxFilter() {
+  document.querySelectorAll("#mx .cell").forEach((el) => el.classList.toggle("dim", !!mxFilter && el.dataset.s !== mxFilter));
+}
+function showCell(el) {
+  if (!el) return;
+  const b = mxBrands.find((x) => x.slug === el.dataset.b), c = STATUS.find((x) => x.dest === el.dataset.d);
+  const p = b && b.profiles.find((x) => x.destination === el.dataset.d), lv = el.dataset.s, L = LEVELS[lv];
+  document.querySelectorAll("#mx .cell.sel").forEach((x) => x.classList.remove("sel"));
+  el.classList.add("sel");
+  const d = (p && p.done) || {}, nx = CHECKPOINTS.find((k) => (d[k.key] || 0) < 1);
+  const exp = p && p.tokenExpiresAt ? new Date(p.tokenExpiresAt) : null;
+  const days = exp ? Math.round((exp - new Date()) / 86400000) : null;
+  const meta = [p && p.handle ? esc(p.handle) : "no handle yet", p ? `mode: ${esc(p.publishingMode)}` : "", p ? `${p.readyAssets} assets ready` : "",
+    days !== null ? (days < 0 ? `token expired ${-days}d ago` : `token ${days}d left`) : ""].filter(Boolean).join(" · ");
+  const box = document.getElementById("mxDetail");
+  box.style.setProperty("--c", L ? L.color : "var(--dim)");
+  box.innerHTML = `<div class="big">${p ? p.pct : 0}%</div>
+    <div><div class="t">${esc(b.name)} × ${esc(c.name)}<em>${L ? L.label.toUpperCase() : "NO PROFILE"}</em></div><div class="m">${meta}</div></div>
+    <div class="dots" title="10 checkpoints">${CHECKPOINTS.map((k) => `<i class="${(d[k.key] || 0) >= 1 ? "ok" : (d[k.key] || 0) > 0 ? "half" : ""}" title="${esc(k.label)}"></i>`).join("")}</div>
+    <div class="n">${p && p.note ? esc(p.note) : nx ? "Next checkpoint: " + esc(nx.label) : "Every checkpoint cleared."}</div>`;
+}
+document.getElementById("matrix").addEventListener("click", (e) => {
+  const t = e.target.closest(".mx-tile");
+  if (t) { mxFilter = t.dataset.f && mxFilter !== t.dataset.f ? t.dataset.f : null; document.querySelectorAll(".mx-tile").forEach((x) => x.classList.toggle("on", (x.dataset.f || null) === mxFilter)); applyMxFilter(); return; }
+  showCell(e.target.closest(".cell"));
+});
+document.getElementById("mx").addEventListener("mouseover", (e) => { const c = e.target.closest(".cell"); if (c && !c.classList.contains("sel")) showCell(c); });
+async function pullMatrix() {
+  try {
+    const res = await fetch(FEED, { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    const feed = await res.json();
+    if (!feed.ok || !feed.brands || !feed.brands.length) throw new Error("bad feed");
+    mxBrands = feed.brands; mxLive = true;
+  } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
+  const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
+  if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
+    if (keep) showCell(document.querySelector(`#mx .cell[data-b="${keep[0]}"][data-d="${keep[1]}"]`)); }
+}
+pullMatrix();
+setInterval(pullMatrix, EVERY);
 
 // ---- Visit counter: every page load counts one visit (free Abacus counter, no account) ----
 fetch("https://abacus.jasoncameron.dev/hit/elettro-com/dash-visits")
