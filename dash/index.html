@@ -76,6 +76,28 @@ h2 em{font-style:normal;color:var(--cyan)}
 .steps li.ok .m{color:var(--volt)} .steps li.half .m{color:var(--gold)} .steps li.half{color:var(--ink)}
 .note{margin-top:10px;font-size:12px;color:var(--dim);border-top:1px dashed var(--line);padding-top:8px}
 footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* ---- The dam: apps waiting on approval ---- */
+.dam{background:var(--asphalt);border:2px solid var(--line);border-radius:18px;padding:14px;position:relative;overflow:hidden}
+.dam svg{display:block;width:100%;height:auto}
+.dam .stat{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;margin:2px 4px 8px}
+.dam .stat .n{font:400 44px/1 Anton,sans-serif;color:var(--cyan)}
+.dam .stat .l{font:700 11px "JetBrains Mono",monospace;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+.dam .waits{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
+.dam .wait{background:var(--lane);border:2px solid var(--line);border-radius:12px;padding:10px 12px;border-left:6px solid var(--c)}
+.dam .wait b{display:block;font-weight:800;font-size:14px}
+.dam .wait .d{font:700 11px "JetBrains Mono",monospace;color:var(--cyan);margin-top:2px}
+.dam .wait p{font-size:12px;color:var(--dim);margin-top:4px}
+.dam .wait.open{border-color:var(--volt)} .dam .wait.open .d{color:var(--volt)}
+@keyframes waveA{to{transform:translateX(-400px)}}
+@keyframes waveB{to{transform:translateX(400px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes drip{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(44px);opacity:0}}
+@keyframes jet{to{stroke-dashoffset:-60}}
+.dam .waveA{animation:waveA 9s linear infinite}
+.dam .waveB{animation:waveB 13s linear infinite}
+.dam .buoy{animation:bob 3.2s ease-in-out infinite}
+.dam .drip{animation:drip 2.4s linear infinite}
+.dam .jet{stroke-dasharray:14 10;animation:jet 1s linear infinite}
 @media (max-width:760px){
   header{grid-template-columns:1fr}.total{text-align:left}
   .scale{grid-template-columns:1fr 64px}.scale>span:first-child{display:none}
@@ -109,6 +131,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
   .prace .next{display:block}
 }
 @media (prefers-reduced-motion:reduce){.ticker div,.car .smoke i{animation:none}.car,.trail,.ghost{transition:none}}
+@media (prefers-reduced-motion:reduce){.dam .waveA,.dam .waveB,.dam .buoy,.dam .drip,.dam .jet{animation:none}}
 /* ---- Plug-in Matrix: brand x network ---- */
 :root{ --ok:#3dff9a; --warn:#ffc83d; --bad:#ff4d4d; --off:#5c5a6e; }
 .mx-head{margin:54px 0 14px;padding-top:26px;border-top:3px solid var(--ink)}
@@ -249,6 +272,13 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
   <h2>Pit <em>boards</em></h2>
   <div class="pits" id="pits"></div>
 
+  <h2>The <em>dam</em></h2>
+  <section class="dam" aria-label="Apps waiting on approval">
+    <div class="stat"><div class="n" id="damN">0</div><div class="l" id="damL">apps waiting for approval</div><div class="l" id="damD"></div></div>
+    <div id="damScene"></div>
+    <div class="waits" id="damWaits"></div>
+  </section>
+
   <section id="postrace" aria-label="1000 post race">
     <div class="pr-head">
       <div>
@@ -295,7 +325,7 @@ const CHECKPOINTS = [
   { key: "api", label: "Developer app + API access", w: 15 },
   { key: "oauth", label: "OAuth connected to Elettro OS", w: 15 },
   { key: "test", label: "First test post via API", w: 10 },
-  { key: "live", label: "Auto-publishing + metrics live", w: 10 },
+  { key: "live", label: "Auto-publishing live", w: 10 },
 ];
 
 // ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-21. ----
@@ -319,14 +349,14 @@ const STATUS = [
     done: { strategy: 1, content: 1, api: 0.5 },
     note: "Dean's profile connected under Elettro 261019 and the first API post went live. Company pages wait on LinkedIn's review." },
   { name: "Threads", dest: "threads", handle: "@stashboxmusic", code: "TH", color: "#c9c4ff",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1 },
-    note: "CONNECTED 261020 as @stashboxmusic (token good to 261219). Next: auto token refresh + publish adapter, then first test post." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
+    note: "LIVE 261022 as @stashboxmusic: Elettro OS posts approved Review items on its own every 15 min (token auto-renews, good to 261219). Scheduled posts confirmed 261021 and 261022." },
   { name: "Pinterest", dest: "pinterest", handle: "@elettro", code: "P", color: "#ff4f6b",
     done: { strategy: 1, account: 1, content: 1, api: 0.5, oauth: 1 },
     note: "APPROVED 261020: Pinterest app Elettro OS (id 1627333) has Trial access, the first network to approve. Connect code live 261021. Full API credit after Standard access (demo video)." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
-    done: { strategy: 1, account: 1, content: 1, api: 0.5 },
-    note: "SUBMITTED for approval 261020: Google Business Profile API access (case 6-8427000042222, one request covers all brands). Review 7-10 days, approval approx 261027." },
+    done: { strategy: 1, account: 1, content: 1, api: 1 },
+    note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (case 6-8427000042222, 300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
 ];
 
 const pctOf = (r) => Math.round(CHECKPOINTS.reduce((s, c) => s + c.w * (r.done[c.key] || 0), 0));
@@ -388,7 +418,97 @@ const leader = field[0], liveCount = STATUS.filter((r) => r.done.live >= 1).leng
 const msg = `LEADER: ${leader.name.toUpperCase()} ${leader.pct}%  ✦  LIVE NETWORKS: ${liveCount}/${STATUS.length}  ✦  NEXT GATE FOR THE PACK: DEVELOPER APP + API ACCESS  ✦  AUTOMATION ORDER: YOUTUBE → META → TIKTOK  ✦  MONTH PLAN: 504 POSTS APPROVED  ✦  `;
 document.getElementById("ticker").textContent = msg.repeat(4);
 document.getElementById("stamp").textContent = stamp;
+renderDam();
 }
+
+// ---- The dam: every app that is built and waiting for a platform's approval before it can post publicly ----
+// Each app keeps the exact moment its request went in ("since"); an up-counter shows how long the platform has been taking,
+// and the water rises with every hour of waiting. state "waiting" = gate closed; "open" = approved (gate open).
+// Edit this list when a request is sent or approved. exact:false = only the date is known (counter starts at noon that day).
+const WAITING = [
+  { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "gmb", name: "Google Business", what: "API access (case 6-8427000042222), approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
+  { dest: "tiktok", name: "TikTok", what: "Production review for public posts", since: "2026-10-21T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "youtube", name: "YouTube", what: "Google app verification and API audit (public uploads)", since: "2026-10-22T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "pinterest", name: "Pinterest", what: "Standard access, demo video sent", since: "2026-10-23T11:38:00-04:00", exact: true, state: "waiting" }
+];
+const damMs = (w) => Math.max(0, Date.now() - new Date(w.since).getTime());
+const damClock = (ms) => {
+  const s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d}d ${p(h)}h ${p(m)}m ${p(x)}s`;
+};
+const damYYMMDD = (iso) => iso.slice(2, 4) + iso.slice(5, 7) + iso.slice(8, 10);
+const damWhen = (w) => damYYMMDD(w.since) + (w.exact ? " " + new Date(w.since).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "");
+function damLevel() {
+  const waiting = WAITING.filter((w) => w.state === "waiting");
+  const hours = waiting.reduce((s, w) => s + damMs(w) / 36e5, 0);
+  return { waiting, level: waiting.length ? Math.min(0.94, 0.12 + 0.12 * waiting.length + 0.0004 * hours) : 0.1 };
+}
+function renderDam() {
+  const col = (d) => (STATUS.find((r) => r.dest === d) || {}).color || "#22e6ff";
+  const open = WAITING.filter((w) => w.state === "open");
+  const { waiting, level } = damLevel();
+  document.getElementById("damN").textContent = waiting.length;
+  document.getElementById("damL").textContent = waiting.length === 1 ? "app waiting for approval" : "apps waiting for approval";
+  const W = 1200, H = 440, ground = 380, crest = 150, damX = 700, top = 168;
+  const wy = Math.round(ground - level * (ground - top));
+  const wave = (y, amp, len, ph) => { let d = `M${-400 + ph} ${y}`; for (let x = -400 + ph; x < W + 400; x += len) d += ` q${len / 4} ${-amp} ${len / 2} 0 t${len / 2} 0`; return d + ` V${ground} H${-400} Z`; };
+  const buoys = waiting.map((w, i) => {
+    const x = 80 + i * (600 / Math.max(1, waiting.length)) + 40, c = col(w.dest);
+    return `<g transform="translate(${x} ${wy - 12})"><g class="buoy" style="animation-delay:${i * 0.6}s">
+      <line x1="0" y1="-62" x2="0" y2="4" stroke="#0b0b10" stroke-width="3"/>
+      <path d="M0 -62 L66 -50 L0 -38 Z" fill="${c}" stroke="#0b0b10" stroke-width="2"/>
+      <ellipse cx="0" cy="8" rx="20" ry="9" fill="${c}" stroke="#0b0b10" stroke-width="2"/>
+      <text x="0" y="-70" text-anchor="middle" font-family="Inter" font-weight="800" font-size="14" fill="var(--ink)">${w.name}</text>
+      <text x="0" y="34" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="12" fill="#04141c">sent ${damWhen(w)}</text>
+      <text class="cnt" data-since="${w.since}" x="0" y="51" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="13" fill="#04141c">${damClock(damMs(w))}</text></g></g>`;
+  }).join("");
+  const posts = waiting.flatMap((w, i) => [0, 1, 2].map((k) => `<rect x="${60 + i * 150 + k * 34}" y="${ground - 34 - k * 6}" width="26" height="34" rx="4" fill="${col(w.dest)}" opacity=".55" stroke="#0b0b10" stroke-width="1.5"/>`)).join("");
+  const jet = open.length ? `<path class="jet" d="M${damX + 36} 330 Q 880 330 960 372" fill="none" stroke="#22e6ff" stroke-width="12" stroke-linecap="round" opacity=".85"/>` : "";
+  const houseCols = open.map((w) => col(w.dest));
+  const house = (x, y, c) => `<g transform="translate(${x} ${y})"><rect x="0" y="8" width="22" height="16" fill="${c}" stroke="#0b0b10" stroke-width="2"/><path d="M-3 9 L11 -3 L25 9 Z" fill="#3a3a4c" stroke="#0b0b10" stroke-width="2"/><rect x="8" y="14" width="6" height="10" fill="#0b0b10"/></g>`;
+  const valley = open.length ? `<path d="M${damX + 120} ${ground - 24} Q ${damX + 260} ${ground - 30} ${damX + 330} ${ground - 14} T ${W} ${ground - 10} V${ground + 8} H${damX + 130} Z" fill="url(#wg)" opacity=".9"/>
+    <path class="waveA" d="M${damX + 150} ${ground - 8} q20 -5 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#fff" stroke-width="2" opacity=".5"/>
+    ${[0, 1, 2, 3, 4].map((i) => house(damX + 190 + i * 100, ground - 54 - (i % 2) * 6, houseCols[i % houseCols.length])).join("")}
+    ${[0, 1, 2, 3].map((i) => house(damX + 240 + i * 100, ground - 96 + (i % 2) * 8, houseCols[(i + 1) % houseCols.length])).join("")}` : "";
+  const drips = waiting.length ? [0, 0.8, 1.6].map((d) => `<circle class="drip" style="animation-delay:${d}s" cx="${damX + 42 + d * 6}" cy="${ground - 52}" r="3.5" fill="#22e6ff"/>`).join("") : "";
+  const stress = Math.round(level * 100);
+  const cracks = (level > 0.7 ? `<path d="M${damX + 30} ${crest + 4} l10 24 l-8 16 l12 22" stroke="#0b0b10" stroke-width="3" fill="none"/>` : "")
+    + (level > 0.82 ? `<path d="M${damX + 66} ${crest + 60} l-12 20 l10 18 l-8 26 M${damX + 48} ${crest + 120} l14 14" stroke="#0b0b10" stroke-width="3" fill="none"/>` : "")
+    + (level > 0.9 ? `<path d="M${damX + 10} ${crest + 90} l16 -10 l10 14 l18 -8" stroke="#ff2e88" stroke-width="3" fill="none"/>` : "");
+  document.getElementById("damScene").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${waiting.length} apps waiting behind a closed dam gate; water pressure ${stress} percent">
+    <defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22e6ff" stop-opacity=".85"/><stop offset="1" stop-color="#0a5a8a" stop-opacity=".95"/></linearGradient>
+    <clipPath id="resClip"><path d="M0 ${wy - 14} H${damX} V${ground} H0 Z"/></clipPath></defs>
+    <path d="M0 300 L120 210 L230 290 L360 190 L520 300 L640 230 L760 310 L900 215 L1040 300 L1200 235 V${ground} H0 Z" fill="var(--lane)" opacity=".7"/>
+    <rect x="0" y="${ground}" width="${W}" height="${H - ground}" fill="var(--lane)"/>
+    <g clip-path="url(#resClip)"><rect x="0" y="${wy}" width="${damX}" height="${ground - wy}" fill="url(#wg)"/>
+      <path class="waveB" d="${wave(wy, 7, 100, 0)}" fill="#22e6ff" opacity=".35"/><path class="waveA" d="${wave(wy + 6, 6, 80, 20)}" fill="#22e6ff" opacity=".55"/>${posts}</g>
+    <path d="M${damX} ${crest} H${damX + 80} L${damX + 130} ${ground} H${damX - 10} Z" fill="#3a3a4c" stroke="#0b0b10" stroke-width="3"/>
+    <path d="M${damX + 16} ${crest + 30} H${damX + 70} M${damX + 24} ${crest + 80} H${damX + 80} M${damX + 32} ${crest + 130} H${damX + 92}" stroke="#2a2a38" stroke-width="3" opacity=".8"/>
+    ${cracks}
+    <g transform="translate(${damX + 14} ${ground - 96})"><rect x="0" y="0" width="52" height="66" rx="8" fill="${open.length ? "#d7ff1f" : "#ff2e88"}" stroke="#0b0b10" stroke-width="3"/>
+      <rect x="10" y="28" width="32" height="28" rx="4" fill="#0b0b10"/><path d="M15 28 v-8 a11 11 0 0 1 22 0 v8" fill="none" stroke="#0b0b10" stroke-width="4"/>
+      <text x="26" y="-8" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" fill="var(--ink)">${open.length ? "GATE OPEN" : "APPROVAL GATE"}</text></g>
+    <text x="${damX + 40}" y="${crest - 12}" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="13" fill="${level > 0.8 ? "#ff2e88" : "var(--cyan)"}">PRESSURE ${stress}%</text>
+    ${valley}${jet}${drips}
+    <path d="M${damX + 130} ${ground} Q ${damX + 330} ${ground - 8} ${W} ${ground}" stroke="var(--line)" stroke-width="4" fill="none" stroke-dasharray="3 9"/>
+    <text x="${damX + 260}" y="${ground + 42}" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="var(--dim)">${open.length ? "PUBLIC POSTING: the valley is flowing" : "PUBLIC POSTING (dry until the gate opens)"}</text>
+    <text x="24" y="${ground + 42}" font-family="Inter" font-weight="800" font-size="17" fill="var(--cyan)">BUILT, TESTED, QUEUED: waiting for approval</text>
+    ${buoys}</svg>`;
+  document.getElementById("damWaits").innerHTML = WAITING.map((w) => `<div class="wait ${w.state}" style="--c:${col(w.dest)}"><b>${w.name}</b>
+    <div class="d">${w.state === "open" ? "APPROVED: gate open" : `waiting <span class="cnt" data-since="${w.since}">${damClock(damMs(w))}</span>`}</div>
+    <p>Submitted ${damWhen(w)}${w.exact ? "" : " (date only)"}. ${w.what}</p></div>`).join("");
+  tickDam();
+}
+function tickDam() {
+  document.querySelectorAll("#damScene .cnt, #damWaits .cnt").forEach((el) => { el.textContent = damClock(Date.now() - new Date(el.dataset.since).getTime()); });
+  const w = WAITING.filter((x) => x.state === "waiting"), el = document.getElementById("damD");
+  if (el) el.textContent = w.length ? `longest wait: ${damClock(Math.max(...w.map(damMs)))}` : "all gates open";
+}
+setInterval(tickDam, 1000);
+setInterval(renderDam, 5 * 60 * 1000);
+
 
 
 // ---- Live feed from Elettro OS: checked on every page load and then every 30 min; the race only re-runs when a number changes ----
