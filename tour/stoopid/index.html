@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Slightly Stoopid Tour Social Assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Space+Mono:wght@400;700&family=Pirata+One&display=swap">
+<style>
+:root{--bg:#1a0d06;--panel:#26150a;--line:#4a2a14;--ink:#fbeed4;--muted:#d1b085;--accent:#f5a43a;--chip:#33190b;--stripe:linear-gradient(90deg,#2bb5a6 0 25%,#f5a43a 25% 50%,#e4572e 50% 75%,#6b2a12 75%); --display:"Bebas Neue","Arial Narrow",Impact,sans-serif; --head:"Pirata One","Bebas Neue",Impact,sans-serif; --body:"DM Sans","Segoe UI",system-ui,sans-serif; --mono:"Space Mono",ui-monospace,Consolas,monospace; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
+img{max-width:100%}
+.wrap{max-width:1500px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left));display:grid;gap:36px}
+.wrap::before{content:"";display:block;height:10px;border-radius:5px;background:var(--stripe)}
+header{display:grid;gap:14px;max-width:920px}
+.eyebrow{font:700 12px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+h1{font:400 clamp(44px,7vw,84px)/.92 var(--head);margin:0;text-wrap:balance}
+.lede{color:var(--muted);margin:0;max-width:72ch}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rule{font:600 13px/1 var(--body);background:var(--chip);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+.dates{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.date{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:8px;padding:12px 14px;display:grid;gap:3px}
+.date b{font:400 24px/1 var(--display);letter-spacing:.02em}
+.date span{font-size:13px;color:var(--muted)}
+.date a{font-size:12px;color:var(--accent)}
+h2.sec{font:400 38px/1 var(--display);margin:0;border-bottom:3px solid var(--accent);padding-bottom:8px;letter-spacing:.02em}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start}
+.post{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;min-width:0}
+.meta{padding:10px 12px 12px;display:grid;gap:7px}
+.meta .n{font:700 11px/1 var(--mono);color:var(--accent);letter-spacing:.12em}
+.meta .name{font:400 22px/1 var(--display);letter-spacing:.02em}
+.meta .cta{font-size:12px;color:var(--muted)}
+.meta .cta b{color:var(--ink)}
+details{font-size:13px}summary{cursor:pointer;color:var(--accent);font-weight:600}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12.5px/1.45 var(--body);background:#0000004d;border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0 0}
+.tabs{display:flex;gap:4px;margin-top:8px}
+.tabs button{font:700 11px/1 var(--mono);background:var(--chip);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:6px 8px;cursor:pointer}
+.tabs button[aria-pressed=true]{color:var(--bg);background:var(--ink)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;max-width:95ch}
+.card{position:relative;overflow:hidden;container-type:inline-size;color:#fff;isolation:isolate;aspect-ratio:4/5}
+.card.story{aspect-ratio:9/16}
+.card .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.card .veil{position:absolute;inset:0;z-index:-1}
+.abs{position:absolute}
+.btn{display:inline-block;font:700 3.4cqw/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:2.4cqw 3.8cqw;border-radius:99px}
+.mono{font-family:var(--mono);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:440px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+.logo{position:absolute;left:50%;transform:translateX(-50%);width:46cqw}
+.h{font-family:var(--head);font-weight:400;line-height:.95}
+.sunset{background:linear-gradient(180deg,#2bb5a6 0%,#f5a43a 38%,#e4572e 70%,#3a1408 100%)}
+.btn.o{background:#f5a43a;color:#2a1408}
+.btn.t{background:#2bb5a6;color:#08211e}
+.btn.c{background:#fbeed4;color:#2a1408}
+.row5{display:grid;gap:1.6cqw}
+.show{display:grid;grid-template-columns:19cqw 1fr;gap:3cqw;align-items:center;background:#1a0d06b8;border-left:1.2cqw solid #f5a43a;padding:1.1cqw 3cqw;backdrop-filter:blur(3px)}
+.show b{font:400 7.6cqw/1 var(--display);color:#f5a43a}
+.show i{font:normal 700 3.5cqw/1.2 var(--body);display:block}
+.show small{font:400 2.9cqw/1.2 var(--body);color:#e8cfa5}
+.stamp{border:.9cqw solid currentColor;border-radius:1.5cqw;padding:1.2cqw 2.6cqw;font:400 8cqw/1 var(--display);letter-spacing:.06em;transform:rotate(-8deg)}
+.knit{background:#c8362b;background-image:repeating-linear-gradient(45deg,#fbeed4 0 1.2cqw,transparent 1.2cqw 6cqw),repeating-linear-gradient(-45deg,#1f7a4d 0 1.2cqw,transparent 1.2cqw 6cqw)}
+.pill{background:#fbeed4;color:#2a1408;border-radius:99px;padding:2.2cqw 4cqw;font:700 3.6cqw/1.1 var(--body);display:flex;justify-content:space-between;gap:2cqw}
+.pill b{font:400 5cqw/1 var(--display);color:#c8362b}
+.barcode{height:9cqw;background:repeating-linear-gradient(90deg,#2a1408 0 .6cqw,transparent .6cqw 1.4cqw,#2a1408 1.4cqw 2.6cqw,transparent 2.6cqw 3.2cqw,#2a1408 3.2cqw 3.4cqw,transparent 3.4cqw 4.6cqw)}
+
+</style></head><body>
+<div class="wrap">
+<header>
+<div class="eyebrow">Slightly Stoopid · tour · 10 social assets</div>
+<h1>Slightly Stoopid Tour Social Assets</h1>
+<p class="lede">Ten ready-to-post concert promos built from the dates on slightlystoopid.com/tour and the band's own artwork: the Road Trippin' sunset-palm banner, the black-and-white band photo, the logo and the official-store merch. Every asset has a clear call to action and an Instagram/TikTok and Facebook caption with the ticket link. Countdowns update themselves from today's date.</p>
+<div class="rules"><span class="rule">Dates and bills straight from the tour page</span><span class="rule">Ticket links go to the official Seated pages</span><span class="rule">No prices, no invented details</span><span class="rule">Slow moves, no beat pulsing</span><span class="rule">Draft only: not approved by the band</span></div>
+</header>
+<div class="dates" id="dates"></div>
+<h2 class="sec">10 social assets</h2>
+<main class="grid" id="grid"></main>
+<footer>Layout proofs drawn live in CSS from the band's public artwork (slightlystoopid.com and the official store), which remains the property of Slightly Stoopid. Show details were read from slightlystoopid.com/tour and may change; confirm before posting. Closer To The Sun is listed as sold out with a waitlist, and the Kia Forum show is listed on the page as on sale 10/23.</footer>
+</div>
+<script>
+const esc=(s)=>String(s??"").replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const daysTo=(iso)=>Math.max(0,Math.ceil((new Date(iso+"T12:00:00")-new Date())/864e5));
+const tracked=(u,id)=>u+(u.includes("?")?"&":"?")+"utm_source=facebook&utm_medium=social&utm_campaign=epe-tour&utm_content="+id;
+
+const BANNER="m/banner.jpg", HERO="m/hero-bw.jpg", LOGO="m/logo.png";
+const L={
+ chi:"https://link.seated.com/f817eda4-7ef7-4501-8040-b97db5892546",
+ gle:"https://link.seated.com/d23ec394-ee87-4617-ae7e-e88237bb561d",
+ cts:"https://link.seated.com/c3da4c46-4971-4528-8b36-b1c5b38a0c07/2",
+ forum:"https://link.seated.com/9a3015af-513f-49e9-b373-6ba1263b8637",
+ fl:"https://link.seated.com/5a3675e5-0230-4d89-8bc9-f3d624edd389",
+ tour:"https://www.slightlystoopid.com/tour",
+ shop:"https://slightlystoopid.shop.redstarmerch.com/"
+};
+const SHOWS=[
+ {when:"Dec 8, 2026",what:"Q101 Twisted @ Aragon Ballroom",where:"Chicago, IL",bill:"w/ Dirty Heads",link:L.chi,status:"Tickets"},
+ {when:"Dec 11, 2026",what:"93.3 ALT AZ Ugly Sweater Holiday Party @ Desert Diamond Arena",where:"Glendale, AZ",bill:"w/ Sublime, Codefendants",link:L.gle,status:"Tickets"},
+ {when:"Jan 9–13, 2027",what:"Closer To The Sun 2027",where:"Riviera Maya, Mexico",bill:"Sold out · waitlist",link:L.cts,status:"Join waitlist"},
+ {when:"Jan 16, 2027",what:"98.7 ALTer EGO @ Kia Forum",where:"Inglewood, CA",bill:"On sale 10/23",link:L.forum,status:"More info"},
+ {when:"Mar 11, 2027",what:"Reggae Rise Up Florida @ Vinoy Park",where:"St. Petersburg, FL",bill:"",link:L.fl,status:"Tickets / RSVP"}
+];
+const CTS=["Stick Figure","Wiz Khalifa","Iration","SOJA","The Movement","Tribal Seeds","Little Stranger","The Hip Abduction","Lila Iké","Surfer Girl","Algorhythm","JARV","Chromeo","Z-Trip","Cut Chemist & Chali 2na","Kaleo Wassman","Logan Rex"];
+const tag="#slightlystoopid #stoopidheads";
+const ASSETS=[
+ {id:"a1",name:"The Run: every date",fmt:"feed",cta:"Get tickets, link in bio",link:L.tour,
+  render:()=>`<img class="bgimg" src="${BANNER}" alt=""><div class="veil" style="background:linear-gradient(180deg,#1a0d0699,#1a0d06e6 60%)"></div>
+   <div class="abs" style="left:5%;right:5%;top:4%;text-align:center"><div class="mono" style="font-size:3.2cqw;color:#f5a43a">Slightly Stoopid</div><div class="h" style="font-size:13cqw">THE RUN</div></div>
+   <div class="abs row5" style="left:5%;right:5%;top:27%;gap:1.1cqw">${SHOWS.map((s)=>`<div class="show"><b>${esc(s.when.replace(/, 20\d\d/,"").toUpperCase())}</b><div><i>${esc(s.where)}</i><small>${esc(s.what.split(" @ ").pop())}</small></div></div>`).join("")}</div>
+   <div class="abs" style="left:5%;bottom:3.5%"><span class="btn o">Tickets · slightlystoopid.com/tour</span></div>`,
+  ig:`Five shows, one road. Chicago, Glendale, Closer To The Sun, the Kia Forum and St. Pete.\nTickets and dates at slightlystoopid.com/tour. Link in bio.\n\n${tag}`,
+  fb:`Five shows, one road. Chicago, Glendale, Closer To The Sun, the Kia Forum and St. Pete.\nAll dates and tickets: {LINK}`},
+ {id:"a2",name:"Countdown: Chicago",fmt:"story",cta:"Tap the ticket sticker",link:L.chi,
+  render:()=>`<img class="bgimg" src="${HERO}" style="filter:grayscale(1) contrast(1.1)" alt=""><div class="veil" style="background:linear-gradient(180deg,#e4572ecc,#f5a43a99 45%,#1a0d06f2)"></div>
+   <div class="abs mono" style="top:6%;left:0;right:0;text-align:center;font-size:3.4cqw">Slightly Stoopid · live</div>
+   <div class="abs" style="left:0;right:0;top:22%;text-align:center"><div style="font:400 62cqw/.8 var(--display);text-shadow:0 1cqw 0 #2a1408">${daysTo("2026-12-08")}</div><div class="h" style="font-size:12cqw;color:#fbeed4">DAYS TO CHICAGO</div></div>
+   <div class="abs" style="left:7%;right:7%;bottom:7%;display:grid;gap:2.4cqw;text-align:center"><div style="font:700 4.4cqw/1.3 var(--body)">Dec 8 · Aragon Ballroom<br>with Dirty Heads</div><span class="btn o" style="justify-self:center">Tickets 🎟 tap here</span></div>`,
+  ig:`Chicago. Dec 8. Aragon Ballroom. With Dirty Heads.\nTickets via the link sticker. Link in bio.\n\n${tag}`,
+  fb:`Chicago, Dec 8 at the Aragon Ballroom with Dirty Heads (Q101 Twisted).\nTickets: {LINK}`},
+ {id:"a3",name:"Ugly Sweater Holiday Party",fmt:"feed",cta:"Tickets, wear your worst sweater",link:L.gle,
+  render:()=>`<div class="veil knit"></div><div class="veil" style="background:radial-gradient(circle at 50% 45%,#1a0d06f2 0 42%,transparent 70%)"></div>
+   <div class="abs mono" style="top:6%;left:0;right:0;text-align:center;font-size:3.2cqw">Slightly Stoopid</div>
+   <div class="abs" style="left:6%;right:6%;top:20%;text-align:center"><div class="mono" style="font-size:3.4cqw;color:#f5a43a">Dec 11 · Glendale, AZ</div><div class="h" style="font-size:14.5cqw;margin-top:2cqw">UGLY SWEATER<br>HOLIDAY PARTY</div><div style="font:700 4cqw/1.3 var(--body);margin-top:3cqw">Desert Diamond Arena<br>w/ Sublime + Codefendants</div></div>
+   <div class="abs" style="left:0;right:0;bottom:6%;text-align:center"><span class="btn c">Wear the worst one · tickets</span></div>`,
+  ig:`Dec 11 in Glendale: the 93.3 ALT AZ Ugly Sweater Holiday Party at Desert Diamond Arena, with Sublime and Codefendants. Wear your worst sweater.\nTickets: link in bio.\n\n${tag} #uglysweater`,
+  fb:`Dec 11 in Glendale: the 93.3 ALT AZ Ugly Sweater Holiday Party at Desert Diamond Arena, with Sublime and Codefendants. Wear your worst sweater.\nTickets: {LINK}`},
+ {id:"a4",name:"Closer To The Sun bill",fmt:"feed",cta:"Join the waitlist",link:L.cts,
+  render:()=>`<div class="veil sunset"></div><img class="bgimg" src="${BANNER}" style="opacity:.28;mix-blend-mode:multiply" alt="">
+   <div class="abs" style="left:6%;right:6%;top:5%;text-align:center"><div class="mono" style="font-size:3.2cqw">Jan 9–13, 2027 · Riviera Maya, Mexico</div><div class="h" style="font-size:11.5cqw;text-shadow:0 1cqw 0 #2a1408;white-space:nowrap">CLOSER TO THE SUN</div></div>
+   <div class="abs" style="left:7%;right:7%;top:28%;text-align:center;font:400 6.2cqw/1.12 var(--display);color:#fff7e6;text-shadow:0 .6cqw 0 #2a140899"><span style="font-size:8.6cqw;color:#2a1408;background:#fbeed4;padding:0 2cqw">SLIGHTLY STOOPID</span><br>${CTS.slice(0,6).join(" · ")}<br>${CTS.slice(6,12).join(" · ")}<br>${CTS.slice(12).join(" · ")}</div>
+   <div class="abs" style="left:7%;bottom:7%;color:#fbeed4"><div class="stamp">SOLD OUT</div></div>
+   <div class="abs" style="right:7%;bottom:7%"><span class="btn t">Join waitlist</span></div>`,
+  ig:`Closer To The Sun 2027 is sold out. Jan 9–13 in Riviera Maya with Stick Figure, Wiz Khalifa, Iration, SOJA and more.\nJoin the waitlist: link in bio.\n\n${tag} #closertothesun`,
+  fb:`Closer To The Sun 2027 is sold out. Jan 9–13 in Riviera Maya with Stick Figure, Wiz Khalifa, Iration, SOJA and more.\nJoin the waitlist: {LINK}`},
+ {id:"a5",name:"Kia Forum on sale",fmt:"feed",cta:"Get tickets before they go",link:L.forum,
+  render:()=>`<img class="bgimg" src="${HERO}" style="filter:grayscale(1) contrast(1.15);object-position:50% 40%" alt=""><div class="veil" style="background:linear-gradient(180deg,#00000000 30%,#1a0d06f0 78%)"></div>
+   <div class="abs" style="top:6%;right:6%;color:#f5a43a"><div class="stamp" style="font-size:7cqw;background:#1a0d06b0">ON SALE 10/23</div></div>
+   <div class="abs" style="left:6%;right:6%;bottom:6%;display:grid;gap:2cqw"><div class="mono" style="font-size:3.4cqw;color:#f5a43a">98.7 ALTer EGO</div><div class="h" style="font-size:22cqw">THE FORUM</div><div style="font:700 4.4cqw/1.2 var(--body)">Jan 16, 2027 · Inglewood, CA</div><span class="btn o" style="justify-self:start">Get tickets</span></div>`,
+  ig:`The Kia Forum, Jan 16, 2027. 98.7 ALTer EGO. Inglewood, you ready?\nTickets and info: link in bio.\n\n${tag} #inglewood`,
+  fb:`The Kia Forum, Jan 16, 2027, for 98.7 ALTer EGO in Inglewood.\nTickets and info: {LINK}`},
+ {id:"a6",name:"Reggae Rise Up Florida",fmt:"feed",cta:"RSVP / tickets",link:L.fl,
+  render:()=>`<div class="veil sunset"></div><img class="bgimg" src="${BANNER}" style="object-position:20% 60%;opacity:.55;mix-blend-mode:multiply" alt="">
+   <div class="abs" style="left:50%;top:34%;width:62cqw;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle,#fff2c4,#f5a43a 62%,#e4572e);opacity:.9"></div>
+   <div class="abs" style="left:5%;right:5%;top:6%;text-align:center"><div class="mono" style="font-size:3.4cqw">Mar 11, 2027 · Vinoy Park</div><div class="h" style="font-size:17cqw;text-shadow:0 1cqw 0 #2a1408">REGGAE RISE UP<br>FLORIDA</div></div>
+   <div class="abs" style="left:0;right:0;bottom:6%;text-align:center;display:grid;gap:2cqw;justify-items:center"><div style="font:400 8cqw/1 var(--display)">ST. PETERSBURG, FL</div><span class="btn c">RSVP · tickets</span></div>`,
+  ig:`Mar 11, 2027. Reggae Rise Up Florida at Vinoy Park, St. Petersburg. Sunset, waterfront, Slightly Stoopid.\nRSVP and tickets: link in bio.\n\n${tag} #reggaeriseup`,
+  fb:`Mar 11, 2027: Reggae Rise Up Florida at Vinoy Park in St. Petersburg.\nRSVP and tickets: {LINK}`},
+ {id:"a7",name:"Admit One ticket stub",fmt:"feed",cta:"Grab yours",link:L.chi,
+  render:()=>`<div class="veil" style="background:#c8362b"></div><div class="veil" style="background:repeating-linear-gradient(135deg,#ffffff10 0 2cqw,transparent 2cqw 4cqw)"></div>
+   <div class="abs" style="left:7%;right:7%;top:12%;bottom:12%;background:#fbeed4;color:#2a1408;border-radius:2.4cqw;display:grid;grid-template-rows:1fr auto;transform:rotate(-3deg);box-shadow:0 3cqw 6cqw #0006">
+    <div style="padding:6cqw;display:grid;gap:2cqw;align-content:start;border-bottom:.8cqw dashed #2a140880"><div class="mono" style="font-size:3.2cqw;color:#c8362b">Admit one</div><div class="h" style="font-size:17cqw">SLIGHTLY STOOPID</div><div style="font:700 4.4cqw/1.3 var(--body)">Dec 8, 2026<br>Aragon Ballroom · Chicago, IL<br>w/ Dirty Heads</div></div>
+    <div style="padding:4cqw 6cqw;display:grid;grid-template-columns:1fr auto;gap:4cqw;align-items:center"><div class="barcode"></div><span class="btn o">Get yours</span></div></div>`,
+  ig:`Your ticket to Chicago is waiting. Dec 8 at the Aragon Ballroom with Dirty Heads.\nTickets: link in bio.\n\n${tag}`,
+  fb:`Your ticket to Chicago is waiting. Dec 8 at the Aragon Ballroom with Dirty Heads.\nTickets: {LINK}`},
+ {id:"a8",name:"Poll: Where are you seeing us?",fmt:"story",cta:"Vote, then tap for tickets",link:L.tour,
+  render:()=>`<div class="veil" style="background:linear-gradient(180deg,#0f6f66,#1a0d06)"></div><img class="bgimg" src="${BANNER}" style="opacity:.25" alt="">
+   <div class="abs" style="left:7%;right:7%;top:8%;text-align:center"><div class="mono" style="font-size:3.4cqw;color:#f5a43a">Stoopidheads</div><div class="h" style="font-size:15cqw;margin-top:2cqw">WHERE ARE YOU SEEING US?</div></div>
+   <div class="abs row5" style="left:7%;right:7%;top:42%">${SHOWS.map((s)=>`<div class="pill"><span>${esc(s.where.split(",")[0])}</span><b>${esc(s.when.replace(/, 20\d\d/,"").toUpperCase())}</b></div>`).join("")}</div>
+   <div class="abs" style="left:0;right:0;bottom:7%;text-align:center"><span class="btn o">Tap an answer 👆</span></div>`,
+  ig:`Where are you seeing us? Chicago, Glendale, Closer To The Sun, Inglewood or St. Pete. Vote in the poll sticker and tag your crew.\n\n${tag}`,
+  fb:`Where are you seeing us? Chicago, Glendale, Closer To The Sun, Inglewood or St. Pete. Tell us in the comments.\nAll dates: {LINK}`},
+ {id:"a9",name:"Dress for the show (merch)",fmt:"feed",cta:"Shop the merch",link:L.shop,
+  render:()=>`<div class="veil sunset"></div>
+   <div class="abs" style="left:6%;right:6%;top:5%;text-align:center"><div class="mono" style="font-size:3.2cqw">Official store</div><div class="h" style="font-size:11cqw;text-shadow:0 1cqw 0 #2a1408;white-space:nowrap">DRESS FOR THE SHOW</div></div>
+   <img class="abs" src="m/hat-1.png" style="left:3%;top:24%;width:44cqw;transform:rotate(-6deg);filter:drop-shadow(0 2cqw 2cqw #0006)" alt="Seagull hat"><img class="abs" src="m/tee-1.png" style="right:3%;top:22%;width:50cqw;transform:rotate(5deg);filter:drop-shadow(0 2cqw 2cqw #0006)" alt="Skull Kiss tee"><img class="abs" src="m/hoodie-1.png" style="left:26%;top:50%;width:48cqw;filter:drop-shadow(0 2cqw 2cqw #0006)" alt="Hoodie">
+   <div class="abs" style="left:0;right:0;bottom:5%;text-align:center"><span class="btn c">Shop before the show</span></div>`,
+  ig:`Dress for the show. Seagull hat, Skull Kiss tie dye, the OG skull hoodie, all at the official Slightly Stoopid store.\nShop: link in bio.\n\n${tag}`,
+  fb:`Dress for the show. Seagull hat, Skull Kiss tie dye and the OG skull hoodie at the official store.\n{LINK}`},
+ {id:"a10",name:"Route sketch",fmt:"feed",cta:"Pick your stop",link:L.tour,
+  render:()=>`<div class="veil" style="background:#fbeed4"></div>
+   <div class="abs" style="left:6%;right:6%;top:5%;color:#2a1408"><div class="mono" style="font-size:3.2cqw;color:#c8362b">The road ahead</div><div class="h" style="font-size:17cqw">PICK YOUR STOP</div></div>
+   <svg class="abs" viewBox="0 0 100 100" style="left:0;top:22%;width:100%;height:66%" aria-hidden="true"><path d="M66 22 C60 40 40 40 22 52 C20 54 18 54 16 52 C30 64 52 80 60 84 C66 74 74 66 76 58" fill="none" stroke="#c8362b" stroke-width="1" stroke-dasharray="2.4 1.8" stroke-linecap="round"/>
+    ${[[66,22,"CHICAGO","DEC 8"],[22,52,"GLENDALE","DEC 11"],[16,52,"",""],[60,84,"RIVIERA MAYA","JAN 9–13"],[76,58,"ST. PETE","MAR 11"]].map((p)=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.2" fill="#2a1408"/>${p[2]?`<text x="${p[0]+3.5}" y="${p[1]-0.5}" font-family="Bebas Neue" font-size="5.4" fill="#2a1408">${p[2]}</text><text x="${p[0]+3.5}" y="${p[1]+4.2}" font-family="Space Mono" font-size="3" font-weight="700" fill="#c8362b">${p[3]}</text>`:""}`).join("")}
+    <circle cx="12" cy="44" r="2.2" fill="#2a1408"/><text x="12" y="40" font-family="Bebas Neue" font-size="5.4" fill="#2a1408" text-anchor="middle">INGLEWOOD</text><text x="12" y="49.6" font-family="Space Mono" font-size="3" font-weight="700" fill="#c8362b" text-anchor="middle">JAN 16</text></svg>
+   <div class="abs" style="left:6%;bottom:5%"><span class="btn o">All dates · link in bio</span></div>`,
+  ig:`Chicago, Glendale, Inglewood, Riviera Maya, St. Pete. Which stop is yours?\nAll dates: link in bio.\n\n${tag}`,
+  fb:`Chicago, Glendale, Inglewood, Riviera Maya, St. Pete. Which stop is yours?\nAll dates and tickets: {LINK}`}
+];
+
+document.getElementById("dates").innerHTML=SHOWS.map((s)=>`<div class="date"><b>${esc(s.when)}</b><span>${esc(s.what)}</span><span>${esc(s.where)}${s.bill?" · "+esc(s.bill):""}</span><a href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.status)} →</a></div>`).join("");
+document.getElementById("grid").innerHTML=ASSETS.map((a,i)=>{
+  const fb=a.fb.replace("{LINK}",tracked(a.link,a.id)), ig=a.ig;
+  return `<article class="post"><div class="card ${a.fmt==="story"?"story":""}" ${a.attr||""}>${a.render()}</div>
+  <div class="meta"><div class="n">${String(i+1).padStart(2,"0")} · ${a.fmt==="story"?"9:16 STORY":"4:5 FEED"}</div><div class="name">${esc(a.name)}</div>
+  <div class="cta"><b>CTA:</b> ${esc(a.cta)}</div>
+  <details><summary>Caption</summary><div class="tabs"><button type="button" aria-pressed="true" data-cap="ig">IG / TikTok</button><button type="button" aria-pressed="false" data-cap="fb">Facebook</button></div>
+  <pre data-ig="${esc(ig)}" data-fb="${esc(fb)}">${esc(ig)}</pre></details></div></article>`}).join("");
+document.addEventListener("click",(ev)=>{const c=ev.target.closest("[data-cap]");if(!c)return;const box=c.closest("details");box.querySelectorAll("[data-cap]").forEach((b)=>b.setAttribute("aria-pressed",String(b===c)));const pre=box.querySelector("pre");pre.textContent=pre.dataset[c.dataset.cap];});
+</script></body></html>
