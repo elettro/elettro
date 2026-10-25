@@ -1,0 +1,345 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>David Knapp Listing Social Assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;600;700;800&display=swap">
+<style>
+:root{--ink:#10201a;--paper:#f5f1e8;--card:#fffdf8;--line:#dcd5c4;--muted:#5d6b63;--g:#1f9d55;--gd:#127a40;--brass:#b88a4a;--sea:#2c5f6e;--serif:"Cormorant Garamond",Georgia,serif;--sans:"Manrope",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 var(--sans)}
+.wrap{max-width:1500px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right)) 72px max(16px,env(safe-area-inset-left));display:grid;gap:34px}
+header{display:grid;gap:12px;max-width:900px}
+.eyebrow{font:800 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gd)}
+h1{font:600 clamp(40px,6.4vw,78px)/.95 var(--serif);margin:0;text-wrap:balance}
+.lede{color:var(--muted);margin:0;max-width:74ch}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rule{font:700 12.5px/1 var(--sans);background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+.homes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;position:sticky;top:0;z-index:5;background:linear-gradient(var(--paper) 82%,transparent);padding:10px 0 14px}
+.home{all:unset;cursor:pointer;display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px;box-sizing:border-box}
+.home[aria-pressed=true]{border-color:var(--g);box-shadow:0 0 0 3px #1f9d5530}
+.home img{width:78px;height:78px;object-fit:cover;border-radius:8px;background:#e6e0d1}
+.home b{display:block;font:700 17px/1.1 var(--serif);font-size:20px}
+.home span{display:block;font-size:12.5px;color:var(--muted)}
+.home em{font:800 13px/1 var(--sans);font-style:normal;color:var(--gd)}
+h2.sec{font:600 40px/1 var(--serif);margin:0;border-bottom:3px solid var(--g);padding-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2.sec small{font:600 13px/1 var(--sans);color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:start}
+.post{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0;box-shadow:0 1px 0 #0001}
+.meta{padding:11px 13px 14px;display:grid;gap:7px}
+.meta .n{font:800 11px/1 var(--sans);color:var(--gd);letter-spacing:.14em}
+.meta .name{font:700 24px/1 var(--serif)}
+.meta .use{font-size:12.5px;color:var(--muted)}
+.fmt{display:inline-block;font:800 10px/1 var(--sans);letter-spacing:.12em;border:1px solid var(--line);border-radius:4px;padding:3px 5px;margin-left:6px;color:var(--muted);vertical-align:2px}
+.tabs{display:flex;gap:4px;align-items:center}
+.tabs button{font:800 11px/1 var(--sans);background:#fff;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:6px 9px;cursor:pointer}
+.tabs button[aria-pressed=true]{color:#fff;background:var(--ink);border-color:var(--ink)}
+.tabs .copy{margin-left:auto;background:var(--g);color:#fff;border-color:var(--g)}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12.5px/1.45 var(--sans);background:#f3efe4;border:1px solid var(--line);border-radius:8px;padding:10px;margin:0;max-height:190px;overflow:auto}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;max-width:100ch;display:grid;gap:8px}
+footer b{color:var(--ink)}
+/* ---------- cards ---------- */
+.card{position:relative;overflow:hidden;container-type:inline-size;color:#fff;isolation:isolate;aspect-ratio:4/5;background:#1b2a23;font-family:var(--sans)}
+.card.story{aspect-ratio:9/16}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;background:#2a3a32}
+.veil{position:absolute;inset:0;z-index:-1}
+.abs{position:absolute}
+.serif{font-family:var(--serif)}
+.price{font-family:var(--serif);font-weight:700;line-height:.9;letter-spacing:-.01em}
+.cap{font:800 3cqw/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.chip{display:inline-block;background:var(--g);color:#fff;font:800 3cqw/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:2cqw 3.2cqw;border-radius:99px}
+.stats{display:flex;gap:3.2cqw;font:700 3.6cqw/1 var(--sans);letter-spacing:.06em;align-items:center;flex-wrap:wrap}
+.stats i{font-style:normal;opacity:.55}
+.agentline{font:700 2.9cqw/1.25 var(--sans);letter-spacing:.08em}
+.agentline b{font-weight:800}
+.fine{position:absolute;left:4cqw;right:4cqw;bottom:1.6cqw;font:500 2cqw/1.2 var(--sans);opacity:.7;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile{background:#f5f1e8;color:var(--ink);border-radius:2cqw;padding:2.6cqw 1cqw;text-align:center}
+.tile b{display:block;font:700 7.2cqw/1 var(--serif)}
+.tile span{font:800 2.4cqw/1.1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gd)}
+.pin{position:absolute;left:50%;top:50%;width:5.4cqw;height:5.4cqw;margin:-2.7cqw 0 0 -2.7cqw;border-radius:50%;background:var(--g);border:.9cqw solid #fff;box-shadow:0 .8cqw 2cqw #0007;z-index:2}
+.pin::after{content:"";position:absolute;inset:-3.4cqw;border-radius:50%;border:.6cqw solid #1f9d55aa;animation:ring 2.4s ease-out infinite}
+@keyframes ring{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.osm{position:absolute;right:2cqw;bottom:1.4cqw;font:500 1.9cqw/1 var(--sans);color:#10201acc;background:#ffffffb8;padding:.5cqw 1cqw;border-radius:.6cqw;z-index:3}
+.check{display:grid;grid-template-columns:5cqw 1fr;gap:2.4cqw;align-items:start;font:700 3.5cqw/1.25 var(--sans);color:var(--ink)}
+.check svg{width:5cqw;height:5cqw}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2cqw;text-align:center}
+.cal div{background:#fff;border:.35cqw solid #dcd5c4;border-radius:2cqw;padding:2cqw 0;color:var(--ink);font:800 2.6cqw/1.1 var(--sans);letter-spacing:.08em}
+.cal div b{display:block;font:700 6cqw/1 var(--serif);margin-top:.8cqw}
+.cal div.we{background:var(--g);border-color:var(--g);color:#fff}
+/* ---------- video templates ---------- */
+.vid{position:relative;overflow:hidden;container-type:inline-size;color:#fff;isolation:isolate;aspect-ratio:9/16;background:#111}
+.vid .layer{position:absolute;inset:0;opacity:0}
+.vid .layer img.k{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1)}
+.vid .tag{position:absolute;left:3.6cqw;top:3.6cqw;z-index:9;font:800 2.6cqw/1 var(--sans);letter-spacing:.14em;background:#000a;padding:1.4cqw 2.2cqw;border-radius:99px;display:flex;gap:1.2cqw;align-items:center}
+.vid .tag::before{content:"";width:2.2cqw;height:2.2cqw;border-radius:50%;background:#e23b3b}
+.vid .bar{position:absolute;left:0;right:0;bottom:0;height:1.2cqw;background:#ffffff40;z-index:9}
+.vid .bar i{display:block;height:100%;width:0;background:var(--g)}
+.vid.go .bar i{animation:bar var(--dur) linear forwards}
+@keyframes bar{to{width:100%}}
+/* v1 photo reel */
+.v1{--dur:12s}
+.v1:not(.go) .layer:first-child{opacity:1}
+.v1.go .layer{animation:fade 12s linear forwards}
+.v1.go .layer:nth-child(2){animation-delay:3s}.v1.go .layer:nth-child(3){animation-delay:6s}.v1.go .layer:nth-child(4){animation-delay:9s}
+.v1.go .layer img.k{animation:kb 3.8s ease-out forwards}
+.v1.go .layer:nth-child(2) img.k{animation-delay:3s}.v1.go .layer:nth-child(3) img.k{animation-delay:6s}.v1.go .layer:nth-child(4) img.k{animation-delay:9s}
+@keyframes fade{0%{opacity:0}2%{opacity:1}24%{opacity:1}28%{opacity:0}100%{opacity:0}}
+.v1.go .layer:nth-child(4){animation-name:fadeLast}
+@keyframes fadeLast{0%{opacity:0}2%{opacity:1}30%{opacity:1}100%{opacity:1}}
+@keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.14) translate(-1.5%,-1.5%)}}
+.v1 .lower{position:absolute;left:0;right:0;bottom:0;padding:34cqw 6cqw 8cqw;background:linear-gradient(180deg,#0000,#000d 55%);z-index:5}
+.v1.go .lower>*{opacity:0;animation:rise .7s ease-out forwards}
+.v1.go .lower>*:nth-child(1){animation-delay:.4s}.v1.go .lower>*:nth-child(2){animation-delay:.7s}.v1.go .lower>*:nth-child(3){animation-delay:1s}
+@keyframes rise{from{opacity:0;transform:translateY(5cqw)}to{opacity:1;transform:none}}
+/* v2 map fly-in */
+.v2{--dur:12s}
+.v2 .mapA,.v2 .mapS{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v2.go .mapA{animation:zoomA 4s ease-in forwards}
+.v2 .mapS{opacity:0}
+.v2.go .mapS{animation:zoomS 8s ease-out 3s forwards}
+@keyframes zoomA{from{transform:scale(1)}to{transform:scale(2.6);opacity:0}}
+@keyframes zoomS{0%{opacity:0;transform:scale(1)}20%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.12)}}
+.v2 .reveal{position:absolute;inset:0;clip-path:circle(0 at 50% 50%);z-index:6}
+.v2.go .reveal{animation:wipe 1.6s ease-in-out 6.2s forwards}
+@keyframes wipe{to{clip-path:circle(120% at 50% 50%)}}
+.v2 .reveal img{width:100%;height:100%;object-fit:cover;display:block}
+.v2 .reveal .veil{background:linear-gradient(180deg,#0000 45%,#000c)}
+.v2 .pinwrap{position:absolute;inset:0;z-index:4;opacity:0}
+.v2.go .pinwrap{animation:pinon 12s linear forwards}
+@keyframes pinon{0%,24%{opacity:0}28%{opacity:1}52%{opacity:1}56%,100%{opacity:0}}
+.v2 .loc{position:absolute;left:6cqw;right:6cqw;top:10cqw;z-index:7;opacity:0;text-shadow:0 .4cqw 2cqw #0009}
+.v2.go .loc{animation:locin 12s linear forwards}
+@keyframes locin{0%,3%{opacity:0;transform:translateY(-3cqw)}8%{opacity:1;transform:none}50%{opacity:1}56%,100%{opacity:0}}
+.v2 .info{position:absolute;left:6cqw;right:6cqw;bottom:9cqw;z-index:8;opacity:0}
+.v2.go .info{animation:infoin .8s ease-out 8s forwards}
+@keyframes infoin{from{opacity:0;transform:translateY(5cqw)}to{opacity:1;transform:none}}
+/* v3 feature cascade */
+.v3{--dur:12s}
+.v3 .bgk{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v3.go .bgk{animation:kb2 12s linear forwards}
+@keyframes kb2{from{transform:scale(1)}to{transform:scale(1.18)}}
+.v3 .veil2{position:absolute;inset:0;background:linear-gradient(180deg,#000a,#0000 30%,#0000 40%,#000d);z-index:1}
+.v3 .head{position:absolute;left:6cqw;right:6cqw;top:12cqw;z-index:3}
+.v3 .feats{position:absolute;left:6cqw;right:6cqw;bottom:30cqw;z-index:3;display:grid;gap:2.4cqw}
+.v3 .f{display:flex;gap:2.6cqw;align-items:center;background:#fffdf8f2;color:var(--ink);padding:2.6cqw 3.6cqw;border-radius:99px;font:800 3.9cqw/1.1 var(--sans);opacity:0;transform:translateX(-14cqw)}
+.v3 .f::before{content:"";flex:none;width:4.2cqw;height:4.2cqw;border-radius:50%;background:var(--g) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3.2L15 6.8' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/80% no-repeat}
+.v3.go .f{animation:slide .6s cubic-bezier(.2,.8,.2,1) forwards}
+.v3.go .f:nth-child(1){animation-delay:1.2s}.v3.go .f:nth-child(2){animation-delay:2.6s}.v3.go .f:nth-child(3){animation-delay:4s}.v3.go .f:nth-child(4){animation-delay:5.4s}.v3.go .f:nth-child(5){animation-delay:6.8s}
+@keyframes slide{to{opacity:1;transform:none}}
+.v3 .end{position:absolute;left:0;right:0;bottom:0;z-index:4;background:linear-gradient(180deg,#0000,#000e 40%);padding:16cqw 6cqw 9cqw;opacity:0}
+.v3.go .end{animation:infoin .8s ease-out 8.4s forwards}
+/* v4 stat counter */
+.v4{--dur:12s}
+.v4 .bgk{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}
+.v4.go .bgk{animation:kb2 12s linear forwards}
+.v4 .dim{position:absolute;inset:0;background:linear-gradient(180deg,#000b,#0004 40%,#000c);z-index:1}
+.v4 .stack{position:absolute;left:6cqw;right:6cqw;top:50%;transform:translateY(-52%);z-index:3;display:grid;gap:5cqw}
+.v4 .row{display:flex;align-items:baseline;gap:3cqw;border-bottom:.35cqw solid #ffffff55;padding-bottom:3cqw;opacity:0}
+.v4 .row b{font:700 17cqw/.9 var(--serif);min-width:26cqw}
+.v4 .row span{font:800 4cqw/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.v4.go .row{animation:slide .6s ease-out forwards;transform:translateX(-10cqw)}
+.v4.go .row:nth-child(1){animation-delay:.6s}.v4.go .row:nth-child(2){animation-delay:1.6s}.v4.go .row:nth-child(3){animation-delay:2.6s}
+.v4 .pricecard{position:absolute;left:6cqw;right:6cqw;bottom:10cqw;z-index:4;opacity:0;transform:scale(.92)}
+.v4.go .pricecard{animation:pop .7s cubic-bezier(.2,1.4,.4,1) 4.4s forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+.v4 .cta{position:absolute;left:6cqw;right:6cqw;bottom:3.4cqw;z-index:4;font:800 3.2cqw/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;text-align:center;opacity:0}
+.v4.go .cta{animation:infoin .6s ease-out 6.4s forwards}
+.vnote{font-size:12.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.vid .layer:first-child{opacity:1}}
+@media(max-width:1250px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}h2.sec{font-size:32px}}
+@media(max-width:470px){.grid{grid-template-columns:minmax(0,1fr)}.homes{position:static}}
+</style></head><body>
+<div class="wrap">
+<header>
+<div class="eyebrow">David Knapp · Highgarden Real Estate · Charleston, SC</div>
+<h1>Listing Social Assets</h1>
+<p class="lede">Ten post styles (six feed posts, four stories) and four video templates for David's featured homes. Every asset is built from the home's own listing: its photography, map location, price and key facts. Pick a home, then copy the caption that goes with each design. Each caption already carries David's number and the listing courtesy line.</p>
+<div class="rules"><span class="rule">4 homes</span><span class="rule">10 stills · 6 feed 4:5 · 4 story 9:16</span><span class="rule">4 video templates 9:16</span><span class="rule">IG + Facebook captions</span></div>
+</header>
+<div class="homes" id="homes" role="group" aria-label="Choose a home"></div>
+<section><h2 class="sec"><span>Posts &amp; stories</span><small id="stillsNote"></small></h2><div class="grid" id="stills" style="margin-top:18px"></div></section>
+<section><h2 class="sec"><span>Video templates</span><small>Live motion previews · loop every 12 seconds</small></h2><p class="vnote" style="margin:10px 0 0">These show the motion, timing and layout of each video style using this home's photos, map and facts. They play on this page; final MP4 exports are rendered per approved home.</p><div class="grid" id="vids" style="margin-top:16px"></div></section>
+<footer>
+<div><b>Source.</b> Listing facts, photo names and prices come from the public listing pages on buyandsellwithdavid.highgarden-charleston.com, read 2026-10-25. Prices and status change; re-check the listing before posting.</div>
+<div><b>Check before posting.</b> 1868 Norton St: the MLS fields say 4 bed / 3 bath, built 2024, but the listing's text describes a 3 bed / 2 bath home with an apartment over the garage. These assets use the MLS fields and leave out the apartment. Confirm with David which is right.</div>
+<div><b>Required lines.</b> Each home's listing courtesy broker is printed on the card and in the caption. Highgarden's own advertising rules may require more (brokerage logo, equal housing mark); add them in the final art.</div>
+<div><b>Photos and maps.</b> Photos load live from the listing photo server. Maps © OpenStreetMap contributors. Neighborhood and school lines are the MLS fields.</div>
+</footer>
+</div>
+<script>
+const esc=(s)=>String(s??"").replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const SITE="https://buyandsellwithdavid.highgarden-charleston.com";
+const CDN="https://images.highgarden-media.com/charleston_images/photos/";
+const PHONE="(954) 695-2849", AGENT="David Knapp", BROKER="Highgarden Real Estate";
+const money=(n)=>"$"+Number(n).toLocaleString("en-US");
+const num=(n)=>Number(n).toLocaleString("en-US");
+const mk=(path,slug,list)=>list.map((l)=>CDN+path+slug+l+".jpg");
+const HOMES=[
+ {id:"formosa",addr:"11 Formosa Dr",city:"Charleston, SC 29407",hood:"Wappoo Heights",price:1450000,beds:4,baths:"2",sqft:2527,year:1928,lot:"0.41 acres",type:"Single Family · Craftsman",mls:"26027444",dom:24,courtesy:"EXP Realty LLC",
+  url:"/11-Formosa-Dr-Charleston-SC-29407/mls26027444",schools:"St. Andrews · C E Williams · West Ashley",
+  photos:mk("2/6/0/2/7/4/","11-Formosa-Dr-Charleston-SC-29407-",["Exterior-Elevation-N6TM","Aerial-View-A8T5","Living-Room-8S07","Kitchen-5UJA","Sunroom-9H2M","Exterior-Elevation-852Z","Dining-Room-E4B0","Bedroom-DU68","Deck-I38B"]),
+  feats:["0.41-acre lot on an oak-lined street","1928 Craftsman, old-growth timber build","Sunroom, study and in-law floorplan","Two-car carport · metal roof","Trailer a boat to the Wappoo Cut ramp"],
+  quote:"Beautiful oak and azalea-lined approach.",tags:"#CharlestonRealEstate #WappooHeights #WestAshley #CharlestonHomes #CraftsmanHome",
+  lat:32.7728701,lng:-79.9754734},
+ {id:"barre",addr:"62 Barre St",city:"Charleston, SC 29401",hood:"Harleston Village",price:1395000,beds:3,baths:"2½",sqft:1530,year:1938,lot:"0.11 acres",type:"Single Family · Colonial",mls:"26027268",dom:25,courtesy:"Carolina One Real Estate",
+  url:"/62-Barre-St-Charleston-SC-29401/mls26027268",schools:"Memminger · Courtenay · Burke",
+  photos:mk("2/6/0/2/7/2/","62-Barre-St-Charleston-SC-29401-",["Exterior-Elevation-6SJH","Living-Room-SUYG","Kitchen-4U13","Dining-Room-FGUO","Bedroom-DBHQ","Screened-Porch-YMEN","Bathroom-2EFK","Exterior-Elevation-609X","Exterior-OQP9"]),
+  feats:["Harleston Village, downtown Charleston","Offered fully furnished","Double oven and walk-in pantry","Primary suite with soaking tub","Screened porch and fenced yard","Off-street parking"],
+  quote:"An effortless opportunity to enjoy the best of Charleston living from day one.",tags:"#CharlestonRealEstate #HarlestonVillage #DowntownCharleston #HistoricCharleston #CharlestonHomes",
+  lat:32.7815879,lng:-79.9468880},
+ {id:"norton",addr:"1868 Norton St",city:"Charleston, SC 29414",hood:"Pierpont",price:1150000,beds:4,baths:"3",sqft:2516,year:2024,lot:"0.48 acres",type:"Single Family · Charleston Single",mls:"26028077",dom:16,courtesy:"AgentOwned Realty",
+  url:"/1868-Norton-St-Charleston-SC-29414/mls26028077",schools:"Springfield · C E Williams · West Ashley",
+  photos:mk("2/6/0/2/8/0/","1868-Norton-St-Charleston-SC-29414-",["Exterior-Elevation-V8WN","Aerial-View-M8AO","Porch-Y79W","Living-Room-P6BH","Kitchen-CWVO","Open-Concept-LT23","Kitchen-and-Dining-9FWI","Exterior-Elevation-HG1T","Aerial-View-FGNM"]),
+  feats:["Built 2024, one level","0.48-acre lot","Detached two-car garage","High ceilings, eat-in kitchen","Covered front porch"],
+  quote:"Your private paradise in the city!",tags:"#CharlestonRealEstate #WestAshley #NewConstruction #CharlestonHomes #ModernFarmhouse",
+  lat:32.8234347,lng:-80.0416075},
+ {id:"diodia",addr:"1108 Diodia Ct",city:"Kiawah Island, SC 29455",hood:"Kiawah Island",price:3195000,beds:4,baths:"4½",sqft:2126,year:1978,lot:"Duneside villa",type:"Oceanfront Villa · Fully furnished",mls:"26013869",dom:166,courtesy:"Akers Ellis Real Estate LLC",
+  url:"/1108-Diodia-Ct-Kiawah-Island-SC-29455/mls26013869",schools:"Johns Island Elem. · Haut Gap · St. Johns",
+  photos:mk("2/6/0/1/3/8/","1108-Diodia-Ct-Kiawah-Island-SC-29455-",["Balcony-OIJX","Exterior-Elevation-F0Q5","Aerial-View-VCL5","Living-Room-WNTO","Kitchen-K0NO","Porch-3QUR","Bedroom-1JZE","Dining-Room-TRDO","Bathroom-FANI"]),
+  feats:["Oceanfront Duneside villa","Ocean views from nearly every room","Beach boardwalk access","Third-floor primary suite and balcony","Sold fully furnished · community pool","2020 roof"],
+  quote:"Breathtaking ocean views from nearly every room.",tags:"#KiawahIsland #KiawahRealEstate #OceanfrontLiving #CharlestonRealEstate #BeachHouse",
+  lat:32.5895056,lng:-80.1270002}
+];
+const bathsLine=(h)=>h.baths+" BA";
+const status=(h)=>h.dom<=30?"Just Listed":"For Sale";
+const tracked=(h,id)=>SITE+h.url+"?utm_source=social&utm_medium=listing-asset&utm_campaign=david-knapp&utm_content="+id;
+const fine=(h)=>`<div class="fine">${esc(AGENT)} · ${esc(BROKER)} · ${PHONE} · Listing courtesy of ${esc(h.courtesy)} · MLS# ${h.mls}</div>`;
+const agent=(h)=>`<div class="agentline"><b>${esc(AGENT)}</b> · ${esc(BROKER)} · ${PHONE}</div>`;
+const stats=(h)=>`<div class="stats"><span>${h.beds} BD</span><i>|</i><span>${bathsLine(h)}</span><i>|</i><span>${num(h.sqft)} SF</span></div>`;
+const tick=`<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#1f9d55"/><path d="M5.2 10.4l3.1 3.1 6.2-6.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const P=(h,i)=>h.photos[i%h.photos.length];
+const days=()=>{const o=[];const d=new Date();for(let i=1;i<=7;i++){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+i);o.push({w:x.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase(),n:x.getDate(),we:x.getDay()===0||x.getDay()===6})}return o};
+const capIG=(h,lead,extra="")=>`${lead}\n\n${h.addr}, ${h.city}\n${money(h.price)} · ${h.beds} bed · ${h.baths} bath · ${num(h.sqft)} sq ft\n${extra?extra+"\n":""}\nTour it with David Knapp: call or text ${PHONE}, or DM me.\n\n${h.tags}\n\nListing courtesy of ${h.courtesy}. MLS# ${h.mls}.`;
+const capFB=(h,lead,id,extra="")=>`${lead}\n\n${h.addr}, ${h.city}\n${money(h.price)} · ${h.beds} bed · ${h.baths} bath · ${num(h.sqft)} sq ft\n${extra?extra+"\n":""}\nPhotos and details: ${tracked(h,id)}\nPrivate tours with David Knapp, ${BROKER}: ${PHONE}\n\nListing courtesy of ${h.courtesy}. MLS# ${h.mls}.`;
+const STILLS=[
+ {id:"t1",name:"Just Listed hero",fmt:"feed",use:"The headline post. Big photo, price, address, three numbers.",
+  render:(h)=>`<img class="bg" src="${P(h,0)}" alt=""><div class="veil" style="background:linear-gradient(180deg,#0007 0,#0000 26%,#000d 100%)"></div>
+  <div class="abs" style="left:5cqw;top:5cqw"><span class="chip">${status(h)}</span></div>
+  <div class="abs" style="left:5cqw;right:5cqw;bottom:9cqw;display:grid;gap:2.6cqw"><div class="price" style="font-size:19cqw">${money(h.price)}</div>
+  <div class="serif" style="font-size:7.4cqw;font-weight:600;line-height:1">${esc(h.addr)}</div><div class="cap" style="opacity:.85">${esc(h.hood)} · ${esc(h.city.split(",")[0])}</div>${stats(h)}</div>${fine(h)}`,
+  ig:(h)=>capIG(h,`${status(h)} in ${h.hood}.`),fb:(h)=>capFB(h,`${status(h)} in ${h.hood}.`,"t1")},
+ {id:"t2",name:"Key facts panel",fmt:"feed",use:"Photo on top, the numbers buyers scan for in tiles underneath.",
+  render:(h)=>`<div class="abs" style="inset:0;background:#f5f1e8"></div><img class="bg" src="${P(h,0)}" style="height:60%;z-index:0" alt="">
+  <div class="abs" style="left:4cqw;top:4cqw"><span class="chip">${status(h)}</span></div>
+  <div class="abs" style="left:5cqw;right:5cqw;top:63%;color:#10201a;display:grid;gap:2cqw"><div class="cap" style="color:#127a40">${esc(h.hood)}</div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:2cqw"><div class="serif" style="font-size:7.4cqw;font-weight:700;line-height:1">${esc(h.addr)}</div><div class="price" style="font-size:8.6cqw;color:#127a40">${money(h.price)}</div></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw;margin-top:1.4cqw"><div class="tile"><b>${h.beds}</b><span>Beds</span></div><div class="tile"><b>${h.baths}</b><span>Baths</span></div><div class="tile"><b>${num(h.sqft)}</b><span>Sq ft</span></div><div class="tile"><b>${h.year}</b><span>Built</span></div></div></div>
+  <div class="abs agentline" style="left:5cqw;right:5cqw;bottom:6cqw;color:#10201a">${esc(AGENT)} · ${esc(BROKER)} · ${PHONE}</div>
+  <div class="fine" style="color:#10201a">Listing courtesy of ${esc(h.courtesy)} · MLS# ${h.mls}</div>`,
+  ig:(h)=>capIG(h,`The numbers on ${h.addr}: ${h.beds} bed, ${h.baths} bath, ${num(h.sqft)} sq ft, built ${h.year}.`),fb:(h)=>capFB(h,`The numbers on ${h.addr}.`,"t2")},
+ {id:"t3",name:"Price reveal",fmt:"story",use:"Story: the price is the hook. Tap-to-tour call to action at the bottom.",
+  render:(h)=>`<img class="bg" src="${P(h,1)}" alt=""><div class="veil" style="background:linear-gradient(180deg,#000b 0,#0005 40%,#000e 100%)"></div>
+  <div class="abs" style="left:0;right:0;top:11%;text-align:center"><div class="cap" style="font-size:3.6cqw">${status(h)} · ${esc(h.hood)}</div></div>
+  <div class="abs" style="left:6cqw;right:6cqw;top:30%;text-align:center;display:grid;gap:5cqw"><div class="cap" style="opacity:.8">Offered at</div><div class="price" style="font-size:21cqw">${money(h.price)}</div><div style="height:.6cqw;width:22cqw;background:var(--g);margin:0 auto"></div>
+  <div class="serif" style="font-size:9cqw;font-weight:600;line-height:1">${esc(h.addr)}</div><div class="cap" style="opacity:.85">${esc(h.city)}</div></div>
+  <div class="abs" style="left:0;right:0;bottom:13%;text-align:center;display:grid;gap:3cqw;justify-items:center"><span class="chip" style="font-size:3.6cqw;padding:3cqw 5cqw">Tap to tour</span><div class="agentline">${esc(AGENT)} · ${PHONE}</div></div>${fine(h)}`,
+  ig:(h)=>capIG(h,`${money(h.price)}. ${h.addr}, ${h.hood}.`),fb:(h)=>capFB(h,`${money(h.price)}. ${h.addr}, ${h.hood}.`,"t3")},
+ {id:"t4",name:"Photo + map pin",fmt:"feed",use:"Shows buyers exactly where it is: photo above, street map with the pin below.",
+  render:(h)=>`<img class="bg" src="${P(h,0)}" style="height:52%" alt=""><div class="abs" style="left:0;right:0;top:52%;bottom:0;overflow:hidden;background:#dfe6dc"><img src="m/map-${h.id}-street.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div class="pin" style="top:50%"></div><div class="osm">© OpenStreetMap contributors</div></div>
+  <div class="abs" style="left:4cqw;top:4cqw"><span class="chip">${status(h)}</span></div>
+  <div class="abs" style="left:4cqw;right:4cqw;top:41%;background:#fffdf8;color:#10201a;border-radius:2.6cqw;padding:3.4cqw 4.4cqw;box-shadow:0 1.4cqw 4cqw #0006;display:flex;justify-content:space-between;align-items:center;gap:3cqw;z-index:3"><div><div class="serif" style="font-size:7cqw;font-weight:700;line-height:1">${esc(h.addr)}</div><div class="cap" style="color:#127a40;margin-top:1.4cqw;font-size:2.6cqw">${esc(h.hood)}</div></div><div class="price" style="font-size:7.8cqw;color:#127a40">${money(h.price)}</div></div>
+  <div class="abs agentline" style="left:4cqw;bottom:5cqw;background:#000a;padding:1.6cqw 2.4cqw;border-radius:1.2cqw;z-index:3">${stats(h).replace('class="stats"','class="stats" style="font-size:3cqw"')}</div>${fine(h).replace('class="fine"','class="fine" style="color:#10201a;z-index:3"')}`,
+  ig:(h)=>capIG(h,`Right in ${h.hood}. ${h.addr}.`),fb:(h)=>capFB(h,`Right in ${h.hood}. ${h.addr}.`,"t4")},
+ {id:"t5",name:"Three-up collage",fmt:"feed",use:"One big exterior and two room shots, with a price strip. Shows range at a glance.",
+  render:(h)=>`<div class="abs" style="inset:0;background:#10201a"></div>
+  <img class="abs" src="${P(h,0)}" style="left:0;top:0;width:64%;height:78%;object-fit:cover" alt="">
+  <img class="abs" src="${P(h,3)}" style="left:65%;top:0;width:35%;height:38.5%;object-fit:cover" alt="">
+  <img class="abs" src="${P(h,2)}" style="left:65%;top:39.5%;width:35%;height:38.5%;object-fit:cover" alt="">
+  <div class="abs" style="left:0;right:0;bottom:0;height:21.5%;background:var(--g);padding:3.6cqw 5cqw;display:grid;align-content:center;gap:1.6cqw"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:2cqw"><div class="serif" style="font-size:7.6cqw;font-weight:700;line-height:1">${esc(h.addr)}</div><div class="price" style="font-size:8.6cqw">${money(h.price)}</div></div>${stats(h).replace('class="stats"','class="stats" style="font-size:3.2cqw"')}</div>
+  <div class="abs" style="left:3cqw;top:3cqw"><span class="chip" style="background:#10201a">${status(h)}</span></div>${fine(h)}`,
+  ig:(h)=>capIG(h,`A look around ${h.addr}.`),fb:(h)=>capFB(h,`A look around ${h.addr}.`,"t5")},
+ {id:"t6",name:"Neighborhood spotlight",fmt:"story",use:"Story: sells the area first (map plus neighborhood), then the home.",
+  render:(h)=>`<div class="abs" style="left:0;right:0;top:0;height:50%;overflow:hidden;background:#cfd8cf"><img src="m/map-${h.id}-area.jpg" alt="" style="width:100%;height:100%;object-fit:cover"><div class="pin"></div><div class="osm">© OpenStreetMap contributors</div></div>
+  <div class="abs" style="left:0;right:0;top:0;height:50%;background:linear-gradient(180deg,#000a,#0000 42%)"></div>
+  <div class="abs" style="left:6cqw;right:6cqw;top:6%"><div class="cap" style="opacity:.9">Where it is</div><div class="serif" style="font-size:12.5cqw;font-weight:700;line-height:.95;margin-top:2cqw;text-shadow:0 .5cqw 3cqw #0008">${esc(h.hood)}</div></div>
+  <img class="abs" src="${P(h,2)}" style="left:0;right:0;top:50%;height:50%;width:100%;object-fit:cover" alt=""><div class="abs" style="left:0;right:0;top:50%;bottom:0;background:linear-gradient(180deg,#0000 20%,#000e 100%)"></div>
+  <div class="abs" style="left:6cqw;right:6cqw;bottom:6%;display:grid;gap:2.6cqw"><div class="price" style="font-size:14cqw">${money(h.price)}</div><div class="serif" style="font-size:8cqw;font-weight:600;line-height:1">${esc(h.addr)}</div>${stats(h)}<div class="cap" style="font-size:2.4cqw;opacity:.8">Zoned: ${esc(h.schools)}</div></div>${fine(h)}`,
+  ig:(h)=>capIG(h,`Welcome to ${h.hood}.`,`Zoned schools: ${h.schools}.`),fb:(h)=>capFB(h,`Welcome to ${h.hood}.`,"t6",`Zoned schools: ${h.schools}.`)},
+ {id:"t7",name:"Feature checklist",fmt:"feed",use:"Photo left, the five or six things worth knowing on the right, price at the foot.",
+  render:(h)=>`<div class="abs" style="inset:0;background:#f5f1e8"></div><img class="abs" src="${P(h,0)}" style="left:0;top:0;width:46%;height:100%;object-fit:cover" alt="">
+  <div class="abs" style="left:3cqw;top:3cqw"><span class="chip">${status(h)}</span></div>
+  <div class="abs" style="left:50%;right:4cqw;top:6cqw;bottom:20cqw;color:#10201a;display:grid;align-content:start;gap:3.2cqw"><div class="cap" style="color:#127a40">${esc(h.hood)}</div><div class="serif" style="font-size:8cqw;font-weight:700;line-height:.98">${esc(h.addr)}</div>
+  <div style="display:grid;gap:3cqw;margin-top:1cqw">${h.feats.slice(0,5).map((f)=>`<div class="check">${tick}<span>${esc(f)}</span></div>`).join("")}</div></div>
+  <div class="abs" style="left:50%;right:4cqw;bottom:8.4cqw;color:#10201a;border-top:.5cqw solid #1f9d55;padding-top:2cqw;display:grid;gap:1.2cqw"><div class="price" style="font-size:9cqw">${money(h.price)}</div><div class="cap" style="font-size:2.4cqw;color:#127a40;white-space:nowrap">${h.beds} bd · ${h.baths} ba · ${num(h.sqft)} sf</div></div>
+  <div class="abs agentline" style="left:50%;right:4cqw;bottom:3.4cqw;color:#10201a;font-size:2.4cqw">${esc(AGENT)} · ${PHONE}</div><div class="fine" style="color:#10201a;left:50%">MLS# ${h.mls} · ${esc(h.courtesy)}</div>`,
+  ig:(h)=>capIG(h,`What to know about ${h.addr}:`,h.feats.slice(0,5).map((f)=>"✔ "+f).join("\n")),fb:(h)=>capFB(h,`What to know about ${h.addr}:`,"t7",h.feats.slice(0,5).map((f)=>"✔ "+f).join("\n"))},
+ {id:"t8",name:"Tour this week",fmt:"story",use:"Story: price badge on the photo, the next seven days, one big phone call to action.",
+  render:(h)=>{const d=days();return`<div class="abs" style="inset:0;background:#f5f1e8"></div><img class="abs" src="${P(h,0)}" style="left:0;right:0;top:0;width:100%;height:48%;object-fit:cover" alt="">
+  <div class="abs" style="left:4cqw;top:4cqw"><span class="chip">${status(h)}</span></div>
+  <div class="abs" style="left:4cqw;bottom:55%;background:#fffdf8;color:#10201a;padding:2.6cqw 4cqw;border-radius:2cqw;box-shadow:0 1cqw 3cqw #0005;display:flex;gap:3cqw;align-items:baseline"><div class="price" style="font-size:9cqw;color:#127a40">${money(h.price)}</div><div class="serif" style="font-size:5.2cqw;font-weight:700">${esc(h.addr)}</div></div>
+  <div class="abs" style="left:5cqw;right:5cqw;top:53%;color:#10201a;display:grid;gap:4cqw"><div><div class="cap" style="color:#127a40">Private tours by appointment</div><div class="serif" style="font-size:12cqw;font-weight:700;line-height:.95;margin-top:2cqw">Tour this home</div></div>
+  <div class="cal">${d.map((x)=>`<div class="${x.we?"we":""}">${x.w}<b>${x.n}</b></div>`).join("")}</div>
+  <div style="background:#10201a;color:#fff;border-radius:99px;padding:3.6cqw 5cqw;text-align:center;font:800 5.4cqw/1 var(--sans);letter-spacing:.04em">Call or text ${PHONE}</div>
+  <div class="agentline" style="text-align:center;color:#10201a">${esc(AGENT)} · ${esc(BROKER)}</div></div><div class="fine" style="color:#10201a">Listing courtesy of ${esc(h.courtesy)} · MLS# ${h.mls}</div>`},
+  ig:(h)=>capIG(h,`Want to see ${h.addr} in person? Pick a day this week.`),fb:(h)=>capFB(h,`Want to see ${h.addr} in person? Pick a day this week.`,"t8")},
+ {id:"t9",name:"Editorial frame",fmt:"feed",use:"The quiet, magazine look for higher-end homes: ivory frame, serif address, price in small caps.",
+  render:(h)=>`<div class="abs" style="inset:0;background:#f5f1e8"></div><div class="abs" style="inset:3.4cqw;border:.4cqw solid #10201a"></div>
+  <img class="abs" src="${P(h,0)}" style="left:9cqw;right:9cqw;top:9cqw;height:52%;width:calc(100% - 18cqw);object-fit:cover" alt="">
+  <div class="abs" style="left:9cqw;right:9cqw;top:calc(9cqw + 52% + 4.4cqw);color:#10201a;text-align:center;display:grid;gap:1.8cqw"><div class="cap" style="color:#127a40">${status(h)} · ${esc(h.hood)}</div>
+  <div class="serif" style="font-size:10.4cqw;font-weight:600;line-height:.95;font-style:italic">${esc(h.addr)}</div><div class="cap" style="font-size:2.6cqw;color:#5d6b63">${esc(h.city)}</div>
+  <div style="display:flex;gap:3cqw;justify-content:center;align-items:center;margin-top:1cqw"><span style="height:.35cqw;width:12cqw;background:#10201a"></span><span class="price" style="font-size:8cqw">${money(h.price)}</span><span style="height:.35cqw;width:12cqw;background:#10201a"></span></div>
+  <div class="cap" style="font-size:2.6cqw;color:#10201a">${h.beds} Beds · ${h.baths} Baths · ${num(h.sqft)} Sq Ft</div></div>
+  <div class="abs agentline" style="left:0;right:0;bottom:6.4cqw;text-align:center;color:#10201a">${esc(AGENT)} · ${esc(BROKER)} · ${PHONE}</div><div class="fine" style="color:#10201a;text-align:center">Listing courtesy of ${esc(h.courtesy)} · MLS# ${h.mls}</div>`,
+  ig:(h)=>capIG(h,`${h.addr}. ${h.hood}.`),fb:(h)=>capFB(h,`${h.addr}. ${h.hood}.`,"t9")},
+ {id:"t10",name:"Pull quote",fmt:"story",use:"Story: one line from the listing over a full-bleed photo, then price and address.",
+  render:(h)=>`<img class="bg" src="${P(h,5)}" alt=""><div class="veil" style="background:linear-gradient(180deg,#000a 0,#0003 35%,#000e 100%)"></div>
+  <div class="abs" style="left:8cqw;right:8cqw;top:14%;display:grid;gap:5cqw"><div class="serif" style="font-size:22cqw;line-height:.5;color:#1f9d55;font-weight:700">“</div><div class="serif" style="font-size:11.6cqw;font-weight:600;line-height:1.02;font-style:italic;text-wrap:balance">${esc(h.quote)}</div></div>
+  <div class="abs" style="left:8cqw;right:8cqw;bottom:9%;display:grid;gap:2.6cqw"><div style="height:.6cqw;width:14cqw;background:var(--g)"></div><div class="serif" style="font-size:8.4cqw;font-weight:700;line-height:1">${esc(h.addr)}</div><div class="cap" style="opacity:.85">${esc(h.hood)} · ${money(h.price)}</div><div class="agentline" style="margin-top:1cqw">${esc(AGENT)} · ${PHONE}</div></div>${fine(h)}`,
+  ig:(h)=>capIG(h,`“${h.quote}”`),fb:(h)=>capFB(h,`“${h.quote}”`,"t10")}
+];
+const VIDS=[
+ {id:"v1",name:"Photo reel",use:"Four photos with a slow push-in, price and address rising in the lower third. The all-purpose listing video.",
+  render:(h)=>`<div class="tag">VIDEO 12s</div>${[0,3,4,2].map((i,k)=>`<div class="layer"><img class="k" src="${P(h,i)}" alt=""></div>`).join("")}
+  <div class="lower"><div class="chip" style="justify-self:start;width:max-content">${status(h)}</div><div class="price" style="font-size:19cqw;margin-top:3cqw">${money(h.price)}</div><div style="margin-top:2.6cqw"><div class="serif" style="font-size:8cqw;font-weight:600;line-height:1">${esc(h.addr)}</div><div class="cap" style="margin-top:2cqw;font-size:2.8cqw;opacity:.9">${esc(h.hood)} · ${h.beds} bd · ${h.baths} ba · ${num(h.sqft)} sf</div></div></div><div class="bar"><i></i></div>`},
+ {id:"v2",name:"Map fly-in",use:"Starts on the area map, zooms to the street and the pin, then wipes open to the home with price and facts.",
+  render:(h)=>`<div class="tag">VIDEO 12s</div><img class="mapA" src="m/map-${h.id}-area.jpg" alt=""><img class="mapS" src="m/map-${h.id}-street.jpg" alt="">
+  <div class="pinwrap"><div class="pin"></div></div><div class="loc"><div class="cap" style="opacity:.95">Located in</div><div class="serif" style="font-size:13cqw;font-weight:700;line-height:.95;margin-top:2cqw">${esc(h.hood)}</div></div>
+  <div class="reveal"><img src="${P(h,0)}" alt=""><div class="veil"></div></div>
+  <div class="info"><div class="chip">${status(h)}</div><div class="price" style="font-size:18cqw;margin-top:3cqw">${money(h.price)}</div><div class="serif" style="font-size:8cqw;font-weight:600;margin-top:2cqw;line-height:1">${esc(h.addr)}</div>${stats(h).replace('class="stats"','class="stats" style="margin-top:3cqw"')}</div><div class="osm" style="z-index:9">© OpenStreetMap contributors</div><div class="bar"><i></i></div>`},
+ {id:"v3",name:"Feature cascade",use:"Slow push on the hero photo while the home's key features slide in one by one, then a price card.",
+  render:(h)=>`<div class="tag">VIDEO 12s</div><img class="bgk" src="${P(h,0)}" alt=""><div class="veil2"></div>
+  <div class="head"><div class="cap" style="opacity:.9">${status(h)} · ${esc(h.hood)}</div><div class="serif" style="font-size:11cqw;font-weight:700;line-height:.95;margin-top:2cqw">${esc(h.addr)}</div></div>
+  <div class="feats">${h.feats.slice(0,5).map((f)=>`<div class="f">${esc(f)}</div>`).join("")}</div>
+  <div class="end"><div class="price" style="font-size:17cqw">${money(h.price)}</div><div class="agentline" style="margin-top:3cqw">${esc(AGENT)} · ${PHONE}</div></div><div class="bar"><i></i></div>`},
+ {id:"v4",name:"Stat counter",use:"Beds, baths and square feet count up over a dimmed photo, then the price pops in with a call to action.",
+  render:(h)=>`<div class="tag">VIDEO 12s</div><img class="bgk" src="${P(h,2)}" alt=""><div class="dim"></div>
+  <div class="stack"><div class="row"><b data-to="${h.beds}">0</b><span>Bedrooms</span></div><div class="row"><b data-to="${parseFloat(h.baths.replace("½",".5"))}" data-dec="1">0</b><span>Bathrooms</span></div><div class="row"><b data-to="${h.sqft}" data-comma="1">0</b><span>Square feet</span></div></div>
+  <div class="pricecard"><div class="cap" style="opacity:.85">${status(h)} · ${esc(h.hood)}</div><div class="price" style="font-size:20cqw;margin-top:2cqw">${money(h.price)}</div><div class="serif" style="font-size:7.6cqw;font-weight:600;margin-top:1.4cqw">${esc(h.addr)}</div></div>
+  <div class="cta">Tour it · ${PHONE}</div><div class="bar"><i></i></div>`}
+];
+let cur=HOMES[0],tabs={};
+const el=(id)=>document.getElementById(id);
+function cardHTML(a,kind){
+ const h=cur,fmt=a.fmt||"video";
+ const media=kind==="vid"?`<div class="vid ${a.id}" data-vid>${a.render(h)}</div>`:`<div class="card ${a.fmt==="story"?"story":""}">${a.render(h)}</div>`;
+ const k=a.id,ig=a.ig?a.ig(h):capIG(h,`${status(h)} in ${h.hood}.`),fb=a.fb?a.fb(h):capFB(h,`${status(h)} in ${h.hood}.`,a.id);
+ return`<article class="post" data-k="${k}">${media}<div class="meta"><div class="n">${kind==="vid"?"VIDEO":"POST"} ${String((kind==="vid"?VIDS:STILLS).indexOf(a)+1).padStart(2,"0")}<span class="fmt">${kind==="vid"?"VIDEO 9:16":a.fmt==="story"?"STORY 9:16":"FEED 4:5"}</span></div><div class="name">${esc(a.name)}</div><div class="use">${esc(a.use)}</div>
+ <div class="tabs"><button aria-pressed="true" data-t="ig">Instagram</button><button aria-pressed="false" data-t="fb">Facebook</button><button class="copy" data-copy>Copy</button></div><pre data-ig="${esc(ig)}" data-fb="${esc(fb)}">${esc(ig)}</pre></div></article>`;
+}
+function render(){
+ el("homes").innerHTML=HOMES.map((h)=>`<button class="home" data-h="${h.id}" aria-pressed="${h===cur}"><img src="${h.photos[0]}" alt="" loading="lazy"><div><b>${esc(h.addr)}</b><span>${esc(h.hood)}</span><em>${money(h.price)}</em></div></button>`).join("");
+ el("stillsNote").textContent=`${cur.addr}, ${cur.city} · ${money(cur.price)} · MLS# ${cur.mls}`;
+ el("stills").innerHTML=STILLS.map((a)=>cardHTML(a,"still")).join("");
+ el("vids").innerHTML=VIDS.map((a)=>cardHTML(a,"vid")).join("");
+ startVideos();
+}
+document.addEventListener("click",(e)=>{
+ const hb=e.target.closest("[data-h]");if(hb){cur=HOMES.find((x)=>x.id===hb.dataset.h);render();return}
+ const tb=e.target.closest("[data-t]");if(tb){const pre=tb.closest(".meta").querySelector("pre");pre.textContent=pre.dataset[tb.dataset.t];tb.parentNode.querySelectorAll("[data-t]").forEach((b)=>b.setAttribute("aria-pressed",b===tb));return}
+ const cb=e.target.closest("[data-copy]");if(cb){const pre=cb.closest(".meta").querySelector("pre");navigator.clipboard?.writeText(pre.textContent).then(()=>{cb.textContent="Copied";setTimeout(()=>cb.textContent="Copy",1400)})}
+});
+/* videos: restart the CSS timeline every 12s while on screen; count-up numbers for the stat counter */
+let timers=[];
+function startVideos(){
+ timers.forEach(clearInterval);timers=[];
+ const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ document.querySelectorAll("[data-vid]").forEach((v)=>{
+  if(reduce)return;
+  const run=()=>{v.classList.remove("go");void v.offsetWidth;v.classList.add("go");v.querySelectorAll("[data-to]").forEach((b)=>{const to=parseFloat(b.dataset.to),dec=b.dataset.dec?1:0,comma=!!b.dataset.comma,start=performance.now(),delay=(1+[...b.closest(".stack").children].indexOf(b.parentNode)*1000/1000)*0,t0=600+[...b.closest(".stack").children].indexOf(b.parentNode)*1000;b.textContent="0";const step=(t)=>{const p=Math.min(1,Math.max(0,(t-start-t0)/1400));const val=to*(1-Math.pow(1-p,3));b.textContent=comma?Math.round(val).toLocaleString("en-US"):dec?val.toFixed(1).replace(/\.0$/,""):Math.round(val);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)})};
+  let visible=false;
+  const io=new IntersectionObserver((en)=>{visible=en[0].isIntersecting;if(visible)run()},{threshold:.35});io.observe(v);
+  timers.push(setInterval(()=>{if(visible)run()},12500));
+ });
+}
+render();
+</script></body></html>
