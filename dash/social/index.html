@@ -162,10 +162,11 @@ const POSTS = [
  { id:"p2", plat:"LinkedIn", color:"#4fb3ff", fmt:"Image post · 1.91:1", title:"We race our own stack", power:"STATUS TRACKING",
    slot:"Proposed: Tue 261027 · 09:00 ET",
    copy:"We run our own social on Elettro OS, so we put the whole rollout on a public scoreboard.\n\nTen weighted checkpoints per network, from \"playbook written\" to \"auto-publishing live.\" A network's car moves only when a checkpoint is cleared, and the board pulls its numbers from Elettro OS itself, not from a spreadsheet someone remembers to update.\n\nIf you manage more than one brand or channel, you know why this matters: you can see exactly where each one stands, in one glance.\n\nSee it move: elettro.com/dash",
-   vis: () => `<div class="vis v191" style="padding:14px"><div class="m" style="color:#d7ff1f">10 checkpoints · 100 points</div>
-     <div class="a" style="font-size:34px;margin:6px 0 8px">Every network<br>gets a <span style="color:#ff2e88">scoreboard</span></div>
-     <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px">${CHECKS.map((c,i)=>`<i style="height:7px;border-radius:3px;background:${i<6?'#3ddc84':i<8?'#ffc83d':'#2a2a38'}"></i>`).join("")}</div>
-     <div class="m" style="margin-top:6px;color:#8d8a9e">Powered by Elettro OS</div></div>` },
+   vis: () => `<div class="vis v191" style="padding:14px;aspect-ratio:1.15/1"><div class="m" style="color:#d7ff1f">10 checkpoints · 100 points</div>
+     <div class="a" style="font-size:30px;margin:10px 0 14px">Every network<br>gets a <span style="color:#ff2e88">scoreboard</span></div>
+     <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px">${CHECKS.map((c,i)=>`<i style="height:9px;border-radius:3px;background:${i<6?'#3ddc84':i<8?'#ffc83d':'#2a2a38'}"></i>`).join("")}</div>
+     <div class="m" style="margin-top:12px;color:#8d8a9e">Playbook → auto-publishing</div>
+     <div class="m" style="margin-top:4px;color:#8d8a9e">Powered by Elettro OS</div></div>` },
 
  { id:"p3", plat:"TikTok", color:"#22e6ff", fmt:"Video · 9:16 · 15s", title:"The 1000 post race", power:"PUBLISHING LEDGER",
    slot:"Proposed: Tue 261027 · 18:00 ET",
