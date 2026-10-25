@@ -1,0 +1,198 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Stephen Marley Merch Template Pilot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: a merch-table proof sheet. One band per template (4), five products across; each post is drawn in CSS from the store photos, with its caption. */
+:root {
+  --bg: #0b1a0f; --panel: #12251a; --line: #2b4a31; --ink: #f6f0dc; --muted: #a9b79f; --accent: #f7c61a; --chip: #193223; --rasta: linear-gradient(90deg,#1e9b3d 0 33.3%,#f7c61a 33.3% 66.6%,#d6281f 66.6%);
+  --display: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "Space Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1400px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 40px; }
+header { display: grid; gap: 14px; max-width: 900px; }
+.eyebrow { font: 700 12px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 400 clamp(44px, 7vw, 84px)/.9 var(--display); margin: 0; letter-spacing: .01em; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0; max-width: 70ch; }
+.rules { display: flex; flex-wrap: wrap; gap: 8px; }
+.rule { font: 600 13px/1 var(--body); background: var(--chip); border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px; }
+.lineup { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.prod { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
+.prod b { font: 400 22px/1 var(--display); letter-spacing: .02em; }
+.prod span { font-size: 13px; color: var(--muted); }
+.prod a { color: var(--ink); font-size: 13px; overflow-wrap: anywhere; }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+nav a { font: 700 12px/1 var(--mono); color: var(--ink); text-decoration: none; padding: 8px 10px; border-radius: 6px; background: var(--chip); }
+nav a:focus-visible, button:focus-visible, video:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section.tpl { display: grid; gap: 16px; scroll-margin-top: 70px; }
+.tplhead { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.tplhead h2 { margin: 0; font: 400 40px/1 var(--display); letter-spacing: .02em; }
+.num { font: 700 14px/1 var(--mono); color: var(--accent); }
+.kind { font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 5px 8px; border-radius: 4px; }
+.tplhead p { margin: 0; color: var(--muted); flex-basis: 100%; max-width: 80ch; }
+.row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.post { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; align-content: start; min-width: 0; }
+.media img, .media video { display: block; width: 100%; height: auto; background: #000; }
+.strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 4px; background: #000; }
+.strip img { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
+.count { font: 700 11px/1 var(--mono); color: var(--muted); padding: 6px 10px 0; }
+.meta { padding: 10px 12px 12px; display: grid; gap: 8px; min-width: 0; }
+.meta .name { font: 400 20px/1 var(--display); letter-spacing: .02em; }
+.meta .song { font-size: 12px; color: var(--muted); }
+details { font-size: 13px; }
+summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12.5px/1.45 var(--body); background: #0e0d0f; border: 1px solid var(--line); border-radius: 6px; padding: 10px; margin: 8px 0 0; }
+.tabs { display: flex; gap: 4px; margin-top: 8px; }
+.tabs button { font: 700 11px/1 var(--mono); background: var(--chip); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; cursor: pointer; }
+.tabs button[aria-pressed="true"] { color: var(--bg); background: var(--ink); }
+.story { font-size: 12px; color: var(--accent); text-decoration: underline; cursor: pointer; background: none; border: 0; padding: 0; text-align: left; font-family: var(--body); }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; max-width: 90ch; }
+@media (max-width: 1100px) { .row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .row { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .strip { scroll-behavior: auto; } }
+
+.card{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--c);isolation:isolate;container-type:inline-size;color:#fff}
+.card .bg{position:absolute;inset:-10%;background:var(--img) center/cover;filter:blur(28px) saturate(1.3);opacity:.55;z-index:-1}
+.card .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.55));z-index:-1}
+.card .pic{display:block;width:100%;height:100%;object-fit:contain}
+.strip .card{flex:0 0 100%;scroll-snap-align:start}
+.hero .pic{position:absolute;inset:6% 6% 30%;width:88%;height:64%;filter:drop-shadow(0 12px 18px rgba(0,0,0,.45))}
+.hero .ttl{position:absolute;left:6%;right:6%;bottom:6%;display:grid;gap:5px}
+.hero .ttl b{font:400 11.5cqw/.95 var(--display);letter-spacing:.02em}
+.hero .ttl i{font:normal 3.6cqw/1.3 var(--body);opacity:.9}
+.btn{justify-self:start;margin-top:3px;font:700 3.4cqw/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:#fff;color:#111;padding:2.2cqw 3.4cqw;border-radius:99px}
+.sleeve{background:#111}
+.sleeve .cover{position:absolute;left:8%;top:6%;width:84%;aspect-ratio:1;background:var(--c);box-shadow:0 10px 30px rgba(0,0,0,.6);display:grid;place-items:center}
+.sleeve .cover img{width:80%;height:80%;object-fit:contain}
+.sleeve .np{position:absolute;left:8%;right:30%;bottom:5%;display:grid;gap:3px}
+.sleeve .np small{font:700 3.2cqw/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.sleeve .np b{font:400 8cqw/1 var(--display)}
+.sleeve .np span{font-size:3.4cqw;color:#bbb}
+.sleeve .mini{position:absolute;right:8%;bottom:5%;width:17%;aspect-ratio:1;border-radius:3px;object-fit:cover}
+.tag{background:#efe6c8;color:#1b1a1d;display:grid;grid-template-rows:auto 1fr auto;padding:7% 8%;gap:3%}
+.tag .hole{width:5cqw;height:5cqw;border-radius:50%;background:#121113;margin:0 auto}
+.tag h3{margin:0;font:400 11cqw/.9 var(--display);letter-spacing:.01em}
+.tag .pics{display:grid;grid-template-columns:1fr 1fr;gap:3%;align-items:center}
+.tag .pics img{width:100%;aspect-ratio:1;object-fit:contain;background:var(--c);border-radius:4px}
+.tag .pics img:only-child{grid-column:1/-1;width:64%;margin:0 auto}
+.tag ul{margin:0;padding:0;list-style:none;display:grid;gap:1.4cqw;font:700 3.6cqw/1.25 var(--mono)}
+.tag li::before{content:"■ ";color:var(--c)}
+.slide{display:grid;place-items:center;text-align:center;padding:8%}
+.slide .pic{position:absolute;inset:8%;width:84%;height:84%;filter:drop-shadow(0 10px 16px rgba(0,0,0,.4))}
+.slide h4{margin:0;position:relative;font:400 13cqw/.92 var(--display);text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.slide small{position:absolute;left:0;right:0;bottom:6%;font:700 3.4cqw/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.slide.shop{background:#111}
+
+.wrap::before{content:"";display:block;height:10px;background:var(--rasta);border-radius:5px}
+.eyebrow{color:var(--accent)}
+.tplhead{border-image:var(--rasta) 1;border-bottom:3px solid}
+.prod{border-top-color:transparent;border-image:var(--rasta) 1}
+.card:not(.tag):not(.shop)::after{content:"";position:absolute;left:0;right:0;top:0;height:2.4cqw;background:var(--rasta);z-index:3}
+.tag::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.4cqw;background:var(--rasta)}
+.btn{background:var(--accent)}
+.card .pic,.cover img{background:none}
+</style>
+
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Stephen Marley merch · template pilot · 5 products × 4 templates</div>
+    <h1>Stephen Marley Merch Template Pilot</h1>
+    <p class="lede">Twenty sample posts built from what the official Stephen Marley store (stephenmarley.shop.redstarmerch.com) publishes: product photos and titles. Each post is drawn live in CSS from those photos, with the Facebook and Instagram/TikTok captions underneath. Pick the templates to keep; the keepers then rotate across the full catalog (Old Soul, Babylon by Bus, Traffic Jam and more).</p>
+    <div class="rules" aria-label="Rules every post follows">
+      <span class="rule">Photos and facts from the public store only (Jah Army approved colors)</span>
+      <span class="rule">No prices, the store shows them</span>
+      <span class="rule">Tracked link per platform + template</span>
+      <span class="rule">Slow moves, no beat pulsing</span>
+      <span class="rule">Draft only: not approved by the artist or store</span>
+    </div>
+  </header>
+  <div class="lineup" id="lineup" aria-label="Pilot products"></div>
+  <nav id="nav" aria-label="Templates"></nav>
+  <main id="tpls" style="display:grid;gap:48px"></main>
+  <footer>Everything here is a layout proof built from publicly visible store content; the photos are copies of the store's own product images and remain the property of Stephen Marley and the store operator, Musictoday II, LLC. The video templates from the Stashbox pilot (lookbook, spinning record, parallax) are not part of this first pass, since each needs a render per product. Captions show the Instagram/TikTok version (link in bio) and the Facebook version (clickable tracked link).</footer>
+</div>
+<script>
+const STORE = "https://stephenmarley.shop.redstarmerch.com";
+const PRODUCTS = [
+  {key:"lp", short:"Old Soul 2LP", type:"Vinyl", vivid:"#7a8a2b", handle:"XZLPSM01/old-soul-2lp", imgs:["m/XZLPSM01.png","m/XZLPSM01-01.png"], hook:"Old Soul, on double vinyl.", tags:"#stephenmarley #oldsoul #vinyl",
+    facts:["Old Soul 2LP","Two records","Album art jacket"]},
+  {key:"tee", short:"Old Soul Album Lion & Leaf Tee", type:"T-Shirt", vivid:"#c8321f", handle:"XZCTSM36/old-soul-album-lion-leaf-tee", imgs:["m/XZCTSM36.png"], hook:"Lion, leaf, Old Soul.", tags:"#stephenmarley #oldsoul #reggae",
+    facts:["Old Soul album art tee","Lion and leaf design","Cream tee"]},
+  {key:"wtee", short:"Old Soul Speaker & Leaf Women's Tee", type:"Women's V-Neck Tee", vivid:"#1f6b3a", handle:"XZCTSM37/old-soul-speaker-leaf-womens-tee", imgs:["m/XZCTSM37.png"], hook:"Speaker, leaf, and a loud old soul.", tags:"#stephenmarley #oldsoul #reggae",
+    facts:["Old Soul album art tee","Speaker and leaf design","Women's V-neck cut"]},
+  {key:"hoodie", short:"Old Soul Album Lion & Leaf Hoodie", type:"Hoodie", vivid:"#e0a914", handle:"XZCMSM07/old-soul-album-lion-leaf-hoodie", imgs:["m/XZCMSM07.png"], hook:"Keep the lion close.", tags:"#stephenmarley #oldsoul #hoodie",
+    facts:["Old Soul album art hoodie","Lion and leaf design","Pullover hoodie"]},
+  {key:"camo", short:"Lion & Leaf Camo Sleeved Hoodie", type:"Hoodie", vivid:"#3f5a34", handle:"XZCMSM08/lion-leaf-camo-sleeved-hoodie", imgs:["m/XZCMSM08.png"], hook:"Camo sleeves, Old Soul chest.", tags:"#stephenmarley #oldsoul #hoodie",
+    facts:["Camo sleeves, heather grey body","Old Soul album art on chest","Pullover hoodie"]}
+];
+const SINGLE = {title:"Old Soul", img:"m/XZLPSM01.png"};
+const TEMPLATES = [
+  {id:"t1", n:1, name:"Hero Poster", kind:"still", desc:"Product over its own blurred art, title, one hook line, shop button. 4:5 feed."},
+  {id:"t2", n:2, name:"Record Sleeve", kind:"still", desc:"The product as an album cover with the album, Old Soul, as Now Playing. Ties the merch to the music."},
+  {id:"t3", n:3, name:"Drop Tag", kind:"still", desc:"A hang tag with three facts from the store record, plus the product photo(s)."},
+  {id:"t4", n:4, name:"Every Angle", kind:"carousel", desc:"Hook slide, the photo(s) the store publishes, then the shop slide. Slide count follows the photos available."}
+];
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const url = (p, id, fb) => `${STORE}/product/${p.handle}` + (fb ? `?utm_source=facebook&utm_medium=social&utm_campaign=epe-merch&utm_content=${id}` : "");
+const style = (p) => `--c:${p.vivid};--img:url(${p.imgs[0]})`;
+const bg = '<div class="bg"></div><div class="shade"></div>';
+
+function caption(t, p) {
+  const line = {t1:p.hook, t2:`Now playing: ${SINGLE.title} by Stephen Marley. Wear the vibe.`, t3:`${p.short}. ${p.facts.join(". ")}.`, t4:`${p.hook} Swipe for every angle.`}[t.id];
+  const shop = `Shop the ${p.short} at the official Stephen Marley store.`;
+  const song = t.id === "t2" ? `\n♪ ${SINGLE.title} by Stephen Marley` : "";
+  return {ig: `${line}\n${shop} Link in bio.${song}\n\n${p.tags}`, fb: `${line}\n${shop}\n${url(p, t.id, true)}${song}`};
+}
+function card(t, p) {
+  if (t.id === "t1") return `<div class="card hero" style="${style(p)}">${bg}<img class="pic" src="${p.imgs[0]}" alt="${esc(p.short)}"><div class="ttl"><b>${esc(p.short)}</b><i>${esc(p.hook)}</i><span class="btn">Shop the official store</span></div></div>`;
+  if (t.id === "t2") return `<div class="card sleeve" style="${style(p)}"><div class="cover"><img src="${p.imgs[0]}" alt="${esc(p.short)}"></div><div class="np"><small>Now playing</small><b>${SINGLE.title}</b><span>Stephen Marley</span></div><img class="mini" src="${SINGLE.img}" alt="Old Soul album cover"></div>`;
+  return `<div class="card tag" style="${style(p)}"><div class="hole"></div><div><h3>${esc(p.short)}</h3><div class="pics" style="margin-top:3%">${p.imgs.slice(0, 2).map((s) => `<img src="${s}" alt="">`).join("")}</div></div><ul>${p.facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></div>`;
+}
+function slides(p) {
+  const hook = `<div class="card slide" style="${style(p)}">${bg}<img class="pic" src="${p.imgs[0]}" alt="" style="opacity:.28"><h4>${esc(p.hook)}</h4><small>Swipe →</small></div>`;
+  const photos = p.imgs.map((s, i) => `<div class="card slide" style="${style(p)}">${bg}<img class="pic" src="${s}" alt="${esc(p.short)}, photo ${i + 1}"></div>`).join("");
+  const shop = `<div class="card slide shop" style="${style(p)}"><h4>${esc(p.short)}</h4><small>Link in bio · official store</small></div>`;
+  return [hook, photos, shop].join("");
+}
+function media(t, p) {
+  if (t.kind === "carousel") { const n = 2 + p.imgs.length; return `<div class="strip" tabindex="0" aria-label="Carousel, ${n} slides, scroll sideways">${slides(p)}</div><div class="count">${n} slides · swipe or scroll →</div>`; }
+  return `<div class="media">${card(t, p)}</div>`;
+}
+
+document.getElementById("lineup").innerHTML = PRODUCTS.map((p) => `
+  <div class="prod" style="--c:${p.vivid}"><b>${esc(p.short)}</b><span>${esc(p.type)} · ${p.imgs.length} photo${p.imgs.length > 1 ? "s" : ""}</span>
+  <a href="${url(p)}" target="_blank" rel="noopener">${esc(url(p).replace("https://", ""))}</a></div>`).join("");
+document.getElementById("nav").innerHTML = TEMPLATES.map((t) => `<a href="#${t.id}">${t.n}. ${esc(t.name)}</a>`).join("");
+document.getElementById("tpls").innerHTML = TEMPLATES.map((t) => `
+  <section class="tpl" id="${t.id}">
+    <div class="tplhead"><span class="num">${String(t.n).padStart(2, "0")}</span><h2>${esc(t.name)}</h2><span class="kind">${t.kind}</span><p>${esc(t.desc)}</p></div>
+    <div class="row">${PRODUCTS.map((p) => { const c = caption(t, p); return `
+      <article class="post">${media(t, p)}
+        <div class="meta"><div class="name">${esc(p.short)}</div>
+          <div class="song">${esc(p.type)} · Stephen Marley</div>
+          <details><summary>Caption</summary>
+            <div class="tabs" role="group" aria-label="Platform"><button type="button" aria-pressed="true" data-cap="ig">IG / TikTok</button><button type="button" aria-pressed="false" data-cap="fb">Facebook</button></div>
+            <pre data-ig="${esc(c.ig)}" data-fb="${esc(c.fb)}">${esc(c.ig)}</pre>
+          </details>
+        </div>
+      </article>`; }).join("")}</div>
+  </section>`).join("");
+document.addEventListener("click", (ev) => {
+  const cap = ev.target.closest("[data-cap]");
+  if (cap) {
+    const box = cap.closest("details");
+    box.querySelectorAll("[data-cap]").forEach((b) => b.setAttribute("aria-pressed", String(b === cap)));
+    const pre = box.querySelector("pre");
+    pre.textContent = pre.dataset[cap.dataset.cap];
+  }
+});
+</script>
+
+</body></html>
