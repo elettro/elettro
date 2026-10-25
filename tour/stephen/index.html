@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Stephen Marley Tour Social Assets</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Space+Mono:wght@400;700&family=Alfa+Slab+One&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Space+Mono:wght@400;700&family=Alfa+Slab+One&family=Permanent+Marker&display=swap">
 <style>
 :root{--bg:#0b1a0f;--panel:#12251a;--line:#2b4a31;--ink:#f6f0dc;--muted:#a9b79f;--accent:#f7c61a;--chip:#193223;--stripe:linear-gradient(90deg,#1e9b3d 0 33.3%,#f7c61a 33.3% 66.6%,#d6281f 66.6%); --display:"Bebas Neue","Arial Narrow",Impact,sans-serif; --head:"Alfa Slab One","Bebas Neue",Impact,serif; --body:"DM Sans","Segoe UI",system-ui,sans-serif; --mono:"Space Mono",ui-monospace,Consolas,monospace; color-scheme:dark}
 *{box-sizing:border-box}
@@ -20,6 +20,7 @@ h1{font:400 clamp(44px,7vw,84px)/.92 var(--head);margin:0;text-wrap:balance}
 .date b{font:400 24px/1 var(--display);letter-spacing:.02em}
 .date span{font-size:13px;color:var(--muted)}
 .date a{font-size:12px;color:var(--accent)}
+.vid video{display:block;width:100%;aspect-ratio:9/16;background:#000;object-fit:cover}
 h2.sec{font:400 38px/1 var(--display);margin:0;border-bottom:3px solid var(--accent);padding-bottom:8px;letter-spacing:.02em}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start}
 .post{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;min-width:0}
@@ -57,18 +58,26 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 .pill b{font:400 5.4cqw/1 var(--display)}
 .barcode{height:9cqw;background:repeating-linear-gradient(90deg,#14210f 0 .6cqw,transparent .6cqw 1.4cqw,#14210f 1.4cqw 2.6cqw,transparent 2.6cqw 3.2cqw,#14210f 3.2cqw 3.4cqw,transparent 3.4cqw 4.6cqw)}
 
+.mq{position:absolute;inset:5cqw;border:2.6cqw dotted var(--a);border-radius:3cqw;box-shadow:0 0 5cqw var(--a),inset 0 0 5cqw #0008}
+.tape{position:absolute;width:24cqw;height:7cqw;background:#ffffffb0;transform:rotate(-4deg)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:.7cqw;font-family:var(--mono);font-weight:700;line-height:1;text-align:center}
+.cal span{padding:1cqw 0;border-radius:99px;opacity:.55}
+.cal span.on{opacity:1;background:var(--a);color:var(--k);font-weight:700}
+.cal span.h{opacity:1;color:var(--a)}
+.strip3{display:grid;gap:2.4cqw}
+.hand{font-family:"Permanent Marker","Bradley Hand",cursive}
+
 </style></head><body>
 <div class="wrap">
 <header>
-<div class="eyebrow">Stephen Marley · tour · 10 social assets</div>
+<div class="eyebrow">Stephen Marley · tour · 24 social assets (20 stills + 4 videos)</div>
 <h1>Stephen Marley Tour Social Assets</h1>
-<p class="lede">Ten ready-to-post promos for the two dates on stephenmarleymusic.com/tour (Welcome To Jamrock Reggae Cruise 2026 and Jam Cruise, both Miami), built from the official lion-coin logo, the painted portrait and the Old Soul artwork in the Jah Army colors. Every asset has a clear call to action and an Instagram/TikTok and Facebook caption with the ticket link. Countdowns update themselves from today's date.</p>
+<p class="lede">Twenty-four ready-to-post promos (20 stills and 4 videos) for the two dates on stephenmarleymusic.com/tour (Welcome To Jamrock Reggae Cruise 2026 and Jam Cruise, both Miami), built from the official lion-coin logo, the painted portrait and the Old Soul artwork in the Jah Army colors. Every asset has a clear call to action and an Instagram/TikTok and Facebook caption with the ticket link. Countdowns update themselves from today's date.</p>
 <div class="rules"><span class="rule">Dates straight from the tour page</span><span class="rule">Ticket links go to the official Bandsintown pages</span><span class="rule">No prices, no invented details</span><span class="rule">Slow moves, no beat pulsing</span><span class="rule">Draft only: not approved by the artist</span></div>
 </header>
 <div class="dates" id="dates"></div>
-<h2 class="sec">10 social assets</h2>
-<main class="grid" id="grid"></main>
-<footer>Layout proofs drawn live in CSS from Stephen Marley's public artwork (stephenmarleymusic.com and the official store), which remains the property of its owners. The tour page lists only month and day, so the years (Nov 11, 2026 and Feb 4–10, 2027) are inferred from the calendar; confirm before posting. The page lists two events only; more assets can follow when new dates are announced.</footer>
+<div id="secs" style="display:grid;gap:36px"></div>
+<footer>Video audio is a placeholder: the artists' own recordings are not publicly available to use, so each video plays a 16-second clip of the Stashbox reggae original 'Reggae Time' (credited on screen). Swap in licensed audio before posting. Layout proofs drawn live in CSS from Stephen Marley's public artwork (stephenmarleymusic.com and the official store), which remains the property of its owners. The tour page lists only month and day, so the years (Nov 11, 2026 and Feb 4–10, 2027) are inferred from the calendar; confirm before posting. The page lists two events only; more assets can follow when new dates are announced.</footer>
 </div>
 <script>
 const esc=(s)=>String(s??"").replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -166,13 +175,105 @@ const ASSETS=[
   fb:`Old Soul on the turntable, Miami on the calendar. Welcome To Jamrock Reggae Cruise Nov 11 and Jam Cruise Feb 4–10.\nDates: {LINK}`}
 ];
 
+const moreAssets=(T)=>{
+ const S=T.shows, V=(s)=>`style="--a:${T.a};--k:${T.k}"`;
+ const firstD=S[0].dl, lastD=S[S.length-1].dl;
+ return [
+ {id:"m1",name:"Marquee: coming to town",fmt:"feed",cta:"Get tickets",link:S[0].link,
+  render:()=>`<div class="veil" style="background:${T.bg}"></div><div class="mq" ${V()}></div>
+   <div class="abs" style="left:11%;right:11%;top:17%;text-align:center"><div class="mono" style="font-size:3.6cqw;color:${T.a}">${esc(T.brand)} · coming to</div><div class="h" style="zoom:${T.hz||1};font-size:${S[0].c.length>10?13:17}cqw;margin-top:4cqw;color:#fff7e6;text-shadow:0 0 4cqw ${T.a}">${esc(S[0].c.toUpperCase())}</div><div style="font:400 12cqw/1 var(--display);color:${T.a};margin-top:3cqw">${esc(S[0].d)}</div><div style="font:700 4cqw/1.35 var(--body);margin-top:3cqw">${esc(S[0].v)}${S[0].b?"<br>"+esc(S[0].b):""}</div></div>
+   <div class="abs" style="left:0;right:0;bottom:11%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">Get tickets</span></div>`,
+  ig:`${S[0].c} on ${S[0].d}. ${S[0].v}${S[0].b?", "+S[0].b:""}.\nTickets: link in bio.\n\n${T.tag}`,fb:`${S[0].c} on ${S[0].d}. ${S[0].v}${S[0].b?", "+S[0].b:""}.\nTickets: {LINK}`},
+ {id:"m2",name:"Postcard: greetings from",fmt:"feed",cta:"Book your trip",link:S[T.pc].link,
+  render:()=>{const s=S[T.pc];return `<div class="veil" style="background:${T.bg}"></div>
+   <div class="abs" style="left:6%;right:6%;top:12%;bottom:12%;background:${T.p};color:${T.k};transform:rotate(-2.5deg);box-shadow:0 3cqw 6cqw #0009;padding:2.4cqw;display:grid;grid-template-columns:1.25fr 1fr;gap:3cqw">
+    <div style="border:.7cqw solid ${T.k};display:grid;place-items:center;text-align:center;padding:3cqw;background:${T.bg};color:#fff7e6;position:relative;overflow:hidden"><img src="${T.hero}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${T.heroPos};opacity:.55" alt=""><div style="position:relative"><div class="mono" style="font-size:2.8cqw;color:${T.a}">Greetings from</div><div class="h" style="zoom:${T.hz||1};font-size:${s.c.length>10?9:12}cqw;text-shadow:0 .8cqw 0 #000a">${esc(s.c.split(",")[0].toUpperCase())}</div></div></div>
+    <div style="display:grid;grid-template-rows:auto 1fr;gap:2cqw;padding:1cqw"><div style="justify-self:end;border:.6cqw dashed ${T.k};padding:1.5cqw 2cqw;font:700 2.6cqw/1.2 var(--mono);text-align:center">${esc(s.d)}<br>${esc(T.brand.split(" ")[0])}</div>
+     <div class="hand" style="font-size:4.2cqw;line-height:1.5;align-self:center">Wish you were here.<br>${esc(s.d)}, ${esc(s.v)}.<br>Bring the whole crew.</div></div></div>
+   <div class="abs" style="left:0;right:0;bottom:3.5%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">Book your trip</span></div>`},
+  ig:`Greetings from ${S[T.pc].c}. ${S[T.pc].d}, ${S[T.pc].v}. Bring the whole crew.\nTickets: link in bio.\n\n${T.tag}`,fb:`Greetings from ${S[T.pc].c}. ${S[T.pc].d}, ${S[T.pc].v}.\nTickets: {LINK}`},
+ {id:"m3",name:"Taped-up road list",fmt:"feed",cta:"Pick a night",link:T.tour,
+  render:()=>`<div class="veil" style="background:${T.bg}"></div>
+   <div class="abs" style="left:12%;right:12%;top:8%;bottom:9%;background:${T.p};color:${T.k};transform:rotate(1.5deg);box-shadow:0 3cqw 6cqw #000a;padding:7cqw 7cqw 5cqw"><div class="tape" style="left:32%;top:-3cqw"></div>
+    <div class="hand" style="font-size:9cqw;line-height:1;border-bottom:.7cqw solid ${T.k};padding-bottom:2cqw">THE ROAD LIST</div>
+    <div class="hand" style="font-size:${S.length>3?4.7:7}cqw;line-height:${S.length>3?2:2.3};margin-top:2cqw">${S.map((s,i)=>`${i+1}. ${esc(s.c.split(",")[0])} <span style="color:${T.r}">${esc(s.d)}</span>`).join("<br>")}</div>
+    <div class="hand" style="font-size:4.2cqw;margin-top:3cqw;color:${T.r}">* wear comfy shoes *</div></div>
+   <div class="abs" style="left:0;right:0;bottom:1.8%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">All dates · link in bio</span></div>`,
+  ig:`The road list: ${S.map((s)=>s.c.split(",")[0]+" "+s.d).join(", ")}. Pick a night.\nTickets: link in bio.\n\n${T.tag}`,fb:`The road list: ${S.map((s)=>s.c.split(",")[0]+" "+s.d).join(", ")}.\nDates and tickets: {LINK}`},
+ {id:"m4",name:"All-access laminate",fmt:"story",cta:"Get your pass",link:T.tour,
+  render:()=>`<div class="veil" style="background:${T.bg}"></div><div class="abs" style="left:50%;top:-5%;width:9cqw;height:34%;background:${T.a};transform:translateX(-50%)"></div>
+   <div class="abs" style="left:11%;right:11%;top:22%;bottom:16%;background:${T.p};color:${T.k};border-radius:4cqw;box-shadow:0 4cqw 8cqw #000b;padding:6cqw;display:grid;grid-template-rows:auto 1fr auto;gap:3cqw"><div style="width:16cqw;height:4cqw;background:${T.bg};border-radius:3cqw;margin:0 auto"></div>
+    <div style="text-align:center;display:grid;gap:2.5cqw;align-content:start"><div class="mono" style="font-size:3.4cqw;color:${T.r}">${esc(T.brand)}</div><div class="h" style="zoom:${T.hz||1};font-size:19cqw">ALL<br>ACCESS</div>
+     <div style="height:34cqw;background:url(${T.hero}) ${T.heroPos}/cover;border:1cqw solid ${T.k}"></div><div style="font:400 8cqw/1 var(--display)">${esc(firstD.toUpperCase())} → ${esc(lastD.toUpperCase())}</div></div>
+    <div class="barcode" style="height:10cqw;background:repeating-linear-gradient(90deg,${T.k} 0 .6cqw,transparent .6cqw 1.4cqw,${T.k} 1.4cqw 2.6cqw,transparent 2.6cqw 3.2cqw)"></div></div>
+   <div class="abs" style="left:0;right:0;bottom:5%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">Get your pass · link in bio</span></div>`,
+  ig:`Your all-access pass to ${T.brand}: ${firstD} through ${lastD}.\nTickets: link in bio.\n\n${T.tag}`,fb:`Your all-access pass to ${T.brand}: ${firstD} through ${lastD}.\nTickets: {LINK}`},
+ {id:"m5",name:"Record back cover: dates",fmt:"feed",cta:"Spin the dates",link:T.tour,
+  render:()=>`<div class="veil" style="background:${T.p}"></div>
+   <div class="abs" style="left:6%;right:6%;top:5%;color:${T.k}"><div style="display:flex;justify-content:space-between;align-items:end;border-bottom:1cqw solid ${T.k};padding-bottom:2cqw"><div class="h" style="zoom:${T.hz||1};font-size:12cqw">TOUR DATES</div><div class="mono" style="font-size:3cqw">${esc(T.brand)}</div></div>
+    <div style="margin-top:3cqw;display:grid;gap:${S.length>3?3.4:3}cqw">${S.map((s,i)=>`<div style="display:grid;grid-template-columns:9cqw 1fr auto;gap:3cqw;align-items:baseline;border-bottom:.35cqw dashed ${T.k}66;padding-bottom:1.4cqw"><b class="mono" style="font-size:3.4cqw;color:${T.r}">${i<3?"A":"B"}${(i%3)+1}</b><span style="font:400 ${S.length>3?8.4:9}cqw/1 var(--display)">${esc(s.c.split(",")[0].toUpperCase())}</span><span class="mono" style="font-size:3.2cqw">${esc(s.d)}</span></div>`).join("")}</div></div>
+   <div class="abs" style="left:6%;bottom:5%;right:6%;display:flex;justify-content:space-between;align-items:center;color:${T.k}"><div class="barcode" style="width:36cqw;height:8cqw;background:repeating-linear-gradient(90deg,${T.k} 0 .6cqw,transparent .6cqw 1.4cqw,${T.k} 1.4cqw 2.6cqw,transparent 2.6cqw 3.2cqw)"></div><span class="btn" style="background:${T.k};color:${T.p};white-space:nowrap">Tickets in bio</span></div>`,
+  ig:`The tour as a tracklist: ${S.map((s)=>s.c.split(",")[0]+" ("+s.d+")").join(", ")}.\nTickets: link in bio.\n\n${T.tag}`,fb:`The tour as a tracklist: ${S.map((s)=>s.c.split(",")[0]+" ("+s.d+")").join(", ")}.\nDates: {LINK}`},
+ {id:"m6",name:"Tag your crew",fmt:"story",cta:"Tag + share",link:T.tour,
+  render:()=>`<img class="bgimg" src="${T.hero}" style="object-position:${T.heroPos}" alt=""><div class="veil" style="background:linear-gradient(180deg,${T.bg}cc,${T.bg}55 40%,${T.bg}f2)"></div>
+   <div class="abs" style="left:7%;right:7%;top:9%;text-align:center"><div class="mono" style="font-size:3.4cqw;color:${T.a}">${esc(T.brand)} · road trip</div><div class="h" style="zoom:${T.hz||1};font-size:14cqw;margin-top:3cqw;text-shadow:0 1cqw 0 #0008">TAG THE ONE WHO'S DRIVING</div></div>
+   <div class="abs" style="left:10%;right:10%;top:56%;display:grid;gap:4cqw;justify-items:center"><div class="btn" style="background:#fff;color:#111;font-size:5cqw;transform:rotate(-3deg)">@yourdriver</div><div class="btn" style="background:${T.a};color:${T.k};font-size:5cqw;transform:rotate(2deg)">@yourbestie</div><div class="btn" style="background:#fff;color:#111;font-size:5cqw;transform:rotate(-1deg)">@theloudfriend</div></div>
+   <div class="abs" style="left:0;right:0;bottom:6%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">Share to your story</span></div>`,
+  ig:`Tag the one who's driving. Dates: ${S.map((s)=>s.c.split(",")[0]+" "+s.d).join(", ")}.\nTickets: link in bio.\n\n${T.tag}`,fb:`Tag the one who's driving to the show!\nDates and tickets: {LINK}`},
+ T.seven(T),
+ {id:"m8",name:"Packing list",fmt:"feed",cta:"Shop + get tickets",link:T.shop,
+  render:()=>`<div class="veil" style="background:${T.p}"></div>
+   <div class="abs" style="left:7%;right:7%;top:5%;color:${T.k}"><div class="mono" style="font-size:3.2cqw;color:${T.r}">Before you go</div><div class="h" style="zoom:${T.hz||1};font-size:15cqw">PACKING LIST</div></div>
+   <div class="abs hand" style="left:9%;top:30%;color:${T.k};font-size:6.2cqw;line-height:1.75">${T.pack.map((x)=>`<div><span style="color:${T.r}">✔</span> ${esc(x)}</div>`).join("")}</div>
+   <img class="abs" src="${T.items[0]}" style="right:3%;bottom:15%;width:44cqw;transform:rotate(6deg);filter:drop-shadow(0 2cqw 2cqw #0006)" alt="">
+   <div class="abs" style="left:0;right:0;bottom:4%;text-align:center"><span class="btn" style="background:${T.k};color:${T.p}">Shop the store · link in bio</span></div>`,
+  ig:`Packing list: ${T.pack.join(", ")}.\nShop the official store: link in bio.\n\n${T.tag}`,fb:`Packing list: ${T.pack.join(", ")}.\nOfficial store: {LINK}`},
+ {id:"m9",name:"Photo-booth strip",fmt:"story",cta:"See you there",link:T.tour,
+  render:()=>`<div class="veil" style="background:${T.bg}"></div>
+   <div class="abs" style="left:50%;top:5%;bottom:11%;width:44%;transform:translateX(-50%) rotate(-2deg);background:${T.p};padding:3cqw;display:grid;grid-template-rows:repeat(3,1fr) auto;gap:2.4cqw;box-shadow:0 3cqw 7cqw #000b">
+    ${[0,1,2].map((i)=>`<div style="background:url(${T.hero}) ${T.crops[i]}/${T.zoom};position:relative"><span class="mono" style="position:absolute;left:1.5cqw;bottom:1.5cqw;font-size:2.8cqw;background:${T.a};color:${T.k};padding:.8cqw 1.6cqw">${esc(S[Math.min(i,S.length-1)].d)} · ${esc(S[Math.min(i,S.length-1)].c.split(",")[0])}</span></div>`).join("")}
+    <div class="h" style="zoom:${T.hz||1};font-size:6cqw;color:${T.k};text-align:center">${esc(T.brand)}</div></div>
+   <div class="abs" style="left:0;right:0;bottom:4%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">See you there</span></div>`,
+  ig:`Three frames, three nights. See you out there.\nDates: link in bio.\n\n${T.tag}`,fb:`Three frames, three nights. See you out there.\nDates: {LINK}`},
+ {id:"m10",name:"Save-the-dates calendar",fmt:"feed",cta:"Mark your calendar",link:T.tour,
+  render:()=>`<div class="veil" style="background:${T.bg}"></div>
+   <div class="abs" style="left:6%;right:6%;top:4%;display:flex;justify-content:space-between;align-items:end"><div class="h" style="zoom:${T.hz||1};font-size:8.6cqw;white-space:nowrap">SAVE THE DATES</div><div class="mono" style="font-size:2.8cqw;color:${T.a}">${esc(T.brand)}</div></div>
+   <div class="abs" style="left:6%;right:6%;top:18%;bottom:12%;display:grid;grid-template-columns:repeat(${T.cal.length},1fr);gap:3cqw;align-content:start">${T.cal.map((m)=>{const off=new Date(m.y,m.m,1).getDay();const n=new Date(m.y,m.m+1,0).getDate();const cells=["S","M","T","W","T","F","S"].map((d)=>`<span class="h" style="opacity:1;color:${T.a}">${d}</span>`).join("")+"".padStart(0)+Array.from({length:off},()=>"<span></span>").join("")+Array.from({length:n},(_,i)=>`<span class="${m.d.includes(i+1)?"on":""}">${i+1}</span>`).join("");return `<div ${V()}><div class="h" style="zoom:${T.hz||1};font-size:${T.cal.length>2?5.4:8}cqw;margin-bottom:1.6cqw;white-space:nowrap">${m.l}</div><div class="cal" style="font-size:${T.cal.length>2?1.9:3}cqw">${cells}</div></div>`}).join("")}</div>
+   <div class="abs" style="left:0;right:0;bottom:3.5%;text-align:center"><span class="btn" style="background:${T.a};color:${T.k}">Mark it · tickets in bio</span></div>`,
+  ig:`Save the dates: ${S.map((s)=>s.d).join(", ")}.\nTickets: link in bio.\n\n${T.tag}`,fb:`Save the dates: ${S.map((s)=>s.d).join(", ")}.\nTickets: {LINK}`}
+ ];
+};
+
+const T={hz:0.72,brand:"STEPHEN MARLEY",a:"#f7c61a",k:"#14210f",p:"#f6f0dc",r:"#d6281f",bg:"#0b1a0f",hero:POR,heroPos:"62% 40%",tag:tag,tour:L.tour,shop:L.shop,pc:0,
+ shows:[{d:"NOV 11",dl:"Nov 11",c:"Miami, FL",v:"Welcome To Jamrock Reggae Cruise 2026",b:"12:00 PM",link:L.jam},{d:"FEB 4–10",dl:"Feb 4",c:"Miami, FL",v:"Jam Cruise",b:"",link:L.jc}],
+ items:["m/XZCMSM07.png"],pack:["Ticket","Old Soul hoodie","Your whole crew","Sunscreen","Good vibes"],crops:["62% 20%","62% 55%","40% 50%"],zoom:"cover",
+ cal:[{l:"NOV 2026",y:2026,m:10,d:[11]},{l:"FEB 2027",y:2027,m:1,d:[4,5,6,7,8,9,10]}],
+ seven:(T)=>({id:"m7",name:"Seven days afloat",fmt:"feed",cta:"Book Jam Cruise",link:L.jc,
+  render:()=>`<div class="veil" style="background:radial-gradient(circle at 50% 35%,#2a4a1c,#0b1a0f 75%)"></div><div class="abs rastav" style="left:0;top:0;bottom:0;width:3cqw"></div><div class="abs rastav" style="right:0;top:0;bottom:0;width:3cqw"></div>
+   <div class="abs" style="left:8%;right:8%;top:9%;text-align:center"><div class="mono gold" style="font-size:3.4cqw">Jam Cruise · Feb 4–10, 2027</div><div style="font:400 62cqw/.85 var(--display);color:#f7c61a;text-shadow:0 1.2cqw 0 #d6281f">7</div><div class="h" style="font-size:8cqw">DAYS AFLOAT</div></div>
+   <img class="lion" src="${LION}" style="left:50%;bottom:20%;width:22cqw;transform:translateX(-50%)" alt="">
+   <div class="abs" style="left:0;right:0;bottom:5%;text-align:center"><span class="btn g">Book Jam Cruise · link in bio</span></div>`,
+  ig:`Seven days afloat. Jam Cruise, Feb 4–10, 2027, out of Miami.\nTickets: link in bio.\n\n#stephenmarley #oldsoul #jamcruise`,fb:`Seven days afloat. Jam Cruise, Feb 4–10, 2027, out of Miami.\nTickets: {LINK}`})};
+ASSETS.push(...moreAssets(T));
+const VID=(id,name,file,link,ig,fb)=>({id,name,fmt:"video",src:"m/v/"+file+".mp4",poster:"m/v/"+file+".jpg",cta:"Tickets, link in bio",link,ig,fb});
+const au="\n♪ Reggae Time by Stashbox";
+ASSETS.push(
+ VID("v1","Now Spinning: Camo Hoodie","stephen_spin_hoodie",L.jam,"Old Soul spins, the Lion & Leaf camo hoodie floats, Jamrock is next: Nov 11 in Miami.\nTickets: link in bio."+au+"\n\n"+tag,"Old Soul spins, the Lion & Leaf camo hoodie floats, Jamrock is next: Nov 11 in Miami.\nTickets: {LINK}"+au),
+ VID("v2","Now Spinning: Old Soul 2LP","stephen_spin_lp",L.jam,"The Old Soul 2LP on the platter, Welcome To Jamrock Reggae Cruise on the calendar: Nov 11, Miami.\nTickets: link in bio."+au+"\n\n"+tag,"The Old Soul 2LP on the platter, Welcome To Jamrock Reggae Cruise Nov 11, Miami.\nTickets: {LINK}"+au),
+ VID("v3","Tour Reel: both sailings","stephen_reel",L.tour,"Two sailings out of Miami: Welcome To Jamrock Reggae Cruise (Nov 11) and Jam Cruise (Feb 4–10).\nTickets: link in bio."+au+"\n\n"+tag,"Two sailings out of Miami: Welcome To Jamrock Reggae Cruise (Nov 11) and Jam Cruise (Feb 4–10).\nTickets: {LINK}"+au),
+ VID("v4","Countdown reel: Jamrock","stephen_count",L.jam,"The countdown to Welcome To Jamrock Reggae Cruise is on. Nov 11, Miami.\nTickets: link in bio."+au+"\n\n"+tag,"The countdown to Welcome To Jamrock Reggae Cruise is on. Nov 11, Miami.\nTickets: {LINK}"+au)
+);
+
 document.getElementById("dates").innerHTML=SHOWS.map((s)=>`<div class="date"><b>${esc(s.when)}</b><span>${esc(s.what)}</span><span>${esc(s.where)}${s.bill?" · "+esc(s.bill):""}</span><a href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.status)} →</a></div>`).join("");
-document.getElementById("grid").innerHTML=ASSETS.map((a,i)=>{
+const SECS=[[0,"Feed + story posts"],[10,"10 more templates"],[20,"Video posts · 9:16"]];
+const post=(a,i)=>{
   const fb=a.fb.replace("{LINK}",tracked(a.link,a.id)), ig=a.ig;
-  return `<article class="post"><div class="card ${a.fmt==="story"?"story":""}" ${a.attr||""}>${a.render()}</div>
-  <div class="meta"><div class="n">${String(i+1).padStart(2,"0")} · ${a.fmt==="story"?"9:16 STORY":"4:5 FEED"}</div><div class="name">${esc(a.name)}</div>
+  const media=a.fmt==="video"?`<div class="vid"><video src="${a.src}" poster="${a.poster}" controls playsinline preload="none"></video></div>`:`<div class="card ${a.fmt==="story"?"story":""}">${a.render()}</div>`;
+  return `<article class="post">${media}
+  <div class="meta"><div class="n">${String(i+1).padStart(2,"0")} · ${a.fmt==="video"?"9:16 VIDEO":a.fmt==="story"?"9:16 STORY":"4:5 FEED"}</div><div class="name">${esc(a.name)}</div>
   <div class="cta"><b>CTA:</b> ${esc(a.cta)}</div>
   <details><summary>Caption</summary><div class="tabs"><button type="button" aria-pressed="true" data-cap="ig">IG / TikTok</button><button type="button" aria-pressed="false" data-cap="fb">Facebook</button></div>
-  <pre data-ig="${esc(ig)}" data-fb="${esc(fb)}">${esc(ig)}</pre></details></div></article>`}).join("");
+  <pre data-ig="${esc(ig)}" data-fb="${esc(fb)}">${esc(ig)}</pre></details></div></article>`};
+document.getElementById("secs").innerHTML=SECS.filter((s)=>ASSETS.length>s[0]).map((s,k)=>{const end=SECS[k+1]?SECS[k+1][0]:ASSETS.length;return `<section><h2 class="sec">${s[1]}</h2><div class="grid" style="margin-top:16px">${ASSETS.slice(s[0],end).map((a,j)=>post(a,s[0]+j)).join("")}</div></section>`}).join("");
 document.addEventListener("click",(ev)=>{const c=ev.target.closest("[data-cap]");if(!c)return;const box=c.closest("details");box.querySelectorAll("[data-cap]").forEach((b)=>b.setAttribute("aria-pressed",String(b===c)));const pre=box.querySelector("pre");pre.textContent=pre.dataset[c.dataset.cap];});
 </script></body></html>
