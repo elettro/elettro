@@ -56,6 +56,12 @@ h1 span{-webkit-text-stroke:1.5px var(--ink);color:transparent}
 .plat{font:800 11px Inter;padding:4px 9px;border-radius:7px;color:#0b0b10;background:var(--accent)}
 .fmt{font:700 11px "JetBrains Mono",monospace;color:var(--dim);letter-spacing:.06em}
 .title{font:400 26px/1.05 Anton,sans-serif;text-transform:uppercase}
+.grp{grid-column:1/-1;display:flex;flex-direction:column;gap:4px;padding:6px 2px 0}
+.grp .kicker{color:var(--hot)}
+.grp h2{font:400 clamp(26px,4vw,40px)/1 Anton,Impact,sans-serif;text-transform:uppercase}
+.grp p{color:var(--dim);max-width:760px;font-size:14px}
+.trig{font:700 11px/1.4 "JetBrains Mono",monospace;color:var(--volt);letter-spacing:.06em}
+.vis .up{color:#3ddc84}
 .power-tag{font:700 11px "JetBrains Mono",monospace;color:var(--cyan);letter-spacing:.06em}
 .copy{background:var(--bg);border:2px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:14px;white-space:pre-line}
 .copy .h{color:var(--cyan)}
@@ -105,7 +111,7 @@ a{color:var(--cyan)}
     <div>
       <div class="kicker">Elettro OS · Client review · Draft posts</div>
       <h1>The <em>Grand Prix</em><br><span>Promo Pack</span></h1>
-      <p class="sub">Fifteen posts that show off Elettro OS by using our own race dashboard as the star. The last five brag about volume, using the real post counts Elettro OS has already published. Each one is built from something real on <a href="/dash/">elettro.com/dash</a>, and each one shows a different thing Elettro OS does: planning, captions, scheduling, multi-network publishing, live status. Approve, ask for changes, or pass on each one, then send us your notes.</p>
+      <p class="sub">Twenty-three posts that show off Elettro OS by using our own race dashboard as the star. The first eight are <b>movement posts</b>: Elettro OS watches the board and the publishing ledger, and when anything moves in the right direction it drafts a post that celebrates it. Then come the evergreen race posts, and the last five brag about volume, using the real post counts Elettro OS has already published. Each one is built from something real on <a href="/dash/">elettro.com/dash</a>, and each one shows a different thing Elettro OS does: planning, captions, scheduling, multi-network publishing, live status. Approve, ask for changes, or pass on each one, then send us your notes.</p>
     </div>
     <button class="theme" id="theme" aria-label="Toggle light or dark">LIGHT / DARK</button>
   </div>
@@ -119,7 +125,7 @@ a{color:var(--cyan)}
       <span class="c-ok"><i id="nOk">0</i>APPROVED</span>
       <span class="c-ch"><i id="nCh">0</i>CHANGES</span>
       <span class="c-pass"><i id="nPass">0</i>PASSED</span>
-      <span class="c-pen"><i id="nPen">15</i>TO REVIEW</span>
+      <span class="c-pen"><i id="nPen">23</i>TO REVIEW</span>
     </div>
     <div class="prog" aria-hidden="true"><i id="prog"></i></div>
     <div class="chips" id="chips"></div>
@@ -150,7 +156,7 @@ const road = (i, to, label) => { const [c, col] = NET[i]; return `<div class="mi
 const CHECKS = ["Playbook written","Account + handle confirmed","In the planner with a cadence","Content pool tagged + ready","Captions engine","First week scheduled","Developer app + API access","OAuth connected to Elettro OS","First test post via API","Auto-publishing + metrics live"];
 
 // ---------- the ten posts ----------
-const POSTS = [
+const POSTS_EVERGREEN = [
  { id:"p1", plat:"Instagram", color:"#ff5fd2", fmt:"Reel · 9:16 · 12s", title:"Lights out", power:"MULTI-NETWORK PLANNER",
    slot:"Proposed: Mon 261026 · 12:00 ET",
    copy:"Nine networks. One finish line.\n\nWe built a race to see which of our social networks gets fully connected to Elettro OS first. Every car only moves when a real checkpoint is cleared: account, planner, captions, API, first post.\n\nWatch the grid live. Link in bio.\n\n#ElettroOS #SocialMediaAutomation #ContentPlanning #MusicMarketing",
@@ -272,9 +278,82 @@ const POSTS = [
      <div class="vis v11"><div class="m" style="color:#d7ff1f">3 / 3</div><div class="a" style="font-size:32px;margin-top:8px">Watch<br>it live</div><div class="m" style="margin-top:14px;color:#8d8a9e">elettro.com/dash</div></div></div>` },
 ];
 
+// ---------- movement posts: drafted automatically when something on the board moves up ----------
+const MOVE = [
+ { id:"m1", grp:"move", plat:"Instagram", color:"#ff5fd2", fmt:"Reel · 9:16 · 10s", title:"250 posts this week", power:"PUBLISHING LEDGER",
+   trig:"TRIGGER: a brand's posts-this-week beats its previous best",
+   slot:"Auto-drafted the moment the weekly count passes the old record",
+   copy:"Stashbox published 250 posts this week.\n\nLast week it was 180. Same band, same networks, and nobody sat there hitting Post. Elettro OS planned them, wrote the captions and sent them out.\n\nEvery one of them is counted on the dashboard. Link in bio.\n\n#Stashbox #ElettroOS #ContentVolume #MusicMarketing",
+   vis: () => `<div class="vis v916" style="padding:14px;text-align:center"><div class="m" style="color:#d7ff1f">Stashbox · this week</div>
+     <div class="a pulse" style="font-size:112px;margin:48px 0 4px;color:#d7ff1f">250</div><div class="m">posts published</div>
+     <div class="a up" style="font-size:36px;margin-top:28px">▲ +39%<br><span style="font-size:18px;color:#8d8a9e">vs last week</span></div></div>` },
+
+ { id:"m2", grp:"move", plat:"Facebook", color:"#3b8bff", fmt:"Image · 1:1", title:"Halfway to 1,000", power:"PUBLISHING LEDGER",
+   trig:"TRIGGER: a brand crosses 25%, 50% or 75% of the 1,000 post goal",
+   slot:"Auto-drafted when the ledger crosses the line",
+   copy:"Stashbox is now 50% of the way to the 1,000 post goal.\n\n500 posts out, 500 to go. At this pace the finish line is about two weeks away.\n\nWatch the race live: elettro.com/dash",
+   vis: () => `<div class="vis v11" style="padding:16px"><div class="m" style="color:#d7ff1f">Stashbox · 1000 Post Race</div>
+     <div class="a" style="font-size:60px;margin-top:12px;color:#d7ff1f">50%</div>
+     <div style="margin-top:14px;height:18px;background:#2a2a38;border-radius:9px;overflow:hidden"><i style="display:block;height:100%;width:50%;background:linear-gradient(90deg,#ff2e88,#d7ff1f)"></i></div>
+     <div class="lbrow" style="grid-template-columns:1fr 1fr 1fr;margin-top:6px;color:#8d8a9e"><span>0</span><span style="text-align:center">500</span><span style="text-align:right">1,000</span></div>
+     <div class="a" style="font-size:26px;margin-top:14px">500 down.<br><span style="color:#ff2e88">500 to go.</span></div></div>` },
+
+ { id:"m3", grp:"move", plat:"LinkedIn", color:"#4fb3ff", fmt:"Image post · 1.91:1", title:"A car just moved", power:"STATUS TRACKING",
+   trig:"TRIGGER: a network clears a checkpoint and its score goes up",
+   slot:"Auto-drafted when the status feed shows a new checkpoint cleared",
+   copy:"TikTok just cleared its OAuth checkpoint on the Grand Prix, moving from 63% to 78%.\n\nThat means Elettro OS can now connect to the account directly. Next gate: first test post through the API.\n\nThe board updates itself from the system, so this post wrote itself too.\n\nelettro.com/dash",
+   vis: () => `<div class="vis v191" style="padding:14px;aspect-ratio:1.15/1"><div class="m" style="color:#22e6ff">Checkpoint cleared · TikTok</div>
+     <div class="a" style="font-size:30px;margin:8px 0 10px"><span style="color:#8d8a9e">63%</span> → <span class="up">78%</span></div>
+     ${road(2,78)}
+     <div class="ck"><b>✓</b>OAuth connected to Elettro OS</div><div class="ck n"><b>·</b>Next: first test post via API</div></div>` },
+
+ { id:"m4", grp:"move", plat:"Threads", color:"#c9c4ff", fmt:"Text + image", title:"New leader", power:"LIVE FEED",
+   trig:"TRIGGER: the lead on the Grand Prix changes hands",
+   slot:"Auto-drafted when the order of the top spot changes",
+   copy:"New leader on the Grand Prix.\n\nYouTube just passed Instagram for first place at 78%.\n\nTikTok is two checkpoints behind and closing.\n\nelettro.com/dash",
+   vis: () => `<div class="vis v11" style="padding:16px"><div class="m" style="color:#ff2e88">Lead change</div>
+     <div class="a" style="font-size:44px;margin:10px 0 12px">YouTube<br><span style="color:#d7ff1f">takes P1</span></div>
+     ${road(1,78)}${road(0,74)}${road(2,70)}<div class="m" style="margin-top:8px;color:#8d8a9e">Live from Elettro OS</div></div>` },
+
+ { id:"m5", grp:"move", plat:"Instagram", color:"#ff5fd2", fmt:"Story · 9:16", title:"First post is live", power:"MULTI-NETWORK PUBLISHING",
+   trig:"TRIGGER: a network publishes its first post through Elettro OS",
+   slot:"Auto-drafted when a network's published count goes from 0 to 1",
+   copy:"STORY FRAME TEXT\nPinterest just got its first post from Elettro OS.\nThat is network number 6.\n\nSTICKER\nLink: elettro.com/dash",
+   vis: () => `<div class="vis v916" style="padding:14px;text-align:center"><div class="m" style="color:#d7ff1f">Network #6 is live</div>
+     <div class="a" style="font-size:44px;margin:26px 0 10px">First<br><span style="color:#ff4f6b">post</span><br>out.</div>
+     <div style="width:96px;height:96px;margin:14px auto;border-radius:50%;background:#ff4f6b;display:grid;place-items:center;font:400 46px Anton"><span style="color:#0b0b10">P</span></div>
+     <div class="m" style="color:#8d8a9e">via Elettro OS · no hands</div></div>` },
+
+ { id:"m6", grp:"move", plat:"TikTok", color:"#22e6ff", fmt:"Video · 9:16 · 12s", title:"Best day yet", power:"SCHEDULER",
+   trig:"TRIGGER: the system sets a new single-day posting record",
+   slot:"Auto-drafted the evening a daily record is broken",
+   copy:"Record day: 31 posts went out today through Elettro OS.\n\nThe old record was 24. Several networks, one calendar, zero copy-pasting.\n\nFollow the race to 1,000: elettro.com/dash\n\n#ElettroOS #ContentCreator #SocialMediaTools",
+   vis: () => `<div class="vis v916" style="padding:14px;text-align:center"><div class="m" style="color:#ff2e88">New daily record</div>
+     <div class="a pulse" style="font-size:130px;margin:44px 0 0;color:#d7ff1f">31</div><div class="m">posts in one day</div>
+     <div class="a up" style="font-size:30px;margin-top:30px">▲ was 24</div></div>` },
+
+ { id:"m7", grp:"move", plat:"LinkedIn", color:"#4fb3ff", fmt:"Text post + image", title:"Approved", power:"STATUS TRACKING",
+   trig:"TRIGGER: a platform approves our API access (a milestone flips to done)",
+   slot:"Auto-drafted when an approval lands on the board",
+   copy:"Good news from the pit lane: TikTok approved our production API access.\n\nWhen the board showed us waiting, the date we submitted was right there next to it. Now the car moves.\n\nIt is the same view you get across your own channels with Elettro OS.\n\nelettro.com/dash",
+   vis: () => `<div class="vis v191" style="padding:14px;aspect-ratio:1.15/1"><div class="m" style="color:#3ddc84">Approval received</div>
+     <div class="a" style="font-size:30px;margin:8px 0 12px">API access<br><span class="up">approved</span></div>
+     <div class="ck h"><b>◐</b>Submitted 261021</div><div class="ck"><b>✓</b>Approved · car moves +15 pts</div></div>` },
+
+ { id:"m8", grp:"move", plat:"YouTube", color:"#ff3b3b", fmt:"Short · 9:16 · 20s", title:"Grid average passes 50%", power:"LIVE FEED",
+   trig:"TRIGGER: the grid average crosses a round number (25, 50, 75, 100)",
+   slot:"Auto-drafted when the average crosses the line",
+   copy:"The whole grid just passed 50%.\n\nAcross nine networks, the average connection score is now 52%, up from 31% two weeks ago. Every point of that is a checkpoint somebody cleared.\n\nSee the cars: elettro.com/dash\n\n#ElettroOS #SocialMediaAutomation",
+   vis: () => `<div class="vis v916" style="padding:14px;text-align:center"><div class="m" style="color:#d7ff1f">Grid average</div>
+     <div class="ring" style="--deg:187deg;margin-top:34px"><div>52%</div></div>
+     <div class="a up" style="font-size:34px;margin-top:22px">▲ from 31%</div><div class="m" style="margin-top:6px;color:#8d8a9e">two weeks ago</div>
+     <div style="margin-top:24px">${road(0,60)}${road(1,56)}${road(2,52)}</div></div>` },
+];
+const POSTS = MOVE.concat(POSTS_EVERGREEN.map((p) => ({ ...p, grp:"ever" })));
+
 const POWERS = [["Planner","One calendar for every network and brand"],["Captions engine","Platform-aware copy, drafted for you"],["Scheduler","Posts go out in the slots you approve"],["Live status","Every network scored against real checkpoints"],["Publishing ledger","Every post counted, per network and per brand"]];
 document.getElementById("powers").innerHTML = POWERS.map(([a,b]) => `<div class="power"><b>${a}</b><span>${b}</span></div>`).join("");
-const msg = "ELETTRO OS SOCIAL PACK  ✦  15 DRAFT POSTS  ✦  9 NETWORKS  ✦  APPROVE · CHANGES · PASS  ✦  NOTHING GOES OUT UNTIL YOU SAY SO  ✦  ";
+const msg = "ELETTRO OS SOCIAL PACK  ✦  23 DRAFT POSTS  ✦  9 NETWORKS  ✦  APPROVE · CHANGES · PASS  ✦  NOTHING GOES OUT UNTIL YOU SAY SO  ✦  ";
 document.getElementById("ticker").textContent = msg.repeat(6);
 
 // ---------- review state (saved in this browser) ----------
@@ -287,15 +366,19 @@ derive();
 
 function renderGrid() {
   const list = POSTS.filter((p) => filter === "All" || p.plat === filter);
+  const GRP = { move:["Movement posts","Elettro OS watches the board and the publishing ledger. When anything moves up (a brand's weekly count, a milestone toward 1,000, a checkpoint cleared, a lead change, an approval) it drafts a post that celebrates it. Numbers below are examples; real ones are filled in from the live feed.","Positive movement"], ever:["The race, explained","Evergreen posts about the Grand Prix and the 1000 Post Race, scheduled on a fixed calendar.","Scheduled posts"] };
+  let lastGrp = "";
   document.getElementById("grid").innerHTML = list.map((p) => {
+    const head = p.grp !== lastGrp ? (lastGrp = p.grp, `<div class="grp"><div class="kicker">${GRP[p.grp][2]}</div><h2>${GRP[p.grp][0]}</h2><p>${GRP[p.grp][1]}</p></div>`) : "";
     const st = S[p.id] || {}, n = POSTS.indexOf(p) + 1;
     const copyHtml = fillQ(p.copy).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/(#\w+)/g, '<span class="h">$1</span>');
-    return `<article class="card" style="--accent:${p.color}" data-state="${st.v || ""}" id="${p.id}">
+    return head + `<article class="card" style="--accent:${p.color}" data-state="${st.v || ""}" id="${p.id}">
       <div class="stage">${p.vis()}</div>
       <div class="info">
         <div class="meta"><span class="num">${String(n).padStart(2,"0")}</span><span class="plat">${p.plat}</span><span class="fmt">${p.fmt}</span></div>
         <div class="title">${p.title}</div>
         <div class="power-tag">SHOWS OFF: ${p.power}</div>
+        ${p.trig ? `<div class="trig">${p.trig}</div>` : ""}
         <div class="copy">${copyHtml}</div>
         <div class="slot">${p.slot}</div>
         <textarea data-id="${p.id}" placeholder="Notes on this post (optional)" aria-label="Notes on post ${n}">${st.note || ""}</textarea>
