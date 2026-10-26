@@ -329,6 +329,7 @@ const CHECKPOINTS = [
 ];
 
 // ---- Status: 1 = done, 0.5 = partly, 0 = not yet. Checked 2026-10-21. ----
+const STATUS_PIN_NOTE = "LIVE 261026: Elettro OS posts real public image and video Pins to the Stashbox board every 15 minutes.";
 const STATUS = [
   { name: "YouTube", dest: "youtube", handle: "@stashboxband", code: "YT", color: "#ff3b3b",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.5, oauth: 1, test: 1 },
@@ -353,12 +354,20 @@ const STATUS = [
     note: "LIVE 261022 as @stashboxmusic: Elettro OS posts approved Review items on its own every 15 min (token auto-renews, good to 261219). Scheduled posts confirmed 261021 and 261022." },
   { name: "Pinterest", dest: "pinterest", handle: "@elettro", code: "P", color: "#ff4f6b",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
-    note: "STANDARD ACCESS APPROVED 261026: Pinterest app Elettro OS (id 1627333) can create real public Pins. Connected as @elettro, image and video Pins plus the 15-minute worker are built. LIVE 261026: Elettro OS is posting real public Pins on schedule (@elettro, Stashbox board): image and video Pins, every 15 minutes." },
+    note: STATUS_PIN_NOTE },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, content: 1, api: 1 },
-    note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (case 6-8427000042222, 300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
+    note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
 ];
 
+// Public page: scrub app/case IDs (6+ digit numbers other than YYMMDD dates), drop repeated sentences, cap length.
+const cleanNote = (t) => {
+  const seen = new Set();
+  const out = String(t).replace(/(?:\d+-)?\d{7,}/g, "").replace(/\s{2,}/g, " ").split(/(?<=[.;])\s+/)
+    .filter((x) => { const k = x.trim().toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; });
+  const s = out.join(" ").replace(/\s+([.,;])/g, "$1");
+  return s.length > 220 ? s.slice(0, 217).replace(/\s+\S*$/, "") + "..." : s;
+};
 const pctOf = (r) => Math.round(CHECKPOINTS.reduce((s, c) => s + c.w * (r.done[c.key] || 0), 0));
 const nextOf = (r) => CHECKPOINTS.find((c) => (r.done[c.key] || 0) < 1);
 function render(stamp) {
@@ -427,10 +436,10 @@ renderDam();
 // Edit this list when a request is sent or approved. exact:false = only the date is known (counter starts at noon that day).
 const WAITING = [
   { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
-  { dest: "gmb", name: "Google Business", what: "API access (case 6-8427000042222), approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
+  { dest: "gmb", name: "Google Business", what: "API access approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok", what: "Production review for public posts", since: "2026-10-21T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "youtube", name: "YouTube", what: "Google app verification and API audit (public uploads)", since: "2026-10-22T12:00:00-04:00", exact: false, state: "waiting" },
-  { dest: "pinterest", name: "Pinterest", what: "Standard access approved 261026, live test Pin next", since: "2026-10-23T11:38:00-04:00", exact: true, state: "open" }
+  { dest: "pinterest", name: "Pinterest", what: "Standard access approved 261026", since: "2026-10-23T11:38:00-04:00", exact: true, state: "open" }
 ];
 const damMs = (w) => Math.max(0, Date.now() - new Date(w.since).getTime());
 const damClock = (ms) => {
@@ -537,7 +546,7 @@ async function pull() {
       if (!r) continue;
       r.done = p.done;
       if (p.handle) r.handle = p.handle;
-      if (p.note) r.note = p.note;
+      if (p.note) r.note = r.dest === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note);
     }
     source = `LIVE · ${brand.name}`;
     const key = JSON.stringify(STATUS.map((r) => r.done));
@@ -744,7 +753,7 @@ function showCell(el) {
   box.innerHTML = `<div class="big">${p ? p.pct : 0}%</div>
     <div><div class="t">${esc(b.name)} × ${esc(c.name)}<em>${L ? L.label.toUpperCase() : "NO PROFILE"}</em></div><div class="m">${meta}</div></div>
     <div class="dots" title="10 checkpoints">${CHECKPOINTS.map((k) => `<i class="${(d[k.key] || 0) >= 1 ? "ok" : (d[k.key] || 0) > 0 ? "half" : ""}" title="${esc(k.label)}"></i>`).join("")}</div>
-    <div class="n">${p && p.note ? esc(p.note) : nx ? "Next checkpoint: " + esc(nx.label) : "Every checkpoint cleared."}</div>`;
+    <div class="n">${p && p.note ? esc(el.dataset.d === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note)) : nx ? "Next checkpoint: " + esc(nx.label) : "Every checkpoint cleared."}</div>`;
 }
 document.getElementById("matrix").addEventListener("click", (e) => {
   const t = e.target.closest(".mx-tile");
