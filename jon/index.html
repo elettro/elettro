@@ -106,6 +106,9 @@ section{padding-block:88px 8px;scroll-margin-top:60px}
 .t-os{background:radial-gradient(circle at 85% 10%,#3a6df055,transparent 55%),linear-gradient(160deg,#16203a,#0e0d0c)}
 .t-dash{background:radial-gradient(circle at 85% 10%,#f5a43a44,transparent 55%),linear-gradient(160deg,#2b1a0d,#0e0d0c)}
 .t-radio{background:radial-gradient(circle at 85% 10%,#1e9b3d55,transparent 55%),linear-gradient(160deg,#102016,#0e0d0c)}
+.t-ar{grid-column:1/-1;min-height:260px;background:radial-gradient(circle at 85% 10%,#f7c61a44,transparent 55%),linear-gradient(160deg,#241e0d,#0e0d0c)}
+.t-ar .go{color:var(--gold)}
+.reticle{position:absolute;right:40px;bottom:30px;width:150px;aspect-ratio:1;z-index:-1;border:3px solid var(--gold);border-radius:22px;opacity:.7;background:linear-gradient(var(--gold),var(--gold)) center/2px 36px no-repeat,linear-gradient(var(--gold),var(--gold)) center/36px 2px no-repeat}
 .t-os .go{color:#8fb0ff}.t-dash .go{color:var(--sun)}.t-radio .go{color:#6fe08a}
 .dial{position:absolute;right:-60px;bottom:-60px;width:220px;aspect-ratio:1;border-radius:50%;z-index:-1;background:repeating-radial-gradient(circle,#0000 0 7px,#ffffff10 7px 8px),radial-gradient(circle,var(--green) 0 22%,#0000 23%);animation:spin 16s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -293,6 +296,11 @@ section.must{padding-block:56px 8px}
           <div class="n">03</div><div class="dial" aria-hidden="true"></div>
           <div><div class="mono" style="color:#6fe08a;margin-bottom:12px">stashbox.com/radio</div><h3>Stashbox Radio</h3><p>Reggae originals on the air. The same Stashbox tracks play under the videos here.</p></div>
           <div class="go">Tune in <span aria-hidden="true">↗</span></div>
+        </a>
+        <a class="tool t-ar" href="https://ar.elettro.com" target="_blank" rel="noopener">
+          <div class="n">04</div><div class="reticle" aria-hidden="true"></div>
+          <div><div class="mono" style="color:var(--gold);margin-bottom:12px">ar.elettro.com</div><h3>Elettro AR</h3><p>Point your phone at a trigger and the brand comes alive. Open it on your phone, then try the triggers at elettro.com/ar.</p></div>
+          <div class="go">Try the AR <span aria-hidden="true">↗</span></div>
         </a>
       </div>
     </div>
