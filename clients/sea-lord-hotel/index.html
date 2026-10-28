@@ -110,6 +110,19 @@
 .ar-showcase-caption p{margin:0;color:#b6cbd5;font-size:13px;flex:1 1 340px;line-height:1.65}
 @media(max-width:760px){.ar-showcase-caption{display:block;padding:20px}.ar-showcase-caption strong{display:block;margin:8px 0}.ar-showcase-image{aspect-ratio:4/3}.ar-showcase-image img{object-position:57% center}}
 </style>
+<style>
+.ar-live-demo{margin-top:36px;padding:clamp(24px,4vw,46px);border:1px solid rgba(73,224,234,.42);border-radius:18px;background:linear-gradient(135deg,#153b50,#102a3b 65%,#0b2737)}
+.ar-live-demo h3{font:400 clamp(1.8rem,3.4vw,3rem)/1.12 'DM Serif Display',serif;letter-spacing:-.025em;color:#fff;margin:12px 0}
+.ar-live-intro{color:#b8d6df;margin:0 0 24px}
+.ar-live-steps{padding:0;margin:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ar-live-steps li{display:flex;gap:14px;padding:20px 17px;border:1px solid var(--line);border-radius:10px;background:rgba(6,22,36,.44)}
+.ar-step-number{font:800 1.2rem Manrope,sans-serif;color:var(--cyan)}
+.ar-live-steps strong{color:#fff;font-size:14px;line-height:1.4;display:block}
+.ar-live-steps p{margin:8px 0 0;color:#bdd1dc;font-size:13px;line-height:1.6}
+.ar-live-steps a{color:var(--cyan);overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}
+.ar-live-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+@media(max-width:760px){.ar-live-steps{grid-template-columns:1fr}.ar-live-actions .btn{width:100%}}
+</style>
 <section class="section scope" id="ar" style="background:#0a1c2b"><div class="wrap"><div class="scope-intro"><div><span class="eyebrow">Optional add-on · Elettro AR</span><h2>Bring the hotel<br>to life in <em>guests’ hands.</em></h2></div><p class="sub">Elettro AR turns a printed card, menu or sign into a video, link page, shop or 3D object when a guest points a phone at it. It runs in the phone’s browser, with no app to install, and one QR code starts it.</p></div>
 <figure class="ar-showcase">
   <div class="ar-showcase-image">
@@ -124,7 +137,17 @@
 <article class="scope-card"><span class="scope-num">04 / Beach &amp; pool</span><h3>Right where guests are</h3><p>A card on the chairs or towels opens chair and umbrella rental, the tiki bar, yoga sign-up and a live “what is open today” note for seasonal hours.</p></article>
 <article class="scope-card"><span class="scope-num">05 / Dining</span><h3>Dishes and cocktails on the table</h3><p>Menu targets show a plated dish or a signature cocktail in motion, with today’s hours, so a seasonal restaurant and bar always read correctly.</p></article>
 <article class="scope-card"><span class="scope-num">06 / Weddings &amp; events</span><h3>From brochure to inquiry</h3><p>Scan the wedding brochure for a beach-ceremony video and an inquiry button. Guest keepsake cards can open a couple’s photo gallery or video message.</p></article>
-</div><div class="hero-links" style="margin-top:30px"><a class="btn" href="https://ar.elettro.com/" target="_blank" rel="noopener">Try Elettro AR live ↗</a></div><p class="process-note">Optional and quoted separately from the website. Experiences need printed or on-screen targets, so the value depends on the hotel placing the cards and signage. Ideas shown are suggestions for discussion, not requirements.</p></div></section>
+</div><div class="ar-live-demo" aria-labelledby="ar-live-title">
+  <span class="eyebrow">Interactive live demonstration</span>
+  <h3 id="ar-live-title">SEE AR IN ACTION RIGHT NOW</h3>
+  <p class="ar-live-intro">Use two screens to experience Elettro AR for yourself. No app installation required.</p>
+  <ol class="ar-live-steps">
+    <li><span class="ar-step-number">01</span><div><strong>Open your phone browser</strong><p>On your phone, visit <a href="https://ar.elettro.com/" target="_blank" rel="noopener">ar.elettro.com</a></p></div></li>
+    <li><span class="ar-step-number">02</span><div><strong>Open the target gallery on a second screen</strong><p>On an iPad or computer, visit <a href="https://elettro.com/ar/" target="_blank" rel="noopener">elettro.com/ar</a></p></div></li>
+    <li><span class="ar-step-number">03</span><div><strong>Point your phone at the images</strong><p>Aim your phone at different images on the iPad or computer screen to trigger different AR experiences.</p></div></li>
+  </ol>
+  <div class="ar-live-actions"><a class="btn" href="https://ar.elettro.com/" target="_blank" rel="noopener">OPEN AR ON YOUR PHONE ↗</a><a class="btn secondary" href="https://elettro.com/ar/" target="_blank" rel="noopener">VIEW AR TARGET IMAGES ↗</a></div>
+</div><p class="process-note">Optional and quoted separately from the website. Experiences need printed or on-screen targets, so the value depends on the hotel placing the cards and signage. Ideas shown are suggestions for discussion, not requirements.</p></div></section>
 <style>
 .social{background:#081925}.social .soc-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:38px}.social h2{margin:15px 0 0}.social .soc-head p{max-width:470px}
 .soc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.soc-post{background:#112b3d;border:1px solid var(--line);border-radius:16px;overflow:hidden}.soc-top{display:flex;gap:11px;align-items:center;padding:13px 16px}.soc-top i{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--mint));color:#06202c;font:800 .7rem 'DM Sans',sans-serif;display:grid;place-items:center;font-style:normal}.soc-top b{display:block;font:700 .84rem 'DM Sans',sans-serif;color:var(--white)}.soc-top span{display:block;font-size:.7rem;color:var(--muted)}
