@@ -394,8 +394,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1 },
     note: "Same Meta Business as Instagram; one Meta app will cover both. 2 Reels/day planned." },
   { name: "TikTok", dest: "tiktok", handle: "@stashboxmusic", code: "TT", color: "#22e6ff",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 0.5, oauth: 1, test: 1 },
-    note: "SUBMITTED to TikTok for production review 261021 (demo video sent). Test posts done via Elettro OS; token refresh + planner tick every 15 min. Approval unlocks public posts with captions." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1 },
+    note: "APPROVED by TikTok 261028. Test posts done via Elettro OS; token refresh + planner tick every 15 min. Public posts with captions unlocked." },
   { name: "X", dest: "x", handle: "Stashbox X", code: "X", color: "#d7ff1f",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
@@ -490,7 +490,7 @@ renderDam();
 const WAITING = [
   { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "gmb", name: "Google Business", what: "API access approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
-  { dest: "tiktok", name: "TikTok", what: "Production review for public posts", since: "2026-10-21T12:00:00-04:00", exact: false, state: "waiting" },
+  { dest: "tiktok", name: "TikTok", what: "Production review approved 261028", since: "2026-10-21T12:00:00-04:00", exact: false, state: "open" },
   { dest: "youtube", name: "YouTube", what: "Google app verification and API audit (public uploads)", since: "2026-10-22T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "pinterest", name: "Pinterest", what: "Standard access approved 261026", since: "2026-10-23T11:38:00-04:00", exact: true, state: "open" }
 ];
