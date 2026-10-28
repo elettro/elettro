@@ -253,6 +253,12 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
 .ar-chart svg{display:block;width:100%;height:auto;overflow:visible}
 .ar-chart .empty{font:700 11px "JetBrains Mono",monospace;letter-spacing:.16em;fill:var(--dim);text-anchor:middle;text-transform:uppercase}
 .arwall{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;padding:6px 2px 14px}
+.wallhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.wallhead h3{margin:0}
+.wtog{display:inline-flex;border:2px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.wtog button{font:700 11px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:var(--dim);border:0;padding:7px 14px;cursor:pointer}
+.wtog button.on{background:var(--volt);color:#0b0b10}
+.wtog button:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
 .arm{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--lane);border:2px solid var(--line);isolation:isolate}
 .arm img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;filter:grayscale(1) brightness(.42) contrast(1.1);transition:filter .8s ease}
 .arm.on{border-color:var(--hc);box-shadow:0 0 calc(var(--heat) * 34px) calc(var(--heat) * 7px) color-mix(in srgb,var(--hc) 60%,transparent)}
@@ -349,7 +355,8 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
     <div class="sys" id="arSys"></div>
     <section class="track prace" aria-label="Scans per day"><h3>Last 30 days</h3>
       <div class="ar-chart" id="arDays"></div></section>
-    <section class="track prace" aria-label="Marker wall"><h3>The marker wall</h3>
+    <section class="track prace" aria-label="Marker wall"><div class="wallhead"><h3>The marker wall</h3>
+        <div class="wtog" role="group" aria-label="Sort the marker wall"><button type="button" class="on" data-sort="latest" aria-pressed="true">Latest</button><button type="button" data-sort="most" aria-pressed="false">Most</button></div></div>
       <div class="arwall" id="arWall"></div></section>
     <section class="track prace" aria-label="Scans by brand"><h3>By brand</h3>
       <div id="arBrands"></div></section>
@@ -854,7 +861,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     if (s < 86400) return Math.floor(s / 3600) + " h ago";
     return Math.floor(s / 86400) + " d ago";
   };
-  var shown = 0, anim = 0, seen = null;
+  var shown = 0, anim = 0, seen = null, lastStats = null, wallSort = "latest";
   function countUp(to) {
     cancelAnimationFrame(anim);
     var from = shown, t0 = performance.now(), dur = from === to ? 0 : 1300;
@@ -877,7 +884,24 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     var empty = total ? "" : '<text class="empty" x="' + W / 2 + '" y="' + (H / 2 - 12) + '">The first scan lights this up</text>';
     el("arDays").innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Scans per day, last 30 days">' + bars + label(0, "start") + label(days.length - 1, "end") + '<text x="' + W + '" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">' + (total ? "PEAK " + max : "") + '</text>' + empty + '</svg>';
   }
+  function drawWall(s) {
+    var top = Math.max(1, s.markers.reduce(function (a, m) { return Math.max(a, m.scans); }, 0)), prev = seen;
+    var crown = s.markers.reduce(function (a, m) { return m.scans > (a ? a.scans : 0) ? m : a; }, null);
+    var ts = function (m) { return m.last ? Date.parse(m.last) : 0; };
+    var list = s.markers.slice().sort(function (a, b) {
+      return wallSort === "latest" ? ts(b) - ts(a) || b.scans - a.scans : b.scans - a.scans || ts(b) - ts(a);
+    });
+    el("arWall").innerHTML = list.map(function (m) {
+      var key = m.brand + "/" + m.id, fresh = prev && m.scans > (prev[key] || 0), on = m.scans > 0;
+      return '<div class="arm' + (on ? " on" : "") + (fresh ? " fresh" : "") + '" style="--hc:' + (COLOR[m.brand] || "#22e6ff") + ";--heat:" + (on ? (0.25 + 0.75 * m.scans / top).toFixed(2) : 0) + '" title="' + (m.name || m.id).replace(/"/g, "") + ' · ' + m.scans + ' scans · ' + m.taps + ' taps">'
+        + '<img src="' + picOf(m) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
+        + '<span class="b">' + (NAME[m.brand] || m.brand) + '</span>' + (m === crown ? '<span class="crown">#1</span>' : "")
+        + '<span class="n">' + fmt(m.scans) + '</span><span class="nm">' + (m.name || m.id).replace(/</g, "") + '</span></div>';
+    }).join("");
+    seen = {}; s.markers.forEach(function (m) { seen[m.brand + "/" + m.id] = m.scans; });
+  }
   function render(s) {
+    lastStats = s;
     countUp(s.total.scans);
     el("arTotalL").textContent = s.since ? "Total scans · since " + new Date(s.since).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Total scans · waiting for the first one";
     var lit = s.markers.filter(function (m) { return m.scans > 0; }).length, brandsLit = s.brands.filter(function (b) { return b.scans > 0; }).length;
@@ -887,15 +911,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
       [brandsLit + "/" + s.brands.length, "Brands lit"], [best.scans ? fmt(best.scans) : "-", best.scans ? "Best day · " + best.d.slice(5) : "Best day"]
     ].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
     chart(s.days, s.total.scans);
-    var top = Math.max(1, s.markers.length ? s.markers[0].scans : 0), prev = seen;
-    el("arWall").innerHTML = s.markers.map(function (m, i) {
-      var key = m.brand + "/" + m.id, fresh = prev && m.scans > (prev[key] || 0), on = m.scans > 0;
-      return '<div class="arm' + (on ? " on" : "") + (fresh ? " fresh" : "") + '" style="--hc:' + (COLOR[m.brand] || "#22e6ff") + ";--heat:" + (on ? (0.25 + 0.75 * m.scans / top).toFixed(2) : 0) + '" title="' + (m.name || m.id).replace(/"/g, "") + ' · ' + m.scans + ' scans · ' + m.taps + ' taps">'
-        + '<img src="' + picOf(m) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
-        + '<span class="b">' + (NAME[m.brand] || m.brand) + '</span>' + (i === 0 && on ? '<span class="crown">#1</span>' : "")
-        + '<span class="n">' + fmt(m.scans) + '</span><span class="nm">' + (m.name || m.id).replace(/</g, "") + '</span></div>';
-    }).join("");
-    seen = {}; s.markers.forEach(function (m) { seen[m.brand + "/" + m.id] = m.scans; });
+    drawWall(s);
     var bmax = Math.max(1, s.brands.length ? s.brands[0].scans : 0);
     el("arBrands").innerHTML = s.brands.map(function (b) {
       return '<div class="arb" style="--hc:' + (COLOR[b.brand] || "#22e6ff") + '"><div class="who"><i></i>' + (NAME[b.brand] || b.brand) + '</div><div class="road"><b data-w="' + Math.round(b.scans / bmax * 100) + '"></b></div><div class="pct">' + fmt(b.scans) + '</div></div>';
@@ -908,6 +924,15 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
       el("arNote").textContent = "The scan counter is offline right now. It will come back by itself.";
     });
   }
+  Array.prototype.forEach.call(document.querySelectorAll(".wtog button"), function (btn) {
+    btn.addEventListener("click", function () {
+      wallSort = btn.dataset.sort;
+      Array.prototype.forEach.call(document.querySelectorAll(".wtog button"), function (b) {
+        var on = b === btn; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      if (lastStats) drawWall(lastStats);
+    });
+  });
   load(); setInterval(load, 30000);
 })();
 </script>
