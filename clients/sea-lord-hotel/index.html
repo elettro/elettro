@@ -261,6 +261,33 @@ END PRIVATE INVESTMENT SECTION -->
 .coffee-note{font-size:12px;color:#536875;line-height:1.7;margin:23px 0 0}
 @media(max-width:850px){.coffee-layout{grid-template-columns:1fr;gap:30px}.coffee-highlights{grid-template-columns:1fr}.coffee-bags{min-height:330px}.coffee-bag{max-width:210px}}
 </style>
+<style>
+.coffee-collection{margin:40px 0 35px;background:#faf8f2;border:1px solid #d6c6ad;border-radius:16px;overflow:hidden}
+.coffee-collection-header{display:flex;justify-content:space-between;align-items:end;gap:18px;padding:23px 26px 19px;border-bottom:1px solid #e4d9cb}
+.coffee-collection-header span{color:#927247;letter-spacing:.17em;font-size:10px;font-weight:800}
+.coffee-collection-header h3{font:400 clamp(1.5rem,3vw,2.3rem) 'DM Serif Display',serif;margin:5px 0 0;color:#173a4b}
+.coffee-collection-header small{color:#7c7b73}
+.coffee-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:23px}
+.coffee-collection-grid article{min-width:0}.coffee-collection-grid h4{font-size:15px;margin:13px 0 2px;color:#173a4b}
+.coffee-collection-grid p{font-size:12px;margin:0;color:#64717a}
+.coffee-product-photo{height:295px;position:relative;overflow:hidden;border-radius:9px;display:flex;justify-content:center;align-items:center;background:linear-gradient(145deg,#d9d4c6,#f1e9d7 68%,#c5b6a0)}
+.coffee-product-photo:after{content:"";position:absolute;bottom:13px;left:18%;width:64%;height:17px;border-radius:50%;background:#0003;filter:blur(10px)}
+.coffee-product-photo.navy{background:linear-gradient(125deg,#cbd9d7,#edf4ef,#b4c2c4)}
+.coffee-product-photo.chilled{background:linear-gradient(140deg,#cce7ed,#f4fcff 60%,#afcdd0);gap:9px}
+.coffee-display-bag{position:relative;z-index:1;width:63%;height:81%;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(7% 0,93% 0,100% 10%,96% 100%,4% 100%,0 10%);background:linear-gradient(90deg,#aa9b83,#faf4e8 18%,#fffdf5 60%,#b7aa92);box-shadow:inset 18px 0 22px #0002;text-align:center;color:#15394c}
+.coffee-display-bag.night{background:linear-gradient(90deg,#061825,#173d51 22%,#1e4b60 63%,#081c2b);color:#f2e7ce}
+.coffee-display-logo{font:400 clamp(19px,2.2vw,31px) 'DM Serif Display',serif;border-bottom:1px solid currentColor;padding-bottom:10px;line-height:1;letter-spacing:.03em}
+.coffee-display-logo small{font:700 10px Manrope,sans-serif;display:block;letter-spacing:.3em;margin-top:5px}
+.coffee-display-wave{font-size:24px;color:#b99254;margin:10px}
+.coffee-display-bag b{font:800 10px Manrope,sans-serif;letter-spacing:.09em}
+.coffee-display-bag>small{font:600 8px Manrope,sans-serif;margin-top:6px;letter-spacing:.07em}
+.cold-brew-bottle{position:relative;z-index:1;width:28%;height:66%;border-radius:9px 9px 15px 15px;background:linear-gradient(90deg,#241b16,#61402e 30%,#281b17 68%,#503625);border:4px solid #795b47;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg);margin-top:28px}
+.cold-brew-bottle.second{transform:rotate(5deg) translateY(-5px)}
+.cold-brew-cap{position:absolute;top:-20px;width:65%;height:18px;border-radius:5px 5px 2px 2px;background:repeating-linear-gradient(90deg,#aa8c58 0 3px,#d0ba8b 3px 5px)}
+.cold-brew-label{background:#f8edd6;width:96%;min-height:104px;padding:10px 3px;text-align:center;display:flex;flex-direction:column;justify-content:center;color:#19394a}
+.cold-brew-label strong{font:400 clamp(11px,1.6vw,17px) 'DM Serif Display',serif}.cold-brew-label span{font-size:7px;letter-spacing:.25em}.cold-brew-label i{font:800 7px Manrope,sans-serif;margin-top:15px;font-style:normal}
+@media(max-width:760px){.coffee-collection-grid{grid-template-columns:1fr;gap:25px}.coffee-product-photo{height:300px}.coffee-display-logo{font-size:30px}.coffee-collection-header{display:block}.coffee-collection-header small{display:block;margin-top:9px}}
+</style>
 <section class="section coffee-brand" id="private-label-coffee"><div class="wrap">
 <div class="coffee-layout">
 <div><span class="eyebrow">Optional brand extension / Private label coffee</span><h2>A Sea Lord coffee<br><em>worth taking home.</em></h2>
@@ -272,6 +299,14 @@ END PRIVATE INVESTMENT SECTION -->
 <div class="coffee-bag"><div class="coffee-label"><span class="sun" aria-hidden="true">☀</span><b>SEA LORD<br>HOTEL</b><small>LAUDERDALE-BY-THE-SEA</small><em>Coastal Morning<br>Signature Roast</em><div class="weight">12 OZ / 340 G</div></div></div>
 <div class="coffee-bag dark"><div class="coffee-label"><span class="sun" aria-hidden="true">☀</span><b>SEA LORD<br>HOTEL</b><small>LAUDERDALE-BY-THE-SEA</small><em>Ocean Breeze<br>Dark Roast</em><div class="weight">12 OZ / 340 G</div></div></div>
 </div>
+</div>
+<div class="coffee-collection" aria-label="Sea Lord private-label coffee product showcase">
+  <div class="coffee-collection-header"><div><span>SEA LORD COFFEE COLLECTION</span><h3>From the room to the beach bar.</h3></div><small>Illustrative branded product mockups</small></div>
+  <div class="coffee-collection-grid">
+    <article><div class="coffee-product-photo cream"><div class="coffee-display-bag"><div class="coffee-display-logo">SEA LORD<small>HOTEL</small></div><div class="coffee-display-wave">≋ ≋ ≋</div><b>COASTAL MORNING</b><small>SIGNATURE ROAST · 12 OZ</small></div></div><h4>Coastal Morning</h4><p>12 oz signature roast · Lobby retail &amp; online gifting</p></article>
+    <article><div class="coffee-product-photo navy"><div class="coffee-display-bag night"><div class="coffee-display-logo">SEA LORD<small>HOTEL</small></div><div class="coffee-display-wave">≋ ≋ ≋</div><b>OCEAN BREEZE</b><small>DARK ROAST · 12 OZ</small></div></div><h4>Ocean Breeze</h4><p>12 oz dark roast · Hotel gift shop &amp; Shopify</p></article>
+    <article><div class="coffee-product-photo chilled"><div class="cold-brew-bottle"><div class="cold-brew-cap"></div><div class="cold-brew-label"><strong>SEA LORD</strong><span>HOTEL</span><i>COASTAL COLD BREW</i></div></div><div class="cold-brew-bottle second"><div class="cold-brew-cap"></div><div class="cold-brew-label"><strong>SEA LORD</strong><span>HOTEL</span><i>COASTAL COLD BREW</i></div></div></div><h4>Sea Lord Cold Brew</h4><p>Ready-to-drink concept · Guestroom fridges &amp; bar</p></article>
+  </div>
 </div>
 <div class="coffee-highlights">
 <div class="coffee-highlight"><b>Signature 12 oz bags</b><p>Original Sea Lord packaging, curated roasts, guest gift baskets, lobby retail and online Shopify sales.</p></div>
