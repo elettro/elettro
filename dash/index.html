@@ -400,8 +400,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
     note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
   { name: "LinkedIn", dest: "linkedin", handle: "Dean Palermo (via Elettro)", code: "in", color: "#4fb3ff",
-    done: { strategy: 1, account: 1, content: 1, api: 1, oauth: 1 },
-    note: "LinkedIn app approved, including company pages. Dean's profile is connected under Elettro (token to 261218) and the first API post went live 261019." },
+    done: { strategy: 1, account: 1, content: 1, api: 0.5, oauth: 1 },
+    note: "Dean's profile connected under Elettro 261019 and the first API post went live. Company pages wait on LinkedIn's review." },
   { name: "Threads", dest: "threads", handle: "@stashboxmusic", code: "TH", color: "#c9c4ff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261022 as @stashboxmusic: Elettro OS posts approved Review items on its own every 15 min (token auto-renews, good to 261219). Scheduled posts confirmed 261021 and 261022." },
@@ -488,7 +488,7 @@ renderDam();
 // and the water rises with every hour of waiting. state "waiting" = gate closed; "open" = approved (gate open).
 // Edit this list when a request is sent or approved. exact:false = only the date is known (counter starts at noon that day).
 const WAITING = [
-  { dest: "linkedin", name: "LinkedIn", what: "Company pages review approved", since: "2026-10-19T12:00:00-04:00", exact: false, state: "open" },
+  { dest: "linkedin", name: "LinkedIn", what: "Company pages review", since: "2026-10-19T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "gmb", name: "Google Business", what: "API access approved 261023", since: "2026-10-20T12:00:00-04:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok", what: "Production review approved 261028", since: "2026-10-21T12:00:00-04:00", exact: false, state: "open" },
   { dest: "youtube", name: "YouTube", what: "Google app verification and API audit approved, posting publicly", since: "2026-10-22T12:00:00-04:00", exact: false, state: "open" },
