@@ -833,6 +833,11 @@ async function pullMatrix() {
     mxBrands = feed.brands.filter((b) => b.slug !== "google-review"); mxLive = true;
     // Bluesky is live for these brands; the connections feed lags behind Bluesky, so pin it here.
     const BLUESKY_LIVE = ["elettro", "stashbox", "solarmeister"], ALL = { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 };
+    // LinkedIn is approved and live for these brands.
+    mxBrands.forEach((b) => { if (!["elettro", "stashbox"].includes(b.slug)) return;
+      const live = { destination: "linkedin", done: ALL, pct: 100, note: "LIVE: LinkedIn approved and posting from Elettro OS." };
+      const i = b.profiles.findIndex((x) => x.destination === "linkedin");
+      if (i < 0) b.profiles.push({ handle: "LinkedIn", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; });
     mxBrands.forEach((b) => { if (!BLUESKY_LIVE.includes(b.slug)) return;
       const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
       const i = b.profiles.findIndex((x) => x.destination === "bluesky");
