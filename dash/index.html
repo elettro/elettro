@@ -675,7 +675,7 @@ function renderRace() {
     const d = race.destinations.find((x) => x.destination === s.dest) || {};
     return { name: s.name, code: s.code, color: s.color, sub: s.handle, published: d.published || 0, scheduled: d.scheduled || 0, finishedAt: d.finishedAt || null, firstAt: d.firstAt || null };
   });
-  const brs = race.brands.map((b, i) => ({ name: b.name, code: b.name.slice(0, 2).toUpperCase(), color: BRAND_COLORS[i % BRAND_COLORS.length],
+  const brs = race.brands.filter((b) => b.slug !== "google-review" && b.name !== "Google Review").map((b, i) => ({ name: b.name, code: b.name.slice(0, 2).toUpperCase(), color: BRAND_COLORS[i % BRAND_COLORS.length],
     sub: (n => n + (n === 1 ? " network" : " networks"))(Object.keys(b.byDestination || {}).length), published: b.published, scheduled: b.scheduled, finishedAt: b.finishedAt, firstAt: b.firstAt }));
   lanes("prNet", nets, "prMarksN");
   lanes("prBrand", brs, "prMarksB");
@@ -829,7 +829,7 @@ async function pullMatrix() {
     if (!res.ok) throw new Error(res.status);
     const feed = await res.json();
     if (!feed.ok || !feed.brands || !feed.brands.length) throw new Error("bad feed");
-    mxBrands = feed.brands; mxLive = true;
+    mxBrands = feed.brands.filter((b) => b.slug !== "google-review"); mxLive = true;
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
