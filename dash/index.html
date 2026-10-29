@@ -499,6 +499,8 @@ const WAITING = [
   { dest: "tiktok", name: "TikTok", what: "Production review approved 261028", since: "2026-10-21T12:00:00-04:00", exact: false, state: "open" },
   { dest: "youtube", name: "YouTube", what: "Google app verification and API audit approved, posting publicly", since: "2026-10-22T12:00:00-04:00", exact: false, state: "open" },
   { dest: "pinterest", name: "Pinterest", what: "Standard access approved 261026", since: "2026-10-23T11:38:00-04:00", exact: true, state: "open" },
+  { dest: "bluesky", name: "Bluesky", what: "Open protocol, no platform approval needed", since: "2026-10-29T09:00:00-04:00", exact: false, state: "open" },
+  { dest: "mastodon", name: "Mastodon", what: "Open protocol, no platform approval needed", since: "2026-10-29T09:00:00-04:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok (final)", what: "Final TikTok API approval, estimated 2-4 weeks", since: "2026-10-28T12:00:00-04:00", exact: false, state: "waiting" }
 ];
 const damMs = (w) => Math.max(0, Date.now() - new Date(w.since).getTime());
