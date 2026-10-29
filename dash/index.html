@@ -409,8 +409,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: STATUS_PIN_NOTE },
   { name: "Bluesky", dest: "bluesky", handle: "Stashbox Bluesky", code: "BS", color: "#4da3ff",
-    done: { strategy: 0.5, account: 1 },
-    note: "Added 261029. Initial Bluesky setup done; app password / API connection and the planner come next." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
+    note: "LIVE 261029: Elettro OS publishes to Bluesky for Elettro, Stashbox and SolarMeister." },
   { name: "Mastodon", dest: "mastodon", handle: "Stashbox Mastodon", code: "M", color: "#a98bff",
     done: { strategy: 0.5, account: 0.5 },
     note: "Added 261029. Just starting: picking the instance and creating the account." },
@@ -830,6 +830,9 @@ async function pullMatrix() {
     const feed = await res.json();
     if (!feed.ok || !feed.brands || !feed.brands.length) throw new Error("bad feed");
     mxBrands = feed.brands.filter((b) => b.slug !== "google-review"); mxLive = true;
+    // Bluesky is live for these brands; the connections feed has no Bluesky profile yet, so add it here.
+    const BLUESKY_LIVE = ["elettro", "stashbox", "solarmeister"], ALL = { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 };
+    mxBrands.forEach((b) => { if (BLUESKY_LIVE.includes(b.slug) && !b.profiles.some((x) => x.destination === "bluesky")) b.profiles.push({ destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." }); });
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
