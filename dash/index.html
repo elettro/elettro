@@ -146,7 +146,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
 .mx-tile i{position:absolute;left:0;bottom:0;height:3px;background:var(--c);width:0;transition:width 1.6s cubic-bezier(.2,.9,.2,1)}
 .mx-scroll{overflow-x:auto;padding-bottom:6px}
 .mx{min-width:860px;background:var(--asphalt);border:2px solid var(--line);border-radius:18px;padding:12px 12px 8px}
-.mx-row{display:grid;grid-template-columns:150px repeat(9,minmax(70px,1fr)) 78px;gap:6px;align-items:center;padding:5px 0;border-top:1px dashed var(--line)}
+.mx-row{display:grid;grid-template-columns:150px repeat(11,minmax(70px,1fr)) 78px;gap:6px;align-items:center;padding:5px 0;border-top:1px dashed var(--line)}
 .mx-row.hd{border-top:0;padding-top:0;align-items:end}
 .mx-row.ft{padding-bottom:0}
 .mx-brand{display:flex;gap:9px;align-items:center;min-width:0;position:sticky;left:0}
@@ -288,7 +288,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
     <div>
       <div class="kicker">Elettro OS × Stashbox · Live connection race</div>
       <h1>The <em>Connection</em><br><span>Grand Prix</span></h1>
-      <p class="sub">Nine networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
+      <p class="sub">Eleven networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
     </div>
     <div class="total"><div class="n" id="total">0%</div><div class="l">Whole grid · average</div><div class="l" id="visits" style="margin-top:6px"></div></div>
   </header>
@@ -408,6 +408,12 @@ const STATUS = [
   { name: "Pinterest", dest: "pinterest", handle: "@elettro", code: "P", color: "#ff4f6b",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: STATUS_PIN_NOTE },
+  { name: "Bluesky", dest: "bluesky", handle: "Stashbox Bluesky", code: "BS", color: "#4da3ff",
+    done: { strategy: 0.5, account: 1 },
+    note: "Added 261029. Initial Bluesky setup done; app password / API connection and the planner come next." },
+  { name: "Mastodon", dest: "mastodon", handle: "Stashbox Mastodon", code: "M", color: "#a98bff",
+    done: { strategy: 0.5, account: 0.5 },
+    note: "Added 261029. Just starting: picking the instance and creating the account." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, content: 1, api: 1 },
     note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
@@ -745,7 +751,7 @@ function cellSvg(color, code, pct) {
     <text class="pc" x="32" y="53">${pct}%</text></svg>`;
 }
 function renderMatrix() {
-  const cols = STATUS; // the nine networks the dashboard races
+  const cols = STATUS; // the eleven networks the dashboard races
   const rows = mxBrands.map((b, bi) => {
     const cells = cols.map((c) => {
       const p = b.profiles.find((x) => x.destination === c.dest);
