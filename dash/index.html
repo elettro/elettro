@@ -606,7 +606,7 @@ async function pull() {
     for (const p of brand.profiles) {
       const r = STATUS.find((x) => x.dest === p.destination);
       if (!r) continue;
-      if (r.dest === "linkedin") continue; // pinned at 100%: approved and live
+      if (r.dest === "linkedin" || r.dest === "bluesky") continue; // pinned at 100%: approved and live
       r.done = p.done;
       if (p.handle) r.handle = p.handle;
       if (p.note) r.note = r.dest === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note);
@@ -831,9 +831,12 @@ async function pullMatrix() {
     const feed = await res.json();
     if (!feed.ok || !feed.brands || !feed.brands.length) throw new Error("bad feed");
     mxBrands = feed.brands.filter((b) => b.slug !== "google-review"); mxLive = true;
-    // Bluesky is live for these brands; the connections feed has no Bluesky profile yet, so add it here.
+    // Bluesky is live for these brands; the connections feed lags behind Bluesky, so pin it here.
     const BLUESKY_LIVE = ["elettro", "stashbox", "solarmeister"], ALL = { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 };
-    mxBrands.forEach((b) => { if (BLUESKY_LIVE.includes(b.slug) && !b.profiles.some((x) => x.destination === "bluesky")) b.profiles.push({ destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." }); });
+    mxBrands.forEach((b) => { if (!BLUESKY_LIVE.includes(b.slug)) return;
+      const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
+      const i = b.profiles.findIndex((x) => x.destination === "bluesky");
+      if (i < 0) b.profiles.push(live); else b.profiles[i] = { ...b.profiles[i], ...live }; });
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
