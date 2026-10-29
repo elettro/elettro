@@ -836,7 +836,7 @@ async function pullMatrix() {
     // The feed labels SolarMeister's LinkedIn with another brand's name; show it unlabeled until the account row is fixed.
     mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return; const l = b.profiles.find((x) => x.destination === "linkedin"); if (l && /davie/i.test(l.handle || "")) l.handle = ""; });
     // LinkedIn is approved and live for these brands.
-    mxBrands.forEach((b) => { if (!["elettro", "stashbox"].includes(b.slug)) return;
+    mxBrands.forEach((b) => { if (!["elettro", "stashbox", "solarmeister"].includes(b.slug)) return;
       const live = { destination: "linkedin", done: ALL, pct: 100, note: "LIVE: LinkedIn approved and posting from Elettro OS." };
       const i = b.profiles.findIndex((x) => x.destination === "linkedin");
       if (i < 0) b.profiles.push({ handle: "LinkedIn", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; });
