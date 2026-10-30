@@ -193,32 +193,140 @@
 @media(max-width:1000px){.proposal-pdf-inner{grid-template-columns:1fr;gap:25px}.proposal-pdf{padding:28px 0 32px}}
 @media(max-width:570px){.proposal-pdf-inner{gap:20px}.proposal-pdf-copy h2{font-size:42px}.proposal-pdf-actions .button{width:100%}.proposal-pdf-art figcaption{font-size:9px}}
 
+
+/* Bal Harbour interactive 5-page proposal carousel */
+.bh-proposal{padding:76px 0 88px;background:linear-gradient(145deg,#183e32 0%,#091f1d 68%,#061b1b 100%);border-top:1px solid rgba(224,191,134,.35);border-bottom:1px solid rgba(224,191,134,.35);color:#f4f0e7}
+.bh-proposal-heading{display:flex;align-items:end;justify-content:space-between;gap:36px;margin-bottom:31px}
+.bh-proposal-heading h2{font-size:clamp(48px,5.5vw,84px);margin:9px 0 17px;line-height:1.05}
+.bh-proposal-heading h2 em{font-style:normal;color:#d9b87f}
+.bh-proposal-heading p{max-width:760px;margin:0;font-size:15px;color:#cbdad2;line-height:1.7}
+.bh-pdf-cta{flex:0 0 auto;margin-bottom:7px;box-shadow:0 8px 40px #0003}
+.bh-carousel{border-top:1px solid #d0b58464;padding-top:18px}
+.bh-carousel-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.bh-carousel-current{font:600 13px/1.4 'Manrope',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b5c8bd}
+.bh-carousel-current strong{color:#efd3a4;font-size:19px}
+.bh-carousel-current span{margin-left:17px;color:#f4e8d2}
+.bh-carousel-controls{display:flex;gap:10px}
+.bh-carousel-controls button,.bh-lightbox-header button,.bh-lightbox-arrow{cursor:pointer;background:#ffffff11;color:#f4eadc;border:1px solid #cab88b88;transition:background .2s,border-color .2s}
+.bh-carousel-controls button{width:46px;height:43px;font-size:20px}
+.bh-carousel-controls button:hover,.bh-lightbox-header button:hover,.bh-lightbox-arrow:hover{background:#d1b789;color:#0b2821;border-color:#d1b789}
+.bh-carousel-track{display:flex;gap:18px;list-style:none;margin:0;padding:2px 0 18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#af9368 transparent}
+.bh-slide{flex:0 0 clamp(242px,24%,340px);min-width:0;scroll-snap-align:start}
+.bh-slide-open{width:100%;padding:0;color:inherit;background:#12352d;border:1px solid rgba(231,211,172,.35);text-align:left;cursor:zoom-in;overflow:hidden;transition:transform .2s,border-color .2s;display:block}
+.bh-slide-open:hover{transform:translateY(-4px);border-color:#e2bf81}
+.bh-slide-open:focus-visible{outline:3px solid #e4c88f;outline-offset:3px}
+.bh-poster{display:block;height:365px;background:#192c25;overflow:hidden}
+.bh-poster img{height:100%;width:100%;object-fit:cover;object-position:top;transition:transform .3s}
+.bh-slide-open:hover .bh-poster img{transform:scale(1.02)}
+.bh-slide-meta{display:flex;gap:15px;align-items:center;min-height:91px;padding:16px}
+.bh-slide-number{align-self:flex-start;white-space:nowrap;color:#d0b385;font:700 12px 'Manrope',sans-serif;letter-spacing:.08em}
+.bh-slide-meta strong{display:block;font:700 13px 'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.bh-slide-meta small{display:block;color:#b9cac0;font:400 11px/1.5 'DM Sans',sans-serif;margin-top:4px}
+.bh-expand-icon{font-size:24px;color:#dfc18c;margin-left:auto}
+.bh-carousel-bottom{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-top:6px}
+.bh-page-dots{display:flex;gap:6px;flex-wrap:wrap}
+.bh-page-dot{padding:9px 14px;background:transparent;border:1px solid #c3b18b66;color:#d8ded2;cursor:pointer;font:700 11px 'Manrope',sans-serif}
+.bh-page-dot:hover,.bh-page-dot.is-active{background:#d4b580;color:#09231d;border-color:#d4b580}
+.bh-hint{font:500 11px 'DM Sans',sans-serif;color:#b3c9bf}
+.bh-lightbox{padding:0;border:1px solid #d0b080;color:#f4e8d3;background:#081c19;max-width:none;max-height:none;width:100vw;height:100dvh;margin:0;overflow:hidden}
+.bh-lightbox[open]{display:block}
+.bh-lightbox::backdrop{background:rgba(0,0,0,.94)}
+.bh-lightbox-inner{height:100%;display:flex;flex-direction:column;min-height:0}
+.bh-lightbox-header,.bh-lightbox-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px clamp(14px,3vw,40px);background:#0c2520;flex-shrink:0}
+.bh-lightbox-header{border-bottom:1px solid #c3a97755}
+.bh-lightbox-header>span{font:700 13px 'Manrope',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.bh-lightbox-header button{padding:9px 15px;font:700 12px 'Manrope',sans-serif}
+.bh-lightbox-stage{flex:1;min-height:0;display:grid;grid-template-columns:55px minmax(0,1fr) 55px;align-items:center;justify-content:center;gap:10px;padding:12px}
+.bh-lightbox-stage img{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;object-position:center;min-height:0}
+.bh-lightbox-arrow{width:48px;height:70px;font-size:43px;font-family:Georgia,serif;line-height:1}
+.bh-lightbox-footer{border-top:1px solid #c3a97755;font-size:12px;color:#c7d7cb}
+body.bh-modal-open{overflow:hidden}
+@media(max-width:900px){.bh-proposal-heading{display:block}.bh-pdf-cta{margin-top:23px}.bh-slide{flex-basis:290px}.bh-proposal{padding:54px 0 65px}}
+@media(max-width:570px){.bh-proposal{padding:41px 0 46px}.bh-proposal-heading h2{font-size:48px}.bh-pdf-cta{width:100%}.bh-slide{flex:0 0 79%;max-width:340px}.bh-poster{height:400px}.bh-hint{display:none}.bh-carousel-current span{margin-left:8px}.bh-lightbox-header button span{display:none}.bh-lightbox-stage{grid-template-columns:31px minmax(0,1fr) 31px;gap:3px;padding:6px 3px}.bh-lightbox-arrow{width:29px;height:57px;font-size:31px}.bh-lightbox-footer span:last-child{display:none}.bh-lightbox-footer{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.bh-carousel-track{scroll-behavior:auto}.bh-slide-open,.bh-poster img{transition:none}}
+
 </style></head><body>
 <header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
 <main>
 
-<section class="proposal-pdf" id="proposal-pdf" aria-labelledby="proposal-pdf-title">
-<div class="shell proposal-pdf-inner">
-  <figure class="proposal-pdf-art" style="margin:0">
-    <img src="./proposal-preview.svg" alt="Preview of the five-part Elettro vision for Bal Harbour Shops, including Elettro OS, AR, wireless website remote, digital experiences and interactive displays" width="1500" height="840" fetchpriority="high">
-    <figcaption>Five-page proposal • Visual overview</figcaption>
-  </figure>
-  <div class="proposal-pdf-copy">
-    <span class="eyebrow">New • Bal Harbour Shops × Elettro</span>
-    <h2>Five big ideas.<br><em>One luxury destination.</em></h2>
-    <p>Explore the five-page visual presentation: Elettro OS content publishing, augmented reality, wireless phone control, connected websites and engaging interactive displays.</p>
-    <div class="proposal-pdf-topics" aria-label="Included concepts">
-      <span>01 / ELETTRO OS</span><span>02 / ELETTRO AR</span><span>03 / REMOTE</span><span>04 / WEB EXPERIENCES</span><span>05 / MOBILE DISPLAYS</span>
-    </div>
-    <div class="proposal-pdf-actions">
-      <a id="proposal-pdf-download" class="button is-pending" aria-disabled="true" tabindex="-1" data-href="/clients/Bal_Harbour_Elettro_Five_Page_Proposal.pdf">PDF UPLOAD PENDING</a>
-      <a class="button ghost" href="#services">Explore the website ↓</a>
-    </div>
-    <p class="proposal-pdf-status" id="proposal-pdf-status">Five-page proposal PDF. The file will be available here once published.</p>
-  </div>
-</div>
-</section>
 <section class="hero"><div class="shell"><div class="herokicker"><span class="eyebrow">Elettro Incorporated × Bal Harbour Shops</span><span>Luxury retail · Digital transformation · South Florida</span></div><h1>The next<br>dimension of <em>luxury.</em></h1><p>A bespoke vision for Bal Harbour Shops. An editorial digital destination, immersive retail experiences, AR-powered print, intelligent guest assistance and a new era of fashion storytelling.</p><div class="btns"><a class="button" href="#homepage">Experience the new homepage ↗</a><a class="button ghost" href="#social">Explore 12 social concepts ↗</a></div><div class="herofoot"><b>No pricing in this proposal</b><span>Digital experience</span><span>Luxury content studio</span><span>Interactive advertising</span></div></div></section>
+
+<section class="bh-proposal" id="proposal-pdf" aria-labelledby="bh-proposal-title">
+  <div class="shell">
+    <div class="bh-proposal-heading">
+      <div>
+        <span class="eyebrow">Elettro × Bal Harbour Shops · Five-page vision</span>
+        <h2 id="bh-proposal-title">Explore the <em>possibilities.</em></h2>
+        <p>Five connected concepts for an extraordinary luxury destination. Browse the proposal below. Select any page for a full-screen view.</p>
+      </div>
+      <a class="button bh-pdf-cta" href="https://www.dropbox.com/scl/fi/4ieosxthm5wwwnb3lfoya/Bal_Harbour_Elettro_Five_Page_Proposal.pdf?rlkey=iy2xhfh3e0m7p2f9vo40q5i4y&amp;dl=0" target="_blank" rel="noopener noreferrer" aria-label="Open the complete five-page Bal Harbour proposal PDF in Dropbox">
+        VIEW / DOWNLOAD THE 5-PAGE PDF ↗
+      </a>
+    </div>
+    <div class="bh-carousel">
+      <div class="bh-carousel-bar">
+        <span class="bh-carousel-current"><strong id="bh-current-page">01</strong> / 05 <span id="bh-current-name">Elettro OS</span></span>
+        <div class="bh-carousel-controls">
+          <button type="button" id="bh-prev" aria-label="Previous proposal page">←</button>
+          <button type="button" id="bh-next" aria-label="Next proposal page">→</button>
+        </div>
+      </div>
+      <ul class="bh-carousel-track" id="bh-carousel-track" aria-label="Five Bal Harbour presentation pages">
+        <li class="bh-slide" data-bh-slide="0">
+  <button type="button" class="bh-slide-open" data-bh-open="0" aria-label="Open full-screen page 1: Elettro OS">
+    <span class="bh-poster"><img src="./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_39%20PM-3.png" loading="eager" alt="Proposal page 1: Elettro OS. AI-powered content planning, approval and publishing." width="1024" height="1536"></span>
+    <span class="bh-slide-meta"><span class="bh-slide-number">01 / 05</span><span><strong>Elettro OS</strong><small>AI-powered content planning, approval and publishing</small></span><span class="bh-expand-icon" aria-hidden="true">⤢</span></span>
+  </button>
+</li>
+<li class="bh-slide" data-bh-slide="1">
+  <button type="button" class="bh-slide-open" data-bh-open="1" aria-label="Open full-screen page 2: Elettro AR">
+    <span class="bh-poster"><img src="./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_38%20PM-2.png" loading="lazy" alt="Proposal page 2: Elettro AR. Activate signage, print and packaging with mobile experiences." width="1024" height="1536"></span>
+    <span class="bh-slide-meta"><span class="bh-slide-number">02 / 05</span><span><strong>Elettro AR</strong><small>Activate signage, print and packaging with mobile experiences</small></span><span class="bh-expand-icon" aria-hidden="true">⤢</span></span>
+  </button>
+</li>
+<li class="bh-slide" data-bh-slide="2">
+  <button type="button" class="bh-slide-open" data-bh-open="2" aria-label="Open full-screen page 3: Elettro Remote">
+    <span class="bh-poster"><img src="./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_37%20PM-1.png" loading="lazy" alt="Proposal page 3: Elettro Remote. Wireless phone control of shared digital displays." width="1024" height="1536"></span>
+    <span class="bh-slide-meta"><span class="bh-slide-number">03 / 05</span><span><strong>Elettro Remote</strong><small>Wireless phone control of shared digital displays</small></span><span class="bh-expand-icon" aria-hidden="true">⤢</span></span>
+  </button>
+</li>
+<li class="bh-slide" data-bh-slide="3">
+  <button type="button" class="bh-slide-open" data-bh-open="3" aria-label="Open full-screen page 4: Connected Web">
+    <span class="bh-poster"><img src="./pillars/Bal%20Harbour%E2%80%99s%20Interactive%20Luxury%20Experience.png" loading="lazy" alt="Proposal page 4: Connected Web. Interactive luxury shopping and digital experiences." width="1024" height="1536"></span>
+    <span class="bh-slide-meta"><span class="bh-slide-number">04 / 05</span><span><strong>Connected Web</strong><small>Interactive luxury shopping and digital experiences</small></span><span class="bh-expand-icon" aria-hidden="true">⤢</span></span>
+  </button>
+</li>
+<li class="bh-slide" data-bh-slide="4">
+  <button type="button" class="bh-slide-open" data-bh-open="4" aria-label="Open full-screen page 5: Family & Displays">
+    <span class="bh-poster"><img src="./pillars/Wireless%20Luxury%20Experiences%20at%20Bal%20Harbour.png" loading="lazy" alt="Proposal page 5: Family & Displays. Immersive activations for shoppers and families." width="1024" height="1536"></span>
+    <span class="bh-slide-meta"><span class="bh-slide-number">05 / 05</span><span><strong>Family & Displays</strong><small>Immersive activations for shoppers and families</small></span><span class="bh-expand-icon" aria-hidden="true">⤢</span></span>
+  </button>
+</li>
+      </ul>
+      <div class="bh-carousel-bottom">
+        <div class="bh-page-dots" aria-label="Select a presentation page"><button type="button" class="bh-page-dot is-active" data-bh-jump="0" aria-label="Go to page 1: Elettro OS" aria-pressed="true">01</button><button type="button" class="bh-page-dot" data-bh-jump="1" aria-label="Go to page 2: Elettro AR" aria-pressed="false">02</button><button type="button" class="bh-page-dot" data-bh-jump="2" aria-label="Go to page 3: Elettro Remote" aria-pressed="false">03</button><button type="button" class="bh-page-dot" data-bh-jump="3" aria-label="Go to page 4: Connected Web" aria-pressed="false">04</button><button type="button" class="bh-page-dot" data-bh-jump="4" aria-label="Go to page 5: Family & Displays" aria-pressed="false">05</button></div>
+        <span class="bh-hint">Select an image to enlarge · Swipe to browse</span>
+      </div>
+    </div>
+  </div>
+</section>
+<dialog id="bh-lightbox" class="bh-lightbox" aria-label="Full-screen Bal Harbour proposal page" aria-modal="true">
+  <div class="bh-lightbox-inner">
+    <div class="bh-lightbox-header">
+      <span id="bh-lightbox-title">01 / 05 · Elettro OS</span>
+      <button type="button" id="bh-lightbox-close" aria-label="Close full-screen preview">✕ <span>Close</span></button>
+    </div>
+    <div class="bh-lightbox-stage">
+      <button type="button" class="bh-lightbox-arrow" id="bh-lightbox-prev" aria-label="Previous full-screen page">‹</button>
+      <img id="bh-lightbox-img" alt="" src="./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_39%20PM-3.png" width="1024" height="1536">
+      <button type="button" class="bh-lightbox-arrow" id="bh-lightbox-next" aria-label="Next full-screen page">›</button>
+    </div>
+    <div class="bh-lightbox-footer">
+      <span id="bh-lightbox-caption">Elettro OS · AI-powered content planning, approval and publishing</span>
+      <span>Use ← → to browse · Esc to close</span>
+    </div>
+  </div>
+</dialog>
 <section class="stats" aria-label="Elettro proposal at a glance"><div class="shell"><div class="stats-intro"><span class="eyebrow">The experience, at a glance</span><p>Four capabilities. One considered vision.</p></div><div class="statgrid">
 <article><span class="stat-index">01 / Creative studio</span><strong class="stat-number">12</strong><h3 class="stat-title">Luxury social concepts</h3><p class="stat-detail">Store-inspired creative across four tailored formats.</p></article>
 <article><span class="stat-index">02 / Editorial formats</span><strong class="stat-number">04</strong><h3 class="stat-title">Creative formats</h3><p class="stat-detail">Stories, feed posts, carousels and motion previews.</p></article>
@@ -318,17 +426,54 @@ document.getElementById('signScan').addEventListener('click',()=>{const p=docume
 
 render();
 </script><script>
-/* Activate the presentation download only after the PDF is available on the public site. */
 (function(){
-  const a=document.getElementById('proposal-pdf-download');
-  const note=document.getElementById('proposal-pdf-status');
-  if(!a)return;
-  fetch(a.dataset.href,{method:'HEAD',cache:'no-store'}).then(function(r){
-    if(!r.ok)return;
-    a.href=a.dataset.href;a.removeAttribute('aria-disabled');a.removeAttribute('tabindex');
-    a.classList.remove('is-pending');a.textContent='VIEW / DOWNLOAD THE 5-PAGE PDF ↗';
-    a.setAttribute('target','_blank');a.setAttribute('rel','noopener');
-    if(note)note.textContent='Five pages of luxury digital experiences. Open or save the presentation.';
-  }).catch(function(){});
+  const pages=[{"name":"ChatGPT Image Oct 30, 2026, 12_22_39 PM-3.png","label":"Elettro OS","desc":"AI-powered content planning, approval and publishing","url":"./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_39%20PM-3.png"},{"name":"ChatGPT Image Oct 30, 2026, 12_22_38 PM-2.png","label":"Elettro AR","desc":"Activate signage, print and packaging with mobile experiences","url":"./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_38%20PM-2.png"},{"name":"ChatGPT Image Oct 30, 2026, 12_22_37 PM-1.png","label":"Elettro Remote","desc":"Wireless phone control of shared digital displays","url":"./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_37%20PM-1.png"},{"name":"Bal Harbour’s Interactive Luxury Experience.png","label":"Connected Web","desc":"Interactive luxury shopping and digital experiences","url":"./pillars/Bal%20Harbour%E2%80%99s%20Interactive%20Luxury%20Experience.png"},{"name":"Wireless Luxury Experiences at Bal Harbour.png","label":"Family & Displays","desc":"Immersive activations for shoppers and families","url":"./pillars/Wireless%20Luxury%20Experiences%20at%20Bal%20Harbour.png"}];
+  const track=document.getElementById('bh-carousel-track');
+  const modal=document.getElementById('bh-lightbox');
+  const modalImage=document.getElementById('bh-lightbox-img');
+  const modalTitle=document.getElementById('bh-lightbox-title');
+  const modalCaption=document.getElementById('bh-lightbox-caption');
+  if(!track||!modal)return;
+  let selected=0,modalSelected=0,lastFocus=null;
+  const cards=Array.from(track.querySelectorAll('[data-bh-slide]'));
+  const dots=Array.from(document.querySelectorAll('[data-bh-jump]'));
+  const digit=i=>String(i+1).padStart(2,'0');
+  function mark(i){
+    selected=Math.max(0,Math.min(pages.length-1,i));
+    dots.forEach((btn,n)=>{const active=n===selected;btn.classList.toggle('is-active',active);btn.setAttribute('aria-pressed',String(active))});
+    document.getElementById('bh-current-page').textContent=digit(selected);
+    document.getElementById('bh-current-name').textContent=pages[selected].label;
+  }
+  function jump(i){mark(i);cards[selected].scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest',inline:'start'})}
+  function show(i){
+    modalSelected=(i+pages.length)%pages.length;
+    const p=pages[modalSelected];
+    modalImage.src=p.url;modalImage.alt='Page '+(modalSelected+1)+' of 5: '+p.label+'. '+p.desc;
+    modalTitle.textContent=digit(modalSelected)+' / 05 · '+p.label;
+    modalCaption.textContent=p.label+' · '+p.desc;
+    mark(modalSelected);
+  }
+  function open(i){lastFocus=document.activeElement;show(i);if(!modal.open)modal.showModal();document.body.classList.add('bh-modal-open');document.getElementById('bh-lightbox-close').focus()}
+  function close(){if(modal.open)modal.close()}
+  document.querySelectorAll('[data-bh-open]').forEach(btn=>btn.addEventListener('click',()=>open(Number(btn.dataset.bhOpen))));
+  dots.forEach(btn=>btn.addEventListener('click',()=>jump(Number(btn.dataset.bhJump))));
+  document.getElementById('bh-prev').addEventListener('click',()=>jump((selected-1+pages.length)%pages.length));
+  document.getElementById('bh-next').addEventListener('click',()=>jump((selected+1)%pages.length));
+  document.getElementById('bh-lightbox-prev').addEventListener('click',()=>show(modalSelected-1));
+  document.getElementById('bh-lightbox-next').addEventListener('click',()=>show(modalSelected+1));
+  document.getElementById('bh-lightbox-close').addEventListener('click',close);
+  modal.addEventListener('click',e=>{if(e.target===modal)close()});
+  modal.addEventListener('close',()=>{document.body.classList.remove('bh-modal-open');if(lastFocus&&lastFocus.focus)lastFocus.focus()});
+  document.addEventListener('keydown',e=>{if(!modal.open)return;if(e.key==='ArrowLeft'){e.preventDefault();show(modalSelected-1)}else if(e.key==='ArrowRight'){e.preventDefault();show(modalSelected+1)}});
+  let startX=null;
+  modalImage.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
+  modalImage.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].screenX-startX;if(Math.abs(dx)>45)show(modalSelected+(dx<0?1:-1));startX=null},{passive:true});
+  let scheduled=false;
+  track.addEventListener('scroll',()=>{
+    if(scheduled)return;scheduled=true;
+    requestAnimationFrame(()=>{scheduled=false;const left=track.getBoundingClientRect().left;let closest=0,dist=Infinity;
+    cards.forEach((card,i)=>{const d=Math.abs(card.getBoundingClientRect().left-left);if(d<dist){dist=d;closest=i}});mark(closest)});
+  },{passive:true});
+  mark(0);
 })();
 </script></body></html>
