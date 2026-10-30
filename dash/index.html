@@ -413,8 +413,8 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261029: Elettro OS publishes to Bluesky for Elettro, Stashbox and SolarMeister." },
   { name: "Mastodon", dest: "mastodon", handle: "Stashbox Mastodon", code: "M", color: "#a98bff",
-    done: { strategy: 0.5, account: 0.5 },
-    note: "Added 261029. Just starting: picking the instance and creating the account." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
+    note: "LIVE 261029: Elettro OS publishes to Mastodon for Stashbox." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, content: 1, api: 1 },
     note: "APPROVED 261023: Google Business Profile API access for the Elettro OS project (300 queries/min, one approval covers every brand). Next: enable the APIs, add the scope, connect Stashbox first." },
@@ -606,7 +606,7 @@ async function pull() {
     for (const p of brand.profiles) {
       const r = STATUS.find((x) => x.dest === p.destination);
       if (!r) continue;
-      if (r.dest === "linkedin" || r.dest === "bluesky") continue; // pinned at 100%: approved and live
+      if (r.dest === "linkedin" || r.dest === "bluesky" || r.dest === "mastodon") continue; // pinned at 100%: approved and live
       r.done = p.done;
       if (p.handle) r.handle = p.handle;
       if (p.note) r.note = r.dest === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note);
@@ -835,6 +835,11 @@ async function pullMatrix() {
     const BLUESKY_LIVE = ["elettro", "stashbox", "solarmeister"], ALL = { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 };
     // The feed labels SolarMeister's LinkedIn with another brand's name; show it unlabeled until the account row is fixed.
     mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return; const l = b.profiles.find((x) => x.destination === "linkedin"); if (l && /davie/i.test(l.handle || "")) l.handle = ""; });
+    // Mastodon is live for Stashbox.
+    mxBrands.forEach((b) => { if (b.slug !== "stashbox") return;
+      const live = { destination: "mastodon", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Mastodon." };
+      const i = b.profiles.findIndex((x) => x.destination === "mastodon");
+      if (i < 0) b.profiles.push({ handle: "Mastodon", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live }; });
     // Threads is connected and live for these brands.
     mxBrands.forEach((b) => { if (!["elettro", "weightlossdavie", "solarmeister"].includes(b.slug)) return;
       const live = { destination: "threads", done: ALL, pct: 100, note: "LIVE: Threads connected and posting from Elettro OS." };
