@@ -49,6 +49,8 @@ body.paired .qrbox{opacity:0;transform:scale(.8);pointer-events:none}
 .acts{display:flex;gap:1vw;flex-wrap:wrap}
 .acts div{padding:.8em 1.4em;border:1px solid var(--line);border-radius:99px;font-size:clamp(11px,1vw,15px);letter-spacing:.12em;text-transform:uppercase}
 .acts .pri{background:var(--gold);color:#111;border-color:var(--gold)}
+.acts .focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(217,181,107,.35);transform:scale(1.08)}
+.acts .pri.focus{background:#f0cf8a}
 .menu{display:grid;gap:.8vw;min-width:min(40vw,520px)}
 .menu .it{padding:1.1vw 1.6vw;border:2px solid var(--line);border-radius:.8vw;font-size:clamp(16px,1.8vw,28px);font-family:Georgia,serif;background:var(--panel)}
 .toast{position:absolute;left:50%;bottom:9%;transform:translate(-50%,20px);z-index:20;background:#fff;color:#111;padding:.9em 1.6em;border-radius:99px;font-size:clamp(12px,1.2vw,18px);opacity:0;transition:.35s;pointer-events:none}
@@ -171,7 +173,7 @@ function startDisplay(){
   $('simlink').href=url;
   try{var q=qrcode(0,'M');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){$('qr').textContent=url}
 
-  var st={scene:0,row:0,col:0,overlay:null,menuIdx:0,vol:60};
+  var st={scene:0,row:0,col:0,overlay:null,menuIdx:0,detIdx:0,vol:60};
   var conn=null,toastT,volT;
 
   function sc(){return SCENES[st.scene]}
@@ -195,10 +197,13 @@ function startDisplay(){
   function showVol(){$('voli').style.height=st.vol+'%';$('vol').classList.add('show');clearTimeout(volT);volT=setTimeout(function(){$('vol').classList.remove('show')},1400)}
   function closeOv(){st.overlay=null;$('ov').classList.remove('show');$('ov').innerHTML=''}
   function openDetail(){
-    var f=focused();st.overlay='detail';
+    var f=focused();st.overlay='detail';st.detIdx=0;
     var c=f.color||'#4b3a22';
-    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:linear-gradient(135deg,'+c+',#0b0d12)"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div><div>'+(f.price||'More')+'</div><div>Back</div></div></div>';
-    $('ov').classList.add('show');pushState();
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:linear-gradient(135deg,'+c+',#0b0d12)"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div><div>Add to cart · '+(f.price||'More')+'</div><div>Back</div></div></div>';
+    $('ov').classList.add('show');paintDetail();pushState();
+  }
+  function paintDetail(){
+    [].forEach.call($('ov').querySelectorAll('.acts div'),function(el,i){el.classList.toggle('focus',i===st.detIdx)});
   }
   function openMenu(){
     st.overlay='menu';st.menuIdx=st.scene;renderMenu();$('ov').classList.add('show');pushState();
@@ -224,7 +229,14 @@ function startDisplay(){
       renderMenu();pushState();return;
     }
     if(st.overlay==='detail'){
-      if(k==='back'||k==='select'){closeOv()}
+      if(k==='left'||k==='up'){st.detIdx=Math.max(0,st.detIdx-1);paintDetail()}
+      else if(k==='right'||k==='down'){st.detIdx=Math.min(2,st.detIdx+1);paintDetail()}
+      else if(k==='select'){
+        if(st.detIdx===0)send();
+        else if(st.detIdx===1){var f=focused();if(conn&&conn.open)conn.send({t:'saved',name:f.name+' (in cart)',price:f.price||'',scene:sc().name});toast('Added to cart: '+f.name)}
+        else closeOv();
+      }
+      else if(k==='back'){closeOv()}
       else if(k==='send'){send()}
       else if(k==='menu')openMenu();
       else if(k==='home'){closeOv();st.row=0;st.col=0;paintFocus()}
