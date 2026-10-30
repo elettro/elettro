@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Wireless Control Demo | Elettro</title>
+<meta name="description" content="Scan the QR code and your phone becomes the remote for this website. No app, no account.">
+<style>
+:root{--bg:#07090d;--panel:#10151d;--line:rgba(255,255,255,.12);--text:#f4f1ea;--muted:#9aa4b0;--gold:#d9b56b;--ok:#5be3a2}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+button{font:inherit;color:inherit}
+/* ---------- DISPLAY ---------- */
+#display{position:fixed;inset:0;display:none;grid-template-rows:auto 1fr auto;padding:2.2vw 3vw;gap:1.6vw}
+body.mode-display #display{display:grid}
+.top{display:flex;align-items:center;justify-content:space-between}
+.top img{height:clamp(20px,2.4vw,38px)}
+.pill{display:flex;align-items:center;gap:.6em;font-size:clamp(11px,1vw,15px);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.6em 1.1em;border-radius:99px}
+.dot{width:.7em;height:.7em;border-radius:50%;background:#e0a040}
+.pill.on{color:var(--ok)}.pill.on .dot{background:var(--ok);box-shadow:0 0 12px var(--ok)}
+.stage{position:relative;border-radius:1.4vw;overflow:hidden;border:1px solid var(--line);display:grid;grid-template-rows:1fr auto}
+.bg{position:absolute;inset:0;transition:background 1s,opacity .6s;background-size:cover;background-position:center;animation:drift 18s ease-in-out infinite alternate}
+body.paused .bg{animation-play-state:paused}
+@keyframes drift{from{transform:scale(1.04) translate(-1.5%,-1%)}to{transform:scale(1.1) translate(1.5%,1%)}}
+.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.1) 70%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 50%)}
+.hero{position:relative;z-index:2;padding:4vw;display:flex;flex-direction:column;justify-content:center;gap:1.1vw;max-width:55%}
+.kicker{font-size:clamp(11px,1vw,15px);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.hero h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(30px,5vw,84px);line-height:1.02}
+.hero p{margin:0;color:#d4d8de;font-size:clamp(13px,1.35vw,22px);line-height:1.5}
+.cta{align-self:flex-start;margin-top:.8vw;padding:.9em 1.8em;border:1px solid var(--gold);color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font-size:clamp(11px,1vw,15px);background:rgba(0,0,0,.25)}
+.tiles{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,1fr);gap:1vw;padding:0 4vw 2.4vw}
+.tile{position:relative;aspect-ratio:16/10;border-radius:.7vw;border:2px solid transparent;display:flex;align-items:flex-end;padding:.9vw;font-size:clamp(10px,1vw,15px);letter-spacing:.14em;text-transform:uppercase;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.tile:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 65%)}
+.tile span{position:relative}
+.focus{border-color:var(--gold)!important;transform:scale(1.07);box-shadow:0 0 0 4px rgba(217,181,107,.25),0 18px 40px rgba(0,0,0,.55);z-index:3}
+.cta.focus{background:var(--gold);color:#111;transform:scale(1.05)}
+.qrbox{position:absolute;right:2.4vw;top:2.4vw;z-index:4;background:#fff;color:#111;border-radius:1vw;padding:1vw;text-align:center;width:clamp(130px,15vw,250px);transition:opacity .5s,transform .5s}
+.qrbox svg,.qrbox img{width:100%;height:auto;display:block}
+.qrbox b{display:block;margin-top:.6em;font-size:clamp(10px,.95vw,14px);letter-spacing:.14em;text-transform:uppercase}
+body.paired .qrbox{opacity:0;transform:scale(.8);pointer-events:none}
+.foot{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:clamp(10px,.9vw,13px);letter-spacing:.14em;text-transform:uppercase;gap:2vw}
+.foot a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(217,181,107,.4)}
+.overlay{position:absolute;inset:0;z-index:10;background:rgba(5,7,10,.88);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+.overlay.show{display:flex}
+.card{width:min(58vw,820px);border:1px solid var(--line);border-radius:1.2vw;background:var(--panel);padding:2.6vw;display:grid;gap:1.1vw}
+.card h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,3.2vw,52px)}
+.card .art{aspect-ratio:21/9;border-radius:.8vw}
+.card .art.can{display:flex;justify-content:center;gap:3vw;padding:.8vw 0}
+.card .art.can img{height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 .6vw 1vw rgba(0,0,0,.5))}
+.tile.can img{position:absolute;left:50%;top:5%;height:90%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 .5vw .8vw rgba(0,0,0,.5))}
+.vid{position:relative;height:92%;aspect-ratio:9/16;max-width:90%;border-radius:1vw;overflow:hidden;background:#000;border:1px solid var(--line)}
+.vid video{width:100%;height:100%;object-fit:contain;background:#000}
+.vcap{position:absolute;left:0;right:0;bottom:0;padding:1.2vw;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:clamp(11px,1.1vw,16px);letter-spacing:.12em;text-transform:uppercase}
+.card p{margin:0;color:#c4cad2;font-size:clamp(13px,1.3vw,20px);line-height:1.5}
+.acts{display:flex;gap:1vw;flex-wrap:wrap}
+.acts div{padding:.8em 1.4em;border:1px solid var(--line);border-radius:99px;font-size:clamp(11px,1vw,15px);letter-spacing:.12em;text-transform:uppercase}
+.acts .pri{background:var(--gold);color:#111;border-color:var(--gold)}
+.acts .focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(217,181,107,.35);transform:scale(1.08)}
+.acts .pri.focus{background:#f0cf8a}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:.7vw;width:min(80vw,1040px)}
+.menu .it{padding:.9vw 1.4vw;border:2px solid var(--line);border-radius:.8vw;font-size:clamp(13px,1.55vw,26px);font-family:Georgia,serif;background:var(--panel)}
+.toast{position:absolute;left:50%;top:3%;transform:translate(-50%,-20px);z-index:20;background:#fff;color:#111;padding:.9em 1.6em;border-radius:99px;font-size:clamp(12px,1.2vw,18px);opacity:0;transition:.35s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.vol{position:absolute;right:3vw;top:50%;z-index:20;width:1.1vw;min-width:10px;height:22vh;background:rgba(255,255,255,.15);border-radius:9px;opacity:0;transition:opacity .3s;overflow:hidden}
+.vol i{position:absolute;bottom:0;left:0;right:0;background:var(--gold)}
+.vol.show{opacity:1}
+.pause{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12;font-size:clamp(14px,1.4vw,22px);letter-spacing:.3em;text-transform:uppercase;background:rgba(0,0,0,.6);padding:.8em 1.4em;border-radius:99px;display:none}
+body.paused .pause{display:block}
+.err{display:none;color:#ffb3a8;font-size:13px}
+/* ---------- CONTROLLER ---------- */
+#remote{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:max(18px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));gap:16px;background:radial-gradient(circle at 50% 0,#1a2230,#07090d 60%);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+body.mode-remote #remote{display:flex}
+#remote img.logo{height:22px;margin-top:6px}
+.rstat{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#e0a040;display:flex;align-items:center;gap:8px}
+.rstat.on{color:var(--ok)}
+.rstat:before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.rnow{min-height:40px;text-align:center;color:var(--muted);font-size:13px;line-height:1.4}
+.rnow b{color:var(--text);font-weight:600}
+.pad{position:relative;flex:none;width:min(78vw,320px,36dvh);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 35%,#222b38,#0d1118);border:1px solid var(--line);box-shadow:inset 0 0 40px rgba(0,0,0,.6),0 20px 50px rgba(0,0,0,.5);touch-action:none}
+.pad button{position:absolute;background:none;border:0;width:30%;height:30%;display:flex;align-items:center;justify-content:center;color:#cfd6df}
+.pad button svg{width:30px;height:30px}
+.pad .u{top:3%;left:35%}.pad .d{bottom:3%;left:35%}.pad .l{left:3%;top:35%}.pad .r{right:3%;top:35%}
+.pad .ok{left:33%;top:33%;width:34%;height:34%;border-radius:50%;background:#171e29;border:1px solid var(--line);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.pad button:active,.keys button:active{background:rgba(217,181,107,.3)}
+.keys{flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(92vw,380px)}
+.keys button{background:#121821;border:1px solid var(--line);border-radius:16px;padding:12px 0 9px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.keys svg{width:24px;height:24px;color:var(--text)}
+.send{flex:none;width:min(92vw,380px);padding:16px;border-radius:99px;border:0;background:var(--gold);color:#111;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:14px}
+.saved{width:min(92vw,380px);display:grid;gap:8px;max-height:26vh;overflow:auto}
+.saved div{background:#121821;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.saved small{color:var(--ok);letter-spacing:.1em;text-transform:uppercase;font-size:10px;align-self:center}
+.rerr{color:#ffb3a8;font-size:13px;text-align:center;display:none;max-width:320px}
+
+/* ---------- TRIVIA (display) ---------- */
+.tv{width:95%;height:93%;display:flex;flex-direction:column;gap:1.1vw;padding:1.2vw}
+.tv h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(20px,3.3vw,54px);line-height:1.1}
+.tv .kick{font-size:clamp(10px,1vw,15px);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.tv .row{display:flex;gap:2.4vw;flex:1;min-height:0}
+.tv .opts{display:grid;grid-template-columns:1fr 1fr;gap:1vw;flex:1}
+.tv .opt{border-radius:1vw;padding:1vw 1.6vw;font-size:clamp(14px,2.1vw,34px);font-weight:700;display:flex;align-items:center;gap:1vw;color:#fff;position:relative;overflow:hidden}
+.tv .opt b{opacity:.75;font-size:.8em}
+.o0{background:#c0392b}.o1{background:#2563eb}.o2{background:#c8a017;color:#111}.o3{background:#1f9d55}
+.tv .opt.dim{opacity:.22}.tv .opt.ok{outline:.35vw solid #fff;transform:scale(1.02)}
+.tv .opt em{margin-left:auto;font-style:normal;font-size:.8em;opacity:.9}
+.tvbar{height:.9vw;border-radius:9px;background:rgba(255,255,255,.12);overflow:hidden}
+.tvbar i{display:block;height:100%;background:var(--gold);width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:.7vw;align-content:flex-start}
+.chip{padding:.5vw 1.1vw;border-radius:99px;font-size:clamp(12px,1.5vw,24px);font-weight:700;color:#111}
+.chip.off{opacity:.35}
+.lb{flex:1;min-width:0}
+.lb div{display:flex;justify-content:space-between;gap:1vw;font-size:clamp(13px,1.6vw,26px);padding:.5vw 1vw;border-radius:.6vw;background:rgba(255,255,255,.06);margin-bottom:.45vw}
+.lb div i{font-style:normal;color:var(--ok);font-size:.8em}
+.tvqr{background:#fff;padding:1vw;border-radius:1vw;width:clamp(150px,19vw,320px)}
+.tvqr svg{width:100%;height:auto;display:block}
+.tvsub{color:var(--muted);font-size:clamp(11px,1.15vw,18px)}
+/* ---------- PLAYER (phone) ---------- */
+#player{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;background:radial-gradient(circle at 50% 0,#1a2230,#07090d 60%);text-align:center;overflow:auto}
+body.mode-player #player{display:flex}
+#player .ptitle{font-family:Georgia,serif;font-size:30px}
+#player .pbig{font-size:26px;font-weight:700;line-height:1.2}
+#player .psub{color:var(--muted);font-size:15px;line-height:1.4;max-width:340px}
+#player .pq{font-family:Georgia,serif;font-size:24px;line-height:1.25;max-width:380px}
+#player .pdot{width:64px;height:64px;border-radius:50%}
+#pname{font-size:20px;padding:14px;border-radius:14px;border:1px solid var(--line);background:#121821;color:#fff;width:min(90vw,340px);text-align:center;font-family:inherit}
+.popts{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(94vw,420px)}
+.po{padding:28px 10px;border:0;border-radius:18px;font-size:19px;font-weight:700;color:#fff;min-height:96px}
+.po.o2{color:#111}.po.off{opacity:.3}.po.me{outline:4px solid #fff}
+</style>
+</head>
+<body>
+
+<!-- ============ DISPLAY (TV / kiosk / desktop) ============ -->
+<div id="display">
+  <div class="top">
+    <img src="img/Elettro-logo-white.png" alt="Elettro">
+    <button class="pill" id="snd" type="button" style="background:rgba(240,180,41,.12);color:#f0b429;border-color:rgba(240,180,41,.5);cursor:pointer">Click here once to enable sound</button>
+    <div class="pill" id="dstat"><span class="dot"></span><span id="dtxt">Waiting for phone</span></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="bg" id="bg"></div>
+    <div class="hero">
+      <div class="kicker" id="kicker"></div>
+      <h1 id="title"></h1>
+      <p id="sub"></p>
+      <div class="cta" id="cta">Start exploring</div>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <div class="qrbox" id="qrbox"><div id="qr"></div><b>Scan to control<br>this experience</b></div>
+    <div class="pause">Paused</div>
+    <div class="vol" id="vol"><i id="voli"></i></div>
+    <div class="toast" id="toast"></div>
+    <div class="overlay" id="ov"></div>
+  </div>
+  <div class="foot">
+    <button class="pill" id="rfsh" type="button" title="Back to the home screen (Esc)" style="cursor:pointer;color:#f0b429;border-color:rgba(240,180,41,.5);background:rgba(240,180,41,.12)">&#8635; Refresh &middot; Home (Esc)</button>
+    <span id="hint">Scan the code with your phone camera. No app, no account.</span>
+    <span><a id="simlink" href="#" target="_blank" rel="noopener">Test on this computer</a> &nbsp;·&nbsp; Session <span id="sid">…</span></span>
+  </div>
+  <div class="err" id="derr"></div>
+</div>
+
+<!-- ============ REMOTE (phone) ============ -->
+<div id="remote">
+  <img class="logo" src="img/Elettro-logo-white.png" alt="Elettro">
+  <div class="rstat" id="rstat">Connecting</div>
+  <div class="rnow" id="rnow">Pairing with the screen…</div>
+  <div class="pad" id="pad">
+    <button class="u" data-k="up" aria-label="Up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+    <button class="d" data-k="down" aria-label="Down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="l" data-k="left" aria-label="Left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button class="r" data-k="right" aria-label="Right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="ok" data-k="select">OK</button>
+  </div>
+  <div class="keys">
+    <button data-k="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l-6 6 6 6M4 12h16"/></svg>Back</button>
+    <button data-k="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Play</button>
+    <button data-k="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
+    <button data-k="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</button>
+    <button data-k="voldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 10l3 4M20 10l-3 4"/></svg>Vol −</button>
+    <button data-k="volup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a4 4 0 010 6M19.5 6.5a8 8 0 010 11"/></svg>Vol +</button>
+  </div>
+  <button class="send" data-k="send">Send to my phone</button>
+  <div class="saved" id="saved"></div>
+  <div class="rerr" id="rerr"></div>
+</div>
+
+<div id="player"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+(function(){
+var params=new URLSearchParams(location.search);
+var target=params.get('c');
+var PREFIX='elettro-wl-';
+var body=document.body;
+function $(id){return document.getElementById(id)}
+
+/* ---------- shared content ---------- */
+var VIDEOS={v1:{t:'Limoncito · Positive Energy: The Visitor',s:'vid/rompe-v1.mp4'},v2:{t:'Limoncito · Positive Energy: Angry Wife',s:'vid/rompe-v2.mp4'},v3:{t:'Limoncito · Positive Energy: The Visitor (Wan 3.0)',s:'vid/rompe-v3.mp4'},v4:{t:'Mojito Mágico · Call & Response',s:'vid/rompe-v4.mp4'}};
+var SCENES=[
+ {id:'mall',hero:'img/mall-hero.jpg',name:'Bal Harbour Mall Site',kicker:'Bal Harbour Shops',title:'Iconic Brands. Extraordinary Experiences.',sub:'Browse brands, view new arrivals, watch campaign videos and save items to your phone.',cta:'Start exploring',
+  grad:'radial-gradient(circle at 25% 25%,#d9b56b,transparent 40%),radial-gradient(circle at 80% 70%,#6b4f2a,transparent 55%),linear-gradient(135deg,#14110c,#2a2218)',
+  tiles:[['Shop','Over 100 luxury boutiques. Filter by floor or brand.','Brands','#6b5230','img/mall-1.jpg'],['Dine','Tables and tasting menus across the Shops.','Reserve','#5a2f2f','img/mall-2.jpg'],['New Arrivals','This week: resort collections and limited drops.','View','#2f4a5a','img/mall-3.jpg'],['Explore','Interactive map from your phone to the boutique.','Map','#3d3d5a','img/mall-4.jpg'],['Events','Private previews, trunk shows and live music.','RSVP','#5a4a2f','img/mall-5.jpg']]},
+ {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Dylan Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Bob Dylan Song Trivia',sub:'Scan to join. No app, no account. Ten questions about songs from tonight’s setlist, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
+  grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
+  tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and live-music nights. Between rounds the screen can promote the band, specials and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]},
+ {id:'candyman',shops:[{l:'Get tickets on Tixr',u:'https://www.tixr.com/promoters/CandyMan'},{l:'Tonight: DJ Pauly D tickets',u:'https://www.tixr.com/pr/candyman/204541'}],hero:'img/candyman-hero.jpg',name:'Candy Man · DAER at Hard Rock Hollywood',kicker:'Candy Man Presents · DAER · Hard Rock Hollywood, FL',title:'Scan. Tap. You’re On The List.',sub:'How we sell the night: one QR on the screen, flyers on the big display, and tickets, tables and reminders in your fans’ pockets before they leave the couch. Live lineup from Candy Man on Tixr.',cta:'See this weekend’s lineup',act2:'Get tickets',
+  grad:'linear-gradient(135deg,#1a0508,#7a1a12 55%,#f0902a)',
+  tiles:[['DJ Pauly D','Halloween Weekend at DAER Nightclub. Fri Oct 30, doors 11 PM. Tap to buy on your phone, tickets land in your wallet.','Fri Oct 30','#b3260f','img/candyman-paulyd.jpg'],['Marco Ninni','Halloween Weekend at DAER Dayclub. Sat Oct 31, doors 12 PM. Pool, music and sun.','Sat Oct 31','#e08a1a','img/candyman-marco.jpg'],['Łaszewo','Halloween at DAER Nightclub. Sat Oct 31, doors 10 PM. Costume night on the big floor.','Sat Oct 31','#5a1a10','img/candyman-laszewo.jpg'],['Sech','DAER Nightclub. Fri Nov 6, doors 10 PM. Reggaeton headliner, a big night for the Miami and Broward crowd.','Fri Nov 6','#a8261c','img/candyman-sech.jpg'],['Kodak Black','DAER Nightclub. Fri Nov 13, doors 10 PM. Reserve a table from 954.779.4750.','Fri Nov 13','#2a2a2a','img/candyman-kodak.jpg']]},
+ {id:'coffee',shops:[{l:'Shop Don Pablo',u:'https://donpablocoffee.com/products/navy-seal-foundation-coffee'},{l:'Shop Blue Card Coffee',u:'https://bluecardcoffee.org/'}],hero:'img/coffee-hero.jpg',name:'Coffee Product Site',kicker:'Artisan Roasters',title:'Discover Exceptional Coffee',sub:'Crafted for a better day. Browse roasts, watch the story, add to cart, all from your phone.',cta:'Explore our roasts',
+  grad:'radial-gradient(circle at 70% 30%,#8a5a2b,transparent 55%),radial-gradient(circle at 20% 80%,#3a2012,transparent 60%),#1b110a',
+  tiles:[['Single Origin','Ethiopia Yirgacheffe, floral and bright. 12oz bag.','$22','#7a4a22','img/coffee-1.jpg'],['Espresso Blend','Dark chocolate and caramel. Built for espresso.','$19','#4b2c18','img/coffee-2.jpg'],['Cold Brew','Slow-steeped concentrate. Smooth, low acid.','$16','#2b3a40','img/coffee-3.jpg'],['Brew Gear','Pour-over kit with kettle, dripper and filters.','$68','#5a5148','img/coffee-4.jpg'],['Subscribe','Fresh roasted every two weeks. Skip anytime.','$17/mo','#6e3b2a','img/coffee-5.jpg']]},
+ {id:'hotel',hero:'img/hotel-hero.jpg',name:'Hotel Site',kicker:'Oceanfront Resort',title:'A More Extraordinary Stay Awaits',sub:'Explore rooms, amenities and dining. Check availability and request details straight from your phone.',cta:'Explore stays',
+  grad:'radial-gradient(circle at 75% 25%,#f0a35e,transparent 45%),linear-gradient(180deg,#2a3c63 0%,#d27a58 55%,#0f3a4a 56%,#0a2330 100%)',
+  tiles:[['Rooms','Ocean-view suites with private terraces. From $389 a night.','$389','#35607a','img/hotel-1.jpg'],['Dining','Rooftop grill, sunrise café and the Palm Bar.','Menus','#7a4a35','img/hotel-2.jpg'],['Experiences','Sunset sails, spa rituals and private cabanas.','Book','#2f6b6a','img/hotel-3.jpg'],['Offers','Stay three nights, get the fourth free this season.','4th free','#6b4a7a','img/hotel-4.jpg'],['Gallery','Pool, beach, suites and the lobby lounge.','Photos','#4a5a7a','img/hotel-5.jpg']]},
+ {id:'sealord',hero:'img/sealord-hero.jpg',name:'Sea Lord Hotel · Beach & Grounds',kicker:'The Sea Lord · Lauderdale-by-the-Sea (concept)',title:'The Whole Beach, From Your Lounger',sub:'A concept for oceanfront hotels: guests scan a QR on their lounger or at the pool and their phone runs the beach-club screens, ordering, reservations and activities.',cta:'See what guests can do',act2:'Request now',
+  grad:'linear-gradient(180deg,#2b4a73 0%,#e9a07a 55%,#1b6f8a 56%,#0b3446 100%)',
+  tiles:[['Order to Your Chair','Scan the umbrella QR and order drinks, towels or snacks. Staff see the chair number, no waving required.','Order','#2f6b8a','img/sealord-1.jpg'],['Reserve a Cabana','Check which cabanas are open on the beach map, hold one by the hour or the day.','Reserve','#5a7a8a','img/sealord-2.jpg'],['Sunset Dining','Browse the evening menu on the screen, book a table on the sand, send the menu to your phone.','Book','#7a4a35','img/sealord-3.jpg'],['On the Water','Sunset sails, paddleboards and snorkel trips. See times and sign up from your chair.','Sign up','#2f6b6a','img/sealord-4.jpg'],['Pool & Wellness','Pool hours today, spa openings and morning beach yoga, saved straight to your phone.','Today','#4a5a7a','img/sealord-5.jpg']]},
+ {id:'stashshop',hero:'img/shop-3.jpg',name:'Stashbox Shop · stashbox.ai',kicker:'stashbox.ai · Official Shop',title:'Wear the Music. Own the Vibe.',sub:'Real products from the Stashbox store. Pick one on the big screen, tap it on your phone, and the shop opens in a new browser tab.',cta:'Browse the shop',
+  grad:'linear-gradient(135deg,#0d2a2a,#1b4d3e 50%,#d9a441)',
+  tiles:[['Squidly Cole Drummer Shoes','Black signature-series sneakers, the official Squidly Cole reggae drummer edition. $69.99.','$69.99','#2a2a2a','img/shop-1.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/official-squidly-cole-reggae-drummer-black-shoes-signature-series'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Rasta Tropical Round Rug','Stashbox rasta green, yellow and red tropical design. $89.99.','$89.99','#1f5a3a','img/shop-2.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/round-rug-stashbox-rasta-green-yellow-red-tropical-design-001'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['St. Pete Pelican Beach Towel','Vertical pelican design, made for the beach. $34.99.','$34.99','#2a6a8a','img/shop-3.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/st-pete-pelican-beach-towel-vertical-design-010'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Surfing Astronaut Pint Glass','16oz pint glass, space-wave surf art. $19.99.','$19.99','#4a3a7a','img/shop-4.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/surfing-astronaut-space-wave-art-pint-glass-16oz-waves-designs-69'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Guitars Bomber Jacket','Men’s all-over-print bomber, colorful abstract guitars. $84.99.','$84.99','#7a3a5a','img/shop-5.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/mens-bomber-jacket-aop-colorful-abstract-guitars-model'},{l:'Browse the shop',u:'https://stashbox.ai/'}]]]},
+ {id:'stashradio',hero:'img/radio-1.jpg',name:'Stashbox Radio · stashbox.com/radio',kicker:'stashbox.com/radio',title:'Stashbox Radio. Always On.',sub:'Original music from a South Florida band: reggae, old soul, rock and more. Pick a song on the big screen, then play it on your phone.',cta:'Start listening',
+  grad:'linear-gradient(135deg,#050607,#1b3a2a 55%,#d9a441)',
+  tiles:[['Palm Trees','Reggae. A featured Stashbox original, streaming now on Stashbox Radio.','Reggae','#1b4d3e','img/radio-1.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Palm+Trees'}]],['Riding Waves (Live)','Reggae. A live Stashbox recording, one of the featured songs on the station.','Reggae','#1b4a6a','img/radio-2.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Riding+Waves'}]],['Dirty Bird','Old Soul. A featured Stashbox original with its own music video.','Old Soul','#5a2a4a','img/radio-3.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Dirty+Bird'}]],['Hippy Speedball','Reggae. I’m On My Way. Featured original on Stashbox Radio.','Reggae','#7a5a1b','img/radio-4.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Hippy+Speedball+(original)'}]],['Vacation Life','Reggae live recording with a mellow beach mood.','Reggae','#1b6a6a','img/radio-5.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Vacation+Life'}]]]},
+ {id:'rompe',can:true,hero:'img/rompe-hero.jpg',name:'ROMPE Energy · 4 Flavors',kicker:'ROMPE · Energy · Zero Sugar',title:'Four Flavors. Zero Sugar. Pure Rompe.',sub:'Meet the lineup: Limoncito, Mojito Mágico, Passion Papi and Pop That Piña. Watch the videos on the big screen, or tap through to Stashbox Radio on your phone.',cta:'Meet the flavors',
+  grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
+  tiles:[['Limoncito','Lime-forward energy, zero sugar, 16 fl oz. Watch the Positive Energy videos.','16 fl oz','#3f8f1f','img/rompe-limoncito.png',[{l:'Watch video',play:['v1','v2','v3']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Mojito Mágico','Mint, lime and ice. The back of the can calls out boosted brain power, laser focus and extra energy. Watch Call & Response.','16 fl oz','#e832d2','img/rompe-mojito.jpg',[{l:'Watch video',play:['v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],'img/rompe-mojito-back.jpg'],['Passion Papi','Passion fruit in hot pink. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#a0307a','img/rompe-passion.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Pop That Piña','Golden pineapple on teal. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#157a7a','img/rompe-pina.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]]]},
+ {id:'game',game:true,hero:'img/rompe-hero.jpg',name:'Game Zone · Can Catch',kicker:'Play on the big screen · control with your phone',title:'Can Catch',sub:'Slide left and right to catch the falling cans. Dodge the rocks. Hold the arrows or drag the pad on your phone. No app, no controller.',cta:'Play now',
+  grad:'linear-gradient(135deg,#0b0d12,#1b4d3e 50%,#f0b429)',
+  tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]}
+];
+
+/* ---------- DISPLAY ---------- */
+function startDisplay(){
+  body.classList.add('mode-display');
+  var id=Math.random().toString(36).slice(2,8);
+  $('sid').textContent=id.toUpperCase();
+  var url=location.origin+location.pathname+'?c='+id;
+  $('simlink').href=url;
+  try{var q=qrcode(0,'M');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){$('qr').textContent=url}
+
+  /* the Bal Harbour mall experience is the default; ?scene=coffee (etc.) overrides */
+  var DEF=Math.max(0,SCENES.findIndex(function(x){return x.id===(params.get('scene')||'mall')}));
+  var st={scene:DEF,row:0,col:0,overlay:null,menuIdx:DEF,detIdx:0,vol:60};
+  var conn=null,toastT,volT;
+
+  function sc(){return SCENES[st.scene]}
+  function renderScene(){
+    var s=sc();
+    $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;
+    $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
+    $('tiles').innerHTML=s.tiles.map(function(t){
+      if((s.can||s.game)&&t[7]!=='cover')return '<div class="tile can" style="background:linear-gradient(160deg,'+t[3]+',#0b0d12)"><img src="'+t[4]+'" alt=""><span>'+t[0]+'</span></div>';
+      return '<div class="tile" style="background:'+t[3]+' url('+t[4]+') center/cover"><span>'+t[0]+'</span></div>'}).join('');
+    st.row=0;st.col=0;paintFocus();pushState();
+  }
+  function paintFocus(){
+    $('cta').classList.toggle('focus',st.row===0);
+    [].forEach.call($('tiles').children,function(el,i){el.classList.toggle('focus',st.row===1&&i===st.col)});
+  }
+  function focused(){
+    var s=sc();
+    if(st.row===0)return{name:s.name+': '+s.cta,desc:s.sub};
+    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3],img:t[4],img2:t[6],can:sc().can&&t[7]!=='cover'};
+  }
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},2200)}
+  function showVol(){$('voli').style.height=st.vol+'%';$('vol').classList.add('show');clearTimeout(volT);volT=setTimeout(function(){$('vol').classList.remove('show')},1400)}
+  function closeOv(){st.overlay=null;$('ov').classList.remove('show');$('ov').innerHTML=''}
+  function openDetail(){
+    var f=focused();st.overlay='detail';st.detIdx=0;
+    var c=f.color||'#4b3a22',art=f.img?'url('+f.img+') center/cover':'linear-gradient(135deg,'+c+',#0b0d12)';
+    var artHtml=f.can?'<div class="art can" style="background:linear-gradient(135deg,'+c+',#0b0d12)"><img src="'+f.img+'" alt="">'+(f.img2?'<img src="'+f.img2+'" alt="">':'')+'</div>':'<div class="art" style="background:'+art+'"></div>';
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div>'+artHtml+'<h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div>'+mids().map(function(x){return '<div>'+x+'</div>'}).join('')+'<div>Back</div></div></div>';
+    $('ov').classList.add('show');paintDetail();pushState();
+  }
+  function shopsList(){
+    var s=sc();
+    if(st.row===1&&s.tiles[st.col][5])return s.tiles[st.col][5];
+    return s.shops||null;
+  }
+  function mids(){
+    var s=sc(),sh=shopsList();
+    if(sh)return sh.map(function(x){return x.l+((x.play||x.game)?' ▶':' ↗')});
+    return [(s.act2||'Add to cart')+' · '+(focused().price||'More')];
+  }
+  /* browsers block sound until the page gets one click or key press */
+  function unlockAudio(){
+    var b=$('snd');if(b)b.style.display='none';
+    var v=$('vp');if(v){v.muted=false;if(v.paused)v.play()}
+  }
+  ['pointerdown','keydown'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true})});
+  function openVideo(ids,i){
+    st.overlay='video';st.vlist=ids;st.vidx=i||0;
+    $('ov').className='overlay show';
+    $('ov').innerHTML='<div class="vid"><video id="vp" playsinline></video><div class="vcap" id="vcap"></div></div>';
+    loadVid();pushState();
+  }
+  function loadVid(){
+    var v=$('vp'),o=VIDEOS[st.vlist[st.vidx]];
+    v.src=o.s;v.poster=o.s.replace('.mp4','.jpg');v.volume=st.vol/100;
+    $('vcap').textContent=o.t+' · '+(st.vidx+1)+' of '+st.vlist.length;
+    v.onended=function(){st.vidx=(st.vidx+1)%st.vlist.length;loadVid()};
+    v.onclick=function(){v.muted=false};
+    var pr=v.play();
+    if(pr&&pr.catch)pr.catch(function(){v.muted=true;v.play();toast('Muted by the browser. Click the screen once for sound.')});
+  }
+  function openShop(x){
+    if(x.play){openVideo(x.play,0);return}
+    if(x.game){closeOv();startGame(1);return}
+    if(conn&&conn.open){conn.send({t:'open',url:x.u,label:x.l});toast('Opening on your phone: '+x.l)}
+    else toast('Connect a phone first')
+  }
+  function paintDetail(){
+    [].forEach.call($('ov').querySelectorAll('.acts div'),function(el,i){el.classList.toggle('focus',i===st.detIdx)});
+  }
+  function openMenu(){
+    st.overlay='menu';st.menuIdx=st.scene;renderMenu();$('ov').classList.add('show');pushState();
+  }
+  function renderMenu(){
+    $('ov').innerHTML='<div class="menu">'+SCENES.map(function(s,i){return '<div class="it'+(i===st.menuIdx?' focus':'')+'">'+s.name+'</div>'}).join('')+'</div>';
+  }
+  function send(){
+    var f=focused();
+    if(conn&&conn.open){conn.send({t:'saved',name:f.name,price:f.price||'',scene:sc().name});toast('Sent to your phone: '+f.name)}
+  }
+  var LEVELS=[{n:'Easy',dur:45,fall:150,spawn:950,rock:.12},{n:'Normal',dur:40,fall:210,spawn:720,rock:.2},{n:'Hard',dur:35,fall:300,spawn:520,rock:.3},{n:'Marathon',dur:75,fall:230,spawn:660,rock:.22}];
+  var GI={a:new Image(),b:new Image()};GI.a.src='img/rompe-limoncito.png';GI.b.src='img/rompe-pina.png';
+  var G=null,gRaf=0;
+  function bestKey(){return 'wl-best-'+G.lv.n}
+  function startGame(li){
+    st.overlay='game';st.gameLevel=li;
+    $('ov').className='overlay show';
+    $('ov').innerHTML='<canvas id="gc" style="width:100%;height:100%"></canvas>';
+    var c=$('gc');c.width=$('ov').clientWidth;c.height=$('ov').clientHeight;
+    G={lv:LEVELS[li],c:c,x:c.width/2,axis:0,items:[],score:0,lives:3,t:0,spawn:0,over:false,paused:false,last:performance.now(),sent:0,best:0,shake:0,flash:0,newBest:false};
+    try{G.best=Number(localStorage.getItem(bestKey()))||0}catch(e){}
+    cancelAnimationFrame(gRaf);gRaf=requestAnimationFrame(gloop);pushState();
+  }
+  function endGame(){
+    G.over=true;
+    if(G.score>G.best){G.best=G.score;G.newBest=true;try{localStorage.setItem(bestKey(),String(G.score))}catch(e){}}
+    if(conn&&conn.open)conn.send({t:'saved',name:'Can Catch ('+G.lv.n+') score: '+G.score,price:'',scene:'Game Zone'});
+    pushState();
+  }
+  function stopGame(){cancelAnimationFrame(gRaf);G=null;closeOv()}
+  function gloop(now){
+    if(st.overlay!=='game'||!G)return;
+    var g=G,c=g.c,x=c.getContext('2d'),dt=Math.min(.05,(now-g.last)/1000);g.last=now;
+    var W=c.width,H=c.height,cupW=W*.13,cupH=H*.1,cupY=H-cupH-H*.04,ih=H*.15;
+    if(!g.over&&!g.paused){
+      g.t+=dt;g.spawn-=dt*1000;
+      g.x=Math.max(cupW/2,Math.min(W-cupW/2,g.x+g.axis*W*.85*dt));
+      if(g.spawn<=0){
+        g.spawn=g.lv.spawn*(.7+Math.random()*.6);
+        var r=Math.random(),type=r<g.lv.rock?'rock':(r<g.lv.rock+.15?'gold':'can');
+        g.items.push({x:ih*.4+Math.random()*(W-ih*.8),y:-ih,v:g.lv.fall*(H/520)*(.85+Math.random()*.4),type:type,rot:Math.random()*6});
+      }
+      for(var i=g.items.length-1;i>=0;i--){
+        var it=g.items[i];it.y+=it.v*dt;it.rot+=dt*2;
+        var cy=it.y+ih*.5;
+        if(cy>=cupY&&cy<=cupY+cupH*.8&&Math.abs(it.x-g.x)<cupW*.55){
+          if(it.type==='rock'){g.lives--;g.shake=.35;g.flash=.25}
+          else{g.score+=it.type==='gold'?25:10}
+          g.items.splice(i,1);
+          if(g.lives<=0){endGame();break}
+        } else if(it.y>H){g.items.splice(i,1)}
+      }
+      if(!g.over&&g.t>=g.lv.dur)endGame();
+      if(now-g.sent>500){g.sent=now;pushState()}
+    }
+    g.shake=Math.max(0,g.shake-dt);g.flash=Math.max(0,g.flash-dt);
+    x.save();
+    if(g.shake>0)x.translate((Math.random()-.5)*10,(Math.random()-.5)*10);
+    var bg=x.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#10243a');bg.addColorStop(1,'#1b4d3e');x.fillStyle=bg;x.fillRect(0,0,W,H);
+    x.fillStyle='rgba(255,255,255,.05)';for(var k=0;k<14;k++){x.fillRect((k*97)%W,(k*53+g.t*20)%H,3,3)}
+    g.items.forEach(function(it){
+      if(it.type==='rock'){
+        x.save();x.translate(it.x,it.y+ih*.5);x.rotate(it.rot);x.fillStyle='#7d838c';x.strokeStyle='#4b5058';x.lineWidth=3;
+        x.beginPath();for(var a=0;a<7;a++){var rr=ih*(.3+((a*37)%5)*.04),an=a/7*6.283;x.lineTo(Math.cos(an)*rr,Math.sin(an)*rr)}x.closePath();x.fill();x.stroke();x.restore();
+      }else{
+        var im=it.type==='gold'?GI.b:GI.a;
+        if(it.type==='gold'){x.save();x.shadowColor='#ffd34d';x.shadowBlur=22}
+        if(im.complete&&im.naturalWidth)x.drawImage(im,it.x-ih*.2,it.y,ih*.4,ih);
+        if(it.type==='gold')x.restore();
+      }
+    });
+    /* catcher: a cooler bucket */
+    x.fillStyle='#f0b429';x.beginPath();x.moveTo(g.x-cupW/2,cupY);x.lineTo(g.x+cupW/2,cupY);x.lineTo(g.x+cupW*.4,cupY+cupH);x.lineTo(g.x-cupW*.4,cupY+cupH);x.closePath();x.fill();
+    x.fillStyle='#b07d0f';x.fillRect(g.x-cupW/2,cupY,cupW,cupH*.18);
+    x.restore();
+    if(g.flash>0){x.fillStyle='rgba(255,40,40,'+(g.flash*1.2)+')';x.fillRect(0,0,W,H)}
+    /* HUD */
+    var fs=Math.max(14,H*.06);x.font='700 '+fs+'px Inter,system-ui,sans-serif';x.textBaseline='top';x.fillStyle='#fff';
+    x.textAlign='left';x.fillText('Score '+g.score,W*.03,H*.04);
+    x.textAlign='center';x.fillText(g.lv.n+' · '+Math.max(0,Math.ceil(g.lv.dur-g.t))+'s',W/2,H*.04);
+    x.textAlign='right';x.fillStyle='#ff6b6b';x.fillText(new Array(Math.max(0,g.lives)+1).join('♥ '),W*.97,H*.04);
+    if(g.paused||g.over){
+      x.fillStyle='rgba(5,7,10,.78)';x.fillRect(0,0,W,H);x.textAlign='center';x.fillStyle='#fff';
+      x.font='700 '+H*.12+'px Georgia,serif';x.fillText(g.over?(g.lives<=0?'Game over':'Time!'):'Paused',W/2,H*.2);
+      if(g.over){
+        x.font='700 '+H*.09+'px Inter,system-ui,sans-serif';x.fillStyle='#f0b429';x.fillText('Score '+g.score,W/2,H*.4);
+        x.font='500 '+H*.05+'px Inter,system-ui,sans-serif';x.fillStyle='#fff';
+        x.fillText((g.newBest?'New best! ':'Best '+g.best+'  ')+'Sent to your phone',W/2,H*.55);
+        x.fillStyle='#9aa4b0';x.fillText('OK to play again  ·  Back to exit',W/2,H*.68);
+      }
+    }
+    gRaf=requestAnimationFrame(gloop);
+  }
+  /* ---------------- TRIVIA (many phones) ---------------- */
+  var QS=[
+    ['Silvio was co-written with which famous Grateful Dead lyricist?',['Jerry Garcia','Robert Hunter','Bob Weir','Phil Lesh'],1],
+    ['Things Have Changed won Dylan an Academy Award for which film?',['Pat Garrett & Billy the Kid','Hearts of Fire','Wonder Boys','Masked and Anonymous'],2],
+    ['Isis is on which 1976 album?',['Desire','Blood on the Tracks','Infidels','Street-Legal'],0],
+    ['Tangled Up in Blue and Simple Twist of Fate are both on which 1975 album?',['Desire','Planet Waves','Oh Mercy','Blood on the Tracks'],3],
+    ['Rainy Day Women #12 & 35 opens which 1966 album?',['Highway 61 Revisited','Blonde on Blonde','John Wesley Harding','Bringing It All Back Home'],1],
+    ['In Ballad of a Thin Man, what is the confused man’s name?',['Mr. Jones','Mr. Smith','Mr. Brown','Mr. Johnson'],0],
+    ['Jokerman and Don’t Fall Apart on Me Tonight are both on which 1983 album?',['Street-Legal','Desire','Infidels','Oh Mercy'],2],
+    ['Masters of War is on which 1963 album?',['Highway 61 Revisited','Another Side of Bob Dylan','Desire','The Freewheelin’ Bob Dylan'],3],
+    ['Love Sick and Cold Irons Bound are both on which 1997 album that won Album of the Year?',['Time Out of Mind','Oh Mercy','Slow Train Coming','Infidels'],0],
+    ['Slow Train Coming (1979) began a run of Dylan albums built around what?',['Jazz standards','Christian gospel songs','Reggae','Country duets'],1]
+  ];
+
+
+
+
+  var COLORS=['#f87171','#60a5fa','#fbbf24','#34d399','#a78bfa','#fb923c','#f472b6','#22d3ee','#a3e635','#e879f9'];
+  var PL={},T=null;
+  var joinUrl=location.origin+location.pathname+'?c='+id+'&p=1';
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function allPlayers(){return Object.keys(PL).map(function(k){return PL[k]})}
+  function livePlayers(){return allPlayers().filter(function(p){return p.conn&&p.conn.open})}
+  function sendP(p,m){try{if(p.conn&&p.conn.open)p.conn.send(m)}catch(e){}}
+  function bcast(m){livePlayers().forEach(function(p){sendP(p,m)})}
+  function ranked(){return allPlayers().slice().sort(function(a,b){return b.score-a.score})}
+  function rankOf(p){return ranked().indexOf(p)+1}
+  function regPlayer(c,m){
+    var pid=String(m.pid||'').slice(0,40)||Math.random().toString(36).slice(2);
+    var p=PL[pid];
+    if(!p){
+      if(allPlayers().length>=24){c.send({t:'full'});setTimeout(function(){c.close()},300);return}
+      p=PL[pid]={pid:pid,color:COLORS[allPlayers().length%COLORS.length],score:0,ans:null,gain:0,t:0}
+    }
+    if(p.conn&&p.conn!==c&&p.conn.open){try{p.conn.close()}catch(e){}}
+    p.name=String(m.name||'Player').trim().slice(0,14)||'Player';p.conn=c;c.__p=p;
+    c.on('close',function(){if(p.conn===c)p.conn=null;if(T)renderTrivia()});
+    c.on('error',function(){if(p.conn===c)p.conn=null});
+    greet(p);if(T)renderTrivia();
+  }
+  function greet(p){
+    var n=livePlayers().length;
+    if(T&&T.phase==='q')sendQ(p);
+    else if(T&&T.phase==='reveal')sendReveal(p);
+    else if(T&&T.phase==='final')sendFinal(p);
+    else if(T)sendP(p,{t:'lobby',name:p.name,color:p.color,n:n});
+    else sendP(p,{t:'wait',msg:'Waiting for the host to open trivia.'});
+  }
+  function playerMsg(c,m){
+    if(m&&m.t==='ans'&&T&&T.phase==='q'&&m.q===T.qi&&c.__p&&c.__p.ans==null){
+      var p=c.__p;p.ans=Number(m.choice);p.t=Date.now()-T.qStart;
+      sendP(p,{t:'locked',choice:p.ans});
+      var done=livePlayers().filter(function(x){return x.ans!=null}).length;
+      var el=$('tvdone');if(el)el.textContent=done+' of '+livePlayers().length+' answered';
+      if(done>=livePlayers().length)setTimeout(function(){if(T&&T.phase==='q')reveal()},700);
+    }
+  }
+  function sendQ(p){
+    var q=QS[T.qi];
+    sendP(p,{t:'q',i:T.qi,total:QS.length,text:q[0],opts:q[1],left:Math.max(0,T.limit-(Date.now()-T.qStart))});
+  }
+  function sendReveal(p){
+    sendP(p,{t:'reveal',correct:QS[T.qi][2],right:p.ans===QS[T.qi][2],gain:p.gain,score:p.score,rank:rankOf(p),n:allPlayers().length});
+  }
+  function sendFinal(p){sendP(p,{t:'final',rank:rankOf(p),score:p.score,n:allPlayers().length})}
+  function startTrivia(){
+    st.overlay='trivia';$('ov').className='overlay show';
+    allPlayers().forEach(function(p){p.score=0;p.ans=null;p.gain=0});
+    if(T){clearInterval(T.iv);clearTimeout(T.to)}
+    T={phase:'lobby',qi:-1,iv:null,to:null,qStart:0,limit:15000,counts:[0,0,0,0]};
+    renderTrivia();livePlayers().forEach(greet);pushState();
+  }
+  function stopTrivia(){
+    if(T){clearInterval(T.iv);clearTimeout(T.to)}
+    T=null;closeOv();bcast({t:'wait',msg:'Trivia ended. Thanks for playing!'});pushState();
+  }
+  function nextQ(){
+    T.qi++;
+    if(T.qi>=QS.length){T.phase='final';renderTrivia();livePlayers().forEach(sendFinal);pushState();return}
+    T.phase='q';T.qStart=Date.now();T.counts=[0,0,0,0];
+    allPlayers().forEach(function(p){p.ans=null;p.gain=0});
+    renderTrivia();livePlayers().forEach(sendQ);pushState();
+    clearInterval(T.iv);
+    T.iv=setInterval(function(){
+      if(!T||T.phase!=='q'){return}
+      var el=Date.now()-T.qStart,b=$('tvbar');
+      if(b)b.style.width=Math.max(0,100-el/T.limit*100)+'%';
+      if(el>=T.limit)reveal();
+    },120);
+  }
+  function reveal(){
+    if(!T||T.phase!=='q')return;
+    clearInterval(T.iv);T.phase='reveal';
+    var q=QS[T.qi];
+    allPlayers().forEach(function(p){
+      if(p.ans!=null&&p.ans>=0&&p.ans<4)T.counts[p.ans]++;
+      if(p.ans===q[2]){p.gain=Math.round(500+500*Math.max(0,1-p.t/T.limit));p.score+=p.gain}
+    });
+    renderTrivia();livePlayers().forEach(sendReveal);pushState();
+    T.to=setTimeout(function(){if(T&&T.phase==='reveal')nextQ()},7000);
+  }
+  function renderTrivia(){
+    if(!T)return;
+    var h='',live=livePlayers(),q=QS[T.qi];
+    if(T.phase==='lobby'){
+      var qr='';try{var qq=qrcode(0,'M');qq.addData(joinUrl);qq.make();qr=qq.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){}
+      h='<div class="tv"><div class="kick">Bob Dylan song trivia</div><h2>Scan to join the game</h2><div class="row"><div><div class="tvqr">'+qr+'</div><div class="tvsub" style="margin-top:.8vw">No app. No account.</div></div>'
+       +'<div style="flex:1"><div class="tvsub" style="margin-bottom:.8vw">'+live.length+' player'+(live.length===1?'':'s')+' in the lobby</div><div class="chips">'
+       +allPlayers().map(function(p){return '<span class="chip'+(p.conn&&p.conn.open?'':' off')+'" style="background:'+p.color+'">'+esc(p.name)+'</span>'}).join('')
+       +'</div></div></div><div class="tvsub">Host: press OK on the remote to start \u00b7 '+QS.length+' questions</div></div>';
+    } else if(T.phase==='q'){
+      h='<div class="tv"><div class="kick">Question '+(T.qi+1)+' of '+QS.length+'</div><h2>'+esc(q[0])+'</h2><div class="opts">'
+       +q[1].map(function(o,i){return '<div class="opt o'+i+'"><b>'+'ABCD'[i]+'</b>'+esc(o)+'</div>'}).join('')
+       +'</div><div class="tvbar"><i id="tvbar"></i></div><div class="tvsub" id="tvdone">0 of '+live.length+' answered</div></div>';
+    } else if(T.phase==='reveal'){
+      var tot=Math.max(1,T.counts.reduce(function(a,b){return a+b},0));
+      h='<div class="tv"><div class="kick">Answer</div><h2>'+esc(q[0])+'</h2><div class="row"><div class="opts" style="flex:1.3">'
+       +q[1].map(function(o,i){return '<div class="opt o'+i+(i===q[2]?' ok':' dim')+'"><b>'+'ABCD'[i]+'</b>'+esc(o)+'<em>'+T.counts[i]+'</em></div>'}).join('')
+       +'</div><div class="lb">'+ranked().slice(0,6).map(function(p,i){return '<div><span>'+(i+1)+'. <span style="color:'+p.color+'">\u25cf</span> '+esc(p.name)+'</span><span>'+p.score+(p.gain?' <i>+'+p.gain+'</i>':'')+'</span></div>'}).join('')+'</div></div>'
+       +'<div class="tvsub">Next question in a moment \u00b7 OK to skip</div></div>';
+    } else {
+      var r=ranked();
+      h='<div class="tv"><div class="kick">Final scores</div><h2>'+(r.length?esc(r[0].name)+' wins!':'Thanks for playing')+'</h2><div class="row"><div class="lb" style="flex:1">'
+       +r.slice(0,8).map(function(p,i){return '<div><span>'+(i+1)+'. <span style="color:'+p.color+'">\u25cf</span> '+esc(p.name)+'</span><span>'+p.score+'</span></div>'}).join('')
+       +'</div></div><div class="tvsub">OK to play again \u00b7 Back to exit</div></div>';
+    }
+    $('ov').innerHTML=h;
+  }
+  /* each incoming phone says hello: a player (many allowed) or the remote (one) */
+  function attachRemote(c){
+    if(conn&&conn.open&&conn!==c){try{c.send({t:'busy'})}catch(e){}setTimeout(function(){c.close()},300);return false}
+    conn=c;setPaired(true);toast('Phone connected');pushState();
+    c.on('close',function(){if(conn===c){conn=null;setPaired(false)}});
+    c.on('error',function(){if(conn===c){conn=null;setPaired(false)}});
+    return true;
+  }
+  function pushState(){
+    if(!conn||!conn.open)return;
+    var f=focused();
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='trivia'&&T?'Trivia: '+({lobby:livePlayers().length+' in lobby',q:'Question '+(T.qi+1)+' of '+QS.length,reveal:'Answer revealed',final:'Final scores'})[T.phase]:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||''});
+  }
+  function key(k){
+    if(st.overlay==='trivia'&&T){
+      if(k==='back'||k==='menu'||k==='home'){stopTrivia();return}
+      if(k==='select'){
+        if(T.phase==='lobby'){if(!livePlayers().length){toast('Waiting for at least one player');return}nextQ()}
+        else if(T.phase==='q')reveal();
+        else if(T.phase==='reveal'){clearTimeout(T.to);nextQ()}
+        else startTrivia();
+      }
+      return;
+    }
+    if(st.overlay==='game'){
+      if(k==='back'||k==='menu'||k==='home'){stopGame();pushState();return}
+      if(k==='select'&&G&&G.over){startGame(st.gameLevel);return}
+      return;
+    }
+    if(st.overlay==='video'){
+      var v=$('vp');
+      if(k==='left'||k==='right'){st.vidx=(st.vidx+(k==='right'?1:st.vlist.length-1))%st.vlist.length;loadVid()}
+      else if(k==='select'){if(v.paused)v.play();else v.pause()}
+      else if(k==='back'||k==='menu'||k==='home'){closeOv()}
+      pushState();return;
+    }
+    if(st.overlay==='menu'){
+      if(k==='up'||k==='left')st.menuIdx=(st.menuIdx+SCENES.length-1)%SCENES.length;
+      else if(k==='down'||k==='right')st.menuIdx=(st.menuIdx+1)%SCENES.length;
+      else if(k==='select'){st.scene=st.menuIdx;closeOv();renderScene();toast(sc().name);return}
+      else if(k==='back'||k==='menu'){closeOv()}
+      renderMenu();pushState();return;
+    }
+    if(st.overlay==='detail'){
+      if(k==='left'||k==='up'){st.detIdx=Math.max(0,st.detIdx-1);paintDetail()}
+      else if(k==='right'||k==='down'){st.detIdx=Math.min(mids().length+1,st.detIdx+1);paintDetail()}
+      else if(k==='select'){
+        if(st.detIdx===0)send();
+        else if(st.detIdx===mids().length+1)closeOv();
+        else if(shopsList())openShop(shopsList()[st.detIdx-1]);
+        else if(st.detIdx===1){var f=focused();if(conn&&conn.open)conn.send({t:'saved',name:f.name+' (in cart)',price:f.price||'',scene:sc().name});toast((sc().act2||'Added to cart')+': '+f.name)}
+        else closeOv();
+      }
+      else if(k==='back'){closeOv()}
+      else if(k==='send'){send()}
+      else if(k==='menu')openMenu();
+      else if(k==='home'){closeOv();st.row=0;st.col=0;paintFocus()}
+      pushState();
+    } else {
+      switch(k){
+        case 'left':if(st.row===1)st.col=Math.max(0,st.col-1);break;
+        case 'right':if(st.row===1)st.col=Math.min(4,st.col+1);break;
+        case 'up':st.row=0;break;
+        case 'down':st.row=1;break;
+        case 'select':
+          if(sc().game&&(st.row===0||st.col<4)){startGame(st.row===0?1:st.col);return}
+          if(sc().trivia&&(st.row===0||st.col===0)){startTrivia();return}
+          openDetail();return;
+        case 'send':send();break;
+        case 'menu':openMenu();return;
+        case 'home':st.scene=DEF;renderScene();toast('Home');return;
+        case 'back':break;
+      }
+      paintFocus();pushState();
+    }
+    if(k==='play'){}
+  }
+  function handle(m){
+    if(m&&m.t==='axis'){if(G&&st.overlay==='game')G.axis=Math.max(-1,Math.min(1,Number(m.x)||0));return}
+    if(!m||m.t!=='key')return;
+    var k=m.k;
+    if(st.overlay==='trivia'){key(k);return}
+    if(st.overlay==='game'){if(k==='play'&&G&&!G.over){G.paused=!G.paused}else key(k);return}
+    if(st.overlay==='video'){
+      var vp=$('vp');
+      if(k==='play'){if(vp.paused){vp.play();toast('Playing')}else{vp.pause();toast('Paused')}return}
+      if(k==='volup'||k==='voldown'){st.vol=Math.max(0,Math.min(100,st.vol+(k==='volup'?10:-10)));vp.volume=st.vol/100;vp.muted=false;showVol();return}
+    }
+    if(k==='play'){body.classList.toggle('paused');toast(body.classList.contains('paused')?'Paused':'Playing');return}
+    if(k==='volup'){st.vol=Math.min(100,st.vol+10);showVol();return}
+    if(k==='voldown'){st.vol=Math.max(0,st.vol-10);showVol();return}
+    key(k);
+  }
+  /* keyboard fallback for testing */
+  document.addEventListener('keydown',function(e){
+    var m={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Enter:'select',Escape:'home',m:'menu',h:'home',' ':'play'}[e.key];
+    if(st.overlay==='game'&&G&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();G.axis=e.key==='ArrowLeft'?-1:1;return}
+    if(m){e.preventDefault();handle({t:'key',k:m})}
+  });
+  document.addEventListener('keyup',function(e){if(G&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))G.axis=0});
+
+  /* Refresh button: same as Home from anywhere (closes any overlay first), so the phone stays paired. */
+  $('rfsh').addEventListener('click',function(){
+    body.classList.remove('paused');
+    var guard=0;
+    while(st.overlay&&guard++<3)handle({t:'key',k:'home'});
+    handle({t:'key',k:'home'});
+  });
+  function setPaired(on){
+    body.classList.toggle('paired',on);
+    $('dstat').classList.toggle('on',on);
+    $('dtxt').textContent=on?'Phone connected':'Waiting for phone';
+    $('hint').textContent=on?'Use your phone as the remote. Swipe or tap the pad. Press Send to keep what you like.':'Scan the code with your phone camera. No app, no account.';
+  }
+  function boot(){
+    var peer=new Peer(PREFIX+id);
+    peer.on('open',function(){renderScene()});
+    peer.on('connection',function(c){
+      var role=null;
+      c.on('data',function(m){
+        if(!role){
+          if(m&&m.t==='hello'&&m.role==='player'){role='player';regPlayer(c,m);return}
+          role='remote';
+          if(!attachRemote(c)){role='rejected';return}
+          if(m&&m.t==='hello')return;
+        }
+        if(role==='player')playerMsg(c,m);
+        else if(role==='remote'&&c===conn)handle(m);
+      });
+    });
+    peer.on('disconnected',function(){try{peer.reconnect()}catch(e){}});
+    peer.on('error',function(e){var d=$('derr');d.style.display='block';d.textContent='Connection service error: '+e.type});
+  }
+  renderScene();
+  boot();
+}
+
+/* ---------- REMOTE ---------- */
+function startRemote(){
+  body.classList.add('mode-remote');
+  var conn,peer,pad=$('pad');
+  function setStat(on,txt){$('rstat').className='rstat'+(on?' on':'');$('rstat').textContent=txt}
+  function err(m){var e=$('rerr');e.style.display='block';e.textContent=m}
+  function send(k){
+    if(navigator.vibrate)navigator.vibrate(12);
+    if(conn&&conn.open)conn.send({t:'key',k:k});
+  }
+  peer=new Peer();
+  peer.on('open',function(){
+    conn=peer.connect(PREFIX+target,{reliable:true});
+    conn.on('open',function(){conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
+    conn.on('data',function(m){
+      if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
+      else if(m.t==='saved'){
+        var d=document.createElement('div');d.innerHTML='<span>'+m.name+(m.price?' · '+m.price:'')+'</span><small>Saved</small>';
+        $('saved').insertBefore(d,$('saved').firstChild);
+        if(navigator.vibrate)navigator.vibrate([30,40,30]);
+      } else if(m.t==='open'){
+        var a=document.createElement('div');
+        a.innerHTML='<span>'+m.label+'</span><a href="'+m.url+'" target="_blank" rel="noopener" style="color:#d9b56b;font-weight:700;text-decoration:none">Open ↗</a>';
+        $('saved').insertBefore(a,$('saved').firstChild);
+        if(navigator.vibrate)navigator.vibrate([30,40,30]);
+        try{window.open(m.url,'_blank')}catch(e){}
+      } else if(m.t==='busy'){setStat(false,'Screen in use');err('Another phone is already controlling this screen.')}
+    });
+    conn.on('close',function(){setStat(false,'Disconnected');$('rnow').textContent='Scan the screen again to reconnect.'});
+    conn.on('error',function(){setStat(false,'Error')});
+  });
+  peer.on('error',function(e){setStat(false,'Could not connect');err(e.type==='peer-unavailable'?'This session has ended. Scan the code on the screen again.':'Connection error: '+e.type)});
+  document.querySelectorAll('[data-k]').forEach(function(b){
+    if(b.closest('#pad'))return;
+    b.addEventListener('click',function(){send(b.dataset.k)});
+  });
+  /* pad: tap arrows, plus swipe anywhere on pad */
+  pad.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){send(b.dataset.k)})});
+  var lastAx=0,lastT=0,pressing=false;
+  function sendAxis(v){
+    v=Math.round(v*10)/10;var now=Date.now();
+    if(v===lastAx||(v!==0&&now-lastT<40))return;
+    lastAx=v;lastT=now;if(conn&&conn.open)conn.send({t:'axis',x:v});
+  }
+  function axisFrom(e){
+    var r=pad.getBoundingClientRect(),a=(e.clientX-(r.left+r.width/2))/(r.width*.35);
+    a=Math.max(-1,Math.min(1,a));sendAxis(Math.abs(a)<.15?0:a);
+  }
+  pad.addEventListener('pointerdown',function(e){pressing=true;axisFrom(e)});
+  pad.addEventListener('pointermove',function(e){if(pressing)axisFrom(e)});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(n){pad.addEventListener(n,function(){pressing=false;sendAxis(0)})});
+  var sx,sy;
+  pad.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
+  pad.addEventListener('touchend',function(e){
+    var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<40)return;
+    e.preventDefault();
+    send(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'));
+  });
+}
+
+/* ---------- PLAYER (phone joins a multi-player game) ---------- */
+function startPlayer(){
+  body.classList.add('mode-player');
+  var root=$('player'),pid=null,peer,conn,me={name:''},sel=null;
+  try{pid=sessionStorage.getItem('wl-pid')}catch(e){}
+  if(!pid){pid=Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('wl-pid',pid)}catch(e){}}
+  function e2(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function view(h){root.innerHTML='<img class="logo" style="height:22px" src="img/Elettro-logo-white.png" alt="Elettro">'+h}
+  function joinForm(){
+    var nm='';try{nm=localStorage.getItem('wl-name')||''}catch(e){}
+    view('<div class="ptitle">Join the game</div><input id="pname" maxlength="14" placeholder="Your name" autocomplete="off" value="'+e2(nm)+'"><button id="pgo" class="send" style="width:min(90vw,340px)">Join</button>');
+    $('pgo').onclick=function(){
+      me.name=$('pname').value.trim()||'Player';
+      try{localStorage.setItem('wl-name',me.name)}catch(e){}
+      view('<div class="pbig">Connecting\u2026</div>');connect();
+    };
+  }
+  function connect(){
+    peer=new Peer();
+    peer.on('open',function(){
+      conn=peer.connect(PREFIX+target,{reliable:true});
+      conn.on('open',function(){conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
+      conn.on('data',onMsg);
+      conn.on('close',function(){view('<div class="pbig">Disconnected</div><button class="send" id="pre" style="width:min(90vw,340px)">Rejoin</button>');$('pre').onclick=function(){view('<div class="pbig">Connecting\u2026</div>');connect()}});
+    });
+    peer.on('error',function(e){view('<div class="pbig">Could not connect</div><div class="psub">'+(e.type==='peer-unavailable'?'This game has ended. Scan the code on the screen again.':'Error: '+e2(e.type))+'</div>')});
+  }
+  function buzz(p){if(navigator.vibrate)navigator.vibrate(p)}
+  function onMsg(m){
+    if(m.t==='lobby'){
+      view('<div class="pdot" style="background:'+e2(m.color)+'"></div><div class="pbig">You are in, '+e2(m.name)+'!</div><div class="psub">Waiting for the host to start. '+m.n+' player'+(m.n===1?'':'s')+' here.</div>');
+    } else if(m.t==='wait'){
+      view('<div class="pbig">'+e2(m.msg)+'</div>');
+    } else if(m.t==='full'){
+      view('<div class="pbig">This game is full</div>');
+    } else if(m.t==='q'){
+      sel=null;
+      view('<div class="psub">Question '+(m.i+1)+' of '+m.total+'</div><div class="pq">'+e2(m.text)+'</div><div class="popts">'
+        +m.opts.map(function(o,i){return '<button class="po o'+i+'" data-i="'+i+'">'+'ABCD'[i]+'<br><span style="font-size:15px;font-weight:600">'+e2(o)+'</span></button>'}).join('')+'</div><div class="psub" id="plock">Tap your answer</div>');
+      [].forEach.call(root.querySelectorAll('.po'),function(b){b.onclick=function(){
+        if(sel!=null)return;sel=Number(b.dataset.i);buzz(25);
+        conn.send({t:'ans',q:m.i,choice:sel});
+        [].forEach.call(root.querySelectorAll('.po'),function(x){x.classList.add(x===b?'me':'off')});
+        $('plock').textContent='Locked in. Waiting for the others\u2026';
+      }});
+    } else if(m.t==='reveal'){
+      buzz(m.right?[40,60,40]:80);
+      view('<div class="pbig" style="font-size:44px">'+(m.right?'Correct!':(sel==null?'Too slow':'Not quite'))+'</div>'
+        +(m.right?'<div class="pbig" style="color:#5be3a2">+'+m.gain+'</div>':'')
+        +'<div class="psub">Rank '+m.rank+' of '+m.n+' \u00b7 '+m.score+' points<br>Next question coming up\u2026</div>');
+    } else if(m.t==='final'){
+      view('<div class="pbig" style="font-size:40px">You finished #'+m.rank+'</div><div class="pbig" style="color:#f0b429">'+m.score+' points</div><div class="psub">'+m.n+' player'+(m.n===1?'':'s')+'. Thanks for playing!</div>');
+    }
+  }
+  joinForm();
+}
+
+if(target&&params.get('p'))startPlayer();else if(target)startRemote();else startDisplay();
+})();
+</script>
+</body>
+</html>
