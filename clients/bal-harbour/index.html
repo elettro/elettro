@@ -172,9 +172,52 @@
 .ar-generated-gallery{margin:12px 0 60px}.ar-generated-gallery .ar-blockhead{margin-bottom:25px}.ar-generated-gallery .ar-blockhead p{font-size:15px;line-height:1.75;color:#455c4e}.ar-generated-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.ar-generated-grid figure{margin:0;min-width:0;overflow:hidden;background:#faf8f1;border:1px solid #ced6c9;box-shadow:0 17px 34px #203c2e1b}.ar-generated-grid figure:first-child{grid-column:1/-1}.ar-generated-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}.ar-generated-grid figure:first-child img{aspect-ratio:16/8.5;object-fit:cover;object-position:center 48%}.ar-generated-grid figcaption{padding:19px 22px;color:#1a3b2a;font:700 13px/1.5 Manrope,sans-serif;letter-spacing:.01em}.ar-generated-notice{font-size:12px;color:#526a5b;margin:17px 0 0}@media(max-width:730px){.ar-generated-grid{grid-template-columns:1fr}.ar-generated-grid figure:first-child{grid-column:auto}.ar-generated-grid figure:first-child img{aspect-ratio:4/3}.ar-generated-grid figcaption{padding:15px;font-size:12px}}
 
 .ar-unified-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:23px}.ar-unified-grid figure{margin:0;background:#faf8f2;border:1px solid #c5cfc1;box-shadow:0 20px 50px #223b2b20;overflow:hidden}.ar-unified-grid .ar-unified-primary{grid-column:1/-1}.ar-unified-grid img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.ar-unified-grid .ar-unified-primary img{aspect-ratio:16/9;object-fit:cover}.ar-unified-grid figcaption{padding:25px 30px 29px;display:grid;gap:9px}.ar-unified-grid figcaption strong{font:400 clamp(25px,2.6vw,36px)/1.15 Italiana,Georgia,serif;color:#183e2c}.ar-unified-grid figcaption span{font-size:14px;line-height:1.7;color:#3f5749}.ar-unified-fine{color:#51695a;font-size:12px;line-height:1.75;margin-top:22px}@media(max-width:760px){.ar-unified-grid{grid-template-columns:1fr;gap:18px}.ar-unified-grid .ar-unified-primary{grid-column:auto}.ar-unified-grid .ar-unified-primary img{aspect-ratio:4/3}.ar-unified-grid figcaption{padding:20px}.ar-unified-grid figcaption span{font-size:14px}}
+
+/* Five-page presentation CTA, displayed directly beneath the top navigation. */
+.proposal-pdf{background:linear-gradient(125deg,#173b31 0%,#0b2520 65%,#071b19 100%);padding:42px 0 46px;border-bottom:1px solid rgba(216,191,140,.5)}
+.proposal-pdf-inner{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,1.12fr);align-items:center;gap:38px}
+.proposal-pdf-art{display:block;overflow:hidden;border:1px solid rgba(216,189,133,.52);box-shadow:0 22px 75px rgba(0,0,0,.38);position:relative;text-decoration:none}
+.proposal-pdf-art img{width:100%;aspect-ratio:1500 / 840;object-fit:cover;transition:transform .35s}
+.proposal-pdf-art:hover img{transform:scale(1.025)}
+.proposal-pdf-art figcaption{position:absolute;left:14px;bottom:14px;padding:7px 12px;color:#fff;font:700 10px 'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.1em;background:#09241edb;border:1px solid #d5bb877a}
+.proposal-pdf-copy .eyebrow{font-size:11px;color:#e8c895}
+.proposal-pdf-copy h2{font-size:clamp(42px,5vw,70px);margin:15px 0 15px;line-height:1.02}
+.proposal-pdf-copy h2 em{font-style:normal;color:#e5c48f}
+.proposal-pdf-copy p{font:400 15px/1.72 'DM Sans',sans-serif;color:#d5e4da;max-width:600px;margin:0 0 20px}
+.proposal-pdf-topics{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px}
+.proposal-pdf-topics span{border:1px solid #aa997774;background:#ffffff0a;color:#f2e8d7;font:700 10px/1.4 'Manrope',sans-serif;letter-spacing:.08em;padding:9px 11px}
+.proposal-pdf-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.proposal-pdf-actions .button{font-size:11px;padding:17px 24px}
+.proposal-pdf-actions .button.is-pending{opacity:.62;cursor:default;pointer-events:none}
+.proposal-pdf-status{color:#c4d3c9;font-size:11px;margin-top:12px!important}
+@media(max-width:1000px){.proposal-pdf-inner{grid-template-columns:1fr;gap:25px}.proposal-pdf{padding:28px 0 32px}}
+@media(max-width:570px){.proposal-pdf-inner{gap:20px}.proposal-pdf-copy h2{font-size:42px}.proposal-pdf-actions .button{width:100%}.proposal-pdf-art figcaption{font-size:9px}}
+
 </style></head><body>
 <header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
 <main>
+
+<section class="proposal-pdf" id="proposal-pdf" aria-labelledby="proposal-pdf-title">
+<div class="shell proposal-pdf-inner">
+  <figure class="proposal-pdf-art" style="margin:0">
+    <img src="./proposal-preview.svg" alt="Preview of the five-part Elettro vision for Bal Harbour Shops, including Elettro OS, AR, wireless website remote, digital experiences and interactive displays" width="1500" height="840" fetchpriority="high">
+    <figcaption>Five-page proposal • Visual overview</figcaption>
+  </figure>
+  <div class="proposal-pdf-copy">
+    <span class="eyebrow">New • Bal Harbour Shops × Elettro</span>
+    <h2>Five big ideas.<br><em>One luxury destination.</em></h2>
+    <p>Explore the five-page visual presentation: Elettro OS content publishing, augmented reality, wireless phone control, connected websites and engaging interactive displays.</p>
+    <div class="proposal-pdf-topics" aria-label="Included concepts">
+      <span>01 / ELETTRO OS</span><span>02 / ELETTRO AR</span><span>03 / REMOTE</span><span>04 / WEB EXPERIENCES</span><span>05 / MOBILE DISPLAYS</span>
+    </div>
+    <div class="proposal-pdf-actions">
+      <a id="proposal-pdf-download" class="button is-pending" aria-disabled="true" tabindex="-1" data-href="/clients/Bal_Harbour_Elettro_Five_Page_Proposal.pdf">PDF UPLOAD PENDING</a>
+      <a class="button ghost" href="#services">Explore the website ↓</a>
+    </div>
+    <p class="proposal-pdf-status" id="proposal-pdf-status">Five-page proposal PDF. The file will be available here once published.</p>
+  </div>
+</div>
+</section>
 <section class="hero"><div class="shell"><div class="herokicker"><span class="eyebrow">Elettro Incorporated × Bal Harbour Shops</span><span>Luxury retail · Digital transformation · South Florida</span></div><h1>The next<br>dimension of <em>luxury.</em></h1><p>A bespoke vision for Bal Harbour Shops. An editorial digital destination, immersive retail experiences, AR-powered print, intelligent guest assistance and a new era of fashion storytelling.</p><div class="btns"><a class="button" href="#homepage">Experience the new homepage ↗</a><a class="button ghost" href="#social">Explore 12 social concepts ↗</a></div><div class="herofoot"><b>No pricing in this proposal</b><span>Digital experience</span><span>Luxury content studio</span><span>Interactive advertising</span></div></div></section>
 <section class="stats" aria-label="Elettro proposal at a glance"><div class="shell"><div class="stats-intro"><span class="eyebrow">The experience, at a glance</span><p>Four capabilities. One considered vision.</p></div><div class="statgrid">
 <article><span class="stat-index">01 / Creative studio</span><strong class="stat-number">12</strong><h3 class="stat-title">Luxury social concepts</h3><p class="stat-detail">Store-inspired creative across four tailored formats.</p></article>
@@ -274,4 +317,18 @@ document.querySelectorAll('[data-sign]').forEach(x=>x.addEventListener('click',(
 document.getElementById('signScan').addEventListener('click',()=>{const p=document.getElementById('signDevice');p.classList.remove('active');requestAnimationFrame(()=>p.classList.add('active'));p.scrollIntoView({block:'nearest',behavior:'smooth'})});
 
 render();
+</script><script>
+/* Activate the presentation download only after the PDF is available on the public site. */
+(function(){
+  const a=document.getElementById('proposal-pdf-download');
+  const note=document.getElementById('proposal-pdf-status');
+  if(!a)return;
+  fetch(a.dataset.href,{method:'HEAD',cache:'no-store'}).then(function(r){
+    if(!r.ok)return;
+    a.href=a.dataset.href;a.removeAttribute('aria-disabled');a.removeAttribute('tabindex');
+    a.classList.remove('is-pending');a.textContent='VIEW / DOWNLOAD THE 5-PAGE PDF ↗';
+    a.setAttribute('target','_blank');a.setAttribute('rel','noopener');
+    if(note)note.textContent='Five pages of luxury digital experiences. Open or save the presentation.';
+  }).catch(function(){});
+})();
 </script></body></html>
