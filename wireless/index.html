@@ -44,7 +44,7 @@ body.paired .qrbox{opacity:0;transform:scale(.8);pointer-events:none}
 .overlay.show{display:flex}
 .card{width:min(58vw,820px);border:1px solid var(--line);border-radius:1.2vw;background:var(--panel);padding:2.6vw;display:grid;gap:1.1vw}
 .card h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,3.2vw,52px)}
-.card .art{aspect-ratio:21/8;border-radius:.8vw}
+.card .art{aspect-ratio:21/9;border-radius:.8vw}
 .card p{margin:0;color:#c4cad2;font-size:clamp(13px,1.3vw,20px);line-height:1.5}
 .acts{display:flex;gap:1vw;flex-wrap:wrap}
 .acts div{padding:.8em 1.4em;border:1px solid var(--line);border-radius:99px;font-size:clamp(11px,1vw,15px);letter-spacing:.12em;text-transform:uppercase}
@@ -153,15 +153,15 @@ function $(id){return document.getElementById(id)}
 
 /* ---------- shared content ---------- */
 var SCENES=[
- {id:'coffee',name:'Coffee Product Site',kicker:'Artisan Roasters',title:'Discover Exceptional Coffee',sub:'Crafted for a better day. Browse roasts, watch the story, add to cart, all from your phone.',cta:'Explore our roasts',
+ {id:'coffee',hero:'img/coffee-hero.jpg',name:'Coffee Product Site',kicker:'Artisan Roasters',title:'Discover Exceptional Coffee',sub:'Crafted for a better day. Browse roasts, watch the story, add to cart, all from your phone.',cta:'Explore our roasts',
   grad:'radial-gradient(circle at 70% 30%,#8a5a2b,transparent 55%),radial-gradient(circle at 20% 80%,#3a2012,transparent 60%),#1b110a',
-  tiles:[['Single Origin','Ethiopia Yirgacheffe, floral and bright. 12oz bag.','$22','#7a4a22'],['Espresso Blend','Dark chocolate and caramel. Built for espresso.','$19','#4b2c18'],['Cold Brew','Slow-steeped concentrate. Smooth, low acid.','$16','#2b3a40'],['Brew Gear','Pour-over kit with kettle, dripper and filters.','$68','#5a5148'],['Subscribe','Fresh roasted every two weeks. Skip anytime.','$17/mo','#6e3b2a']]},
- {id:'hotel',name:'Hotel Site',kicker:'Oceanfront Resort',title:'A More Extraordinary Stay Awaits',sub:'Explore rooms, amenities and dining. Check availability and request details straight from your phone.',cta:'Explore stays',
+  tiles:[['Single Origin','Ethiopia Yirgacheffe, floral and bright. 12oz bag.','$22','#7a4a22','img/coffee-1.jpg'],['Espresso Blend','Dark chocolate and caramel. Built for espresso.','$19','#4b2c18','img/coffee-2.jpg'],['Cold Brew','Slow-steeped concentrate. Smooth, low acid.','$16','#2b3a40','img/coffee-3.jpg'],['Brew Gear','Pour-over kit with kettle, dripper and filters.','$68','#5a5148','img/coffee-4.jpg'],['Subscribe','Fresh roasted every two weeks. Skip anytime.','$17/mo','#6e3b2a','img/coffee-5.jpg']]},
+ {id:'hotel',hero:'img/hotel-hero.jpg',name:'Hotel Site',kicker:'Oceanfront Resort',title:'A More Extraordinary Stay Awaits',sub:'Explore rooms, amenities and dining. Check availability and request details straight from your phone.',cta:'Explore stays',
   grad:'radial-gradient(circle at 75% 25%,#f0a35e,transparent 45%),linear-gradient(180deg,#2a3c63 0%,#d27a58 55%,#0f3a4a 56%,#0a2330 100%)',
-  tiles:[['Rooms','Ocean-view suites with private terraces. From $389 a night.','$389','#35607a'],['Dining','Rooftop grill, sunrise café and the Palm Bar.','Menus','#7a4a35'],['Experiences','Sunset sails, spa rituals and private cabanas.','Book','#2f6b6a'],['Offers','Stay three nights, get the fourth free this season.','4th free','#6b4a7a'],['Gallery','Pool, beach, suites and the lobby lounge.','Photos','#4a5a7a']]},
- {id:'mall',name:'Bal Harbour Mall Site',kicker:'Bal Harbour Shops',title:'Iconic Brands. Extraordinary Experiences.',sub:'Browse brands, view new arrivals, watch campaign videos and save items to your phone.',cta:'Start exploring',
+  tiles:[['Rooms','Ocean-view suites with private terraces. From $389 a night.','$389','#35607a','img/hotel-1.jpg'],['Dining','Rooftop grill, sunrise café and the Palm Bar.','Menus','#7a4a35','img/hotel-2.jpg'],['Experiences','Sunset sails, spa rituals and private cabanas.','Book','#2f6b6a','img/hotel-3.jpg'],['Offers','Stay three nights, get the fourth free this season.','4th free','#6b4a7a','img/hotel-4.jpg'],['Gallery','Pool, beach, suites and the lobby lounge.','Photos','#4a5a7a','img/hotel-5.jpg']]},
+ {id:'mall',hero:'img/mall-hero.jpg',name:'Bal Harbour Mall Site',kicker:'Bal Harbour Shops',title:'Iconic Brands. Extraordinary Experiences.',sub:'Browse brands, view new arrivals, watch campaign videos and save items to your phone.',cta:'Start exploring',
   grad:'radial-gradient(circle at 25% 25%,#d9b56b,transparent 40%),radial-gradient(circle at 80% 70%,#6b4f2a,transparent 55%),linear-gradient(135deg,#14110c,#2a2218)',
-  tiles:[['Shop','Over 100 luxury boutiques. Filter by floor or brand.','Brands','#6b5230'],['Dine','Tables and tasting menus across the Shops.','Reserve','#5a2f2f'],['New Arrivals','This week: resort collections and limited drops.','View','#2f4a5a'],['Explore','Interactive map from your phone to the boutique.','Map','#3d3d5a'],['Events','Private previews, trunk shows and live music.','RSVP','#5a4a2f']]}
+  tiles:[['Shop','Over 100 luxury boutiques. Filter by floor or brand.','Brands','#6b5230','img/mall-1.jpg'],['Dine','Tables and tasting menus across the Shops.','Reserve','#5a2f2f','img/mall-2.jpg'],['New Arrivals','This week: resort collections and limited drops.','View','#2f4a5a','img/mall-3.jpg'],['Explore','Interactive map from your phone to the boutique.','Map','#3d3d5a','img/mall-4.jpg'],['Events','Private previews, trunk shows and live music.','RSVP','#5a4a2f','img/mall-5.jpg']]}
 ];
 
 /* ---------- DISPLAY ---------- */
@@ -179,9 +179,9 @@ function startDisplay(){
   function sc(){return SCENES[st.scene]}
   function renderScene(){
     var s=sc();
-    $('bg').style.background=s.grad;$('bg').style.backgroundSize='140% 140%';
+    $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;$('bg').style.backgroundSize='125% 125%';
     $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
-    $('tiles').innerHTML=s.tiles.map(function(t){return '<div class="tile" style="background:linear-gradient(135deg,'+t[3]+',#0b0d12)"><span>'+t[0]+'</span></div>'}).join('');
+    $('tiles').innerHTML=s.tiles.map(function(t){return '<div class="tile" style="background:'+t[3]+' url('+t[4]+') center/cover"><span>'+t[0]+'</span></div>'}).join('');
     st.row=0;st.col=0;paintFocus();pushState();
   }
   function paintFocus(){
@@ -191,15 +191,15 @@ function startDisplay(){
   function focused(){
     var s=sc();
     if(st.row===0)return{name:s.name+': '+s.cta,desc:s.sub};
-    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3]};
+    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3],img:t[4]};
   }
   function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},2200)}
   function showVol(){$('voli').style.height=st.vol+'%';$('vol').classList.add('show');clearTimeout(volT);volT=setTimeout(function(){$('vol').classList.remove('show')},1400)}
   function closeOv(){st.overlay=null;$('ov').classList.remove('show');$('ov').innerHTML=''}
   function openDetail(){
     var f=focused();st.overlay='detail';st.detIdx=0;
-    var c=f.color||'#4b3a22';
-    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:linear-gradient(135deg,'+c+',#0b0d12)"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div><div>Add to cart · '+(f.price||'More')+'</div><div>Back</div></div></div>';
+    var c=f.color||'#4b3a22',art=f.img?'url('+f.img+') center/cover':'linear-gradient(135deg,'+c+',#0b0d12)';
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:'+art+'"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div><div>Add to cart · '+(f.price||'More')+'</div><div>Back</div></div></div>';
     $('ov').classList.add('show');paintDetail();pushState();
   }
   function paintDetail(){
