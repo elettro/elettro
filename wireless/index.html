@@ -222,9 +222,9 @@ var SCENES=[
  {id:'game',game:true,hero:'img/rompe-hero.jpg',name:'Game Zone · Can Catch',kicker:'Play on the big screen · control with your phone',title:'Can Catch',sub:'Slide left and right to catch the falling cans. Dodge the rocks. Hold the arrows or drag the pad on your phone. No app, no controller.',cta:'Play now',
   grad:'linear-gradient(135deg,#0b0d12,#1b4d3e 50%,#f0b429)',
   tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]},
- {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Bar Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Trivia Night',sub:'Scan to join. No app, no account. Ten questions, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
+ {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Dylan Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Bob Dylan Song Trivia',sub:'Scan to join. No app, no account. Ten questions about Bob Dylan songs, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
   grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
-  tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and events. Between rounds the screen can promote specials, menus and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]}
+  tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and live-music nights. Between rounds the screen can promote the band, specials and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]}
 ];
 
 /* ---------- DISPLAY ---------- */
@@ -403,17 +403,18 @@ function startDisplay(){
   }
   /* ---------------- TRIVIA (many phones) ---------------- */
   var QS=[
-    ['Which planet is known as the Red Planet?',['Venus','Mars','Jupiter','Mercury'],1],
-    ['How many players does one basketball team have on the court?',['4','5','6','7'],1],
-    ['What is the capital of Australia?',['Sydney','Melbourne','Canberra','Perth'],2],
-    ['Which country gave the Statue of Liberty to the United States?',['France','Italy','Spain','Britain'],0],
-    ['What is the largest ocean on Earth?',['Atlantic','Indian','Arctic','Pacific'],3],
-    ['In which sport do you score a birdie?',['Golf','Tennis','Baseball','Cricket'],0],
-    ['Which fruit is the main ingredient of guacamole?',['Lime','Tomato','Avocado','Mango'],2],
-    ['How many strings does a standard guitar have?',['4','5','6','8'],2],
-    ['In which city would you find the Colosseum?',['Athens','Rome','Madrid','Paris'],1],
-    ['In what year did the first iPhone launch?',['2005','2006','2007','2009'],2]
+    ['Which Dylan song asks how many roads a man must walk down?',['Mr. Tambourine Man','Blowin’ in the Wind','Hurricane','Forever Young'],1],
+    ['Which 1965 Dylan song begins with Once upon a time you dressed so fine?',['Positively 4th Street','Subterranean Homesick Blues','Like a Rolling Stone','Just Like a Woman'],2],
+    ['Jimi Hendrix had a famous 1968 hit covering which Dylan song?',['All Along the Watchtower','Mr. Tambourine Man','Hurricane','Forever Young'],0],
+    ['Knockin’ on Heaven’s Door was written for the soundtrack of which western?',['The Searchers','High Noon','Shane','Pat Garrett & Billy the Kid'],3],
+    ['Tangled Up in Blue appears on which 1975 album?',['Desire','Highway 61 Revisited','Blood on the Tracks','Nashville Skyline'],2],
+    ['Which band took Mr. Tambourine Man to number one in 1965?',['The Beatles','The Byrds','The Rolling Stones','The Beach Boys'],1],
+    ['Lay Lady Lay is on which Dylan album?',['Nashville Skyline','Blonde on Blonde','Desire','Time Out of Mind'],0],
+    ['The song Hurricane is about which boxer?',['Muhammad Ali','Rubin Carter','Joe Frazier','Sonny Liston'],1],
+    ['In the Subterranean Homesick Blues film clip, what does Dylan hold up?',['A guitar','A harmonica','Cue cards','Sheet music'],2],
+    ['Which song from the film Wonder Boys won Dylan an Oscar?',['Not Dark Yet','Things Have Changed','Make You Feel My Love','Sugar Baby'],1]
   ];
+
   var COLORS=['#f87171','#60a5fa','#fbbf24','#34d399','#a78bfa','#fb923c','#f472b6','#22d3ee','#a3e635','#e879f9'];
   var PL={},T=null;
   var joinUrl=location.origin+location.pathname+'?c='+id+'&p=1';
@@ -503,7 +504,7 @@ function startDisplay(){
     var h='',live=livePlayers(),q=QS[T.qi];
     if(T.phase==='lobby'){
       var qr='';try{var qq=qrcode(0,'M');qq.addData(joinUrl);qq.make();qr=qq.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){}
-      h='<div class="tv"><div class="kick">Trivia night</div><h2>Scan to join the game</h2><div class="row"><div><div class="tvqr">'+qr+'</div><div class="tvsub" style="margin-top:.8vw">No app. No account.</div></div>'
+      h='<div class="tv"><div class="kick">Bob Dylan song trivia</div><h2>Scan to join the game</h2><div class="row"><div><div class="tvqr">'+qr+'</div><div class="tvsub" style="margin-top:.8vw">No app. No account.</div></div>'
        +'<div style="flex:1"><div class="tvsub" style="margin-bottom:.8vw">'+live.length+' player'+(live.length===1?'':'s')+' in the lobby</div><div class="chips">'
        +allPlayers().map(function(p){return '<span class="chip'+(p.conn&&p.conn.open?'':' off')+'" style="background:'+p.color+'">'+esc(p.name)+'</span>'}).join('')
        +'</div></div></div><div class="tvsub">Host: press OK on the remote to start \u00b7 '+QS.length+' questions</div></div>';
