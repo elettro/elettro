@@ -180,7 +180,10 @@ var SCENES=[
   tiles:[['Palm Trees','Reggae. A featured Stashbox original, streaming now on Stashbox Radio.','Reggae','#1b4d3e','img/radio-1.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Palm+Trees'}]],['Riding Waves (Live)','Reggae. A live Stashbox recording, one of the featured songs on the station.','Reggae','#1b4a6a','img/radio-2.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Riding+Waves'}]],['Dirty Bird','Old Soul. A featured Stashbox original with its own music video.','Old Soul','#5a2a4a','img/radio-3.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Dirty+Bird'}]],['Hippy Speedball','Reggae. I’m On My Way. Featured original on Stashbox Radio.','Reggae','#7a5a1b','img/radio-4.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Hippy+Speedball+(original)'}]],['Vacation Life','Reggae live recording with a mellow beach mood.','Reggae','#1b6a6a','img/radio-5.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Vacation+Life'}]]]},
  {id:'rompe',can:true,hero:'img/rompe-hero.jpg',name:'ROMPE Energy · 4 Flavors',kicker:'ROMPE · Energy · Zero Sugar',title:'Four Flavors. Zero Sugar. Pure Rompe.',sub:'Meet the lineup: Limoncito, Mojito Mágico, Passion Papi and Pop That Piña. Watch the videos on the big screen, or tap through to Stashbox Radio on your phone.',cta:'Meet the flavors',
   grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
-  tiles:[['Limoncito','Lime-forward energy, zero sugar, 16 fl oz. Watch the Positive Energy videos.','16 fl oz','#3f8f1f','img/rompe-limoncito.png',[{l:'Watch video',play:['v1','v2','v3']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Mojito Mágico','Mint, lime and ice. The back of the can calls out boosted brain power, laser focus and extra energy. Watch Call & Response.','16 fl oz','#e832d2','img/rompe-mojito.jpg',[{l:'Watch video',play:['v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],'img/rompe-mojito-back.jpg'],['Passion Papi','Passion fruit in hot pink. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#a0307a','img/rompe-passion.jpg',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],null,'cover'],['Pop That Piña','Golden pineapple on teal. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#157a7a','img/rompe-pina.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]]]}
+  tiles:[['Limoncito','Lime-forward energy, zero sugar, 16 fl oz. Watch the Positive Energy videos.','16 fl oz','#3f8f1f','img/rompe-limoncito.png',[{l:'Watch video',play:['v1','v2','v3']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Mojito Mágico','Mint, lime and ice. The back of the can calls out boosted brain power, laser focus and extra energy. Watch Call & Response.','16 fl oz','#e832d2','img/rompe-mojito.jpg',[{l:'Watch video',play:['v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],'img/rompe-mojito-back.jpg'],['Passion Papi','Passion fruit in hot pink. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#a0307a','img/rompe-passion.jpg',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],null,'cover'],['Pop That Piña','Golden pineapple on teal. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#157a7a','img/rompe-pina.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]]]},
+ {id:'game',game:true,hero:'img/rompe-hero.jpg',name:'Game Zone · Can Catch',kicker:'Play on the big screen · control with your phone',title:'Can Catch',sub:'Slide left and right to catch the falling cans. Dodge the rocks. Hold the arrows or drag the pad on your phone. No app, no controller.',cta:'Play now',
+  grad:'linear-gradient(135deg,#0b0d12,#1b4d3e 50%,#f0b429)',
+  tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]}
 ];
 
 /* ---------- DISPLAY ---------- */
@@ -201,7 +204,7 @@ function startDisplay(){
     $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;$('bg').style.backgroundSize='125% 125%';
     $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
     $('tiles').innerHTML=s.tiles.map(function(t){
-      if(s.can&&t[7]!=='cover')return '<div class="tile can" style="background:linear-gradient(160deg,'+t[3]+',#0b0d12)"><img src="'+t[4]+'" alt=""><span>'+t[0]+'</span></div>';
+      if((s.can||s.game)&&t[7]!=='cover')return '<div class="tile can" style="background:linear-gradient(160deg,'+t[3]+',#0b0d12)"><img src="'+t[4]+'" alt=""><span>'+t[0]+'</span></div>';
       return '<div class="tile" style="background:'+t[3]+' url('+t[4]+') center/cover"><span>'+t[0]+'</span></div>'}).join('');
     st.row=0;st.col=0;paintFocus();pushState();
   }
@@ -231,7 +234,7 @@ function startDisplay(){
   }
   function mids(){
     var s=sc(),sh=shopsList();
-    if(sh)return sh.map(function(x){return x.l+(x.play?' ▶':' ↗')});
+    if(sh)return sh.map(function(x){return x.l+((x.play||x.game)?' ▶':' ↗')});
     return [(s.act2||'Add to cart')+' · '+(focused().price||'More')];
   }
   function openVideo(ids,i){
@@ -251,6 +254,7 @@ function startDisplay(){
   }
   function openShop(x){
     if(x.play){openVideo(x.play,0);return}
+    if(x.game){closeOv();startGame(1);return}
     if(conn&&conn.open){conn.send({t:'open',url:x.u,label:x.l});toast('Opening on your phone: '+x.l)}
     else toast('Connect a phone first')
   }
@@ -267,12 +271,100 @@ function startDisplay(){
     var f=focused();
     if(conn&&conn.open){conn.send({t:'saved',name:f.name,price:f.price||'',scene:sc().name});toast('Sent to your phone: '+f.name)}
   }
+  var LEVELS=[{n:'Easy',dur:45,fall:150,spawn:950,rock:.12},{n:'Normal',dur:40,fall:210,spawn:720,rock:.2},{n:'Hard',dur:35,fall:300,spawn:520,rock:.3},{n:'Marathon',dur:75,fall:230,spawn:660,rock:.22}];
+  var GI={a:new Image(),b:new Image()};GI.a.src='img/rompe-limoncito.png';GI.b.src='img/rompe-pina.png';
+  var G=null,gRaf=0;
+  function bestKey(){return 'wl-best-'+G.lv.n}
+  function startGame(li){
+    st.overlay='game';st.gameLevel=li;
+    $('ov').className='overlay show';
+    $('ov').innerHTML='<canvas id="gc" style="width:100%;height:100%"></canvas>';
+    var c=$('gc');c.width=$('ov').clientWidth;c.height=$('ov').clientHeight;
+    G={lv:LEVELS[li],c:c,x:c.width/2,axis:0,items:[],score:0,lives:3,t:0,spawn:0,over:false,paused:false,last:performance.now(),sent:0,best:0,shake:0,flash:0,newBest:false};
+    try{G.best=Number(localStorage.getItem(bestKey()))||0}catch(e){}
+    cancelAnimationFrame(gRaf);gRaf=requestAnimationFrame(gloop);pushState();
+  }
+  function endGame(){
+    G.over=true;
+    if(G.score>G.best){G.best=G.score;G.newBest=true;try{localStorage.setItem(bestKey(),String(G.score))}catch(e){}}
+    if(conn&&conn.open)conn.send({t:'saved',name:'Can Catch ('+G.lv.n+') score: '+G.score,price:'',scene:'Game Zone'});
+    pushState();
+  }
+  function stopGame(){cancelAnimationFrame(gRaf);G=null;closeOv()}
+  function gloop(now){
+    if(st.overlay!=='game'||!G)return;
+    var g=G,c=g.c,x=c.getContext('2d'),dt=Math.min(.05,(now-g.last)/1000);g.last=now;
+    var W=c.width,H=c.height,cupW=W*.13,cupH=H*.1,cupY=H-cupH-H*.04,ih=H*.15;
+    if(!g.over&&!g.paused){
+      g.t+=dt;g.spawn-=dt*1000;
+      g.x=Math.max(cupW/2,Math.min(W-cupW/2,g.x+g.axis*W*.85*dt));
+      if(g.spawn<=0){
+        g.spawn=g.lv.spawn*(.7+Math.random()*.6);
+        var r=Math.random(),type=r<g.lv.rock?'rock':(r<g.lv.rock+.15?'gold':'can');
+        g.items.push({x:ih*.4+Math.random()*(W-ih*.8),y:-ih,v:g.lv.fall*(H/520)*(.85+Math.random()*.4),type:type,rot:Math.random()*6});
+      }
+      for(var i=g.items.length-1;i>=0;i--){
+        var it=g.items[i];it.y+=it.v*dt;it.rot+=dt*2;
+        var cy=it.y+ih*.5;
+        if(cy>=cupY&&cy<=cupY+cupH*.8&&Math.abs(it.x-g.x)<cupW*.55){
+          if(it.type==='rock'){g.lives--;g.shake=.35;g.flash=.25}
+          else{g.score+=it.type==='gold'?25:10}
+          g.items.splice(i,1);
+          if(g.lives<=0){endGame();break}
+        } else if(it.y>H){g.items.splice(i,1)}
+      }
+      if(!g.over&&g.t>=g.lv.dur)endGame();
+      if(now-g.sent>500){g.sent=now;pushState()}
+    }
+    g.shake=Math.max(0,g.shake-dt);g.flash=Math.max(0,g.flash-dt);
+    x.save();
+    if(g.shake>0)x.translate((Math.random()-.5)*10,(Math.random()-.5)*10);
+    var bg=x.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#10243a');bg.addColorStop(1,'#1b4d3e');x.fillStyle=bg;x.fillRect(0,0,W,H);
+    x.fillStyle='rgba(255,255,255,.05)';for(var k=0;k<14;k++){x.fillRect((k*97)%W,(k*53+g.t*20)%H,3,3)}
+    g.items.forEach(function(it){
+      if(it.type==='rock'){
+        x.save();x.translate(it.x,it.y+ih*.5);x.rotate(it.rot);x.fillStyle='#7d838c';x.strokeStyle='#4b5058';x.lineWidth=3;
+        x.beginPath();for(var a=0;a<7;a++){var rr=ih*(.3+((a*37)%5)*.04),an=a/7*6.283;x.lineTo(Math.cos(an)*rr,Math.sin(an)*rr)}x.closePath();x.fill();x.stroke();x.restore();
+      }else{
+        var im=it.type==='gold'?GI.b:GI.a;
+        if(it.type==='gold'){x.save();x.shadowColor='#ffd34d';x.shadowBlur=22}
+        if(im.complete&&im.naturalWidth)x.drawImage(im,it.x-ih*.2,it.y,ih*.4,ih);
+        if(it.type==='gold')x.restore();
+      }
+    });
+    /* catcher: a cooler bucket */
+    x.fillStyle='#f0b429';x.beginPath();x.moveTo(g.x-cupW/2,cupY);x.lineTo(g.x+cupW/2,cupY);x.lineTo(g.x+cupW*.4,cupY+cupH);x.lineTo(g.x-cupW*.4,cupY+cupH);x.closePath();x.fill();
+    x.fillStyle='#b07d0f';x.fillRect(g.x-cupW/2,cupY,cupW,cupH*.18);
+    x.restore();
+    if(g.flash>0){x.fillStyle='rgba(255,40,40,'+(g.flash*1.2)+')';x.fillRect(0,0,W,H)}
+    /* HUD */
+    var fs=Math.max(14,H*.06);x.font='700 '+fs+'px Inter,system-ui,sans-serif';x.textBaseline='top';x.fillStyle='#fff';
+    x.textAlign='left';x.fillText('Score '+g.score,W*.03,H*.04);
+    x.textAlign='center';x.fillText(g.lv.n+' · '+Math.max(0,Math.ceil(g.lv.dur-g.t))+'s',W/2,H*.04);
+    x.textAlign='right';x.fillStyle='#ff6b6b';x.fillText(new Array(Math.max(0,g.lives)+1).join('♥ '),W*.97,H*.04);
+    if(g.paused||g.over){
+      x.fillStyle='rgba(5,7,10,.78)';x.fillRect(0,0,W,H);x.textAlign='center';x.fillStyle='#fff';
+      x.font='700 '+H*.12+'px Georgia,serif';x.fillText(g.over?(g.lives<=0?'Game over':'Time!'):'Paused',W/2,H*.2);
+      if(g.over){
+        x.font='700 '+H*.09+'px Inter,system-ui,sans-serif';x.fillStyle='#f0b429';x.fillText('Score '+g.score,W/2,H*.4);
+        x.font='500 '+H*.05+'px Inter,system-ui,sans-serif';x.fillStyle='#fff';
+        x.fillText((g.newBest?'New best! ':'Best '+g.best+'  ')+'Sent to your phone',W/2,H*.55);
+        x.fillStyle='#9aa4b0';x.fillText('OK to play again  ·  Back to exit',W/2,H*.68);
+      }
+    }
+    gRaf=requestAnimationFrame(gloop);
+  }
   function pushState(){
     if(!conn||!conn.open)return;
     var f=focused();
-    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:f.name,overlay:st.overlay||''});
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||''});
   }
   function key(k){
+    if(st.overlay==='game'){
+      if(k==='back'||k==='menu'||k==='home'){stopGame();pushState();return}
+      if(k==='select'&&G&&G.over){startGame(st.gameLevel);return}
+      return;
+    }
     if(st.overlay==='video'){
       var v=$('vp');
       if(k==='left'||k==='right'){st.vidx=(st.vidx+(k==='right'?1:st.vlist.length-1))%st.vlist.length;loadVid()}
@@ -308,7 +400,9 @@ function startDisplay(){
         case 'right':if(st.row===1)st.col=Math.min(4,st.col+1);break;
         case 'up':st.row=0;break;
         case 'down':st.row=1;break;
-        case 'select':openDetail();return;
+        case 'select':
+          if(sc().game&&(st.row===0||st.col<4)){startGame(st.row===0?1:st.col);return}
+          openDetail();return;
         case 'send':send();break;
         case 'menu':openMenu();return;
         case 'home':st.scene=0;renderScene();toast('Home');return;
@@ -319,8 +413,10 @@ function startDisplay(){
     if(k==='play'){}
   }
   function handle(m){
+    if(m&&m.t==='axis'){if(G&&st.overlay==='game')G.axis=Math.max(-1,Math.min(1,Number(m.x)||0));return}
     if(!m||m.t!=='key')return;
     var k=m.k;
+    if(st.overlay==='game'){if(k==='play'&&G&&!G.over){G.paused=!G.paused}else key(k);return}
     if(st.overlay==='video'){
       var vp=$('vp');
       if(k==='play'){if(vp.paused){vp.play();toast('Playing')}else{vp.pause();toast('Paused')}return}
@@ -334,8 +430,10 @@ function startDisplay(){
   /* keyboard fallback for testing */
   document.addEventListener('keydown',function(e){
     var m={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Enter:'select',Escape:'back',m:'menu',h:'home',' ':'play'}[e.key];
+    if(st.overlay==='game'&&G&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();G.axis=e.key==='ArrowLeft'?-1:1;return}
     if(m){e.preventDefault();handle({t:'key',k:m})}
   });
+  document.addEventListener('keyup',function(e){if(G&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))G.axis=0});
 
   function setPaired(on){
     body.classList.toggle('paired',on);
@@ -399,6 +497,19 @@ function startRemote(){
   });
   /* pad: tap arrows, plus swipe anywhere on pad */
   pad.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){send(b.dataset.k)})});
+  var lastAx=0,lastT=0,pressing=false;
+  function sendAxis(v){
+    v=Math.round(v*10)/10;var now=Date.now();
+    if(v===lastAx||(v!==0&&now-lastT<40))return;
+    lastAx=v;lastT=now;if(conn&&conn.open)conn.send({t:'axis',x:v});
+  }
+  function axisFrom(e){
+    var r=pad.getBoundingClientRect(),a=(e.clientX-(r.left+r.width/2))/(r.width*.35);
+    a=Math.max(-1,Math.min(1,a));sendAxis(Math.abs(a)<.15?0:a);
+  }
+  pad.addEventListener('pointerdown',function(e){pressing=true;axisFrom(e)});
+  pad.addEventListener('pointermove',function(e){if(pressing)axisFrom(e)});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(n){pad.addEventListener(n,function(){pressing=false;sendAxis(0)})});
   var sx,sy;
   pad.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
   pad.addEventListener('touchend',function(e){
