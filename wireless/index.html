@@ -19,9 +19,9 @@ body.mode-display #display{display:grid}
 .dot{width:.7em;height:.7em;border-radius:50%;background:#e0a040}
 .pill.on{color:var(--ok)}.pill.on .dot{background:var(--ok);box-shadow:0 0 12px var(--ok)}
 .stage{position:relative;border-radius:1.4vw;overflow:hidden;border:1px solid var(--line);display:grid;grid-template-rows:1fr auto}
-.bg{position:absolute;inset:0;transition:background 1s,opacity .6s;background-size:140% 140%;animation:drift 18s ease-in-out infinite alternate}
+.bg{position:absolute;inset:0;transition:background 1s,opacity .6s;background-size:cover;background-position:center;animation:drift 18s ease-in-out infinite alternate}
 body.paused .bg{animation-play-state:paused}
-@keyframes drift{from{background-position:0 0}to{background-position:100% 100%}}
+@keyframes drift{from{transform:scale(1.04) translate(-1.5%,-1%)}to{transform:scale(1.1) translate(1.5%,1%)}}
 .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.1) 70%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 50%)}
 .hero{position:relative;z-index:2;padding:4vw;display:flex;flex-direction:column;justify-content:center;gap:1.1vw;max-width:55%}
 .kicker{font-size:clamp(11px,1vw,15px);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
@@ -244,7 +244,7 @@ function startDisplay(){
   function sc(){return SCENES[st.scene]}
   function renderScene(){
     var s=sc();
-    $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;$('bg').style.backgroundSize='125% 125%';
+    $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;
     $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
     $('tiles').innerHTML=s.tiles.map(function(t){
       if((s.can||s.game)&&t[7]!=='cover')return '<div class="tile can" style="background:linear-gradient(160deg,'+t[3]+',#0b0d12)"><img src="'+t[4]+'" alt=""><span>'+t[0]+'</span></div>';
