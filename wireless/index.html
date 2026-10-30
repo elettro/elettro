@@ -45,6 +45,12 @@ body.paired .qrbox{opacity:0;transform:scale(.8);pointer-events:none}
 .card{width:min(58vw,820px);border:1px solid var(--line);border-radius:1.2vw;background:var(--panel);padding:2.6vw;display:grid;gap:1.1vw}
 .card h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,3.2vw,52px)}
 .card .art{aspect-ratio:21/9;border-radius:.8vw}
+.card .art.can{display:flex;justify-content:center;gap:3vw;padding:.8vw 0}
+.card .art.can img{height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 .6vw 1vw rgba(0,0,0,.5))}
+.tile.can img{position:absolute;left:50%;top:5%;height:90%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 .5vw .8vw rgba(0,0,0,.5))}
+.vid{position:relative;height:92%;aspect-ratio:9/16;max-width:90%;border-radius:1vw;overflow:hidden;background:#000;border:1px solid var(--line)}
+.vid video{width:100%;height:100%;object-fit:contain;background:#000}
+.vcap{position:absolute;left:0;right:0;bottom:0;padding:1.2vw;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:clamp(11px,1.1vw,16px);letter-spacing:.12em;text-transform:uppercase}
 .card p{margin:0;color:#c4cad2;font-size:clamp(13px,1.3vw,20px);line-height:1.5}
 .acts{display:flex;gap:1vw;flex-wrap:wrap}
 .acts div{padding:.8em 1.4em;border:1px solid var(--line);border-radius:99px;font-size:clamp(11px,1vw,15px);letter-spacing:.12em;text-transform:uppercase}
@@ -152,6 +158,7 @@ var body=document.body;
 function $(id){return document.getElementById(id)}
 
 /* ---------- shared content ---------- */
+var VIDEOS={v1:{t:'Limoncito · Positive Energy: The Visitor',s:'vid/rompe-v1.mp4'},v2:{t:'Limoncito · Positive Energy: Angry Wife',s:'vid/rompe-v2.mp4'},v3:{t:'Limoncito · Positive Energy: The Visitor (Wan 3.0)',s:'vid/rompe-v3.mp4'},v4:{t:'Mojito Mágico · Call & Response',s:'vid/rompe-v4.mp4'}};
 var SCENES=[
  {id:'coffee',shops:[{l:'Shop Don Pablo',u:'https://donpablocoffee.com/products/navy-seal-foundation-coffee'},{l:'Shop Blue Card Coffee',u:'https://bluecardcoffee.org/'}],hero:'img/coffee-hero.jpg',name:'Coffee Product Site',kicker:'Artisan Roasters',title:'Discover Exceptional Coffee',sub:'Crafted for a better day. Browse roasts, watch the story, add to cart, all from your phone.',cta:'Explore our roasts',
   grad:'radial-gradient(circle at 70% 30%,#8a5a2b,transparent 55%),radial-gradient(circle at 20% 80%,#3a2012,transparent 60%),#1b110a',
@@ -170,7 +177,10 @@ var SCENES=[
   tiles:[['Squidly Cole Drummer Shoes','Black signature-series sneakers, the official Squidly Cole reggae drummer edition. $69.99.','$69.99','#2a2a2a','img/shop-1.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/official-squidly-cole-reggae-drummer-black-shoes-signature-series'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Rasta Tropical Round Rug','Stashbox rasta green, yellow and red tropical design. $89.99.','$89.99','#1f5a3a','img/shop-2.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/round-rug-stashbox-rasta-green-yellow-red-tropical-design-001'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['St. Pete Pelican Beach Towel','Vertical pelican design, made for the beach. $34.99.','$34.99','#2a6a8a','img/shop-3.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/st-pete-pelican-beach-towel-vertical-design-010'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Surfing Astronaut Pint Glass','16oz pint glass, space-wave surf art. $19.99.','$19.99','#4a3a7a','img/shop-4.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/surfing-astronaut-space-wave-art-pint-glass-16oz-waves-designs-69'},{l:'Browse the shop',u:'https://stashbox.ai/'}]],['Guitars Bomber Jacket','Men’s all-over-print bomber, colorful abstract guitars. $84.99.','$84.99','#7a3a5a','img/shop-5.jpg',[{l:'View on stashbox.ai',u:'https://stashbox.ai/products/mens-bomber-jacket-aop-colorful-abstract-guitars-model'},{l:'Browse the shop',u:'https://stashbox.ai/'}]]]},
  {id:'stashradio',hero:'img/radio-1.jpg',name:'Stashbox Radio · stashbox.com/radio',kicker:'stashbox.com/radio',title:'Stashbox Radio. Always On.',sub:'Original music from a South Florida band: reggae, old soul, rock and more. Pick a song on the big screen, then play it on your phone.',cta:'Start listening',
   grad:'linear-gradient(135deg,#050607,#1b3a2a 55%,#d9a441)',
-  tiles:[['Palm Trees','Reggae. A featured Stashbox original, streaming now on Stashbox Radio.','Reggae','#1b4d3e','img/radio-1.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Palm+Trees'}]],['Riding Waves (Live)','Reggae. A live Stashbox recording, one of the featured songs on the station.','Reggae','#1b4a6a','img/radio-2.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Riding+Waves'}]],['Dirty Bird','Old Soul. A featured Stashbox original with its own music video.','Old Soul','#5a2a4a','img/radio-3.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Dirty+Bird'}]],['Hippy Speedball','Reggae. I’m On My Way. Featured original on Stashbox Radio.','Reggae','#7a5a1b','img/radio-4.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Hippy+Speedball+(original)'}]],['Vacation Life','Reggae live recording with a mellow beach mood.','Reggae','#1b6a6a','img/radio-5.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Vacation+Life'}]]]}
+  tiles:[['Palm Trees','Reggae. A featured Stashbox original, streaming now on Stashbox Radio.','Reggae','#1b4d3e','img/radio-1.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Palm+Trees'}]],['Riding Waves (Live)','Reggae. A live Stashbox recording, one of the featured songs on the station.','Reggae','#1b4a6a','img/radio-2.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Riding+Waves'}]],['Dirty Bird','Old Soul. A featured Stashbox original with its own music video.','Old Soul','#5a2a4a','img/radio-3.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Dirty+Bird'}]],['Hippy Speedball','Reggae. I’m On My Way. Featured original on Stashbox Radio.','Reggae','#7a5a1b','img/radio-4.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Hippy+Speedball+(original)'}]],['Vacation Life','Reggae live recording with a mellow beach mood.','Reggae','#1b6a6a','img/radio-5.jpg',[{l:'Listen on Stashbox Radio',u:'https://stashbox.com/radio/'},{l:'Shop this song',u:'https://stashbox.ai/search?q=Vacation+Life'}]]]},
+ {id:'rompe',can:true,hero:'img/rompe-hero.jpg',name:'ROMPE Energy · 4 Flavors',kicker:'ROMPE · Energy · Zero Sugar',title:'Four Flavors. Zero Sugar. Pure Rompe.',sub:'Meet the lineup: Limoncito, Mojito Mágico, Passion Papi and Pop That Piña. Watch the videos on the big screen, or tap through to Stashbox Radio on your phone.',cta:'Meet the flavors',
+  grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
+  tiles:[['Limoncito','Lime-forward energy, zero sugar, 16 fl oz. Watch the Positive Energy videos.','16 fl oz','#3f8f1f','img/rompe-limoncito.png',[{l:'Watch video',play:['v1','v2','v3']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Mojito Mágico','Mint, lime and ice. The back of the can calls out boosted brain power, laser focus and extra energy. Watch Call & Response.','16 fl oz','#e832d2','img/rompe-mojito.jpg',[{l:'Watch video',play:['v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],'img/rompe-mojito-back.jpg'],['Passion Papi','Passion fruit in hot pink. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#a0307a','img/rompe-passion.jpg',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],null,'cover'],['Pop That Piña','Golden pineapple on teal. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#157a7a','img/rompe-pina.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]]]}
 ];
 
 /* ---------- DISPLAY ---------- */
@@ -190,7 +200,9 @@ function startDisplay(){
     var s=sc();
     $('bg').style.background="url('"+s.hero+"') center/cover,"+s.grad;$('bg').style.backgroundSize='125% 125%';
     $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
-    $('tiles').innerHTML=s.tiles.map(function(t){return '<div class="tile" style="background:'+t[3]+' url('+t[4]+') center/cover"><span>'+t[0]+'</span></div>'}).join('');
+    $('tiles').innerHTML=s.tiles.map(function(t){
+      if(s.can&&t[7]!=='cover')return '<div class="tile can" style="background:linear-gradient(160deg,'+t[3]+',#0b0d12)"><img src="'+t[4]+'" alt=""><span>'+t[0]+'</span></div>';
+      return '<div class="tile" style="background:'+t[3]+' url('+t[4]+') center/cover"><span>'+t[0]+'</span></div>'}).join('');
     st.row=0;st.col=0;paintFocus();pushState();
   }
   function paintFocus(){
@@ -200,7 +212,7 @@ function startDisplay(){
   function focused(){
     var s=sc();
     if(st.row===0)return{name:s.name+': '+s.cta,desc:s.sub};
-    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3],img:t[4]};
+    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3],img:t[4],img2:t[6],can:sc().can&&t[7]!=='cover'};
   }
   function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},2200)}
   function showVol(){$('voli').style.height=st.vol+'%';$('vol').classList.add('show');clearTimeout(volT);volT=setTimeout(function(){$('vol').classList.remove('show')},1400)}
@@ -208,7 +220,8 @@ function startDisplay(){
   function openDetail(){
     var f=focused();st.overlay='detail';st.detIdx=0;
     var c=f.color||'#4b3a22',art=f.img?'url('+f.img+') center/cover':'linear-gradient(135deg,'+c+',#0b0d12)';
-    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:'+art+'"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div>'+mids().map(function(x){return '<div>'+x+'</div>'}).join('')+'<div>Back</div></div></div>';
+    var artHtml=f.can?'<div class="art can" style="background:linear-gradient(135deg,'+c+',#0b0d12)"><img src="'+f.img+'" alt="">'+(f.img2?'<img src="'+f.img2+'" alt="">':'')+'</div>':'<div class="art" style="background:'+art+'"></div>';
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div>'+artHtml+'<h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div>'+mids().map(function(x){return '<div>'+x+'</div>'}).join('')+'<div>Back</div></div></div>';
     $('ov').classList.add('show');paintDetail();pushState();
   }
   function shopsList(){
@@ -218,10 +231,26 @@ function startDisplay(){
   }
   function mids(){
     var s=sc(),sh=shopsList();
-    if(sh)return sh.map(function(x){return x.l+' ↗'});
+    if(sh)return sh.map(function(x){return x.l+(x.play?' ▶':' ↗')});
     return [(s.act2||'Add to cart')+' · '+(focused().price||'More')];
   }
+  function openVideo(ids,i){
+    st.overlay='video';st.vlist=ids;st.vidx=i||0;
+    $('ov').className='overlay show';
+    $('ov').innerHTML='<div class="vid"><video id="vp" playsinline></video><div class="vcap" id="vcap"></div></div>';
+    loadVid();pushState();
+  }
+  function loadVid(){
+    var v=$('vp'),o=VIDEOS[st.vlist[st.vidx]];
+    v.src=o.s;v.poster=o.s.replace('.mp4','.jpg');v.volume=st.vol/100;
+    $('vcap').textContent=o.t+' · '+(st.vidx+1)+' of '+st.vlist.length;
+    v.onended=function(){st.vidx=(st.vidx+1)%st.vlist.length;loadVid()};
+    v.onclick=function(){v.muted=false};
+    var pr=v.play();
+    if(pr&&pr.catch)pr.catch(function(){v.muted=true;v.play();toast('Playing muted. Click the screen once for sound.')});
+  }
   function openShop(x){
+    if(x.play){openVideo(x.play,0);return}
     if(conn&&conn.open){conn.send({t:'open',url:x.u,label:x.l});toast('Opening on your phone: '+x.l)}
     else toast('Connect a phone first')
   }
@@ -241,9 +270,16 @@ function startDisplay(){
   function pushState(){
     if(!conn||!conn.open)return;
     var f=focused();
-    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':f.name,overlay:st.overlay||''});
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:f.name,overlay:st.overlay||''});
   }
   function key(k){
+    if(st.overlay==='video'){
+      var v=$('vp');
+      if(k==='left'||k==='right'){st.vidx=(st.vidx+(k==='right'?1:st.vlist.length-1))%st.vlist.length;loadVid()}
+      else if(k==='select'){if(v.paused)v.play();else v.pause()}
+      else if(k==='back'||k==='menu'||k==='home'){closeOv()}
+      pushState();return;
+    }
     if(st.overlay==='menu'){
       if(k==='up'||k==='left')st.menuIdx=(st.menuIdx+SCENES.length-1)%SCENES.length;
       else if(k==='down'||k==='right')st.menuIdx=(st.menuIdx+1)%SCENES.length;
@@ -285,6 +321,11 @@ function startDisplay(){
   function handle(m){
     if(!m||m.t!=='key')return;
     var k=m.k;
+    if(st.overlay==='video'){
+      var vp=$('vp');
+      if(k==='play'){if(vp.paused){vp.play();toast('Playing')}else{vp.pause();toast('Paused')}return}
+      if(k==='volup'||k==='voldown'){st.vol=Math.max(0,Math.min(100,st.vol+(k==='volup'?10:-10)));vp.volume=st.vol/100;vp.muted=false;showVol();return}
+    }
     if(k==='play'){body.classList.toggle('paused');toast(body.classList.contains('paused')?'Paused':'Playing');return}
     if(k==='volup'){st.vol=Math.min(100,st.vol+10);showVol();return}
     if(k==='voldown'){st.vol=Math.max(0,st.vol-10);showVol();return}
