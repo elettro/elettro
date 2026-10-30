@@ -836,7 +836,7 @@ async function pullMatrix() {
     // The feed labels SolarMeister's LinkedIn with another brand's name; show it unlabeled until the account row is fixed.
     mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return; const l = b.profiles.find((x) => x.destination === "linkedin"); if (l && /davie/i.test(l.handle || "")) l.handle = ""; });
     // Threads is connected and live for these brands.
-    mxBrands.forEach((b) => { if (!["elettro", "weightlossdavie"].includes(b.slug)) return;
+    mxBrands.forEach((b) => { if (!["elettro", "weightlossdavie", "solarmeister"].includes(b.slug)) return;
       const live = { destination: "threads", done: ALL, pct: 100, note: "LIVE: Threads connected and posting from Elettro OS." };
       const i = b.profiles.findIndex((x) => x.destination === "threads");
       if (i < 0) b.profiles.push({ handle: "Threads", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live }; });
