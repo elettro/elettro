@@ -222,7 +222,7 @@ var SCENES=[
  {id:'game',game:true,hero:'img/rompe-hero.jpg',name:'Game Zone · Can Catch',kicker:'Play on the big screen · control with your phone',title:'Can Catch',sub:'Slide left and right to catch the falling cans. Dodge the rocks. Hold the arrows or drag the pad on your phone. No app, no controller.',cta:'Play now',
   grad:'linear-gradient(135deg,#0b0d12,#1b4d3e 50%,#f0b429)',
   tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]},
- {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Dylan Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Bob Dylan Song Trivia',sub:'Scan to join. No app, no account. Ten questions about Bob Dylan songs, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
+ {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Dylan Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Bob Dylan Song Trivia',sub:'Scan to join. No app, no account. Sixteen questions that cover every song on tonight’s setlist, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
   grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
   tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and live-music nights. Between rounds the screen can promote the band, specials and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]}
 ];
@@ -404,16 +404,23 @@ function startDisplay(){
   /* ---------------- TRIVIA (many phones) ---------------- */
   var QS=[
     ['Silvio was co-written with which famous Grateful Dead lyricist?',['Jerry Garcia','Robert Hunter','Bob Weir','Phil Lesh'],1],
-    ['Isis is on which 1976 Dylan album?',['Desire','Blood on the Tracks','Infidels','Street-Legal'],0],
-    ['Shooting Star is on which Daniel Lanois-produced 1989 album?',['Time Out of Mind','Infidels','Oh Mercy','Slow Train Coming'],2],
+    ['Positively 4th Street was released in 1965 as what?',['A stand-alone single','A track on Highway 61 Revisited','A track on Blonde on Blonde','A live album track'],0],
+    ['Gotta Serve Somebody is on which 1979 album?',['Infidels','Shot of Love','Saved','Slow Train Coming'],3],
+    ['Things Have Changed won Dylan an Academy Award for which film?',['Pat Garrett & Billy the Kid','Hearts of Fire','Wonder Boys','Masked and Anonymous'],2],
+    ['Isis is on which 1976 album?',['Desire','Blood on the Tracks','Infidels','Street-Legal'],0],
+    ['Tangled Up in Blue and Simple Twist of Fate are both on which 1975 album?',['Desire','Blood on the Tracks','Oh Mercy','Planet Waves'],1],
+    ['Shooting Star is on which Daniel Lanois-produced 1989 album?',['Time Out of Mind','Infidels','Oh Mercy','Street-Legal'],2],
+    ['Rainy Day Women #12 & 35 opens which 1966 album?',['Highway 61 Revisited','Bringing It All Back Home','John Wesley Harding','Blonde on Blonde'],3],
     ['In Ballad of a Thin Man, what is the confused man’s name?',['Mr. Jones','Mr. Smith','Mr. Brown','Mr. Johnson'],0],
-    ['Jokerman and Don’t Fall Apart on Me Tonight are both on which 1983 album?',['Street-Legal','Desire','Oh Mercy','Infidels'],3],
-    ['Masters of War is on which 1963 album?',['Highway 61 Revisited','The Freewheelin’ Bob Dylan','John Wesley Harding','Desire'],1],
-    ['Love Sick opens which 1997 album that won Album of the Year?',['Oh Mercy','Slow Train Coming','Time Out of Mind','Infidels'],2],
-    ['Senor (Tales of Yankee Power) is on which 1978 album?',['Desire','Planet Waves','Street-Legal','Blood on the Tracks'],2],
-    ['Gotta Serve Somebody is on which 1979 album?',['Infidels','Slow Train Coming','Shot of Love','Saved'],1],
-    ['She Belongs to Me is on which 1965 album?',['Blonde on Blonde','John Wesley Harding','Bringing It All Back Home','Highway 61 Revisited'],2]
+    ['She Belongs to Me is on which 1965 album?',['Blonde on Blonde','John Wesley Harding','Bringing It All Back Home','Highway 61 Revisited'],2],
+    ['Jokerman and Don’t Fall Apart on Me Tonight are both on which 1983 album?',['Street-Legal','Infidels','Desire','Oh Mercy'],1],
+    ['Masters of War is on which 1963 album?',['Highway 61 Revisited','Another Side of Bob Dylan','Desire','The Freewheelin’ Bob Dylan'],3],
+    ['Love Sick and Cold Irons Bound are both on which 1997 album that won Album of the Year?',['Time Out of Mind','Oh Mercy','Slow Train Coming','Infidels'],0],
+    ['Highway 61 is the title track of which 1965 album?',['Bringing It All Back Home','Blonde on Blonde','Highway 61 Revisited','Another Side of Bob Dylan'],2],
+    ['Slow Train Coming (1979) began a run of Dylan albums built around what?',['Jazz standards','Christian gospel songs','Reggae','Country duets'],1],
+    ['Senor (Tales of Yankee Power) is on which 1978 album?',['Desire','Planet Waves','Infidels','Street-Legal'],3]
   ];
+
 
 
   var COLORS=['#f87171','#60a5fa','#fbbf24','#34d399','#a78bfa','#fb923c','#f472b6','#22d3ee','#a3e635','#e879f9'];
