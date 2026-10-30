@@ -90,6 +90,41 @@ body.mode-remote #remote{display:flex}
 .saved div{background:#121821;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
 .saved small{color:var(--ok);letter-spacing:.1em;text-transform:uppercase;font-size:10px;align-self:center}
 .rerr{color:#ffb3a8;font-size:13px;text-align:center;display:none;max-width:320px}
+
+/* ---------- TRIVIA (display) ---------- */
+.tv{width:95%;height:93%;display:flex;flex-direction:column;gap:1.1vw;padding:1.2vw}
+.tv h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(20px,3.3vw,54px);line-height:1.1}
+.tv .kick{font-size:clamp(10px,1vw,15px);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.tv .row{display:flex;gap:2.4vw;flex:1;min-height:0}
+.tv .opts{display:grid;grid-template-columns:1fr 1fr;gap:1vw;flex:1}
+.tv .opt{border-radius:1vw;padding:1vw 1.6vw;font-size:clamp(14px,2.1vw,34px);font-weight:700;display:flex;align-items:center;gap:1vw;color:#fff;position:relative;overflow:hidden}
+.tv .opt b{opacity:.75;font-size:.8em}
+.o0{background:#c0392b}.o1{background:#2563eb}.o2{background:#c8a017;color:#111}.o3{background:#1f9d55}
+.tv .opt.dim{opacity:.22}.tv .opt.ok{outline:.35vw solid #fff;transform:scale(1.02)}
+.tv .opt em{margin-left:auto;font-style:normal;font-size:.8em;opacity:.9}
+.tvbar{height:.9vw;border-radius:9px;background:rgba(255,255,255,.12);overflow:hidden}
+.tvbar i{display:block;height:100%;background:var(--gold);width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:.7vw;align-content:flex-start}
+.chip{padding:.5vw 1.1vw;border-radius:99px;font-size:clamp(12px,1.5vw,24px);font-weight:700;color:#111}
+.chip.off{opacity:.35}
+.lb{flex:1;min-width:0}
+.lb div{display:flex;justify-content:space-between;gap:1vw;font-size:clamp(13px,1.6vw,26px);padding:.5vw 1vw;border-radius:.6vw;background:rgba(255,255,255,.06);margin-bottom:.45vw}
+.lb div i{font-style:normal;color:var(--ok);font-size:.8em}
+.tvqr{background:#fff;padding:1vw;border-radius:1vw;width:clamp(150px,19vw,320px)}
+.tvqr svg{width:100%;height:auto;display:block}
+.tvsub{color:var(--muted);font-size:clamp(11px,1.15vw,18px)}
+/* ---------- PLAYER (phone) ---------- */
+#player{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;background:radial-gradient(circle at 50% 0,#1a2230,#07090d 60%);text-align:center;overflow:auto}
+body.mode-player #player{display:flex}
+#player .ptitle{font-family:Georgia,serif;font-size:30px}
+#player .pbig{font-size:26px;font-weight:700;line-height:1.2}
+#player .psub{color:var(--muted);font-size:15px;line-height:1.4;max-width:340px}
+#player .pq{font-family:Georgia,serif;font-size:24px;line-height:1.25;max-width:380px}
+#player .pdot{width:64px;height:64px;border-radius:50%}
+#pname{font-size:20px;padding:14px;border-radius:14px;border:1px solid var(--line);background:#121821;color:#fff;width:min(90vw,340px);text-align:center;font-family:inherit}
+.popts{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(94vw,420px)}
+.po{padding:28px 10px;border:0;border-radius:18px;font-size:19px;font-weight:700;color:#fff;min-height:96px}
+.po.o2{color:#111}.po.off{opacity:.3}.po.me{outline:4px solid #fff}
 </style>
 </head>
 <body>
@@ -148,6 +183,8 @@ body.mode-remote #remote{display:flex}
   <div class="rerr" id="rerr"></div>
 </div>
 
+<div id="player"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
@@ -184,7 +221,10 @@ var SCENES=[
   tiles:[['Limoncito','Lime-forward energy, zero sugar, 16 fl oz. Watch the Positive Energy videos.','16 fl oz','#3f8f1f','img/rompe-limoncito.png',[{l:'Watch video',play:['v1','v2','v3']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Mojito Mágico','Mint, lime and ice. The back of the can calls out boosted brain power, laser focus and extra energy. Watch Call & Response.','16 fl oz','#e832d2','img/rompe-mojito.jpg',[{l:'Watch video',play:['v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}],'img/rompe-mojito-back.jpg'],['Passion Papi','Passion fruit in hot pink. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#a0307a','img/rompe-passion.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]],['Pop That Piña','Golden pineapple on teal. Zero sugar, 16 fl oz. Watch the ROMPE videos.','16 fl oz','#157a7a','img/rompe-pina.png',[{l:'Watch ROMPE videos',play:['v1','v2','v3','v4']},{l:'Watch on Stashbox Radio',u:'https://stashbox.com/radio/'}]]]},
  {id:'game',game:true,hero:'img/rompe-hero.jpg',name:'Game Zone · Can Catch',kicker:'Play on the big screen · control with your phone',title:'Can Catch',sub:'Slide left and right to catch the falling cans. Dodge the rocks. Hold the arrows or drag the pad on your phone. No app, no controller.',cta:'Play now',
   grad:'linear-gradient(135deg,#0b0d12,#1b4d3e 50%,#f0b429)',
-  tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]}
+  tiles:[['Easy','Slow and relaxed. 45 seconds. Great for first-timers.','45s','#2f8f4f','img/rompe-limoncito.png',null],['Normal','The classic round. 40 seconds, a few rocks.','40s','#c08a1b','img/rompe-pina.png',null],['Hard','Fast cans, lots of rocks. 35 seconds.','35s','#b0233a','img/rompe-limoncito.png',null],['Marathon','Keep it going for 75 seconds.','75s','#2a6a8a','img/rompe-pina.png',null],['How to Play','Hold the left and right arrows on your phone, or drag the pad. Green can +10, golden can +25, rocks cost a life. Three lives. Press Play to start.','Tips','#5a3a8a','img/rompe-limoncito.png',[{l:'Play now',game:1}]]]},
+ {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Bar Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Trivia Night',sub:'Scan to join. No app, no account. Ten questions, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
+  grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
+  tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and events. Between rounds the screen can promote specials, menus and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]}
 ];
 
 /* ---------- DISPLAY ---------- */
@@ -361,12 +401,154 @@ function startDisplay(){
     }
     gRaf=requestAnimationFrame(gloop);
   }
+  /* ---------------- TRIVIA (many phones) ---------------- */
+  var QS=[
+    ['Which planet is known as the Red Planet?',['Venus','Mars','Jupiter','Mercury'],1],
+    ['How many players does one basketball team have on the court?',['4','5','6','7'],1],
+    ['What is the capital of Australia?',['Sydney','Melbourne','Canberra','Perth'],2],
+    ['Which country gave the Statue of Liberty to the United States?',['France','Italy','Spain','Britain'],0],
+    ['What is the largest ocean on Earth?',['Atlantic','Indian','Arctic','Pacific'],3],
+    ['In which sport do you score a birdie?',['Golf','Tennis','Baseball','Cricket'],0],
+    ['Which fruit is the main ingredient of guacamole?',['Lime','Tomato','Avocado','Mango'],2],
+    ['How many strings does a standard guitar have?',['4','5','6','8'],2],
+    ['In which city would you find the Colosseum?',['Athens','Rome','Madrid','Paris'],1],
+    ['In what year did the first iPhone launch?',['2005','2006','2007','2009'],2]
+  ];
+  var COLORS=['#f87171','#60a5fa','#fbbf24','#34d399','#a78bfa','#fb923c','#f472b6','#22d3ee','#a3e635','#e879f9'];
+  var PL={},T=null;
+  var joinUrl=location.origin+location.pathname+'?c='+id+'&p=1';
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function allPlayers(){return Object.keys(PL).map(function(k){return PL[k]})}
+  function livePlayers(){return allPlayers().filter(function(p){return p.conn&&p.conn.open})}
+  function sendP(p,m){try{if(p.conn&&p.conn.open)p.conn.send(m)}catch(e){}}
+  function bcast(m){livePlayers().forEach(function(p){sendP(p,m)})}
+  function ranked(){return allPlayers().slice().sort(function(a,b){return b.score-a.score})}
+  function rankOf(p){return ranked().indexOf(p)+1}
+  function regPlayer(c,m){
+    var pid=String(m.pid||'').slice(0,40)||Math.random().toString(36).slice(2);
+    var p=PL[pid];
+    if(!p){
+      if(allPlayers().length>=24){c.send({t:'full'});setTimeout(function(){c.close()},300);return}
+      p=PL[pid]={pid:pid,color:COLORS[allPlayers().length%COLORS.length],score:0,ans:null,gain:0,t:0}
+    }
+    if(p.conn&&p.conn!==c&&p.conn.open){try{p.conn.close()}catch(e){}}
+    p.name=String(m.name||'Player').trim().slice(0,14)||'Player';p.conn=c;c.__p=p;
+    c.on('close',function(){if(p.conn===c)p.conn=null;if(T)renderTrivia()});
+    c.on('error',function(){if(p.conn===c)p.conn=null});
+    greet(p);if(T)renderTrivia();
+  }
+  function greet(p){
+    var n=livePlayers().length;
+    if(T&&T.phase==='q')sendQ(p);
+    else if(T&&T.phase==='reveal')sendReveal(p);
+    else if(T&&T.phase==='final')sendFinal(p);
+    else if(T)sendP(p,{t:'lobby',name:p.name,color:p.color,n:n});
+    else sendP(p,{t:'wait',msg:'Waiting for the host to open trivia.'});
+  }
+  function playerMsg(c,m){
+    if(m&&m.t==='ans'&&T&&T.phase==='q'&&m.q===T.qi&&c.__p&&c.__p.ans==null){
+      var p=c.__p;p.ans=Number(m.choice);p.t=Date.now()-T.qStart;
+      sendP(p,{t:'locked',choice:p.ans});
+      var done=livePlayers().filter(function(x){return x.ans!=null}).length;
+      var el=$('tvdone');if(el)el.textContent=done+' of '+livePlayers().length+' answered';
+      if(done>=livePlayers().length)setTimeout(function(){if(T&&T.phase==='q')reveal()},700);
+    }
+  }
+  function sendQ(p){
+    var q=QS[T.qi];
+    sendP(p,{t:'q',i:T.qi,total:QS.length,text:q[0],opts:q[1],left:Math.max(0,T.limit-(Date.now()-T.qStart))});
+  }
+  function sendReveal(p){
+    sendP(p,{t:'reveal',correct:QS[T.qi][2],right:p.ans===QS[T.qi][2],gain:p.gain,score:p.score,rank:rankOf(p),n:allPlayers().length});
+  }
+  function sendFinal(p){sendP(p,{t:'final',rank:rankOf(p),score:p.score,n:allPlayers().length})}
+  function startTrivia(){
+    st.overlay='trivia';$('ov').className='overlay show';
+    allPlayers().forEach(function(p){p.score=0;p.ans=null;p.gain=0});
+    if(T){clearInterval(T.iv);clearTimeout(T.to)}
+    T={phase:'lobby',qi:-1,iv:null,to:null,qStart:0,limit:15000,counts:[0,0,0,0]};
+    renderTrivia();livePlayers().forEach(greet);pushState();
+  }
+  function stopTrivia(){
+    if(T){clearInterval(T.iv);clearTimeout(T.to)}
+    T=null;closeOv();bcast({t:'wait',msg:'Trivia ended. Thanks for playing!'});pushState();
+  }
+  function nextQ(){
+    T.qi++;
+    if(T.qi>=QS.length){T.phase='final';renderTrivia();livePlayers().forEach(sendFinal);pushState();return}
+    T.phase='q';T.qStart=Date.now();T.counts=[0,0,0,0];
+    allPlayers().forEach(function(p){p.ans=null;p.gain=0});
+    renderTrivia();livePlayers().forEach(sendQ);pushState();
+    clearInterval(T.iv);
+    T.iv=setInterval(function(){
+      if(!T||T.phase!=='q'){return}
+      var el=Date.now()-T.qStart,b=$('tvbar');
+      if(b)b.style.width=Math.max(0,100-el/T.limit*100)+'%';
+      if(el>=T.limit)reveal();
+    },120);
+  }
+  function reveal(){
+    if(!T||T.phase!=='q')return;
+    clearInterval(T.iv);T.phase='reveal';
+    var q=QS[T.qi];
+    allPlayers().forEach(function(p){
+      if(p.ans!=null&&p.ans>=0&&p.ans<4)T.counts[p.ans]++;
+      if(p.ans===q[2]){p.gain=Math.round(500+500*Math.max(0,1-p.t/T.limit));p.score+=p.gain}
+    });
+    renderTrivia();livePlayers().forEach(sendReveal);pushState();
+    T.to=setTimeout(function(){if(T&&T.phase==='reveal')nextQ()},7000);
+  }
+  function renderTrivia(){
+    if(!T)return;
+    var h='',live=livePlayers(),q=QS[T.qi];
+    if(T.phase==='lobby'){
+      var qr='';try{var qq=qrcode(0,'M');qq.addData(joinUrl);qq.make();qr=qq.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){}
+      h='<div class="tv"><div class="kick">Trivia night</div><h2>Scan to join the game</h2><div class="row"><div><div class="tvqr">'+qr+'</div><div class="tvsub" style="margin-top:.8vw">No app. No account.</div></div>'
+       +'<div style="flex:1"><div class="tvsub" style="margin-bottom:.8vw">'+live.length+' player'+(live.length===1?'':'s')+' in the lobby</div><div class="chips">'
+       +allPlayers().map(function(p){return '<span class="chip'+(p.conn&&p.conn.open?'':' off')+'" style="background:'+p.color+'">'+esc(p.name)+'</span>'}).join('')
+       +'</div></div></div><div class="tvsub">Host: press OK on the remote to start \u00b7 '+QS.length+' questions</div></div>';
+    } else if(T.phase==='q'){
+      h='<div class="tv"><div class="kick">Question '+(T.qi+1)+' of '+QS.length+'</div><h2>'+esc(q[0])+'</h2><div class="opts">'
+       +q[1].map(function(o,i){return '<div class="opt o'+i+'"><b>'+'ABCD'[i]+'</b>'+esc(o)+'</div>'}).join('')
+       +'</div><div class="tvbar"><i id="tvbar"></i></div><div class="tvsub" id="tvdone">0 of '+live.length+' answered</div></div>';
+    } else if(T.phase==='reveal'){
+      var tot=Math.max(1,T.counts.reduce(function(a,b){return a+b},0));
+      h='<div class="tv"><div class="kick">Answer</div><h2>'+esc(q[0])+'</h2><div class="row"><div class="opts" style="flex:1.3">'
+       +q[1].map(function(o,i){return '<div class="opt o'+i+(i===q[2]?' ok':' dim')+'"><b>'+'ABCD'[i]+'</b>'+esc(o)+'<em>'+T.counts[i]+'</em></div>'}).join('')
+       +'</div><div class="lb">'+ranked().slice(0,6).map(function(p,i){return '<div><span>'+(i+1)+'. <span style="color:'+p.color+'">\u25cf</span> '+esc(p.name)+'</span><span>'+p.score+(p.gain?' <i>+'+p.gain+'</i>':'')+'</span></div>'}).join('')+'</div></div>'
+       +'<div class="tvsub">Next question in a moment \u00b7 OK to skip</div></div>';
+    } else {
+      var r=ranked();
+      h='<div class="tv"><div class="kick">Final scores</div><h2>'+(r.length?esc(r[0].name)+' wins!':'Thanks for playing')+'</h2><div class="row"><div class="lb" style="flex:1">'
+       +r.slice(0,8).map(function(p,i){return '<div><span>'+(i+1)+'. <span style="color:'+p.color+'">\u25cf</span> '+esc(p.name)+'</span><span>'+p.score+'</span></div>'}).join('')
+       +'</div></div><div class="tvsub">OK to play again \u00b7 Back to exit</div></div>';
+    }
+    $('ov').innerHTML=h;
+  }
+  /* each incoming phone says hello: a player (many allowed) or the remote (one) */
+  function attachRemote(c){
+    if(conn&&conn.open&&conn!==c){try{c.send({t:'busy'})}catch(e){}setTimeout(function(){c.close()},300);return false}
+    conn=c;setPaired(true);toast('Phone connected');pushState();
+    c.on('close',function(){if(conn===c){conn=null;setPaired(false)}});
+    c.on('error',function(){if(conn===c){conn=null;setPaired(false)}});
+    return true;
+  }
   function pushState(){
     if(!conn||!conn.open)return;
     var f=focused();
-    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||''});
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='trivia'&&T?'Trivia: '+({lobby:livePlayers().length+' in lobby',q:'Question '+(T.qi+1)+' of '+QS.length,reveal:'Answer revealed',final:'Final scores'})[T.phase]:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||''});
   }
   function key(k){
+    if(st.overlay==='trivia'&&T){
+      if(k==='back'||k==='menu'||k==='home'){stopTrivia();return}
+      if(k==='select'){
+        if(T.phase==='lobby'){if(!livePlayers().length){toast('Waiting for at least one player');return}nextQ()}
+        else if(T.phase==='q')reveal();
+        else if(T.phase==='reveal'){clearTimeout(T.to);nextQ()}
+        else startTrivia();
+      }
+      return;
+    }
     if(st.overlay==='game'){
       if(k==='back'||k==='menu'||k==='home'){stopGame();pushState();return}
       if(k==='select'&&G&&G.over){startGame(st.gameLevel);return}
@@ -409,6 +591,7 @@ function startDisplay(){
         case 'down':st.row=1;break;
         case 'select':
           if(sc().game&&(st.row===0||st.col<4)){startGame(st.row===0?1:st.col);return}
+          if(sc().trivia&&(st.row===0||st.col===0)){startTrivia();return}
           openDetail();return;
         case 'send':send();break;
         case 'menu':openMenu();return;
@@ -423,6 +606,7 @@ function startDisplay(){
     if(m&&m.t==='axis'){if(G&&st.overlay==='game')G.axis=Math.max(-1,Math.min(1,Number(m.x)||0));return}
     if(!m||m.t!=='key')return;
     var k=m.k;
+    if(st.overlay==='trivia'){key(k);return}
     if(st.overlay==='game'){if(k==='play'&&G&&!G.over){G.paused=!G.paused}else key(k);return}
     if(st.overlay==='video'){
       var vp=$('vp');
@@ -452,12 +636,17 @@ function startDisplay(){
     var peer=new Peer(PREFIX+id);
     peer.on('open',function(){renderScene()});
     peer.on('connection',function(c){
-      if(conn&&conn.open){c.on('open',function(){c.send({t:'busy'});setTimeout(function(){c.close()},300)});return}
-      conn=c;
-      c.on('open',function(){setPaired(true);toast('Phone connected');pushState()});
-      c.on('data',handle);
-      c.on('close',function(){conn=null;setPaired(false)});
-      c.on('error',function(){conn=null;setPaired(false)});
+      var role=null;
+      c.on('data',function(m){
+        if(!role){
+          if(m&&m.t==='hello'&&m.role==='player'){role='player';regPlayer(c,m);return}
+          role='remote';
+          if(!attachRemote(c)){role='rejected';return}
+          if(m&&m.t==='hello')return;
+        }
+        if(role==='player')playerMsg(c,m);
+        else if(role==='remote'&&c===conn)handle(m);
+      });
     });
     peer.on('disconnected',function(){try{peer.reconnect()}catch(e){}});
     peer.on('error',function(e){var d=$('derr');d.style.display='block';d.textContent='Connection service error: '+e.type});
@@ -479,7 +668,7 @@ function startRemote(){
   peer=new Peer();
   peer.on('open',function(){
     conn=peer.connect(PREFIX+target,{reliable:true});
-    conn.on('open',function(){setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
+    conn.on('open',function(){conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
     conn.on('data',function(m){
       if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
       else if(m.t==='saved'){
@@ -527,7 +716,64 @@ function startRemote(){
   });
 }
 
-if(target)startRemote();else startDisplay();
+/* ---------- PLAYER (phone joins a multi-player game) ---------- */
+function startPlayer(){
+  body.classList.add('mode-player');
+  var root=$('player'),pid=null,peer,conn,me={name:''},sel=null;
+  try{pid=sessionStorage.getItem('wl-pid')}catch(e){}
+  if(!pid){pid=Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('wl-pid',pid)}catch(e){}}
+  function e2(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function view(h){root.innerHTML='<img class="logo" style="height:22px" src="/images/Elettro-logo-white.png" alt="Elettro">'+h}
+  function joinForm(){
+    var nm='';try{nm=localStorage.getItem('wl-name')||''}catch(e){}
+    view('<div class="ptitle">Join the game</div><input id="pname" maxlength="14" placeholder="Your name" autocomplete="off" value="'+e2(nm)+'"><button id="pgo" class="send" style="width:min(90vw,340px)">Join</button>');
+    $('pgo').onclick=function(){
+      me.name=$('pname').value.trim()||'Player';
+      try{localStorage.setItem('wl-name',me.name)}catch(e){}
+      view('<div class="pbig">Connecting\u2026</div>');connect();
+    };
+  }
+  function connect(){
+    peer=new Peer();
+    peer.on('open',function(){
+      conn=peer.connect(PREFIX+target,{reliable:true});
+      conn.on('open',function(){conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
+      conn.on('data',onMsg);
+      conn.on('close',function(){view('<div class="pbig">Disconnected</div><button class="send" id="pre" style="width:min(90vw,340px)">Rejoin</button>');$('pre').onclick=function(){view('<div class="pbig">Connecting\u2026</div>');connect()}});
+    });
+    peer.on('error',function(e){view('<div class="pbig">Could not connect</div><div class="psub">'+(e.type==='peer-unavailable'?'This game has ended. Scan the code on the screen again.':'Error: '+e2(e.type))+'</div>')});
+  }
+  function buzz(p){if(navigator.vibrate)navigator.vibrate(p)}
+  function onMsg(m){
+    if(m.t==='lobby'){
+      view('<div class="pdot" style="background:'+e2(m.color)+'"></div><div class="pbig">You are in, '+e2(m.name)+'!</div><div class="psub">Waiting for the host to start. '+m.n+' player'+(m.n===1?'':'s')+' here.</div>');
+    } else if(m.t==='wait'){
+      view('<div class="pbig">'+e2(m.msg)+'</div>');
+    } else if(m.t==='full'){
+      view('<div class="pbig">This game is full</div>');
+    } else if(m.t==='q'){
+      sel=null;
+      view('<div class="psub">Question '+(m.i+1)+' of '+m.total+'</div><div class="pq">'+e2(m.text)+'</div><div class="popts">'
+        +m.opts.map(function(o,i){return '<button class="po o'+i+'" data-i="'+i+'">'+'ABCD'[i]+'<br><span style="font-size:15px;font-weight:600">'+e2(o)+'</span></button>'}).join('')+'</div><div class="psub" id="plock">Tap your answer</div>');
+      [].forEach.call(root.querySelectorAll('.po'),function(b){b.onclick=function(){
+        if(sel!=null)return;sel=Number(b.dataset.i);buzz(25);
+        conn.send({t:'ans',q:m.i,choice:sel});
+        [].forEach.call(root.querySelectorAll('.po'),function(x){x.classList.add(x===b?'me':'off')});
+        $('plock').textContent='Locked in. Waiting for the others\u2026';
+      }});
+    } else if(m.t==='reveal'){
+      buzz(m.right?[40,60,40]:80);
+      view('<div class="pbig" style="font-size:44px">'+(m.right?'Correct!':(sel==null?'Too slow':'Not quite'))+'</div>'
+        +(m.right?'<div class="pbig" style="color:#5be3a2">+'+m.gain+'</div>':'')
+        +'<div class="psub">Rank '+m.rank+' of '+m.n+' \u00b7 '+m.score+' points<br>Next question coming up\u2026</div>');
+    } else if(m.t==='final'){
+      view('<div class="pbig" style="font-size:40px">You finished #'+m.rank+'</div><div class="pbig" style="color:#f0b429">'+m.score+' points</div><div class="psub">'+m.n+' player'+(m.n===1?'':'s')+'. Thanks for playing!</div>');
+    }
+  }
+  joinForm();
+}
+
+if(target&&params.get('p'))startPlayer();else if(target)startRemote();else startDisplay();
 })();
 </script>
 </body>
