@@ -45,6 +45,40 @@ header{position:absolute;z-index:12;color:white;top:0;left:0;width:100%;border-b
 @keyframes reveal-motion{to{transform:scale(1.17)}}
 .reveal-note{position:absolute;bottom:9px;left:17px;color:#254a34;font:700 9px Manrope,sans-serif}
 @media(max-width:760px){.reveal-stage{min-height:470px;padding:20px 10px}.reveal-print{height:300px}.reveal-print strong{font-size:23px}.reveal-print button{font-size:8px}.reveal-phone{height:365px;width:170px}.reveal-phonecopy strong{font-size:23px}.reveal-phonecopy a{font-size:7px;padding:8px 4px}.reveal-overlay strong{font-size:22px}}
+
+/* Lighter editorial palette and legibility pass, October 2026 */
+:root{--cream:#fdfcf8;--paper:#f4f3ec;--ink:#173c2d;--muted:#40574a;--gold:#906c39}
+body{font-size:16px;line-height:1.75;color:#203f30;background:#fdfcf8}
+h1,h2,h3{color:inherit}
+.eyebrow{color:#775527;font-size:11px;letter-spacing:.17em}
+.intro{background:#fff}
+.intro p,.splitcopy p,.sectionhead p,.visitgrid p{color:#365042;font-size:17px;line-height:1.85}
+.splitfeature{background:#f4f2eb}
+.editorialdark{background:#fbfaf6;color:#183d2d}
+.editorialdark .sectionhead p,.editorialdark .magtype p,.maggrid .mini p{color:#365344;font-size:16px;line-height:1.8}
+.editorialdark .maggrid img{border:1px solid #e0ddd1}
+.section{background:#fff}
+.sectionhead p{font-size:16px}
+.boutique .bttext{color:#fff}
+.bttext h3{font-family:Italiana,Georgia,serif}
+.map-note{color:#264c38;font-size:12px}
+.voice-response{color:#244936;font-size:15px}
+.newsletter{background:#eeeae1;color:#173c2d;padding:90px 0}
+.newsletter h2{color:#173c2d}
+.newsletter p{color:#385446;font-size:16px}
+.newsletter .outline{color:#173e2d;border-color:#31503e}
+.newsletter .outline:hover{background:#fff}
+footer{background:#13392c;color:#e4e9df}
+.bottom{color:#d4e1d8}
+.concept-remote-demo{background:#fbfaf7;border-top:1px solid #e0ded2;border-bottom:1px solid #e0ded2;padding:65px 0}
+.concept-remote-inner{display:grid;grid-template-columns:1fr auto;gap:26px;align-items:center}
+.concept-remote-demo .eyebrow{color:#805b2e}
+.concept-remote-demo h2{font-size:clamp(42px,4.4vw,67px);color:#153d2d;margin:12px 0 14px}
+.concept-remote-demo p{font-size:16px;max-width:750px;color:#375245;margin:0}
+.concept-remote-demo .solid{font-size:12px;text-align:center;padding:20px 28px;box-shadow:0 7px 22px #0a291b1c}
+.concept-remote-demo .solid:hover{color:#fff}
+@media(max-width:760px){.concept-remote-inner{grid-template-columns:1fr}.concept-remote-demo{padding:52px 0}.concept-remote-demo .solid{width:100%}.intro p,.splitcopy p{font-size:16px}}
+
 </style>
 </head><body>
 <header><div class="shell navrow">
@@ -71,6 +105,10 @@ header{position:absolute;z-index:12;color:white;top:0;left:0;width:100%;border-b
 <section class="section editorialdark" id="magazine"><div class="shell"><div class="sectionhead"><div><span class="eyebrow">A point of view on style</span><h2>Bal Harbour Magazine.</h2></div><p>Stories and images that belong to the world's most discerning style conversation.</p></div><div class="maggrid"><div><img loading="lazy" src="https://cdn.shopify.com/s/files/1/0530/3815/3898/files/cover-spring-2026-bw.jpg?v=1773630871" alt="Official spring 2026 Bal Harbour Magazine cover"></div><div class="magtype"><span class="eyebrow">Print to possibility</span><h2>A new dimension for every page.</h2><p>In this Elettro concept, select magazine features and advertising placements gain a camera-triggered digital layer: film, boutiques, directions to Bal Harbour Shops and personalized invitations.</p><a class="outline" href="https://www.balharbourshops.com/magazine/" target="_blank" rel="noopener">Explore the magazine ↗</a></div><div class="mini"><img loading="lazy" src="https://www.balharbourshops.com/wp-content/uploads/2022/08/leslie-randall.jpg" alt="Tropical Bal Harbour artistic illustration"><p>Style comes alive</p></div></div></div></section>
 <section class="section" id="visit"><div class="shell visitgrid"><div><span class="eyebrow">A new dimension of Bal Harbour</span><h2>When the page comes alive.</h2><p>Imagine a luxury magazine advertisement, on-property sign or hotel invitation that activates an immersive fashion film on a guest's phone. Beautiful print leads to the experience, then to an invitation to visit Bal Harbour Shops, explore its boutiques and discover more online.</p><p>A single scan gives guests three meaningful next steps: driving directions to Bal Harbour Shops, the official website and the complete store directory.</p><a class="solid" href="../#ar">Experience the full Elettro AR concepts ↗</a></div><div class="reveal-stage"><div class="reveal-print"><img src="https://cdn.assets.prezly.com/2eed1244-1969-4a0f-83da-204575d6a4ae/Slide%209%20Replacement.jpg" alt="Bal Harbour luxury magazine advertisement concept" loading="lazy"><div><strong>A new world<br>of style.</strong><button id="launchReveal" type="button">◎ Scan the ad ↗</button></div></div><div class="reveal-phone" id="revealPhone"><img src="https://cdn.assets.prezly.com/cd1357b9-02c1-4116-b69a-615054f16a8e/Bal%20Harbour%20Shops%2020.jpg" alt="Luxury promo video storyboard frame" loading="lazy"><div class="reveal-overlay"><strong>Camera recognizes<br>the print.</strong><p>Tap the advertisement to activate its luxury film experience.</p></div><div class="reveal-phonecopy"><small>BAL HARBOUR SHOPS · AR FILM CONCEPT</small><strong>Enter the extraordinary.</strong><a href="https://www.balharbourshops.com/directions/" target="_blank" rel="noopener">Directions to Bal Harbour ↗</a><a class="alt" href="https://www.balharbourshops.com/" target="_blank" rel="noopener">Visit official website ↗</a><a class="alt" href="https://www.balharbourshops.com/store-directory/" target="_blank" rel="noopener">Explore boutiques ↗</a></div></div><span class="reveal-note">Illustrative camera-triggered motion preview</span></div></div></section>
 <section class="slowsection" id="dining"><img loading="lazy" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=85" alt="Elegant restaurant setting"><div class="splitcopy"><span class="eyebrow">An invitation to linger</span><h2>The pleasure of the afternoon.</h2><p>Discover destination dining, exceptional service and unhurried moments under the palms. Explore Makoto, Carpaccio and the other culinary addresses featured in the Shops' dining directory.</p><a class="solid" href="https://www.balharbourshops.com/dining/" target="_blank" rel="noopener">Explore dining ↗</a></div></section>
+<section class="concept-remote-demo" aria-labelledby="concept-remote-title"><div class="shell concept-remote-inner">
+<div><span class="eyebrow">Elettro technology demonstration</span><h2 id="concept-remote-title">Try the wireless experience.</h2><p>See how a visitor's phone becomes a wireless controller for a large website display. Open the working Elettro Remote demo on your computer, then pair your phone by scanning the QR code.</p></div>
+<a class="solid" href="https://elettro.com/remote/" target="_blank" rel="noopener noreferrer">TRY ELETTRO REMOTE ↗</a>
+</div></section>
 <section class="newsletter"><div class="shell"><span class="eyebrow">The latest from Bal Harbour</span><h2>Stay in the know.</h2><p>A curated perspective on the new, the noteworthy and the extraordinary.</p><a href="https://www.balharbourshops.com/" target="_blank" rel="noopener" class="outline">Visit Bal Harbour Shops ↗</a></div></section>
 </main><footer><div class="shell"><div class="footflex"><a class="logo" href="#home">Bal Harbour<small>SHOPS</small></a><div class="footlinks"><a href="#houses">Boutiques</a><a href="#stories">Editorial</a><a href="#magazine">Magazine</a><a href="#visit">Visit</a></div><div>9700 Collins Avenue<br>Bal Harbour, Florida 33154</div></div><div class="bottom"><span>© 2026 Elettro Incorporated · Private, speculative redesign exercise, not an official Bal Harbour Shops website.</span><a href="../">Return to Elettro proposal ↗</a></div></div></footer>
 <script>
