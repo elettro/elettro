@@ -98,6 +98,7 @@ body.mode-remote #remote{display:flex}
 <div id="display">
   <div class="top">
     <img src="/images/Elettro-logo-white.png" alt="Elettro">
+    <button class="pill" id="snd" type="button" style="background:rgba(240,180,41,.12);color:#f0b429;border-color:rgba(240,180,41,.5);cursor:pointer">Click here once to enable sound</button>
     <div class="pill" id="dstat"><span class="dot"></span><span id="dtxt">Waiting for phone</span></div>
   </div>
   <div class="stage" id="stage">
@@ -237,6 +238,12 @@ function startDisplay(){
     if(sh)return sh.map(function(x){return x.l+((x.play||x.game)?' ▶':' ↗')});
     return [(s.act2||'Add to cart')+' · '+(focused().price||'More')];
   }
+  /* browsers block sound until the page gets one click or key press */
+  function unlockAudio(){
+    var b=$('snd');if(b)b.style.display='none';
+    var v=$('vp');if(v){v.muted=false;if(v.paused)v.play()}
+  }
+  ['pointerdown','keydown'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true})});
   function openVideo(ids,i){
     st.overlay='video';st.vlist=ids;st.vidx=i||0;
     $('ov').className='overlay show';
@@ -250,7 +257,7 @@ function startDisplay(){
     v.onended=function(){st.vidx=(st.vidx+1)%st.vlist.length;loadVid()};
     v.onclick=function(){v.muted=false};
     var pr=v.play();
-    if(pr&&pr.catch)pr.catch(function(){v.muted=true;v.play();toast('Playing muted. Click the screen once for sound.')});
+    if(pr&&pr.catch)pr.catch(function(){v.muted=true;v.play();toast('Muted by the browser. Click the screen once for sound.')});
   }
   function openShop(x){
     if(x.play){openVideo(x.play,0);return}
