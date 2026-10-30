@@ -245,8 +245,101 @@ body.bh-modal-open{overflow:hidden}
 @media(max-width:570px){.bh-proposal{padding:41px 0 46px}.bh-proposal-heading h2{font-size:48px}.bh-pdf-cta{width:100%}.bh-slide{flex:0 0 79%;max-width:340px}.bh-poster{height:400px}.bh-hint{display:none}.bh-carousel-current span{margin-left:8px}.bh-lightbox-header button span{display:none}.bh-lightbox-stage{grid-template-columns:31px minmax(0,1fr) 31px;gap:3px;padding:6px 3px}.bh-lightbox-arrow{width:29px;height:57px;font-size:31px}.bh-lightbox-footer span:last-child{display:none}.bh-lightbox-footer{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.bh-carousel-track{scroll-behavior:auto}.bh-slide-open,.bh-poster img{transition:none}}
 
+
+/* 2026 luxury editorial readability renovation: cream/white canvas, readable ink, gold accents. */
+:root{--bh-cream:#f8f7f3;--bh-paper:#fff;--bh-ink:#173d2e;--bh-body:#344a40;--bh-line:#dedfd6;--bh-accent:#8d682f}
+body{background:var(--bh-cream)}
+.section{padding-top:92px;padding-bottom:92px}
+.section:not(.ar-lux):not(.score):not(.homepreview):not(.social):not(.roadmap){background:var(--bh-cream);color:var(--bh-ink)}
+#vision{background:#fff!important;color:var(--bh-ink)!important}
+#vision .eyebrow,#services .eyebrow,.homepreview .eyebrow,.social .eyebrow,.bh-proposal .eyebrow{color:#87612d;font-size:11px}
+#vision p,#services p,.homepreview .sectiontitle p,.social .socialtop p,.roadmap p{color:#334d3d}
+#vision p{font-size:17px;line-height:1.85}
+#vision .photo-stack .p2{border-color:#fff}
+#vision .button.ghost,.homepreview .button.ghost,.social .button.ghost{color:#1c4734;border-color:#385c49}
+#vision .button.ghost:hover,.homepreview .button.ghost:hover{background:#eaf0e9}
+.sectiontitle h2,.socialtop h2{color:#143c2c}
+.sectiontitle p{font-size:15px;line-height:1.75}
+.homepreview{background:#f2f3ec;color:#153c2d}
+.homepreview .sectiontitle p,.homepreview .previewnote{color:#435d4e}
+.homepreview .previewnote{font-size:14px}
+#services{background:#fff!important}
+#services .servicegrid{gap:21px}
+#services .service{background:#fff;border:1px solid #d5dbcf;padding:0;color:#163a2d;min-height:unset;overflow:hidden;box-shadow:0 10px 29px rgba(29,55,41,.07);transition:box-shadow .2s,transform .2s}
+#services .service:hover{transform:translateY(-3px);box-shadow:0 17px 35px rgba(29,55,41,.13)}
+.service-picture{display:block;height:166px;overflow:hidden;background:#e6e7dd}
+.service-picture img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .3s}
+.service:hover .service-picture img{transform:scale(1.035)}
+.service-info{padding:25px 26px 30px}
+#services .service .num{font:800 11px/1.6 Manrope,Arial,sans-serif;letter-spacing:.15em;color:#765625}
+#services .service h3{font-size:clamp(29px,2.6vw,39px);color:#123a2c;margin:13px 0 12px;line-height:1.13}
+#services .service p{color:#385044;font-size:14px;line-height:1.74}
+.ar-lux{background:#fdfcf9;color:#193f2f}
+.ar-lux .note,.ar-lux .ar-blockhead p,.ar-lux .ar-voicepair p,.ar-lux .sectiontitle p{color:#385746;font-size:15px}
+.ar-lux .ar-chip,.ar-lux .eyebrow{color:#775727}
+.ar-lux .ar-signexplain p,.ar-lux .ar-adtext p{color:#354e41;font-size:14px}
+.ar-lux .ar-generated-grid figure,.ar-lux .ar-unified-grid figure{background:#fff}
+.ar-lux .ar-unified-grid figcaption span{color:#314f3d}
+.social{background:#fff;color:#193d2d}
+.social .socialtop p,.social .socialfoot{color:#42594d;font-size:15px}
+.socialfilters button{color:#193e2c;border-color:#7a9381;font-weight:700}
+.socialfilters button.active,.socialfilters button:hover{background:#173e2d;color:#fff;border-color:#173e2d}
+.socialitem{background:#fff;border-color:#d0d9cd;box-shadow:0 9px 26px #243d2a12}
+.socialbottom p{color:#334f3e;font-size:14px}
+.socialmeta{color:#2f5542}
+.roadmap{background:#f2f1eb;color:#193e2d}
+.roadmap .roadmapgrid p{color:#435949;font-size:14px}
+.score{background:#f2f1eb;color:#173d2e}
+.score .sectiontitle p,.score .scorefine{color:#354f40}
+.score .scorecard p{font-size:14px}
+.score .auditcards p{font-size:14px;color:#43594c}
+.score .barpanel,.score .scorecard:not(.future){background:#fff}
+.bh-proposal{background:#f5f4ed;color:#153d2c;border-top-color:#ded8c8;border-bottom-color:#ded8c8}
+.bh-proposal-heading p{color:#385345;font-size:16px}
+.bh-proposal-heading h2{color:#153d2c}
+.bh-proposal-heading h2 em{color:#987137}
+.bh-carousel{border-top-color:#a48f6f}
+.bh-carousel-current{color:#465e51}
+.bh-carousel-current strong{color:#805b2e}
+.bh-carousel-current span{color:#244938}
+.bh-carousel-controls button{background:#fff;color:#173e2e;border-color:#b1a58b}
+.bh-carousel-controls button:hover{background:#173e2e;color:#fff}
+.bh-slide-open{background:#fff;color:#163d2e;border-color:#d4dacd;box-shadow:0 8px 23px #142c1c12}
+.bh-poster{background:#f0ede2}
+.bh-slide-number{color:#795a2e}
+.bh-slide-meta small{color:#435b4e}
+.bh-expand-icon{color:#83622f}
+.bh-page-dot{color:#234d37;border-color:#aaa58c;background:#fff}
+.bh-page-dot:hover,.bh-page-dot.is-active{background:#173e2d;color:#fff;border-color:#173e2d}
+.bh-hint{color:#43594d}
+.cta{background:#eeeae2;color:#173a2b}
+.cta h2{color:#173a2b}
+.cta p{color:#385343;font-size:17px}
+.cta .button.ghost{color:#173e2e;border-color:#173e2e}
+.cta .button.ghost:hover{background:#d5dfd4}
+.bh-remote-demo{background:#f8f5ee;color:#143d2c;padding:82px 0;border-bottom:1px solid #d8d8cf}
+.bh-remote-layout{display:grid;grid-template-columns:1.18fr .82fr;gap:65px;align-items:center}
+.bh-remote-copy .eyebrow{color:#825b29;font-size:11px}
+.bh-remote-copy h2{font-size:clamp(54px,6.5vw,91px);line-height:1.04;color:#143b2c;margin:18px 0 24px}
+.bh-remote-copy h2 em{font-style:normal;color:#a88045}
+.bh-remote-copy p{max-width:665px;color:#334f3e;font-size:17px;line-height:1.82;margin:0 0 23px}
+.bh-remote-steps{display:flex;flex-wrap:wrap;gap:11px;margin:21px 0 29px}
+.bh-remote-steps span{display:flex;align-items:center;gap:8px;color:#284a36;background:#fff;border:1px solid #d1d8cc;padding:11px 12px;font:700 12px Manrope,Arial,sans-serif}
+.bh-remote-steps b{color:#92692f;font-size:13px}
+.bh-remote-primary{background:#164734;border-color:#164734;color:#fff;box-shadow:0 8px 20px #1c47352b;font-size:12px}
+.bh-remote-primary:hover{background:#276248;color:#fff}
+.bh-remote-copy .bh-remote-note{font-size:13px;margin:17px 0 0;color:#526d5a}
+.bh-remote-image{display:block;position:relative;max-height:495px;overflow:hidden;border:1px solid #b9b49f;background:#dfe3d7;box-shadow:0 19px 43px #10291824}
+.bh-remote-image img{width:100%;height:500px;object-fit:cover;object-position:center 26%}
+.bh-remote-image span{position:absolute;bottom:0;left:0;right:0;text-align:center;background:#103529f2;color:#fff;padding:16px;font:800 11px Manrope,sans-serif;letter-spacing:.08em}
+.hero p{font-size:18px;line-height:1.75}
+.bh-proposal .button.ghost{color:#173f2f;border-color:#55705c}
+.bh-proposal .button.ghost:hover{background:#fff}
+@media(max-width:920px){.bh-remote-layout{grid-template-columns:1fr;gap:30px}.bh-remote-image{max-width:550px}.bh-remote-image img{height:430px}}
+@media(max-width:570px){.section{padding-top:66px;padding-bottom:66px}.service-picture{height:175px}.service-info{padding:21px 23px 25px}.bh-remote-demo{padding:62px 0}.bh-remote-copy h2{font-size:56px}.bh-remote-primary{width:100%;text-align:center}.bh-remote-copy p{font-size:16px}}
+
 </style></head><body>
-<header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
+<header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#remote-demo">Try Remote</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
 <main>
 
 <section class="hero"><div class="shell"><div class="herokicker"><span class="eyebrow">Elettro Incorporated × Bal Harbour Shops</span><span>Luxury retail · Digital transformation · South Florida</span></div><h1>The next<br>dimension of <em>luxury.</em></h1><p>A bespoke vision for Bal Harbour Shops. An editorial digital destination, immersive retail experiences, AR-powered print, intelligent guest assistance and a new era of fashion storytelling.</p><div class="btns"><a class="button" href="#homepage">Experience the new homepage ↗</a><a class="button ghost" href="#social">Explore 12 social concepts ↗</a></div><div class="herofoot"><b>No pricing in this proposal</b><span>Digital experience</span><span>Luxury content studio</span><span>Interactive advertising</span></div></div></section>
@@ -327,6 +420,21 @@ body.bh-modal-open{overflow:hidden}
     </div>
   </div>
 </dialog>
+<section class="bh-remote-demo" id="remote-demo" aria-labelledby="bh-remote-title">
+<div class="shell bh-remote-layout">
+<div class="bh-remote-copy">
+<span class="eyebrow">Elettro Remote · Interactive live demonstration</span>
+<h2 id="bh-remote-title">Your phone.<br><em>The remote control.</em></h2>
+<p>Explore our working wireless website control demonstration. Open it on a desktop or large display, scan the QR code with your phone, and use your phone to navigate the experience in real time. No app installation required.</p>
+<div class="bh-remote-steps"><span><b>01</b> Open demo on a computer</span><span><b>02</b> Scan with your phone</span><span><b>03</b> Control the screen</span></div>
+<a class="button bh-remote-primary" href="https://elettro.com/remote/" target="_blank" rel="noopener noreferrer">TRY ELETTRO REMOTE · LIVE DEMO ↗</a>
+<p class="bh-remote-note">For the best test, open the demo on a larger screen and scan its pairing code with a separate phone.</p>
+</div>
+<a class="bh-remote-image" href="https://elettro.com/remote/" target="_blank" rel="noopener noreferrer" aria-label="Try the Elettro Remote live demonstration">
+<img loading="lazy" decoding="async" src="./pillars/ChatGPT%20Image%20Oct%2030%2C%202026%2C%2012_22_37%20PM-1.png" width="1024" height="1536" alt="Bal Harbour concept: visitors using phones to control large interactive luxury displays">
+<span>SEE THE WIRELESS CONCEPT IN ACTION ↗</span>
+</a>
+</div></section>
 <section class="section" id="vision"><div class="shell storygrid"><div><span class="eyebrow">The opportunity</span><h2>A singular destination deserves a singular digital world.</h2><p>Bal Harbour Shops already brings together exceptional luxury houses, a beautiful open-air setting, personal shopping, dining, e-commerce and a sophisticated editorial magazine. The opportunity is to connect these assets into one more intuitive, visually commanding guest experience.</p><p>Elettro proposes a unified creative and publishing system. The site becomes a curated destination. Property signage becomes an immersive experience. Magazine advertising becomes interactive. Every participating boutique gains a new path from inspiration to visit.</p><div class="btns" style="margin-top:25px"><a href="https://www.balharbourshops.com/" target="_blank" rel="noopener" class="button ghost">Existing website ↗</a><a href="https://www.balharbourshops.com/magazine/" target="_blank" rel="noopener" class="button ghost">Existing magazine ↗</a></div></div><div class="photo-stack"><img class="p1" loading="lazy" src="https://cdn.assets.prezly.com/cd1357b9-02c1-4116-b69a-615054f16a8e/Bal%20Harbour%20Shops%2020.jpg" alt="Gucci luxury storefront at Bal Harbour Shops"><img class="p2" loading="lazy" src="https://cdn.assets.prezly.com/2eed1244-1969-4a0f-83da-204575d6a4ae/Slide%209%20Replacement.jpg" alt="Fashion shopper at Prada Bal Harbour Shops"><span class="photo-tag">Miami · Fashion · Culture</span></div></div></section>
 <section class="section score" id="scores"><div class="shell"><div class="sectiontitle"><div><span class="eyebrow">Strategic digital analysis · October 2026</span><h2>SEO + AI search opportunity.</h2></div><p>Current site strengths are real. Elettro's opportunity is to improve technical discoverability, question-answer visibility, local discovery and conversion paths.</p></div>
 <div class="scoretop"><article class="scorecard"><div class="labelrow"><b>BalHarbourShops.com today</b><small>Directional review, not measured Lighthouse</small></div><div class="scorepair"><div><strong>80<span style="font:400 20px Italiana"> / 100</span></strong><span>SEO readiness · estimated</span></div><div><strong>59<span style="font:400 20px Italiana"> / 100</span></strong><span>AI search / AIO · estimated</span></div></div><p>Strong boutique and editorial footprint with extensive indexable detail pages. Further technical inspection required to verify live performance, JSON-LD coverage and AI answer retrieval.</p></article><article class="scorecard future"><div class="labelrow"><b>Elettro redesign goals</b><small>Post-build targets, not guaranteed scores</small></div><div class="scorepair"><div><strong>95<span style="font:400 20px Italiana"> / 100</span></strong><span>SEO readiness · target 90+</span></div><div><strong>94<span style="font:400 20px Italiana"> / 100</span></strong><span>AI search / AIO · target 90+</span></div></div><p>Targets assume comprehensive rebuild and validation: structured entities, fast templates, robust internal linking, localized answers, accessible media, crawl controls and content operations.</p></article></div>
@@ -335,18 +443,18 @@ body.bh-modal-open{overflow:hidden}
 <div class="scorefine"><strong>Score methodology:</strong> These are Elettro planning estimates derived from a qualitative public-page review, not results from a live Lighthouse, Core Web Vitals or AI-citation benchmark. The current SEO score of 80 and AIO score of 59 are directional opportunities, not independently measured grades. No universal industry-standard AIO score exists. The 90+ figures are project quality targets contingent on implementation and post-launch testing. Source references: <a href="https://www.balharbourshops.com/store-directory/" target="_blank" rel="noopener">store directory</a>, <a href="https://www.balharbourshops.com/magazine/" target="_blank" rel="noopener">magazine</a>, and <a href="https://www.balharbourshops.com/" target="_blank" rel="noopener">homepage</a>.</div></div></section>
 <section class="section homepreview" id="homepage"><div class="shell"><div class="sectiontitle"><div><span class="eyebrow">A completely new luxury editorial homepage</span><h2>Experience the vision.</h2></div><p>A working, mobile-responsive homepage concept inspired by the Shops' tropical architecture, sophisticated fashion aesthetic and global luxury brands.</p></div><div class="browser"><div class="browsertop"><span class="dots"><i></i><i></i><i></i></span><span class="browseraddress">elettro.com/clients/bal-harbour/concept/</span></div><div class="previewframe"><iframe title="Bal Harbour Shops redesigned homepage concept preview" src="./concept/" loading="lazy"></iframe><a class="preoverlay" href="./concept/"><span>Open the full interactive homepage ↗</span></a></div></div><div class="btns" style="margin-top:27px"><a class="button" href="./concept/">Explore the homepage ↗</a><a class="button ghost" href="#ar">See the augmented experiences ↗</a></div><p class="previewnote">Real store directory links and a scripted concierge prototype. A creative redesign demonstration, not an official deployment or live AR/voice system.</p></div></section>
 <section class="section" id="services"><div class="shell"><div class="sectiontitle"><div><span class="eyebrow">Elettro OS · The luxury retail suite</span><h2>One connected creative operation.</h2></div><p>Modular services tailored to a high-fashion, editorially led shopping destination. Scope and investment determined collaboratively. No pricing shown.</p></div><div class="servicegrid">
-<article class="service"><span class="num">01 / DIGITAL FLAGSHIP</span><h3>Luxury website & editorial platform</h3><p>Bespoke design, mobile-first experiences, content architecture, boutique landing pages, dining, events and magazine storytelling.</p></article>
-<article class="service"><span class="num">02 / ON-SITE INTELLIGENCE</span><h3>Interactive AR advertising & signs</h3><p>Luxury films activated by magazine pages, boutique displays, garden events, dining signs and destination print.</p></article>
-<article class="service"><span class="num">03 / PRINT REIMAGINED</span><h3>Magazine & print-to-AR</h3><p>Activate approved advertisements, lookbooks, invitations, hotel print cards, boutique displays and magazine pages with digital experiences.</p></article>
-<article class="service"><span class="num">04 / GUEST ASSISTANCE</span><h3>AI voice & virtual concierge</h3><p>Natural-language help for store locations, hours, events, dining, accessibility, and appointment requests with live data integrations and handoff.</p></article>
-<article class="service"><span class="num">05 / CREATIVE STUDIO</span><h3>High-fashion image & video</h3><p>Human-directed AI-assisted editorial campaigns, vertical films, cinemagraphs, event trailers, retailer-approved creative versions and localization.</p></article>
-<article class="service"><span class="num">06 / PUBLISHING ENGINE</span><h3>Elettro OS content operations</h3><p>Permissioned staff and tenant submissions, reusable asset catalog, approvals, metadata, platform-specific publishing and analytics.</p></article>
-<article class="service"><span class="num">07 / DISCOVERABILITY</span><h3>SEO + AIO authority</h3><p>Technical SEO, structured boutique data, assistant-readable answers, AI-search citation readiness, international content and search governance.</p></article>
-<article class="service"><span class="num">08 / COMMERCE & MEMBERSHIP</span><h3>Retail journey integration</h3><p>Approved links to existing marketplace, ACCESS perks, personal shopping, gift certificates, retailer appointment systems and event RSVPs.</p></article>
-<article class="service"><span class="num">09 / EXPERIENCES</span><h3>Luxury events & sand sculpture</h3><p>Signature sculptural installations, event concepts, aerial captures, live content packages and sponsored photo moments.</p></article>
-<article class="service"><span class="num">10 / SOCIAL & PAID</span><h3>Fashion-first social campaigns</h3><p>Stories, carousels, reels, shorts, targeted media, regional audience creative and brand-specific editorial calendars.</p></article>
-<article class="service"><span class="num">11 / LOCAL & VISITOR</span><h3>Google, maps & destination marketing</h3><p>Maps optimization, business profiles, dining discovery, hotels and travel partner paths, concierge-friendly location information.</p></article>
-<article class="service"><span class="num">12 / MEASUREMENT</span><h3>Experiential attribution</h3><p>Track approved AR scans, content interactions, store inquiries, appointments, magazine activation, organic visibility and guest journey events.</p></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-01.jpg?v=1793383920" alt="Luxury digital flagship and website design visual concept"></div><div class="service-info"><span class="num">01 / DIGITAL FLAGSHIP</span><h3>Luxury website & editorial platform</h3><p>Bespoke design, mobile-first experiences, content architecture, boutique landing pages, dining, events and magazine storytelling.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-02.jpg?v=1793383926" alt="Interactive augmented reality for luxury advertising visual concept"></div><div class="service-info"><span class="num">02 / ON-SITE INTELLIGENCE</span><h3>Interactive AR advertising & signs</h3><p>Luxury films activated by magazine pages, boutique displays, garden events, dining signs and destination print.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-03.jpg?v=1793383931" alt="Magazine print-to-AR activated experiences visual concept"></div><div class="service-info"><span class="num">03 / PRINT REIMAGINED</span><h3>Magazine & print-to-AR</h3><p>Activate approved advertisements, lookbooks, invitations, hotel print cards, boutique displays and magazine pages with digital experiences.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-04.jpg?v=1793383936" alt="AI voice concierge and guest services visual concept"></div><div class="service-info"><span class="num">04 / GUEST ASSISTANCE</span><h3>AI voice & virtual concierge</h3><p>Natural-language help for store locations, hours, events, dining, accessibility, and appointment requests with live data integrations and handoff.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-05.jpg?v=1793388994" alt="Fashion campaign creative studio visual concept"></div><div class="service-info"><span class="num">05 / CREATIVE STUDIO</span><h3>High-fashion image & video</h3><p>Human-directed AI-assisted editorial campaigns, vertical films, cinemagraphs, event trailers, retailer-approved creative versions and localization.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-06.jpg?v=1793389000" alt="Elettro OS publishing dashboard visual concept"></div><div class="service-info"><span class="num">06 / PUBLISHING ENGINE</span><h3>Elettro OS content operations</h3><p>Permissioned staff and tenant submissions, reusable asset catalog, approvals, metadata, platform-specific publishing and analytics.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-07.jpg?v=1793389004" alt="Search engine and AI search optimization visual concept"></div><div class="service-info"><span class="num">07 / DISCOVERABILITY</span><h3>SEO + AIO authority</h3><p>Technical SEO, structured boutique data, assistant-readable answers, AI-search citation readiness, international content and search governance.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-08.jpg?v=1793389009" alt="Luxury shopping and personal retail journey visual concept"></div><div class="service-info"><span class="num">08 / COMMERCE & MEMBERSHIP</span><h3>Retail journey integration</h3><p>Approved links to existing marketplace, ACCESS perks, personal shopping, gift certificates, retailer appointment systems and event RSVPs.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-09.jpg?v=1793389014" alt="Luxury event and sand sculpture experiences visual concept"></div><div class="service-info"><span class="num">09 / EXPERIENCES</span><h3>Luxury events & sand sculpture</h3><p>Signature sculptural installations, event concepts, aerial captures, live content packages and sponsored photo moments.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-10.jpg?v=1793389019" alt="Fashion social media campaigns visual concept"></div><div class="service-info"><span class="num">10 / SOCIAL & PAID</span><h3>Fashion-first social campaigns</h3><p>Stories, carousels, reels, shorts, targeted media, regional audience creative and brand-specific editorial calendars.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-11.jpg?v=1793389025" alt="Bal Harbour destination marketing and maps visual concept"></div><div class="service-info"><span class="num">11 / LOCAL & VISITOR</span><h3>Google, maps & destination marketing</h3><p>Maps optimization, business profiles, dining discovery, hotels and travel partner paths, concierge-friendly location information.</p></div></article>
+<article class="service service-illustrated"><div class="service-picture"><img loading="lazy" decoding="async" width="850" height="300" src="https://cdn.shopify.com/s/files/1/1004/1858/4950/files/bal-harbour-elettro-service-12.jpg?v=1793389030" alt="Analytics reporting and experiential attribution visual concept"></div><div class="service-info"><span class="num">12 / MEASUREMENT</span><h3>Experiential attribution</h3><p>Track approved AR scans, content interactions, store inquiries, appointments, magazine activation, organic visibility and guest journey events.</p></div></article>
 </div></div></section>
 <section class="section ar-lux" id="ar"><div class="shell">
 <div class="sectiontitle"><div><span class="eyebrow">Elettro AR / Luxury print and on-property media</span><h2>Make every ad an experience.</h2></div><p>A visually immersive proposal for print advertising, fashion campaigns and interactive property signage.</p></div>
