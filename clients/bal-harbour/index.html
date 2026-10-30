@@ -216,7 +216,7 @@
 .bh-slide-open:hover{transform:translateY(-4px);border-color:#e2bf81}
 .bh-slide-open:focus-visible{outline:3px solid #e4c88f;outline-offset:3px}
 .bh-poster{display:block;height:365px;background:#192c25;overflow:hidden}
-.bh-poster img{height:100%;width:100%;object-fit:cover;object-position:top;transition:transform .3s}
+.bh-poster img{height:100%;width:100%;object-fit:contain;object-position:top center;transition:transform .3s}
 .bh-slide-open:hover .bh-poster img{transform:scale(1.02)}
 .bh-slide-meta{display:flex;gap:15px;align-items:center;min-height:91px;padding:16px}
 .bh-slide-number{align-self:flex-start;white-space:nowrap;color:#d0b385;font:700 12px 'Manrope',sans-serif;letter-spacing:.08em}
@@ -444,7 +444,7 @@ render();
     document.getElementById('bh-current-page').textContent=digit(selected);
     document.getElementById('bh-current-name').textContent=pages[selected].label;
   }
-  function jump(i){mark(i);cards[selected].scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest',inline:'start'})}
+  function jump(i){mark(i);cards[selected].scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest',inline:'start'})}
   function show(i){
     modalSelected=(i+pages.length)%pages.length;
     const p=pages[modalSelected];
