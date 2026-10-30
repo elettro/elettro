@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Wireless Control Demo | Elettro</title>
+<meta name="description" content="Scan the QR code and your phone becomes the remote for this website. No app, no account.">
+<style>
+:root{--bg:#07090d;--panel:#10151d;--line:rgba(255,255,255,.12);--text:#f4f1ea;--muted:#9aa4b0;--gold:#d9b56b;--ok:#5be3a2}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+button{font:inherit;color:inherit}
+/* ---------- DISPLAY ---------- */
+#display{position:fixed;inset:0;display:none;grid-template-rows:auto 1fr auto;padding:2.2vw 3vw;gap:1.6vw}
+body.mode-display #display{display:grid}
+.top{display:flex;align-items:center;justify-content:space-between}
+.top img{height:clamp(20px,2.4vw,38px)}
+.pill{display:flex;align-items:center;gap:.6em;font-size:clamp(11px,1vw,15px);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.6em 1.1em;border-radius:99px}
+.dot{width:.7em;height:.7em;border-radius:50%;background:#e0a040}
+.pill.on{color:var(--ok)}.pill.on .dot{background:var(--ok);box-shadow:0 0 12px var(--ok)}
+.stage{position:relative;border-radius:1.4vw;overflow:hidden;border:1px solid var(--line);display:grid;grid-template-rows:1fr auto}
+.bg{position:absolute;inset:0;transition:background 1s,opacity .6s;background-size:140% 140%;animation:drift 18s ease-in-out infinite alternate}
+body.paused .bg{animation-play-state:paused}
+@keyframes drift{from{background-position:0 0}to{background-position:100% 100%}}
+.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.1) 70%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 50%)}
+.hero{position:relative;z-index:2;padding:4vw;display:flex;flex-direction:column;justify-content:center;gap:1.1vw;max-width:55%}
+.kicker{font-size:clamp(11px,1vw,15px);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.hero h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(30px,5vw,84px);line-height:1.02}
+.hero p{margin:0;color:#d4d8de;font-size:clamp(13px,1.35vw,22px);line-height:1.5}
+.cta{align-self:flex-start;margin-top:.8vw;padding:.9em 1.8em;border:1px solid var(--gold);color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font-size:clamp(11px,1vw,15px);background:rgba(0,0,0,.25)}
+.tiles{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,1fr);gap:1vw;padding:0 4vw 2.4vw}
+.tile{position:relative;aspect-ratio:16/10;border-radius:.7vw;border:2px solid transparent;display:flex;align-items:flex-end;padding:.9vw;font-size:clamp(10px,1vw,15px);letter-spacing:.14em;text-transform:uppercase;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.tile:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 65%)}
+.tile span{position:relative}
+.focus{border-color:var(--gold)!important;transform:scale(1.07);box-shadow:0 0 0 4px rgba(217,181,107,.25),0 18px 40px rgba(0,0,0,.55);z-index:3}
+.cta.focus{background:var(--gold);color:#111;transform:scale(1.05)}
+.qrbox{position:absolute;right:2.4vw;top:2.4vw;z-index:4;background:#fff;color:#111;border-radius:1vw;padding:1vw;text-align:center;width:clamp(130px,15vw,250px);transition:opacity .5s,transform .5s}
+.qrbox svg,.qrbox img{width:100%;height:auto;display:block}
+.qrbox b{display:block;margin-top:.6em;font-size:clamp(10px,.95vw,14px);letter-spacing:.14em;text-transform:uppercase}
+body.paired .qrbox{opacity:0;transform:scale(.8);pointer-events:none}
+.foot{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:clamp(10px,.9vw,13px);letter-spacing:.14em;text-transform:uppercase;gap:2vw}
+.foot a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(217,181,107,.4)}
+.overlay{position:absolute;inset:0;z-index:10;background:rgba(5,7,10,.88);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+.overlay.show{display:flex}
+.card{width:min(58vw,820px);border:1px solid var(--line);border-radius:1.2vw;background:var(--panel);padding:2.6vw;display:grid;gap:1.1vw}
+.card h2{margin:0;font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,3.2vw,52px)}
+.card .art{aspect-ratio:21/8;border-radius:.8vw}
+.card p{margin:0;color:#c4cad2;font-size:clamp(13px,1.3vw,20px);line-height:1.5}
+.acts{display:flex;gap:1vw;flex-wrap:wrap}
+.acts div{padding:.8em 1.4em;border:1px solid var(--line);border-radius:99px;font-size:clamp(11px,1vw,15px);letter-spacing:.12em;text-transform:uppercase}
+.acts .pri{background:var(--gold);color:#111;border-color:var(--gold)}
+.menu{display:grid;gap:.8vw;min-width:min(40vw,520px)}
+.menu .it{padding:1.1vw 1.6vw;border:2px solid var(--line);border-radius:.8vw;font-size:clamp(16px,1.8vw,28px);font-family:Georgia,serif;background:var(--panel)}
+.toast{position:absolute;left:50%;bottom:9%;transform:translate(-50%,20px);z-index:20;background:#fff;color:#111;padding:.9em 1.6em;border-radius:99px;font-size:clamp(12px,1.2vw,18px);opacity:0;transition:.35s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.vol{position:absolute;right:3vw;top:50%;z-index:20;width:1.1vw;min-width:10px;height:22vh;background:rgba(255,255,255,.15);border-radius:9px;opacity:0;transition:opacity .3s;overflow:hidden}
+.vol i{position:absolute;bottom:0;left:0;right:0;background:var(--gold)}
+.vol.show{opacity:1}
+.pause{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12;font-size:clamp(14px,1.4vw,22px);letter-spacing:.3em;text-transform:uppercase;background:rgba(0,0,0,.6);padding:.8em 1.4em;border-radius:99px;display:none}
+body.paused .pause{display:block}
+.err{display:none;color:#ffb3a8;font-size:13px}
+/* ---------- CONTROLLER ---------- */
+#remote{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:max(18px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));gap:16px;background:radial-gradient(circle at 50% 0,#1a2230,#07090d 60%);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+body.mode-remote #remote{display:flex}
+#remote img.logo{height:22px;margin-top:6px}
+.rstat{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#e0a040;display:flex;align-items:center;gap:8px}
+.rstat.on{color:var(--ok)}
+.rstat:before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.rnow{min-height:40px;text-align:center;color:var(--muted);font-size:13px;line-height:1.4}
+.rnow b{color:var(--text);font-weight:600}
+.pad{position:relative;width:min(78vw,320px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 35%,#222b38,#0d1118);border:1px solid var(--line);box-shadow:inset 0 0 40px rgba(0,0,0,.6),0 20px 50px rgba(0,0,0,.5);touch-action:none}
+.pad button{position:absolute;background:none;border:0;width:30%;height:30%;display:flex;align-items:center;justify-content:center;color:#cfd6df}
+.pad button svg{width:30px;height:30px}
+.pad .u{top:3%;left:35%}.pad .d{bottom:3%;left:35%}.pad .l{left:3%;top:35%}.pad .r{right:3%;top:35%}
+.pad .ok{left:33%;top:33%;width:34%;height:34%;border-radius:50%;background:#171e29;border:1px solid var(--line);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.pad button:active,.keys button:active{background:rgba(217,181,107,.3)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(92vw,380px)}
+.keys button{background:#121821;border:1px solid var(--line);border-radius:16px;padding:12px 0 9px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.keys svg{width:24px;height:24px;color:var(--text)}
+.send{width:min(92vw,380px);padding:16px;border-radius:99px;border:0;background:var(--gold);color:#111;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:14px}
+.saved{width:min(92vw,380px);display:grid;gap:8px;max-height:20vh;overflow:auto}
+.saved div{background:#121821;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.saved small{color:var(--ok);letter-spacing:.1em;text-transform:uppercase;font-size:10px;align-self:center}
+.rerr{color:#ffb3a8;font-size:13px;text-align:center;display:none;max-width:320px}
+</style>
+</head>
+<body>
+
+<!-- ============ DISPLAY (TV / kiosk / desktop) ============ -->
+<div id="display">
+  <div class="top">
+    <img src="/images/Elettro-logo-white.png" alt="Elettro">
+    <div class="pill" id="dstat"><span class="dot"></span><span id="dtxt">Waiting for phone</span></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="bg" id="bg"></div>
+    <div class="hero">
+      <div class="kicker" id="kicker"></div>
+      <h1 id="title"></h1>
+      <p id="sub"></p>
+      <div class="cta" id="cta">Start exploring</div>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <div class="qrbox" id="qrbox"><div id="qr"></div><b>Scan to control<br>this experience</b></div>
+    <div class="pause">Paused</div>
+    <div class="vol" id="vol"><i id="voli"></i></div>
+    <div class="toast" id="toast"></div>
+    <div class="overlay" id="ov"></div>
+  </div>
+  <div class="foot">
+    <span id="hint">Scan the code with your phone camera. No app, no account.</span>
+    <span><a id="simlink" href="#" target="_blank" rel="noopener">Test on this computer</a> &nbsp;·&nbsp; Session <span id="sid">…</span></span>
+  </div>
+  <div class="err" id="derr"></div>
+</div>
+
+<!-- ============ REMOTE (phone) ============ -->
+<div id="remote">
+  <img class="logo" src="/images/Elettro-logo-white.png" alt="Elettro">
+  <div class="rstat" id="rstat">Connecting</div>
+  <div class="rnow" id="rnow">Pairing with the screen…</div>
+  <div class="pad" id="pad">
+    <button class="u" data-k="up" aria-label="Up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+    <button class="d" data-k="down" aria-label="Down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="l" data-k="left" aria-label="Left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button class="r" data-k="right" aria-label="Right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="ok" data-k="select">OK</button>
+  </div>
+  <div class="keys">
+    <button data-k="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l-6 6 6 6M4 12h16"/></svg>Back</button>
+    <button data-k="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Play</button>
+    <button data-k="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
+    <button data-k="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</button>
+    <button data-k="voldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 10l3 4M20 10l-3 4"/></svg>Vol −</button>
+    <button data-k="volup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a4 4 0 010 6M19.5 6.5a8 8 0 010 11"/></svg>Vol +</button>
+  </div>
+  <button class="send" data-k="send">Send to my phone</button>
+  <div class="saved" id="saved"></div>
+  <div class="rerr" id="rerr"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+(function(){
+var params=new URLSearchParams(location.search);
+var target=params.get('c');
+var PREFIX='elettro-wl-';
+var body=document.body;
+function $(id){return document.getElementById(id)}
+
+/* ---------- shared content ---------- */
+var SCENES=[
+ {id:'coffee',name:'Coffee Product Site',kicker:'Artisan Roasters',title:'Discover Exceptional Coffee',sub:'Crafted for a better day. Browse roasts, watch the story, add to cart, all from your phone.',cta:'Explore our roasts',
+  grad:'radial-gradient(circle at 70% 30%,#8a5a2b,transparent 55%),radial-gradient(circle at 20% 80%,#3a2012,transparent 60%),#1b110a',
+  tiles:[['Single Origin','Ethiopia Yirgacheffe, floral and bright. 12oz bag.','$22','#7a4a22'],['Espresso Blend','Dark chocolate and caramel. Built for espresso.','$19','#4b2c18'],['Cold Brew','Slow-steeped concentrate. Smooth, low acid.','$16','#2b3a40'],['Brew Gear','Pour-over kit with kettle, dripper and filters.','$68','#5a5148'],['Subscribe','Fresh roasted every two weeks. Skip anytime.','$17/mo','#6e3b2a']]},
+ {id:'hotel',name:'Hotel Site',kicker:'Oceanfront Resort',title:'A More Extraordinary Stay Awaits',sub:'Explore rooms, amenities and dining. Check availability and request details straight from your phone.',cta:'Explore stays',
+  grad:'radial-gradient(circle at 75% 25%,#f0a35e,transparent 45%),linear-gradient(180deg,#2a3c63 0%,#d27a58 55%,#0f3a4a 56%,#0a2330 100%)',
+  tiles:[['Rooms','Ocean-view suites with private terraces. From $389 a night.','$389','#35607a'],['Dining','Rooftop grill, sunrise café and the Palm Bar.','Menus','#7a4a35'],['Experiences','Sunset sails, spa rituals and private cabanas.','Book','#2f6b6a'],['Offers','Stay three nights, get the fourth free this season.','4th free','#6b4a7a'],['Gallery','Pool, beach, suites and the lobby lounge.','Photos','#4a5a7a']]},
+ {id:'mall',name:'Bal Harbour Mall Site',kicker:'Bal Harbour Shops',title:'Iconic Brands. Extraordinary Experiences.',sub:'Browse brands, view new arrivals, watch campaign videos and save items to your phone.',cta:'Start exploring',
+  grad:'radial-gradient(circle at 25% 25%,#d9b56b,transparent 40%),radial-gradient(circle at 80% 70%,#6b4f2a,transparent 55%),linear-gradient(135deg,#14110c,#2a2218)',
+  tiles:[['Shop','Over 100 luxury boutiques. Filter by floor or brand.','Brands','#6b5230'],['Dine','Tables and tasting menus across the Shops.','Reserve','#5a2f2f'],['New Arrivals','This week: resort collections and limited drops.','View','#2f4a5a'],['Explore','Interactive map from your phone to the boutique.','Map','#3d3d5a'],['Events','Private previews, trunk shows and live music.','RSVP','#5a4a2f']]}
+];
+
+/* ---------- DISPLAY ---------- */
+function startDisplay(){
+  body.classList.add('mode-display');
+  var id=Math.random().toString(36).slice(2,8);
+  $('sid').textContent=id.toUpperCase();
+  var url=location.origin+location.pathname+'?c='+id;
+  $('simlink').href=url;
+  try{var q=qrcode(0,'M');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true})}catch(e){$('qr').textContent=url}
+
+  var st={scene:0,row:0,col:0,overlay:null,menuIdx:0,vol:60};
+  var conn=null,toastT,volT;
+
+  function sc(){return SCENES[st.scene]}
+  function renderScene(){
+    var s=sc();
+    $('bg').style.background=s.grad;$('bg').style.backgroundSize='140% 140%';
+    $('kicker').textContent=s.kicker;$('title').textContent=s.title;$('sub').textContent=s.sub;$('cta').textContent=s.cta;
+    $('tiles').innerHTML=s.tiles.map(function(t){return '<div class="tile" style="background:linear-gradient(135deg,'+t[3]+',#0b0d12)"><span>'+t[0]+'</span></div>'}).join('');
+    st.row=0;st.col=0;paintFocus();pushState();
+  }
+  function paintFocus(){
+    $('cta').classList.toggle('focus',st.row===0);
+    [].forEach.call($('tiles').children,function(el,i){el.classList.toggle('focus',st.row===1&&i===st.col)});
+  }
+  function focused(){
+    var s=sc();
+    if(st.row===0)return{name:s.name+': '+s.cta,desc:s.sub};
+    var t=s.tiles[st.col];return{name:t[0],desc:t[1],price:t[2],color:t[3]};
+  }
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},2200)}
+  function showVol(){$('voli').style.height=st.vol+'%';$('vol').classList.add('show');clearTimeout(volT);volT=setTimeout(function(){$('vol').classList.remove('show')},1400)}
+  function closeOv(){st.overlay=null;$('ov').classList.remove('show');$('ov').innerHTML=''}
+  function openDetail(){
+    var f=focused();st.overlay='detail';
+    var c=f.color||'#4b3a22';
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div><div class="art" style="background:linear-gradient(135deg,'+c+',#0b0d12)"></div><h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div><div>'+(f.price||'More')+'</div><div>Back</div></div></div>';
+    $('ov').classList.add('show');pushState();
+  }
+  function openMenu(){
+    st.overlay='menu';st.menuIdx=st.scene;renderMenu();$('ov').classList.add('show');pushState();
+  }
+  function renderMenu(){
+    $('ov').innerHTML='<div class="menu">'+SCENES.map(function(s,i){return '<div class="it'+(i===st.menuIdx?' focus':'')+'">'+s.name+'</div>'}).join('')+'</div>';
+  }
+  function send(){
+    var f=focused();
+    if(conn&&conn.open){conn.send({t:'saved',name:f.name,price:f.price||'',scene:sc().name});toast('Sent to your phone: '+f.name)}
+  }
+  function pushState(){
+    if(!conn||!conn.open)return;
+    var f=focused();
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':f.name,overlay:st.overlay||''});
+  }
+  function key(k){
+    if(st.overlay==='menu'){
+      if(k==='up'||k==='left')st.menuIdx=(st.menuIdx+SCENES.length-1)%SCENES.length;
+      else if(k==='down'||k==='right')st.menuIdx=(st.menuIdx+1)%SCENES.length;
+      else if(k==='select'){st.scene=st.menuIdx;closeOv();renderScene();toast(sc().name);return}
+      else if(k==='back'||k==='menu'){closeOv()}
+      renderMenu();pushState();return;
+    }
+    if(st.overlay==='detail'){
+      if(k==='back'||k==='select'){closeOv()}
+      else if(k==='send'){send()}
+      else if(k==='menu')openMenu();
+      else if(k==='home'){closeOv();st.row=0;st.col=0;paintFocus()}
+      pushState();
+    } else {
+      switch(k){
+        case 'left':if(st.row===1)st.col=Math.max(0,st.col-1);break;
+        case 'right':if(st.row===1)st.col=Math.min(4,st.col+1);break;
+        case 'up':st.row=0;break;
+        case 'down':st.row=1;break;
+        case 'select':openDetail();return;
+        case 'send':send();break;
+        case 'menu':openMenu();return;
+        case 'home':st.scene=0;renderScene();toast('Home');return;
+        case 'back':break;
+      }
+      paintFocus();pushState();
+    }
+    if(k==='play'){}
+  }
+  function handle(m){
+    if(!m||m.t!=='key')return;
+    var k=m.k;
+    if(k==='play'){body.classList.toggle('paused');toast(body.classList.contains('paused')?'Paused':'Playing');return}
+    if(k==='volup'){st.vol=Math.min(100,st.vol+10);showVol();return}
+    if(k==='voldown'){st.vol=Math.max(0,st.vol-10);showVol();return}
+    key(k);
+  }
+  /* keyboard fallback for testing */
+  document.addEventListener('keydown',function(e){
+    var m={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Enter:'select',Escape:'back',m:'menu',h:'home',' ':'play'}[e.key];
+    if(m){e.preventDefault();handle({t:'key',k:m})}
+  });
+
+  function setPaired(on){
+    body.classList.toggle('paired',on);
+    $('dstat').classList.toggle('on',on);
+    $('dtxt').textContent=on?'Phone connected':'Waiting for phone';
+    $('hint').textContent=on?'Use your phone as the remote. Swipe or tap the pad. Press Send to keep what you like.':'Scan the code with your phone camera. No app, no account.';
+  }
+  function boot(){
+    var peer=new Peer(PREFIX+id);
+    peer.on('open',function(){renderScene()});
+    peer.on('connection',function(c){
+      if(conn&&conn.open){c.on('open',function(){c.send({t:'busy'});setTimeout(function(){c.close()},300)});return}
+      conn=c;
+      c.on('open',function(){setPaired(true);toast('Phone connected');pushState()});
+      c.on('data',handle);
+      c.on('close',function(){conn=null;setPaired(false)});
+      c.on('error',function(){conn=null;setPaired(false)});
+    });
+    peer.on('disconnected',function(){try{peer.reconnect()}catch(e){}});
+    peer.on('error',function(e){var d=$('derr');d.style.display='block';d.textContent='Connection service error: '+e.type});
+  }
+  renderScene();
+  boot();
+}
+
+/* ---------- REMOTE ---------- */
+function startRemote(){
+  body.classList.add('mode-remote');
+  var conn,peer,pad=$('pad');
+  function setStat(on,txt){$('rstat').className='rstat'+(on?' on':'');$('rstat').textContent=txt}
+  function err(m){var e=$('rerr');e.style.display='block';e.textContent=m}
+  function send(k){
+    if(navigator.vibrate)navigator.vibrate(12);
+    if(conn&&conn.open)conn.send({t:'key',k:k});
+  }
+  peer=new Peer();
+  peer.on('open',function(){
+    conn=peer.connect(PREFIX+target,{reliable:true});
+    conn.on('open',function(){setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
+    conn.on('data',function(m){
+      if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
+      else if(m.t==='saved'){
+        var d=document.createElement('div');d.innerHTML='<span>'+m.name+(m.price?' · '+m.price:'')+'</span><small>Saved</small>';
+        $('saved').insertBefore(d,$('saved').firstChild);
+        if(navigator.vibrate)navigator.vibrate([30,40,30]);
+      } else if(m.t==='busy'){setStat(false,'Screen in use');err('Another phone is already controlling this screen.')}
+    });
+    conn.on('close',function(){setStat(false,'Disconnected');$('rnow').textContent='Scan the screen again to reconnect.'});
+    conn.on('error',function(){setStat(false,'Error')});
+  });
+  peer.on('error',function(e){setStat(false,'Could not connect');err(e.type==='peer-unavailable'?'This session has ended. Scan the code on the screen again.':'Connection error: '+e.type)});
+  document.querySelectorAll('[data-k]').forEach(function(b){
+    if(b.closest('#pad'))return;
+    b.addEventListener('click',function(){send(b.dataset.k)});
+  });
+  /* pad: tap arrows, plus swipe anywhere on pad */
+  pad.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){send(b.dataset.k)})});
+  var sx,sy;
+  pad.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
+  pad.addEventListener('touchend',function(e){
+    var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<40)return;
+    e.preventDefault();
+    send(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'));
+  });
+}
+
+if(target)startRemote();else startDisplay();
+})();
+</script>
+</body>
+</html>
