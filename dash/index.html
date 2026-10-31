@@ -288,7 +288,7 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
     <div>
       <div class="kicker">Elettro OS × Stashbox · Live connection race</div>
       <h1>The <em>Connection</em><br><span>Grand Prix</span></h1>
-      <p class="sub">Eleven networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
+      <p class="sub">Ten networks, one finish line: <b>connected and posting on its own from Elettro OS</b>. Every racer moves only when a real checkpoint is cleared.</p>
     </div>
     <div class="total"><div class="n" id="total">0%</div><div class="l">Whole grid · average</div><div class="l" id="visits" style="margin-top:6px"></div></div>
   </header>
@@ -397,9 +397,6 @@ const STATUS = [
   { name: "TikTok", dest: "tiktok", handle: "@stashboxmusic", code: "TT", color: "#22e6ff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1 },
     note: "APPROVED by TikTok 261028. Test posts done via Elettro OS; token refresh + planner tick every 15 min. Public posts with captions unlocked." },
-  { name: "X", dest: "x", handle: "Stashbox X", code: "X", color: "#d7ff1f",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1 },
-    note: "4 clips/day with a 25% promo cap. Posting API is a paid tier." },
   { name: "LinkedIn", dest: "linkedin", handle: "Dean Palermo (via Elettro)", code: "in", color: "#4fb3ff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: STATUS_LI_NOTE },
@@ -719,7 +716,7 @@ setInterval(raceClock, 1000);
 setInterval(pullRace, EVERY);
 
 // ---- Plug-In Matrix: every brand x every network, pulled from the same connections feed ----
-const PAUSED = { x: "PAUSED" };
+const PAUSED = {};
 const LEVELS = {
   live:      { label: "Live",        color: "var(--ok)",   blurb: "Connected and auto-publishing" },
   plugged:   { label: "Plugged in",  color: "var(--cyan)", blurb: "Connected to Elettro OS" },
@@ -754,7 +751,7 @@ function cellSvg(color, code, pct) {
     <text class="pc" x="32" y="53">${pct}%</text></svg>`;
 }
 function renderMatrix() {
-  const cols = STATUS; // the eleven networks the dashboard races
+  const cols = STATUS; // the ten networks the dashboard races
   const rows = mxBrands.map((b, bi) => {
     const cells = cols.map((c) => {
       const p = b.profiles.find((x) => x.destination === c.dest);
