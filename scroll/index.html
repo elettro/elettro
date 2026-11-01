@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elettro | 3D Scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0a0c0b; --fg:#efe8dc; --muted:#a39d92; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html.lenis, html.lenis body { height:auto; }
+  .lenis.lenis-smooth { scroll-behavior:auto !important; }
+  body { background:var(--bg); color:var(--fg); font-family:Inter,system-ui,sans-serif; overflow-x:hidden; }
+  h1,h2,h3 { font-weight:500; letter-spacing:-.02em; line-height:1.02; }
+  em { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; }
+  .serif { font-family:'Cormorant Garamond',serif; }
+
+  /* placeholder tile when no image is set */
+  .ph { width:100%; height:100%; }
+
+  /* HERO */
+  .hero { min-height:100vh; display:grid; place-items:center; text-align:center; padding:0 6vw; }
+  .hero h1 { font-size:clamp(2.6rem,7vw,6.5rem); }
+  .hero p { color:var(--muted); margin-top:1.4rem; font-size:1.05rem; }
+  .btn { display:inline-block; margin-top:2rem; padding:.9rem 1.8rem; border-radius:99px; background:var(--fg); color:#111; text-decoration:none; font-size:.9rem; }
+
+  /* CARD CAROUSEL (pinned) */
+  .cards { height:100vh; position:relative; overflow:hidden; }
+  .card {
+    position:absolute; top:50%; left:50%; width:min(74vw,1100px); height:min(68vh,620px);
+    border-radius:22px; overflow:hidden; background:#151817;
+    transform:translate(-50%,-50%); will-change:transform,opacity;
+  }
+  .card .bg { position:absolute; inset:0; }
+  .card .bg img { width:100%; height:100%; object-fit:cover; }
+  .card .bg::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.05) 70%); }
+  .card .copy { position:absolute; left:5%; top:50%; transform:translateY(-50%); max-width:min(420px,70%); z-index:2; }
+  .card h2 { font-size:clamp(1.8rem,4vw,3.4rem); }
+  .card p { color:#d9d3c8; margin-top:1rem; line-height:1.55; }
+
+  /* TILTED WALL */
+  .wall-sec { position:relative; min-height:140vh; overflow:hidden; perspective:1400px; }
+  .wall-copy { position:absolute; z-index:5; left:6vw; top:30vh; max-width:420px; }
+  .wall-copy .eyebrow { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:1.2rem; }
+  .wall-copy h2 { font-size:clamp(2rem,4.4vw,4rem); }
+  .wall-copy p { color:var(--muted); margin-top:1.2rem; line-height:1.6; }
+  .wall-shade { position:absolute; inset:0; z-index:4; pointer-events:none;
+    background:linear-gradient(90deg,var(--bg) 0%,rgba(10,12,11,.85) 25%,transparent 55%),
+               linear-gradient(180deg,var(--bg),transparent 18%,transparent 82%,var(--bg)); }
+  .wall { position:absolute; left:30%; top:-10%; width:90vw; display:grid; grid-template-columns:repeat(4,1fr); gap:1.1vw;
+    transform-style:preserve-3d; transform:rotateX(52deg) rotateZ(-20deg); transform-origin:center; will-change:transform; }
+  .wall .tile { aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:#151817; }
+  .wall .tile img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* BLUR REVEAL */
+  .reveal { min-height:110vh; display:grid; place-items:center; padding:0 8vw; text-align:center; }
+  .reveal h2 { font-size:clamp(2.2rem,6vw,5.5rem); max-width:16ch; }
+  .reveal .w { display:inline-block; white-space:pre; will-change:filter,opacity,transform; }
+
+  footer { padding:10vh 6vw; text-align:center; color:var(--muted); font-size:.85rem; }
+
+  @media (prefers-reduced-motion: reduce) { .wall { transform:rotateX(52deg) rotateZ(-20deg) !important; } }
+  @media (max-width:700px) {
+    .wall { left:-20%; width:150vw; grid-template-columns:repeat(3,1fr); }
+    .wall-copy { top:14vh; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div>
+    <h1>A studio built<br>around your <em>growth.</em></h1>
+    <p>Scroll down. Swap in your own images at the top of the script.</p>
+    <a class="btn" href="#cards">Let’s talk ↗</a>
+  </div>
+</section>
+
+<section class="cards" id="cards"></section>
+
+<section class="wall-sec" id="wallSec">
+  <div class="wall-copy">
+    <div class="eyebrow">A clearer way forward</div>
+    <h2>Good businesses deserve to be <em>seen.</em></h2>
+    <p>Strategy, creative and technology working towards the same goal.</p>
+  </div>
+  <div class="wall-shade"></div>
+  <div class="wall" id="wall"></div>
+</section>
+
+<section class="reveal">
+  <h2 id="revealText">Turn attention into growth.</h2>
+</section>
+
+<footer>© 2026 Elettro Interactive</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ============ EDIT THIS ============
+   Put image files in an "images/" folder next to this HTML and list them here.
+   Leave empty to see gradient placeholders.
+   First 3 are used for the pinned cards; all are cycled through the tilted wall. */
+const IMAGES = [
+  // 'images/01.webp',
+  // 'images/02.webp',
+  // 'images/03.webp',
+];
+
+const CARDS = [
+  { title:'Reach the <em>right people.</em>',     text:'We shape your message and put it in front of your audience.' },
+  { title:'Turn attention <em>into business.</em>', text:'Clear offers and effective pages that turn interest into action.' },
+  { title:'We help you <em>win customers.</em>',  text:'Ads, content and websites working together.' },
+];
+/* =================================== */
+
+gsap.registerPlugin(ScrollTrigger);
+
+// image or placeholder
+function media(i, cls){
+  const src = IMAGES.length ? IMAGES[i % IMAGES.length] : null;
+  if (src) return `<img src="${src}" alt="" loading="lazy" decoding="async">`;
+  const h = (i*47+20)%360;
+  return `<div class="ph" style="background:linear-gradient(135deg,hsl(${h} 25% 22%),hsl(${(h+40)%360} 30% 10%))"></div>`;
+}
+
+// build cards
+const cardsEl = document.getElementById('cards');
+CARDS.forEach((c,i)=>{
+  cardsEl.insertAdjacentHTML('beforeend',
+   `<article class="card"><div class="bg">${media(i)}</div>
+    <div class="copy"><h2>${c.title}</h2><p>${c.text}</p></div></article>`);
+});
+const cardEls = [...cardsEl.querySelectorAll('.card')];
+
+// build wall
+const wall = document.getElementById('wall');
+for (let i=0;i<16;i++) wall.insertAdjacentHTML('beforeend', `<div class="tile">${media(i+3)}</div>`);
+
+// split reveal text
+const rt = document.getElementById('revealText');
+rt.innerHTML = rt.textContent.split(' ').map(w=>`<span class="w">${w} </span>`).join('');
+
+// smooth scroll wired to ScrollTrigger
+const lenis = new Lenis({ lerp:0.09 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+
+// 1) pinned card carousel
+function layout(p){
+  cardEls.forEach((el,i)=>{
+    const d = i - p, a = Math.min(Math.abs(d),1);
+    gsap.set(el,{
+      xPercent:-50, yPercent:-50,
+      x: d * window.innerWidth * 0.62,
+      scale: 1 - a*0.16,
+      opacity: 1 - a*0.65,
+      zIndex: 10 - Math.round(Math.abs(d)),
+    });
+  });
+}
+layout(0);
+ScrollTrigger.create({
+  trigger:'#cards', start:'top top', end:()=>'+='+(window.innerHeight*(CARDS.length-1)*0.9),
+  pin:true, scrub:true, invalidateOnRefresh:true,
+  onUpdate:s => layout(s.progress*(CARDS.length-1)),
+});
+
+// 2) tilted wall drift
+gsap.fromTo(wall,
+  { yPercent:10, rotateZ:-20 },
+  { yPercent:-35, rotateZ:-12, ease:'none',
+    scrollTrigger:{ trigger:'#wallSec', start:'top bottom', end:'bottom top', scrub:1 } });
+gsap.from('.wall-copy > *',{
+  opacity:0, y:30, filter:'blur(10px)', stagger:.12, ease:'none',
+  scrollTrigger:{ trigger:'#wallSec', start:'top 60%', end:'top 25%', scrub:true } });
+
+// 3) blur-to-sharp word reveal
+gsap.fromTo('.reveal .w',
+  { opacity:0, filter:'blur(14px)', y:30 },
+  { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
+    scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
+</script>
+</body>
+</html>
