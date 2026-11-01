@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#04304f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Deep Reef · Elettro Remote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#06245a;--sun:#ffd23f;--me:#ffd23f}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;position:fixed;inset:0;width:100%;
+    font-family:Fredoka,"Arial Rounded MT Bold",ui-rounded,system-ui,sans-serif;color:#fff;
+    background:linear-gradient(#52e3ff 0,#12a8e6 38%,#0c5fc4 72%,#1b2f98 100%);
+    -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.35),transparent 40%),radial-gradient(circle at 85% 8%,rgba(255,255,255,.2),transparent 35%)}
+  .screen{position:fixed;inset:0;display:none;flex-direction:column;padding:max(12px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom))}
+  .screen.on{display:flex}
+  h1{margin:0;font-size:clamp(28px,8vw,44px);line-height:1;text-align:center;text-shadow:0 3px 0 rgba(6,36,90,.25);font-weight:700}
+  .sub{text-align:center;opacity:.9;font-size:clamp(15px,4vw,19px);margin-top:6px}
+  button{font:inherit;color:inherit;border:0;cursor:pointer}
+  .chip{background:rgba(5,40,115,.42);border:2px solid rgba(255,255,255,.4);border-radius:99px;padding:8px 14px;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:6px}
+  .chip:active{transform:scale(.96)}
+  .chip.on{background:var(--sun);color:var(--navy);border-color:#fff}
+  .lang{position:fixed;right:max(10px,env(safe-area-inset-right));top:calc(max(12px,env(safe-area-inset-top)) + clamp(28px,8vw,44px) + 2px);z-index:20;padding:3px 11px;font-size:13px}
+  body.playing .lang{display:none}
+
+  /* code entry */
+  #sCode{justify-content:center;align-items:center;gap:18px}
+  #codeIn{font-family:Manrope,system-ui,sans-serif!important;width:min(78vw,320px);font:700 54px/1 Fredoka,system-ui,sans-serif;letter-spacing:.3em;text-align:center;text-transform:uppercase;padding:14px 0 14px .3em;border-radius:22px;border:4px solid #fff;color:var(--navy);background:#fff;outline:none;user-select:text;-webkit-user-select:text;touch-action:manipulation}
+  .big{font-size:24px;font-weight:700;padding:14px 38px;border-radius:99px;background:linear-gradient(#ffe45c,#ffb21f);color:var(--navy);box-shadow:0 6px 0 #c9780a,0 12px 24px rgba(0,20,80,.3);touch-action:manipulation}
+  .big:active{transform:translateY(4px);box-shadow:0 2px 0 #c9780a}
+
+  /* picker */
+  #sPick{gap:10px}
+  #grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:12px;min-height:0;margin-top:16px;touch-action:manipulation}
+  .buddy{position:relative;border-radius:26px;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:6px 6px 8px;min-height:0;overflow:hidden;
+    box-shadow:0 6px 0 rgba(6,36,90,.25);touch-action:manipulation;transition:transform .12s}
+  .buddy canvas{flex:1;width:100%;min-height:0}
+  .buddy span{font-weight:700;font-size:clamp(15px,4.2vw,20px);text-shadow:0 2px 0 rgba(6,36,90,.35)}
+  .buddy:active{transform:scale(.95)}
+  .buddy.sel{background:rgba(255,226,70,.45);border-color:#fff}
+
+  /* play */
+  #sPlay{gap:8px}
+  #top{display:flex;align-items:center;gap:8px}
+  #me{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:99px;background:var(--me);color:#fff;border:3px solid #fff;font-weight:700;font-size:20px;text-shadow:0 2px 0 rgba(6,36,90,.35);box-shadow:0 4px 0 rgba(6,36,90,.22)}
+  #me canvas{width:38px;height:38px;background:rgba(255,255,255,.35);border-radius:50%}
+  #me b{font-weight:700}
+  #stars{display:inline-flex;align-items:center;gap:3px;margin-left:4px}
+  #tools{margin-left:auto;display:flex;gap:6px}
+  #hero{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  #hero canvas{width:min(62vw,32vh);height:min(62vw,32vh);filter:drop-shadow(0 10px 14px rgba(0,30,90,.35))}
+  #hint{text-align:center;font-size:clamp(16px,4.4vw,20px);font-weight:600;min-height:1.3em;opacity:0;transition:opacity .4s}
+  #hint.on{opacity:1}
+  #ctl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;gap:10px;align-items:center;height:min(44vh,330px);flex:none}
+  #stick{position:relative;min-width:0;height:100%;display:grid;place-items:center;touch-action:none}
+  #base{position:relative;width:min(100%,38vh,200px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),rgba(255,255,255,.12));border:4px solid rgba(255,255,255,.7);box-shadow:inset 0 0 0 10px rgba(255,255,255,.1),0 8px 24px rgba(0,30,90,.3)}
+  #base::before,#base::after{content:"";position:absolute;background:rgba(255,255,255,.35);border-radius:3px}
+  #base::before{left:50%;top:12%;bottom:12%;width:3px;margin-left:-1.5px}
+  #base::after{top:50%;left:12%;right:12%;height:3px;margin-top:-1.5px}
+  #knob{position:absolute;left:50%;top:50%;width:46%;height:46%;margin:-23% 0 0 -23%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--me) 60%,color-mix(in srgb,var(--me) 70%,#000));border:4px solid #fff;box-shadow:0 8px 16px rgba(0,30,90,.4);pointer-events:none}
+  #btns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:10px;height:100%;min-width:0;padding:4px 0}
+  .act{position:relative;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:min(100%,calc((min(44vh,330px) - 28px) / 2));height:auto;min-width:0;aspect-ratio:1;margin:auto;font-weight:700;font-size:clamp(11px,3.2vw,15px);letter-spacing:.03em;text-shadow:0 2px 0 rgba(0,0,0,.25);
+    border:4px solid #fff;touch-action:none;box-shadow:0 7px 0 rgba(6,36,90,.35),0 12px 20px rgba(0,30,90,.3);transition:transform .06s,box-shadow .06s}
+  .act i{font-style:normal;font-size:clamp(28px,9vw,44px);line-height:1;filter:drop-shadow(0 2px 0 rgba(0,0,0,.2))}
+  .act.p{transform:translateY(5px) scale(.96);box-shadow:0 2px 0 rgba(6,36,90,.35)}
+  .a1{background:linear-gradient(#ffe45c,#ff9f1c)}.a2{background:linear-gradient(#7cf0ff,#12a8e6)}.a3{background:linear-gradient(#ff9ad5,#e83e9a)}.a4{background:linear-gradient(#c9a6ff,#7b4bf0)}
+
+  @media (max-height:520px){#hero{display:none}#ctl{height:100%}#sPlay{flex-direction:column}}
+
+  /* status */
+  #bar{position:fixed;left:50%;top:max(10px,env(safe-area-inset-top));transform:translate(-50%,-140%);z-index:30;background:rgba(5,40,115,.85);border:2px solid #fff;border-radius:99px;padding:8px 18px;font-weight:600;font-size:15px;transition:transform .35s;white-space:nowrap}
+  #bar.on{transform:translate(-50%,0)}
+  #msg{position:fixed;inset:0;z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;background:rgba(6,36,100,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  #msg.on{display:flex}
+  #msg p{margin:0;font-size:clamp(22px,6.4vw,32px);font-weight:700;line-height:1.15}
+  #party{position:fixed;inset:0;z-index:35;display:none;align-items:center;justify-content:center;pointer-events:none;text-align:center}
+  #party.on{display:flex;animation:pf 4s ease-out forwards}
+  #party b{font-size:clamp(46px,16vw,90px);line-height:.95;font-weight:700;background:linear-gradient(90deg,#ff5fc0,#ffd23f,#3ddc84,#18e0ff,#8a6bff,#ff5fc0);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:5px #fff;paint-order:stroke fill;animation:slide 1.4s linear infinite}
+  @keyframes slide{to{background-position:-200% 0}}
+  @keyframes pf{0%{opacity:0;transform:scale(.3)}10%{opacity:1;transform:scale(1.05)}85%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
+  .spin{width:54px;height:54px;border-radius:50%;border:6px solid rgba(255,255,255,.35);border-top-color:#fff;animation:rot 1s linear infinite}
+  @keyframes rot{to{transform:rotate(360deg)}}
+
+  /* Deep Reef skin: darker, realistic */
+  html,body{font-family:Manrope,system-ui,-apple-system,sans-serif!important;background:linear-gradient(#0b6f93 0,#0a4f78 35%,#06304f 70%,#031a30 100%)!important}
+  body::before{background:radial-gradient(circle at 25% 0,rgba(180,255,255,.22),transparent 45%),radial-gradient(circle at 80% 0,rgba(180,255,255,.12),transparent 40%)!important}
+  h1{font-weight:800!important;text-shadow:none!important;letter-spacing:-.01em}
+  .buddy{background:rgba(255,255,255,.07)!important;border:1.5px solid rgba(190,235,255,.28)!important;border-radius:20px!important}
+  .buddy.sel{background:rgba(232,201,135,.22)!important;border-color:#e8c987!important}
+  .buddy span{font-weight:700!important;font-size:clamp(13px,3.6vw,16px)!important;text-shadow:none!important}
+  .chip{background:rgba(3,22,36,.55)!important;border:1px solid rgba(190,235,255,.3)!important;font-weight:700!important}
+  #me{background:rgba(3,22,36,.6)!important;border:2px solid var(--me)!important;text-shadow:none!important}
+  #me canvas{background:rgba(255,255,255,.08)!important}
+  .big{background:linear-gradient(#f3dca0,#d9b56b)!important;color:#0a2433!important;box-shadow:0 5px 0 #9a7a3a,0 12px 24px rgba(0,10,30,.35)!important}
+  .act{border:2px solid rgba(255,255,255,.75)!important;box-shadow:0 6px 0 rgba(0,10,25,.45),0 12px 20px rgba(0,10,30,.35)!important}
+  .a1{background:linear-gradient(#6fe8ff,#0f8fcf)!important}.a2{background:linear-gradient(#ffe08a,#e08a1a)!important}.a3{background:linear-gradient(#ff9fb8,#d63a70)!important}.a4{background:linear-gradient(#a9f0c8,#1ba37a)!important}
+  .act.cd{filter:saturate(.25) brightness(.65)}
+  .act.cd::after{content:attr(data-cd);position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(22px,7vw,34px);font-weight:800;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+  #hint{padding:0 14px;line-height:1.25}
+  #hint.bad{color:#ffb0a8}#hint.good{color:#ffe9a0}#hint.info{color:#bfe9f7}
+  #msg{background:rgba(2,18,32,.9)!important}
+  #party b{font-size:clamp(34px,11vw,64px)!important;background:linear-gradient(90deg,#f3dca0,#fff,#8be8ff,#f3dca0)!important;background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+  #result{position:fixed;inset:0;z-index:38;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;background:rgba(2,18,32,.92)}
+  #result.on{display:flex}
+  #result .rk{font-size:clamp(64px,22vw,120px);font-weight:800;color:#e8c987;line-height:1}
+  #result .rl{font-size:clamp(16px,4.6vw,22px);font-weight:700;letter-spacing:.06em}
+  #result .rs{font-size:clamp(14px,4vw,18px);opacity:.75}
+</style>
+</head>
+<body>
+<button class="chip lang" id="lang">EN | ES</button>
+<div id="bar"></div>
+
+<!-- 0. type the code (only when opened without a QR) -->
+<section class="screen" id="sCode">
+  <h1 data-t="codeTitle">Type the code</h1>
+  <div class="sub" data-t="codeSub">It's on the big screen</div>
+  <input id="codeIn" maxlength="4" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" inputmode="text" placeholder="····">
+  <button class="big" id="codeGo" data-t="go">GO!</button>
+</section>
+
+<!-- 1. pick your buddy -->
+<section class="screen" id="sPick">
+  <h1 data-t="pickTitle">Pick your buddy!</h1>
+  <div class="sub" data-t="pickSub">Tap one to dive in</div>
+  <div id="grid"></div>
+</section>
+
+<!-- 2. play -->
+<section class="screen" id="sPlay">
+  <div id="top">
+    <div id="me"><canvas id="meCv"></canvas><b id="meName">…</b><span id="stars"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="#ffe14a" stroke="#a86a00" stroke-width="1.6" stroke-linejoin="round" d="M12 2.5l2.9 6.2 6.6.8-4.9 4.6 1.3 6.7L12 17.5l-5.9 3.3 1.3-6.7L2.5 9.5l6.6-.8z"/></svg><b id="starN">0</b></span></div>
+    <div id="tools"><button class="chip" id="tilt">&#x1F4F1; <span data-t="tilt">Tilt</span></button><button class="chip" id="swap">&#x1F501; <span data-t="swap">Swap</span></button></div>
+  </div>
+  <div id="hero"><canvas id="heroCv"></canvas><div id="hint" data-t="find">Find the glowing ring on the big screen!</div></div>
+  <div id="ctl">
+    <div id="stick"><div id="base"><div id="knob"></div></div></div>
+    <div id="btns">
+      <button class="act a1" data-k="zoom"><i>&#x1F4A8;</i><span data-t="zoom">DASH</span></button>
+      <button class="act a2" data-k="bubble"><i>&#x26A1;</i><span data-t="bubble">POWER</span></button>
+      <button class="act a3" data-k="spin"><i>&#x2728;</i><span data-t="spin">FLAIR</span></button>
+      <button class="act a4" data-k="sing"><i>&#x1F4E1;</i><span data-t="sing">PING</span></button>
+    </div>
+  </div>
+</section>
+
+<div id="party"><b data-t="party">REEF BLESSING!</b></div>
+<div id="result"><div class="rl" id="rLbl"></div><div class="rk" id="rRank"></div><div class="rl" id="rScore"></div><div class="rs" id="rBest"></div><div class="rs" data-t="next">Next round starting…</div></div>
+<div id="msg"><div class="spin" id="msgSpin"></div><p id="msgTxt"></p><button class="big" id="msgBtn" style="display:none"></button></div>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="art.js"></script>
+<script src="net.js"></script>
+<script>
+(function () {
+'use strict';
+var Q = new URLSearchParams(location.search), $ = function (id) { return document.getElementById(id); };
+var TXT = {
+  en: { codeTitle: 'Type the code', codeSub: "It's on the big screen", go: 'GO!', pickTitle: 'Choose your fish', pickSub: 'Each one has a special power', tilt: 'Tilt', swap: 'Swap',
+        find: 'Eat glowing plankton. Dodge predators. Hide in the anemones!', zoom: 'DASH', bubble: 'POWER', spin: 'FLAIR', sing: 'PING', party: 'REEF BLESSING!', next: 'Next round starting…', place: 'You placed', of: 'of', pts: 'points', champ: 'Reef champion',
+        connecting: 'Diving in…', looking: 'Looking for the reef screen…', badcode: 'Can’t find that reef — check the code', full: 'The reef is full! Trying again…',
+        idle: 'You drifted away!', again: 'Jump back in', lost: 'Reconnecting…', tiltNo: 'Tilt isn’t available on this phone' },
+  es: { codeTitle: 'Escribe el código', codeSub: 'Está en la pantalla grande', go: '¡VAMOS!', pickTitle: 'Elige tu pez', pickSub: 'Cada uno tiene un poder especial', tilt: 'Inclinar', swap: 'Cambiar',
+        find: '¡Come plancton brillante! Esquiva depredadores. ¡Escóndete en las anémonas!', zoom: 'IMPULSO', bubble: 'PODER', spin: 'GIRO', sing: 'SONAR', party: '¡BENDICIÓN!', next: 'Empieza la siguiente ronda…', place: 'Quedaste', of: 'de', pts: 'puntos', champ: 'Campeón del arrecife',
+        connecting: 'Entrando…', looking: 'Buscando la pantalla…', badcode: 'No encuentro ese arrecife — revisa el código', full: '¡El arrecife está lleno! Reintentando…',
+        idle: '¡Te alejaste!', again: 'Volver a entrar', lost: 'Reconectando…', tiltNo: 'Este teléfono no puede inclinarse' }
+};
+var lang = (function () { try { var s = localStorage.getItem('reefLang'); if (s) return s; } catch (e) {} return /^es/i.test(navigator.language || '') ? 'es' : 'en'; })();
+function T(k) { return TXT[lang][k] || TXT.en[k] || k; }
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(function (n) { n.textContent = T(n.getAttribute('data-t')); });
+  $('lang').textContent = lang === 'en' ? 'EN | ES' : 'ES | EN';
+  $('codeIn').placeholder = '····';
+}
+$('lang').addEventListener('click', function () { lang = lang === 'en' ? 'es' : 'en'; try { localStorage.setItem('reefLang', lang); } catch (e) {} applyLang(); labelBuddies(); if (link && link.isOpen()) link.send({ t: 'lang', l: lang }); });
+
+function show(id) { ['sCode', 'sPick', 'sPlay'].forEach(function (s) { $(s).classList.toggle('on', s === id); }); document.body.classList.toggle('playing', id === 'sPlay'); }
+function bar(txt) { var b = $('bar'); if (txt) { b.textContent = txt; b.classList.add('on'); } else b.classList.remove('on'); }
+function overlay(txt, btn, fn, spin) { $('msg').classList.add('on'); $('msgTxt').textContent = txt; $('msgSpin').style.display = spin ? '' : 'none'; var b = $('msgBtn'); b.style.display = btn ? '' : 'none'; if (btn) { b.textContent = btn; b.onclick = fn; } }
+function overlayOff() { $('msg').classList.remove('on'); }
+function buzz(p) { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} }
+
+/* ---------- identity ---------- */
+var uid; try { uid = localStorage.getItem('reefUid'); if (!uid) { uid = 'u' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); localStorage.setItem('reefUid', uid); } } catch (e) { uid = 'u' + Math.random().toString(36).slice(2, 10); }
+var room = ReefNet.clean(Q.get('room')), link = null, myType = null, me = { name: '', color: '#ffd23f', stars: 0 }, joined = false, nohost = 0;
+try { myType = sessionStorage.getItem('reefType:' + room) || null; } catch (e) {}
+if (myType && !ReefArt.by[myType]) myType = null;
+
+/* ---------- picker ---------- */
+var grid = $('grid'), pickCvs = {};
+ReefArt.types.forEach(function (ty) {
+  var b = document.createElement('button'); b.className = 'buddy'; b.setAttribute('data-id', ty.id);
+  b.innerHTML = '<canvas></canvas><span></span>'; b.lastChild.setAttribute('data-n', ty.id); grid.appendChild(b); pickCvs[ty.id] = b.firstChild;
+  b.addEventListener('click', function () { choose(ty.id); });
+});
+function labelBuddies() { ReefArt.types.forEach(function (ty) { grid.querySelector('[data-n="' + ty.id + '"]').textContent = lang === 'es' ? ty.es : ty.en; }); }
+function choose(id) {
+  myType = id; try { sessionStorage.setItem('reefType:' + room, id); } catch (e) {} buzz(20);
+  if (joined && link && link.isOpen()) { link.send({ t: 'pick', type: id }); enterPlay(); }
+  else { hello(); overlay(T('connecting'), null, null, true); }
+}
+function paintPick(t) { if (!$('sPick').classList.contains('on')) return; ReefArt.types.forEach(function (ty) { ReefArt.avatar(pickCvs[ty.id], ty.id, t + ty.id.length, { sp: 0.25 }); }); }
+
+/* ---------- connection ---------- */
+function hello() { if (link && link.isOpen() && myType) link.send({ t: 'hello', uid: uid, type: myType, lang: lang }); }
+function connect() {
+  if (!window.Peer) { overlay('Offline', null, null, false); return; }
+  link = ReefNet.join(room, {
+    status: function (s) {
+      if (s === 'open') { nohost = 0; bar(''); }
+      else if (s === 'nohost') { nohost++; bar(nohost > 3 ? T('badcode') : T('looking')); }
+      else if (s === 'retry' && joined) bar(T('lost'));
+      else if (s === 'connecting' && !joined && !myType) bar(T('connecting'));
+    },
+    open: function () { bar(''); hello(); },
+    msg: onMsg,
+    close: function () { if (joined) bar(T('lost')); }
+  });
+}
+function onMsg(d) {
+  if (!d || !d.t) return;
+  if (d.t === 'hi') {
+    me.name = d.name; me.color = d.color; me.stars = d.stars || 0; myType = d.type || myType; joined = true; bar(''); overlayOff(); enterPlay();
+    if (d.party) doParty(); if (d.power) { var hh = $('hint'); hh.textContent = (lang === 'es' ? 'Poder: ' : 'Power: ') + (lang === 'es' ? d.power[1] : d.power[0]); hh.className = 'on info'; }
+  } else if (d.t === 'stars') { me.stars = d.n; $('starN').textContent = d.n; buzz([18, 40, 18]); }
+  else if (d.t === 'party') doParty();
+  else if (d.t === 'alert') { var h = $('hint'); h.textContent = d.text; h.className = 'on ' + (d.kind || 'info'); buzz(d.kind === 'bad' ? [60, 40, 60] : 25); clearTimeout(h._t); h._t = setTimeout(function () { h.classList.remove('on'); }, 3800); }
+  else if (d.t === 'cd') { cooldown(d.k, d.ms); }
+  else if (d.t === 'round') { if (d.ph === 'results') { $('rLbl').textContent = T('place'); $('rRank').textContent = '#' + d.rank; $('rScore').textContent = T('of') + ' ' + d.of + ' · ' + d.score.toLocaleString() + ' ' + T('pts'); $('rBest').textContent = d.best || ''; $('result').classList.add('on'); buzz([80, 60, 160]); } else { $('result').classList.remove('on'); } }
+  else if (d.t === 'full') { joined = false; overlay(T('full'), null, null, true); try { link.close(); } catch (e) {} setTimeout(function () { connect(); }, 6000); }
+  else if (d.t === 'bye') { joined = false; stopTilt(); try { link.close(); } catch (e) {} link = null; overlay(T('idle'), T('again'), function () { overlayOff(); connect(); }, false); }
+}
+var cdT = {};
+function cooldown(k, ms) { var b = document.querySelector('.act[data-k="' + (k === 'power' ? 'bubble' : k) + '"]'); if (!b) return; clearInterval(cdT[k]); var end = Date.now() + ms; b.classList.add('cd'); cdT[k] = setInterval(function () { var l = Math.ceil((end - Date.now()) / 1000); if (l <= 0) { clearInterval(cdT[k]); b.classList.remove('cd'); b.removeAttribute('data-cd'); buzz(15); } else b.setAttribute('data-cd', l); }, 200); b.setAttribute('data-cd', Math.ceil(ms / 1000)); }
+function doParty() { var p = $('party'); p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); buzz([80, 60, 80, 60, 200]); }
+
+function enterPlay() {
+  show('sPlay'); overlayOff();
+  document.documentElement.style.setProperty('--me', me.color);
+  $('meName').textContent = me.name || '…'; $('starN').textContent = me.stars;
+  var h = $('hint'); h.classList.add('on'); clearTimeout(h._t); h._t = setTimeout(function () { h.classList.remove('on'); }, 9000);
+  wake();
+}
+
+/* ---------- joystick + tilt ---------- */
+var st = { id: null, x: 0, y: 0, cx: 0, cy: 0, R: 1 }, tiltOn = false, tiltBase = null, tiltV = { x: 0, y: 0 }, lastSent = '0,0';
+var stickEl = $('stick'), knob = $('knob');
+stickEl.addEventListener('pointerdown', function (e) {
+  if (st.id != null) return; st.id = e.pointerId; try { stickEl.setPointerCapture(e.pointerId); } catch (x) {}
+  var r = $('base').getBoundingClientRect(); st.cx = r.left + r.width / 2; st.cy = r.top + r.height / 2; st.R = r.width / 2 * 0.82; sMove(e); e.preventDefault();
+});
+function sMove(e) {
+  if (e.pointerId !== st.id) return;
+  var dx = e.clientX - st.cx, dy = e.clientY - st.cy, d = Math.hypot(dx, dy), k = d > st.R ? st.R / d : 1; dx *= k; dy *= k;
+  st.x = dx / st.R; st.y = dy / st.R; knob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+}
+function sUp(e) { if (e.pointerId !== st.id) return; st.id = null; st.x = st.y = 0; knob.style.transform = ''; }
+stickEl.addEventListener('pointermove', sMove); stickEl.addEventListener('pointerup', sUp); stickEl.addEventListener('pointercancel', sUp); stickEl.addEventListener('lostpointercapture', sUp);
+
+function onOrient(e) {
+  if (e.gamma == null || e.beta == null) return;
+  var ang = (screen.orientation && screen.orientation.angle) || window.orientation || 0, g = e.gamma, b = e.beta, x, y;
+  if (ang === 90) { x = b; y = -g; } else if (ang === 270 || ang === -90) { x = -b; y = g; } else if (ang === 180) { x = -g; y = -b; } else { x = g; y = b; }
+  if (!tiltBase) tiltBase = { x: x, y: y };
+  tiltV.x = Math.max(-1, Math.min(1, (x - tiltBase.x) / 24)); tiltV.y = Math.max(-1, Math.min(1, (y - tiltBase.y) / 24));
+}
+function startTilt() {
+  var go = function () { tiltOn = true; tiltBase = null; window.addEventListener('deviceorientation', onOrient); $('tilt').classList.add('on'); };
+  if (typeof DeviceOrientationEvent === 'undefined') { bar(T('tiltNo')); setTimeout(function () { bar(''); }, 2200); return; }
+  if (typeof DeviceOrientationEvent.requestPermission === 'function') DeviceOrientationEvent.requestPermission().then(function (r) { if (r === 'granted') go(); }).catch(function () {});
+  else go();
+}
+function stopTilt() { tiltOn = false; window.removeEventListener('deviceorientation', onOrient); $('tilt').classList.remove('on'); tiltV.x = tiltV.y = 0; }
+$('tilt').addEventListener('click', function () { if (tiltOn) stopTilt(); else startTilt(); });
+$('swap').addEventListener('click', function () { show('sPick'); buzz(10); });
+
+function dz(v) { var a = Math.abs(v); if (a < 0.12) return 0; return Math.sign(v) * Math.min(1, (a - 0.12) / 0.88 * 1.1); }
+setInterval(function () {
+  if (!joined || !link || !link.isOpen()) return;
+  var x = 0, y = 0;
+  if (st.id != null) { x = st.x; y = st.y; } else if (tiltOn) { x = tiltV.x; y = tiltV.y; }
+  x = dz(x); y = dz(y);
+  var key = x.toFixed(2) + ',' + y.toFixed(2), live = st.id != null || tiltOn;
+  if (live || key !== lastSent) { link.send({ t: 'm', x: +x.toFixed(3), y: +y.toFixed(3) }); lastSent = key; }
+}, 66);
+setInterval(function () { if (joined && link && link.isOpen()) link.send({ t: 'hb' }); }, 2000);
+
+/* ---------- buttons ---------- */
+document.querySelectorAll('.act').forEach(function (b) {
+  var down = function (e) { e.preventDefault(); b.classList.add('p'); buzz(12); if (joined && link) link.send({ t: 'b', k: b.getAttribute('data-k') }); };
+  var up = function () { b.classList.remove('p'); };
+  b.addEventListener('pointerdown', down); b.addEventListener('pointerup', up); b.addEventListener('pointerleave', up); b.addEventListener('pointercancel', up);
+  b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+});
+
+/* ---------- keep the screen awake ---------- */
+var wl = null;
+function wake() { try { if (navigator.wakeLock && !wl) navigator.wakeLock.request('screen').then(function (l) { wl = l; l.addEventListener('release', function () { wl = null; }); }).catch(function () {}); } catch (e) {} }
+document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && joined) wake(); });
+
+/* ---------- code entry ---------- */
+function goCode() {
+  var c = ReefNet.clean($('codeIn').value); if (c.length !== 4) { $('codeIn').focus(); return; }
+  var u = new URL(location.href); u.searchParams.set('room', c); location.href = u.href;
+}
+$('codeGo').addEventListener('click', goCode); $('codeIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') goCode(); });
+
+/* ---------- boot ---------- */
+applyLang(); labelBuddies();
+var raf = 0; (function loop(ts) {
+  var t = (ts || 0) / 1000;
+  paintPick(t);
+  if ($('sPlay').classList.contains('on') && myType) { ReefArt.avatar($('meCv'), myType, t, { sp: 0.3 }); ReefArt.avatar($('heroCv'), myType, t, { sp: 0.35 + Math.hypot(st.x, st.y) * 0.5, puff: 0 }); }
+  requestAnimationFrame(loop);
+})();
+if (room.length !== 4) { show('sCode'); }
+else {
+  connect();
+  if (myType) { show('sPick'); overlay(T('connecting'), null, null, true); } else show('sPick');
+}
+window.__play = { state: function () { return { joined: joined, me: me, myType: myType, lang: lang }; } };
+})();
+</script>
+</body>
+</html>
