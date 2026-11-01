@@ -134,7 +134,28 @@
   .ms::before { content:""; position:absolute; left:50%; width:10px; height:10px; border-radius:50%; background:var(--gold); translate:-50% 0; }
   .ms.up::before { top:calc(100% + 0px); } .ms.down::before { bottom:calc(100% + 0px); }
 
+
+  /* video: scrub */
+  .vscrub { height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:4vw; padding:0 8vw; position:relative; overflow:hidden; }
+  .vscrub h2 { font-size:clamp(2.4rem,6vw,5.6rem); }
+  .vscrub p { color:var(--muted); margin-top:1.2rem; line-height:1.6; max-width:28em; }
+  .vs-time { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--gold); font-size:clamp(2rem,5vw,4rem); margin-top:1.4rem; font-variant-numeric:tabular-nums; }
+  .vs-phone { justify-self:center; height:80vh; aspect-ratio:3/4; border-radius:28px; overflow:hidden; border:1px solid rgba(217,181,107,.5); box-shadow:0 0 0 6px rgba(217,181,107,.1),0 30px 80px rgba(0,0,0,.7); background:#000; }
+  .vs-phone video { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* video: seen through type */
+  .vtype { height:100vh; position:relative; overflow:hidden; background:#000; }
+  .vt-v { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .vt-mask { position:absolute; inset:0; background:#000; mix-blend-mode:multiply; display:grid; place-items:center; overflow:hidden; }
+  .vt-t { font-size:clamp(4rem,17vw,22rem); font-weight:700; letter-spacing:-.05em; color:#fff; line-height:.8; transform-origin:50% 56%; white-space:nowrap; }
+  .vt-cap { position:absolute; left:0; right:0; bottom:12vh; text-align:center; z-index:3; font-size:clamp(1.6rem,4vw,3.6rem); text-shadow:0 4px 30px rgba(0,0,0,.6); pointer-events:none; }
+  .ring .face video, .scard .im video { width:100%; height:100%; object-fit:cover; display:block; }
+  .scard .im video { position:absolute; inset:0; }
+  .portal .pimg video { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.4); }
+
   @media (max-width:700px) {
+    .vscrub { grid-template-columns:1fr; align-content:center; padding:0 6vw; gap:3vh; }
+    .vs-phone { height:50vh; }
     .hz-panel { flex-basis:78vw; }
     .hz-intro { flex-basis:72vw; }
     .ring { width:46vw; }
@@ -247,6 +268,22 @@
   </section>
 
   <section class="tunnel" id="tunnel"><div class="tunnel-title"><h2>Fly <em>through.</em></h2></div></section>
+
+  <section class="vscrub" id="vscrub">
+    <div class="vs-copy">
+      <div class="sec-eyebrow">Scroll is playback</div>
+      <h2>Scrub the <em>intro.</em></h2>
+      <p>No play button. Your scroll is the timeline, forward and back, frame by frame.</p>
+      <div class="vs-time" id="vsTime">0.0s</div>
+    </div>
+    <div class="vs-phone"><video id="vsVideo" src="vid/dean-scrub.mp4" poster="vid/dean-scrub.jpg" muted playsinline preload="auto"></video></div>
+  </section>
+
+  <section class="vtype" id="vtype">
+    <video class="vt-v" src="vid/typemask.mp4" poster="vid/typemask.jpg" muted loop playsinline preload="metadata"></video>
+    <div class="vt-mask"><span class="vt-t">ELETTRO</span></div>
+    <div class="vt-cap">Your story, <em>in motion.</em></div>
+  </section>
 
   <section class="marq" id="marq">
     <div class="mrow" data-dir="-1"></div>
@@ -414,6 +451,19 @@ function startSite(){
 }
 
 
+function vid(name){
+  return '<video src="vid/' + name + '.mp4" poster="vid/' + name + '.jpg" muted loop playsinline preload="metadata"></video>';
+}
+var vio = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    [].forEach.call(e.target.querySelectorAll('video'), function(v){
+      if (e.target.getAttribute('data-noauto')) return;
+      if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function(){}); } else v.pause();
+    });
+  });
+}, { threshold:0.05 }) : null;
+function autoplayIn(el){ if (vio && el) vio.observe(el); }
+
 function buildExtra(){
   /* 1. horizontal travel */
   var HZ = [['01','Brand worlds',3],['02','Live and events',6],['03','Campaigns',9],['04','Product',12],['05','Music',15]];
@@ -429,11 +479,11 @@ function buildExtra(){
   });
 
   /* 2. portal: a small window opens to fill the screen */
-  $('pimg').innerHTML = media(1);
+  $('pimg').innerHTML = vid('portal'); autoplayIn($('portal'));
   gsap.timeline({ scrollTrigger:{ trigger:'#portal', start:'top top', end:'+=160%', pin:true, scrub:1 } })
     .to('#ppre', { opacity:0, duration:.2 }, 0)
     .fromTo('#pimg', { clipPath:'inset(30% 34% 30% 34% round 28px)' }, { clipPath:'inset(0% 0% 0% 0% round 0px)', ease:'none', duration:1 }, 0)
-    .fromTo('#pimg img', { scale:1.4 }, { scale:1, ease:'none', duration:1 }, 0)
+    .fromTo('#pimg video', { scale:1.4 }, { scale:1, ease:'none', duration:1 }, 0)
     .fromTo('#portal .ptext > div', { opacity:0, y:40, filter:'blur(12px)' }, { opacity:1, y:0, filter:'blur(0px)', duration:.5 }, .7);
 
   /* 3. counters tied to scroll position */
@@ -446,7 +496,8 @@ function buildExtra(){
 
   /* 4. 3D ring turns with the scroll */
   var ring = $('ring'), RING = [8,9,10,11,12,13,14,15];
-  ring.innerHTML = RING.map(function(i){ return '<div class="face">' + media(i) + '</div>'; }).join('');
+  ring.innerHTML = RING.map(function(i, k){ return '<div class="face">' + (k === 1 ? vid('ring-2') : k === 5 ? vid('ring-3') : media(i)) + '</div>'; }).join('');
+  autoplayIn($('ringSec'));
   function placeRing(){
     var r = (ring.offsetWidth / 2) / Math.tan(Math.PI / RING.length) + 28;
     [].forEach.call(ring.querySelectorAll('.face'), function(f, k){ f.style.transform = 'rotateY(' + (k * 360 / RING.length) + 'deg) translateZ(' + r + 'px)'; });
@@ -469,6 +520,25 @@ function buildExtra(){
     tl.to(f, { opacity:1, duration:.5, ease:'none' }, t);
     tl.to(f, { opacity:0, duration:.7, ease:'none' }, t + 1.9);
   });
+
+  /* video A: scroll is the playhead */
+  var vs = $('vsVideo'), vsTarget = 0, vsCur = 0;
+  vs.addEventListener('loadedmetadata', function(){ var p = vs.play(); if (p && p.then) p.then(function(){ vs.pause(); }).catch(function(){}); });
+  ST.create({ trigger:'#vscrub', start:'top top', end:'+=220%', pin:true, onUpdate:function(s){ vsTarget = s.progress; } });
+  gsap.ticker.add(function(){
+    if (!vs.duration) return;
+    vsCur += (vsTarget - vsCur) * .2;
+    var t = vsCur * (vs.duration - .05);
+    if (Math.abs(vs.currentTime - t) > .01) vs.currentTime = t;
+    $('vsTime').textContent = (vsCur * vs.duration).toFixed(1) + 's';
+  });
+
+  /* video B: seen through giant type, then the type swallows the screen */
+  autoplayIn($('vtype'));
+  gsap.timeline({ scrollTrigger:{ trigger:'#vtype', start:'top top', end:'+=260%', pin:true, scrub:1 } })
+    .fromTo('.vt-t', { scale:1 }, { scale:7, ease:'power2.in', duration:1 }, 0)
+    .to('.vt-mask', { opacity:0, ease:'none', duration:.35 }, .8)
+    .fromTo('.vt-cap', { opacity:0, y:30 }, { opacity:1, y:0, duration:.3 }, 1.05);
 
   /* 6. marquee reacts to scroll speed */
   var rows = [].map.call(document.querySelectorAll('#marq .mrow'), function(el){ return { el:el, dir:+el.getAttribute('data-dir'), x:0, w:0 }; });
@@ -502,9 +572,10 @@ function buildExtra(){
     ['03','Create','Develop the message and creative direction.',9],['04','Publish','Launch across every channel, on schedule.',12],
     ['05','Measure','Review the signals and use them to shape the next move.',14]];
   $('stackList').innerHTML = STEPS.map(function(s, i){
-    return '<article class="scard" style="--i:' + i + ';background:hsl(' + (30 + i * 12) + ' 14% ' + (11 + i) + '%)"><div class="t"><div class="n">' + s[0] + '</div><h3>' + s[1] + '</h3><p>' + s[2] + '</p></div><div class="im">' + media(s[3]) + '</div></article>';
+    return '<article class="scard" style="--i:' + i + ';background:hsl(' + (30 + i * 12) + ' 14% ' + (11 + i) + '%)"><div class="t"><div class="n">' + s[0] + '</div><h3>' + s[1] + '</h3><p>' + s[2] + '</p></div><div class="im">' + (i === 2 ? vid('stack') : media(s[3])) + '</div></article>';
   }).join('');
   var sc = [].slice.call(document.querySelectorAll('#stackList .scard'));
+  autoplayIn(sc[2]);
   sc.forEach(function(c, i){
     if (i === sc.length - 1) return;
     gsap.to(c, { scale:1 - (sc.length - 1 - i) * .035, filter:'brightness(.55)', ease:'none',
