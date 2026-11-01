@@ -339,7 +339,7 @@ body{background:var(--bh-cream)}
 @media(max-width:570px){.section{padding-top:66px;padding-bottom:66px}.service-picture{height:175px}.service-info{padding:21px 23px 25px}.bh-remote-demo{padding:62px 0}.bh-remote-copy h2{font-size:56px}.bh-remote-primary{width:100%;text-align:center}.bh-remote-copy p{font-size:16px}}
 
 </style></head><body>
-<header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#remote-demo">Try Remote</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
+<header class="topbar"><div class="shell nav"><a href="https://elettro.com/" class="elogo" aria-label="Elettro Incorporated"><img src="/images/Elettro-logo-white.png" alt="Elettro"></a><div class="navsmall">Private luxury retail presentation</div><button id="hamb" class="hamb" aria-label="Open menu" aria-expanded="false">Menu</button><nav class="navlinks" id="navlinks"><a href="#vision">Vision</a><a href="#scores">SEO / AIO</a><a href="#homepage">Homepage</a><a href="#services">Services</a><a href="#ar">AR + Magazine</a><a href="#remote-demo">Try Remote</a><a href="#reef">Reef</a><a href="#social">Social studio</a><a href="#contact">Next chapter ↗</a></nav></div></header>
 <main>
 
 <section class="hero"><div class="shell"><div class="herokicker"><span class="eyebrow">Elettro Incorporated × Bal Harbour Shops</span><span>Luxury retail · Digital transformation · South Florida</span></div><h1>The next<br>dimension of <em>luxury.</em></h1><p>A bespoke vision for Bal Harbour Shops. An editorial digital destination, immersive retail experiences, AR-powered print, intelligent guest assistance and a new era of fashion storytelling.</p><div class="btns"><a class="button" href="#homepage">Experience the new homepage ↗</a><a class="button ghost" href="#social">Explore 12 social concepts ↗</a></div><div class="herofoot"><b>No pricing in this proposal</b><span>Digital experience</span><span>Luxury content studio</span><span>Interactive advertising</span></div></div></section>
@@ -435,6 +435,238 @@ body{background:var(--bh-cream)}
 <span>SEE THE WIRELESS CONCEPT IN ACTION ↗</span>
 </a>
 </div></section>
+<!-- =====================================================================
+     BAL HARBOUR REEF — drop-in section for /clients/bal-harbour/
+     Paste this whole block into the page (between two existing sections).
+     Add  <a href="#reef">Reef</a>  to the anchor nav.
+     Needs the /reef/ folder next to the page:  /clients/bal-harbour/reef/…
+     Colors / type: tweak the three variables on #reef below.
+     ===================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+#reef{--rf-ink:#f4f1ea;--rf-muted:rgba(244,241,234,.72);--rf-gold:#d7bf8a;
+  position:relative;padding:clamp(64px,9vw,128px) clamp(16px,4vw,48px);color:var(--rf-ink);scroll-margin-top:72px;
+  background:radial-gradient(1200px 520px at 50% 0%,rgba(24,224,255,.12),transparent 70%),#0b1f20}
+#reef *,#reef *::before,#reef *::after{box-sizing:border-box}
+#reef .rf-wrap{max-width:1280px;margin:0 auto}
+#reef .rf-eyebrow{margin:0 0 14px;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--rf-gold)}
+#reef .rf-h{margin:0;font-size:clamp(38px,6vw,84px);line-height:.98;font-weight:600;letter-spacing:-.02em;max-width:14ch}
+#reef .rf-lede{margin:20px 0 clamp(28px,4vw,52px);max-width:58ch;font-size:clamp(16px,1.5vw,20px);line-height:1.55;color:var(--rf-muted)}
+
+/* ---------- the one-sheet ---------- */
+#reef .rf-sheet{position:relative;isolation:isolate;overflow:hidden;border-radius:clamp(20px,2.6vw,34px);color:#fff;
+  font-family:Fredoka,"Arial Rounded MT Bold",ui-rounded,system-ui,sans-serif;
+  display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.44fr);gap:clamp(8px,2vw,32px);align-items:center;
+  padding:clamp(26px,4vw,56px) clamp(22px,4vw,56px) clamp(70px,8vw,110px);min-height:clamp(560px,52vw,760px);
+  background:linear-gradient(#86f3ff 0,#1aaeea 30%,#0c66cc 64%,#18308f 100%);
+  box-shadow:0 50px 120px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.35) inset}
+#reef .rf-rays{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:soft-light;
+  background:repeating-linear-gradient(105deg,rgba(255,255,255,0) 0 90px,rgba(255,255,255,.55) 120px,rgba(255,255,255,0) 190px);background-size:1200px 100%;animation:rfrays 40s linear infinite}
+@keyframes rfrays{to{background-position:1200px 0}}
+#reef .rf-bub{position:absolute;z-index:-1;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:rgba(255,255,255,.12);animation:rfrise linear infinite}
+@keyframes rfrise{from{transform:translateY(0)}to{transform:translateY(-120vh)}}
+#reef .rf-sandsvg{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(60px,8vw,110px);z-index:0;display:block}
+#reef .rf-kelp{position:absolute;bottom:0;z-index:0;width:clamp(26px,3vw,44px);transform-origin:50% 100%;animation:rfsway 5s ease-in-out infinite}
+@keyframes rfsway{50%{transform:rotate(5deg) scaleY(1.03)}}
+
+#reef .rf-copy{position:relative;z-index:2}
+#reef .rf-tag{display:inline-block;padding:7px 16px;border-radius:99px;font-size:clamp(11px,1.1vw,14px);font-weight:600;letter-spacing:.16em;text-transform:uppercase;background:rgba(6,36,90,.45);border:2px solid rgba(255,255,255,.55)}
+#reef .rf-title{margin:18px 0 0;font-size:clamp(50px,7.2vw,112px);line-height:.84;font-weight:700;letter-spacing:-.01em;text-shadow:0 .06em 0 rgba(6,36,90,.32)}
+#reef .rf-title span{display:block;color:#ffd23f;-webkit-text-stroke:.045em #fff;paint-order:stroke fill;text-shadow:0 .07em 0 #e08a00,0 .13em 0 rgba(6,36,90,.35)}
+#reef .rf-sub{margin:18px 0 0;font-size:clamp(17px,1.9vw,26px);line-height:1.22;font-weight:500;max-width:19em;text-shadow:0 2px 0 rgba(6,36,90,.3)}
+#reef .rf-steps{list-style:none;margin:clamp(18px,2.4vw,30px) 0 0;padding:0;display:grid;gap:10px}
+#reef .rf-steps li{display:flex;align-items:center;gap:12px;font-size:clamp(16px,1.7vw,23px);font-weight:600;line-height:1.05}
+#reef .rf-steps b{flex:none;display:grid;place-items:center;width:clamp(34px,3.2vw,46px);height:clamp(34px,3.2vw,46px);border-radius:50%;background:linear-gradient(135deg,#ffe45c,#ff8a1f);color:#06245a;font-size:clamp(18px,1.9vw,26px);border:3px solid #fff;box-shadow:0 4px 0 rgba(6,36,90,.3)}
+#reef .rf-steps small{display:block;font-size:.66em;font-weight:400;opacity:.9;margin-top:2px}
+#reef .rf-chips{list-style:none;margin:clamp(16px,2vw,26px) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+#reef .rf-chips li{padding:6px 14px;border-radius:99px;font-size:clamp(12px,1.1vw,15px);font-weight:600;background:rgba(6,36,90,.4);border:2px solid rgba(255,255,255,.45)}
+
+#reef .rf-btn{position:relative;margin-top:clamp(20px,2.6vw,34px);padding:.62em 1.3em .62em 1.1em;border:0;border-radius:99px;cursor:pointer;
+  font:700 clamp(20px,2.2vw,30px)/1 Fredoka,"Arial Rounded MT Bold",system-ui,sans-serif;color:#06245a;display:inline-flex;align-items:center;gap:.5em;
+  background:linear-gradient(#ffe86a,#ffb21f);box-shadow:0 .2em 0 #c9780a,0 .7em 1.4em rgba(0,20,80,.4);transition:transform .15s,box-shadow .15s}
+#reef .rf-btn:hover{transform:translateY(-3px)}
+#reef .rf-btn:active{transform:translateY(.12em);box-shadow:0 .06em 0 #c9780a}
+#reef .rf-btn:focus-visible{outline:4px solid #fff;outline-offset:4px}
+#reef .rf-btn::after{content:"";position:absolute;inset:-.22em;border-radius:99px;border:3px solid rgba(255,255,255,.85);animation:rfpulse 2.2s ease-out infinite;pointer-events:none}
+@keyframes rfpulse{from{transform:scale(.96);opacity:.9}to{transform:scale(1.18);opacity:0}}
+#reef .rf-btn svg{width:1em;height:1em}
+
+#reef .rf-vis{position:relative;z-index:1;aspect-ratio:16/12.4;min-width:0}
+#reef .rf-screen{position:absolute;left:2%;top:2%;width:92%;padding:clamp(5px,.8vw,11px);border-radius:clamp(10px,1.4vw,18px);background:#0a1630;
+  box-shadow:0 0 0 2px #26335c,0 40px 80px rgba(0,10,50,.6),0 0 90px rgba(24,224,255,.35);transform:perspective(1800px) rotateY(-5deg) rotateX(1.5deg);transform-origin:50% 60%}
+#reef .rf-screen img{display:block;width:100%;height:auto;border-radius:clamp(6px,.9vw,11px)}
+#reef .rf-glare{position:absolute;inset:clamp(5px,.8vw,11px);border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.22) 0,rgba(255,255,255,0) 30%)}
+#reef .rf-phone{position:absolute;margin:0;padding:clamp(3px,.5vw,7px);border-radius:clamp(14px,2.2vw,28px);background:#0b1020;box-shadow:0 0 0 2px #323b66,0 24px 44px rgba(0,10,50,.6);animation:rffloat 6s ease-in-out infinite}
+#reef .rf-phone img{display:block;width:100%;height:auto;border-radius:clamp(11px,1.8vw,22px)}
+#reef .rf-p1{left:4%;bottom:0;width:21%;transform:rotate(-7deg)}
+#reef .rf-p2{right:1%;bottom:-3%;width:25%;transform:rotate(5deg);animation-delay:-3s}
+@keyframes rffloat{50%{translate:0 -10px}}
+#reef .rf-call{position:absolute;z-index:3;padding:.4em .9em;border-radius:99px;font-size:clamp(11px,1.15vw,16px);font-weight:700;color:#06245a;background:#fff;box-shadow:0 5px 0 rgba(6,36,90,.25),0 10px 24px rgba(0,20,80,.35);white-space:nowrap}
+#reef .rf-call::after{content:"";position:absolute;left:18px;bottom:-9px;border:8px solid transparent;border-top-color:#fff;border-bottom:0}
+#reef .rf-c1{right:8%;top:-1%;transform:rotate(3deg)}
+#reef .rf-c2{left:32%;bottom:14%;transform:rotate(-3deg)}
+#reef .rf-c3{right:30%;bottom:27%;transform:rotate(2deg)}
+#reef .rf-fl{position:absolute;z-index:2;pointer-events:none;filter:drop-shadow(0 10px 14px rgba(0,30,90,.35));animation:rfbob 5s ease-in-out infinite}
+@keyframes rfbob{50%{translate:0 -14px}}
+#reef .rf-foot{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:10px 16px;text-align:center;font-size:clamp(8px,1.9vw,11px);letter-spacing:.14em;text-transform:uppercase;color:#7a4a10;font-weight:600}
+
+#reef .rf-after{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between;font-size:14px;color:var(--rf-muted)}
+#reef .rf-after a{color:var(--rf-gold)}
+
+@media (max-width:960px){
+  #reef .rf-sheet{grid-template-columns:1fr;padding-bottom:clamp(96px,18vw,120px)}
+  #reef .rf-vis{width:100%;margin-top:6px}
+  #reef .rf-fl.rf-hide-s{display:none}
+}
+@media (prefers-reduced-motion:reduce){#reef *{animation:none!important}}
+
+/* ---------- full-screen stage ---------- */
+html.rf-lock{overflow:hidden}
+.rf-stage{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:#04204a;opacity:0;transition:opacity .35s;overscroll-behavior:contain;
+  font-family:Fredoka,"Arial Rounded MT Bold",system-ui,sans-serif;color:#fff}
+.rf-stage[hidden]{display:none}
+.rf-stage.on{opacity:1}
+.rf-bar{flex:none;height:54px;display:flex;align-items:center;gap:10px;padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left));background:#06245a;border-bottom:2px solid rgba(255,255,255,.18)}
+.rf-bar button{font:600 15px/1 Fredoka,system-ui,sans-serif;color:#fff;cursor:pointer;border-radius:99px;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);padding:9px 16px;white-space:nowrap}
+.rf-bar button:hover{background:rgba(255,255,255,.24)}
+.rf-bar button:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+.rf-bar .rf-back{background:linear-gradient(#ffe86a,#ffb21f);color:#06245a;border-color:#fff;font-weight:700}
+.rf-bar .rf-back:hover{background:linear-gradient(#fff08a,#ffc33f)}
+.rf-bar .rf-mid{flex:1;text-align:center;font-size:14px;opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rf-bar .rf-mid b{letter-spacing:.2em;margin-left:.3em;color:#ffd23f}
+.rf-bar .rf-x{width:40px;height:40px;padding:0;font-size:18px}
+.rf-frame{flex:1;min-height:0;position:relative;background:#0a5fb0}
+.rf-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+@media (max-width:640px){.rf-bar .rf-mid{display:none}.rf-bar{justify-content:space-between}.rf-bar .rf-ghost-l{display:none}}
+</style>
+
+<section id="reef" aria-labelledby="rf-h">
+  <div class="rf-wrap">
+    <p class="rf-eyebrow">Kids’ experience · Concept</p>
+    <h2 class="rf-h" id="rf-h">The reef in the atrium.</h2>
+    <p class="rf-lede">A giant, living aquarium on the big screen — and every child steers a sea creature from their parent’s phone. No app, no waiting: scan, pick a buddy, swim. Many families can play at once, and nobody can break it.</p>
+
+    <!-- ===== the one-sheet ===== -->
+    <div class="rf-sheet" id="rfSheet">
+      <div class="rf-rays" aria-hidden="true"></div>
+      <span class="rf-bub" style="left:6%;bottom:-6%;width:26px;height:26px;animation-duration:19s" aria-hidden="true"></span>
+      <span class="rf-bub" style="left:44%;bottom:-6%;width:16px;height:16px;animation-duration:14s;animation-delay:-6s" aria-hidden="true"></span>
+      <span class="rf-bub" style="left:71%;bottom:-6%;width:34px;height:34px;animation-duration:23s;animation-delay:-11s" aria-hidden="true"></span>
+      <span class="rf-bub" style="left:92%;bottom:-6%;width:20px;height:20px;animation-duration:17s;animation-delay:-3s" aria-hidden="true"></span>
+
+      <svg class="rf-sandsvg" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 46 C 150 14 260 66 420 40 S 700 8 860 42 S 1100 62 1200 30 V110 H0Z" fill="#f7c46d"/>
+        <path d="M0 46 C 150 14 260 66 420 40 S 700 8 860 42 S 1100 62 1200 30" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="4"/>
+        <g fill="#ff8ac8" stroke="#8a2a6a" stroke-opacity=".35" stroke-width="3"><circle cx="90" cy="48" r="20"/><circle cx="120" cy="52" r="14"/><circle cx="1040" cy="44" r="22"/><circle cx="1076" cy="50" r="14"/></g>
+      </svg>
+      <svg class="rf-kelp" style="left:1.5%;height:230px" viewBox="0 0 40 230" aria-hidden="true"><path d="M20 230 C 4 190 36 160 18 120 S 34 50 20 0 C 30 50 12 100 30 130 S 6 190 24 230Z" fill="#2ee59d" stroke="#0a6a50" stroke-opacity=".4" stroke-width="3"/></svg>
+      <svg class="rf-kelp" style="left:5.5%;height:150px;animation-delay:-2s" viewBox="0 0 40 230" aria-hidden="true"><path d="M20 230 C 4 190 36 160 18 120 S 34 50 20 0 C 30 50 12 100 30 130 S 6 190 24 230Z" fill="#19c777" stroke="#0a6a50" stroke-opacity=".4" stroke-width="3"/></svg>
+      <svg class="rf-kelp" style="right:2%;height:210px;animation-delay:-1s" viewBox="0 0 40 230" aria-hidden="true"><path d="M20 230 C 4 190 36 160 18 120 S 34 50 20 0 C 30 50 12 100 30 130 S 6 190 24 230Z" fill="#2ee59d" stroke="#0a6a50" stroke-opacity=".4" stroke-width="3"/></svg>
+
+      <div class="rf-copy">
+        <span class="rf-tag">Interactive atrium experience</span>
+        <h3 class="rf-title">Bal Harbour<span>Reef</span></h3>
+        <p class="rf-sub">One giant screen. A whole reef of sea creatures. Your phone is the remote.</p>
+        <ol class="rf-steps">
+          <li><b>1</b><span>Scan the code<small>on the big screen</small></span></li>
+          <li><b>2</b><span>Pick a sea buddy<small>fish, turtle, octopus, jellyfish…</small></span></li>
+          <li><b>3</b><span>Swim!<small>thumb or tilt · pearls · bubbles · a Reef Party</small></span></li>
+        </ol>
+        <ul class="rf-chips"><li>No app to download</li><li>English + Español</li><li>Up to 12 swimmers</li></ul>
+        <button class="rf-btn" type="button" data-rf-launch>Launch the reef <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 4.5v15l12-7.5z"/></svg></button>
+      </div>
+
+      <div class="rf-vis">
+        <div class="rf-screen"><img src="reef/assets/reef-screen.jpg" width="1600" height="900" alt="The big-screen reef: children’s sea creatures swimming past coral, a friendly whale and a QR code to join." loading="lazy"><span class="rf-glare"></span></div>
+        <figure class="rf-phone rf-p1"><img src="reef/assets/phone-pick.jpg" width="600" height="1298" alt="Phone screen: pick your buddy." loading="lazy"></figure>
+        <figure class="rf-phone rf-p2"><img src="reef/assets/phone-play.jpg" width="600" height="1298" alt="Phone screen: a joystick and four big buttons — zoom, bubbles, spin, sing." loading="lazy"></figure>
+        <span class="rf-call rf-c1">Scan to join</span>
+        <span class="rf-call rf-c2">Pick your buddy</span>
+        <span class="rf-call rf-c3">Steer · bubbles · sing</span>
+        <canvas class="rf-fl" data-t="seahorse" style="left:-3%;top:34%;width:13%;aspect-ratio:.66"></canvas>
+        <canvas class="rf-fl rf-hide-s" data-t="jelly" style="left:24%;top:-17%;width:11%;aspect-ratio:.7;animation-delay:-2s"></canvas>
+        <canvas class="rf-fl" data-t="turtle" style="left:36%;bottom:-8%;width:17%;aspect-ratio:1.5;animation-delay:-1s"></canvas>
+      </div>
+      <div class="rf-foot">Concept preview · Not affiliated with Bal Harbour Shops</div>
+    </div>
+
+    <div class="rf-after">
+      <span>Opens full-screen — a big “Back” button is always on top. Press Esc to leave.</span>
+      <a href="#reef-play" data-rf-launch>Launch the live reef →</a>
+    </div>
+  </div>
+</section>
+
+<!-- full-screen experience (the iframe is only created when launched) -->
+<div class="rf-stage" id="rfStage" role="dialog" aria-modal="true" aria-label="Bal Harbour Reef" hidden>
+  <div class="rf-bar">
+    <button type="button" class="rf-back" id="rfBack">&larr; Back to Bal Harbour</button>
+    <div class="rf-mid" id="rfMid">Live reef demo<span id="rfCodeWrap" hidden> · join code<b id="rfCode"></b></span></div>
+    <button type="button" class="rf-ghost rf-ghost-l" id="rfPhone" hidden>Open phone controller</button>
+    <button type="button" class="rf-ghost" id="rfFs">Full screen</button>
+    <button type="button" class="rf-x" id="rfClose" aria-label="Close and go back">&#10005;</button>
+  </div>
+  <div class="rf-frame" id="rfFrame"></div>
+</div>
+
+<script>
+(function () {
+  var sec = document.getElementById('reef'), stage = document.getElementById('rfStage'); if (!sec || !stage) return;
+  var frame = document.getElementById('rfFrame'), back = document.getElementById('rfBack'), fsBtn = document.getElementById('rfFs'),
+      phoneBtn = document.getElementById('rfPhone'), codeWrap = document.getElementById('rfCodeWrap'), codeEl = document.getElementById('rfCode'),
+      ifr = null, room = null, lastFocus = null, isOpen = false;
+  var BASE = 'reef/';
+
+  function openStage(push) {
+    if (isOpen) return; isOpen = true; lastFocus = document.activeElement;
+    stage.hidden = false; document.documentElement.classList.add('rf-lock');
+    requestAnimationFrame(function () { stage.classList.add('on'); });
+    ifr = document.createElement('iframe'); ifr.src = BASE + 'reef.html?demo=1'; ifr.title = 'Bal Harbour Reef'; ifr.setAttribute('allow', 'fullscreen; autoplay');
+    frame.appendChild(ifr); back.focus({ preventScroll: true });
+    if (push !== false) { try { history.pushState({ rf: 1 }, '', '#reef-play'); } catch (e) {} }
+  }
+  function closeStage() {
+    if (!isOpen) return; isOpen = false;
+    if (document.fullscreenElement && document.exitFullscreen) try { document.exitFullscreen(); } catch (e) {}
+    stage.classList.remove('on'); document.documentElement.classList.remove('rf-lock');
+    setTimeout(function () { if (!isOpen) { stage.hidden = true; if (ifr) { ifr.src = 'about:blank'; ifr.remove(); ifr = null; } } }, 360);
+    room = null; codeWrap.hidden = true; phoneBtn.hidden = true;
+    if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function leave() { if (history.state && history.state.rf) history.back(); else { if (location.hash === '#reef-play') { try { history.replaceState(null, '', '#reef'); } catch (e) {} } closeStage(); } }
+
+  document.querySelectorAll('[data-rf-launch]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); openStage(true); }); });
+  back.addEventListener('click', leave); document.getElementById('rfClose').addEventListener('click', leave);
+  addEventListener('popstate', function () { if (isOpen && !(history.state && history.state.rf)) closeStage(); else if (!isOpen && location.hash === '#reef-play') openStage(false); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen && !document.fullscreenElement) leave(); });
+  addEventListener('message', function (e) {
+    if (e.origin !== location.origin || !e.data) return;
+    if (e.data.type === 'reef-exit') leave();
+    if (e.data.type === 'reef-room' && /^[A-Z]{4}$/.test(e.data.room || '')) { room = e.data.room; codeEl.textContent = room; codeWrap.hidden = false; phoneBtn.hidden = false; }
+  });
+  phoneBtn.addEventListener('click', function () { if (room) window.open(new URL(BASE + 'play.html?room=' + room, location.href).href, 'reefphone', 'popup=yes,width=430,height=880'); });
+
+  var fsTarget = stage.requestFullscreen ? stage : null;
+  if (!fsTarget) fsBtn.hidden = true;
+  fsBtn.addEventListener('click', function () { if (document.fullscreenElement) document.exitFullscreen(); else fsTarget.requestFullscreen().catch(function () {}); });
+  document.addEventListener('fullscreenchange', function () { fsBtn.textContent = document.fullscreenElement ? 'Exit full screen' : 'Full screen'; });
+
+  if (location.hash === '#reef-play') { try { history.replaceState({ rf: 1 }, '', '#reef-play'); } catch (e) {} openStage(false); }
+
+  /* floating creatures around the one-sheet (drawn with the same art as the game) */
+  var fl = Array.prototype.slice.call(sec.querySelectorAll('canvas.rf-fl')), vis = false, raf = 0, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function paint(t) { for (var i = 0; i < fl.length; i++) if (fl[i].offsetParent !== null) ReefArt.avatar(fl[i], fl[i].getAttribute('data-t'), t + i * 1.7, { sp: 0.35 }); }
+  function tick(ts) { if (!vis) { raf = 0; return; } paint(ts / 1000); raf = requestAnimationFrame(tick); }
+  function startArt() {
+    if (!window.ReefArt) { var s = document.createElement('script'); s.src = BASE + 'reef-art.js'; s.onload = startArt; document.head.appendChild(s); return; }
+    if (still) { paint(1.2); return; }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { vis = en[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(tick); }).observe(document.getElementById('rfSheet'));
+    else { vis = true; raf = requestAnimationFrame(tick); }
+  }
+  startArt();
+})();
+</script>
 <section class="section" id="vision"><div class="shell storygrid"><div><span class="eyebrow">The opportunity</span><h2>A singular destination deserves a singular digital world.</h2><p>Bal Harbour Shops already brings together exceptional luxury houses, a beautiful open-air setting, personal shopping, dining, e-commerce and a sophisticated editorial magazine. The opportunity is to connect these assets into one more intuitive, visually commanding guest experience.</p><p>Elettro proposes a unified creative and publishing system. The site becomes a curated destination. Property signage becomes an immersive experience. Magazine advertising becomes interactive. Every participating boutique gains a new path from inspiration to visit.</p><div class="btns" style="margin-top:25px"><a href="https://www.balharbourshops.com/" target="_blank" rel="noopener" class="button ghost">Existing website ↗</a><a href="https://www.balharbourshops.com/magazine/" target="_blank" rel="noopener" class="button ghost">Existing magazine ↗</a></div></div><div class="photo-stack"><img class="p1" loading="lazy" src="https://cdn.assets.prezly.com/cd1357b9-02c1-4116-b69a-615054f16a8e/Bal%20Harbour%20Shops%2020.jpg" alt="Gucci luxury storefront at Bal Harbour Shops"><img class="p2" loading="lazy" src="https://cdn.assets.prezly.com/2eed1244-1969-4a0f-83da-204575d6a4ae/Slide%209%20Replacement.jpg" alt="Fashion shopper at Prada Bal Harbour Shops"><span class="photo-tag">Miami · Fashion · Culture</span></div></div></section>
 <section class="section score" id="scores"><div class="shell"><div class="sectiontitle"><div><span class="eyebrow">Strategic digital analysis · October 2026</span><h2>SEO + AI search opportunity.</h2></div><p>Current site strengths are real. Elettro's opportunity is to improve technical discoverability, question-answer visibility, local discovery and conversion paths.</p></div>
 <div class="scoretop"><article class="scorecard"><div class="labelrow"><b>BalHarbourShops.com today</b><small>Directional review, not measured Lighthouse</small></div><div class="scorepair"><div><strong>80<span style="font:400 20px Italiana"> / 100</span></strong><span>SEO readiness · estimated</span></div><div><strong>59<span style="font:400 20px Italiana"> / 100</span></strong><span>AI search / AIO · estimated</span></div></div><p>Strong boutique and editorial footprint with extensive indexable detail pages. Further technical inspection required to verify live performance, JSON-LD coverage and AI answer retrieval.</p></article><article class="scorecard future"><div class="labelrow"><b>Elettro redesign goals</b><small>Post-build targets, not guaranteed scores</small></div><div class="scorepair"><div><strong>95<span style="font:400 20px Italiana"> / 100</span></strong><span>SEO readiness · target 90+</span></div><div><strong>94<span style="font:400 20px Italiana"> / 100</span></strong><span>AI search / AIO · target 90+</span></div></div><p>Targets assume comprehensive rebuild and validation: structured entities, fast templates, robust internal linking, localized answers, accessible media, crawl controls and content operations.</p></article></div>
