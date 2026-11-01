@@ -916,7 +916,7 @@ function buildMore(){
     var S = { cv:cv, active:false, target:0, cur:0, cam:{ yaw:0, pitch:0, dist:900, fov:700, x:0, y:0, z:0 }, parts:[] };
     S.size = function(){ var r = cv.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, 1.5); W = Math.max(2, r.width); H = Math.max(2, r.height); cv.width = W * dpr; cv.height = H * dpr; };
     S.size();
-    function proj(c, x, y, z){ x -= c.x; y -= c.y; z -= c.z; var cy = Math.cos(c.yaw), sy = Math.sin(c.yaw), x1 = x * cy - z * sy, z1 = x * sy + z * cy, cp = Math.cos(c.pitch), sp = Math.sin(c.pitch), y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp, d = c.dist + z2, s = c.fov / d; return [W / 2 + x1 * s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000)) * 1, H / 2 - y2 * s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000)), d, s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000))]; }
+    function proj(c, x, y, z){ var Z = cfg.zoom || 1; x -= c.x; y -= c.y; z -= c.z; var cy = Math.cos(c.yaw), sy = Math.sin(c.yaw), x1 = x * cy - z * sy, z1 = x * sy + z * cy, cp = Math.cos(c.pitch), sp = Math.sin(c.pitch), y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp, d = c.dist + z2, s = c.fov / d; return [W / 2 + x1 * s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000)) * Z * 1, H / 2 - y2 * s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000)) * Z, d, s * (W / 1000 > H / 700 ? (H / 700) : (W / 1000)) * Z]; }
     S.render = function(p, t){
       var c = S.cam; cfg.frame(p, t, c, S);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
@@ -969,7 +969,7 @@ function buildMore(){
     for (var i = 0; i < N; i++) { var u = R() * 2 - 1, th = R() * 6.2832, sq = Math.sqrt(1 - u * u), dx = sq * Math.cos(th), dy = u * .9 + .25, dz = sq * Math.sin(th), l = Math.hypot(dx, dy, dz);
       D.push({ dx:dx / l, dy:dy / l, dz:dz / l, sp:40 + Math.pow(R(), 1.6) * 360 }); P.push(newPart(PAL[(R() * PAL.length) | 0], 1.8 + Math.pow(R(), 3) * 11)); }
     dropSection('d1', 'Liquid Pop 360', 'dp1', 'Bullet time', 'The pop, <em>frozen.</em>', 'A fresh can cracks open. The camera circles the burst before a single drop has fallen.', {
-      focus:900, fr:520,
+      zoom:2.1, focus:900, fr:520,
       under:function(ctx, W, H, p){ var g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.min(W, H) * .45); g.addColorStop(0, 'rgba(255,255,255,' + (.75 * (1 - p)) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); },
       frame:function(p, t, c, S){ var tt = .3 + .3 * p; for (var i = 0; i < N; i++) { var q = P[i], d = D[i]; q.x = d.dx * d.sp * tt; q.y = d.dy * d.sp * tt; q.z = d.dz * d.sp * tt; q.vx = d.dx * d.sp * .1; q.vy = d.dy * d.sp * .1; q.vz = d.dz * d.sp * .1; }
         S.parts = P; c.yaw = p * 6.2832; c.pitch = -.16 + Math.sin(p * 6.2832) * .08; c.dist = 900; c.fov = 720; c.y = 30; }
@@ -983,7 +983,7 @@ function buildMore(){
     var NP = Math.round(150 * K); for (var a = 0; a < NP; a++) { P.push(newPart(PAL[(R() * PAL.length) | 0], 2 + R() * 5)); meta.push({ pool:true, th:R() * 6.2832, rho:50 + R() * 230 }); }
     var NF = Math.round(70 * K); for (var b = 0; b < NF; b++) { P.push(newPart(PAL[(R() * PAL.length) | 0], 1.6 + R() * 4)); meta.push({ free:true, th:R() * 6.2832, rr:200 + R() * 160, yy:-40 + R() * 260 }); }
     dropSection('d2', 'Liquid Crown', 'dp2', 'Macro splash', 'The <em>crown</em> rises.', 'Every spike ends in a bead. Tilt down and the whole ring opens up like a flower.', {
-      focus:950, fr:600,
+      zoom:1.9, focus:950, fr:600,
       frame:function(p, t, c, S){ var g = .22 + .78 * p;
         for (var i = 0; i < P.length; i++) { var q = P[i], mt = meta[i];
           if (mt.pool) { q.x = Math.cos(mt.th) * mt.rho * (.6 + .4 * g); q.z = Math.sin(mt.th) * mt.rho * (.6 + .4 * g); q.y = -118; }
@@ -1025,12 +1025,12 @@ function buildMore(){
     for (var i = tg.length - 1; i > 0; i--) { var j = (R() * (i + 1)) | 0, tmp = tg[i]; tg[i] = tg[j]; tg[j] = tmp; }
     var N = Math.min(tg.length, Math.round(720 * K)), P = [], M = [], HUES = [340, 15, 50, 172, 185, 205, 320];
     for (var k = 0; k < N; k++) { var u = R() * 2 - 1, th = R() * 6.2832, sq = Math.sqrt(1 - u * u), rr = 160 + R() * 420, hi = Math.max(0, Math.min(HUES.length - 1, Math.floor((tg[k][0] + 370) / 740 * HUES.length)));
-      P.push(newPart(HUES[hi], 3.3)); M.push({ sx:sq * Math.cos(th) * rr, sy:u * rr, sz:sq * Math.sin(th) * rr, tx:tg[k][0], ty:tg[k][1], d:R() * .25, r0:2 + R() * 7 }); }
+      P.push(newPart(HUES[hi], 5.2)); M.push({ sx:sq * Math.cos(th) * rr, sy:u * rr, sz:sq * Math.sin(th) * rr, tx:tg[k][0], ty:tg[k][1], d:R() * .25, r0:2 + R() * 7 }); }
     dropSection('d5', 'Liquid Reform', 'dp5', 'Resolve', 'Splash, then <em>signature.</em>', 'The burst pulls back together mid-orbit and settles into the name.', {
-      focus:900, fr:700,
+      zoom:1.35, focus:900, fr:700,
       frame:function(p, t, c, S){ var e = ease((p - .06) / .8);
         for (var i = 0; i < N; i++) { var q = P[i], m = M[i], ei = ease(e * 1.25 - m.d), sw = (1 - ei) * 2.4, cs = Math.cos(sw), sn = Math.sin(sw), sx = m.sx * cs - m.sz * sn, sz = m.sx * sn + m.sz * cs;
-          q.x = sx * (1 - ei) + m.tx * ei; q.y = m.sy * (1 - ei) + m.ty * ei; q.z = sz * (1 - ei); q.r = m.r0 + (3.3 - m.r0) * ei; }
+          q.x = sx * (1 - ei) + m.tx * ei; q.y = m.sy * (1 - ei) + m.ty * ei; q.z = sz * (1 - ei); q.r = m.r0 + (5.2 - m.r0) * ei; }
         S.parts = P; c.yaw = (1 - e) * 5.4; c.pitch = -.12 * (1 - e); c.dist = 940 - 120 * e; c.fov = 760; c.y = 0; }
     }, 360);
   })();
