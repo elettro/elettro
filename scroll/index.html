@@ -304,6 +304,36 @@
   .rbtns { display:flex; gap:10px; }
   .rbtns button { flex:1; padding:.9em; border-radius:99px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font:inherit; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
   #rerr { display:none; color:#ff8a7a; font-size:12px; text-align:center; }
+
+  /* ============ PAGES: pager + menu ============ */
+  .pager { min-height:100vh; display:grid; place-items:center; text-align:center; padding:12vh 6vw; position:relative; z-index:2;
+    background:radial-gradient(ellipse at 50% 0%,rgba(217,181,107,.14),rgba(7,9,13,0) 60%); }
+  .pager h2 { font-size:clamp(2rem,5vw,4.4rem); margin:.5rem 0 0; }
+  .pager .pg-sub { color:var(--muted); margin-top:.8rem; }
+  .pg-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:2.2rem; }
+  .pg-btns a { display:inline-block; padding:1.05em 2.1em; border-radius:99px; border:1px solid rgba(217,181,107,.55); color:var(--fg); text-decoration:none;
+    font-size:.82rem; letter-spacing:.16em; text-transform:uppercase; background:rgba(7,9,13,.5); }
+  .pg-btns a.primary { background:var(--gold); color:#111; border-color:var(--gold); font-weight:600; }
+  .pg-btns a:hover { filter:brightness(1.15); }
+  .pager .menu { margin:3.5rem auto 0; max-width:1100px; }
+  .menu { display:grid; grid-template-columns:repeat(3,1fr); gap:2.2vw; text-align:left; }
+  .menu .mp h4 { font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin:0 0 .7rem; font-weight:600; }
+  .menu .mp h4 a { color:inherit; text-decoration:none; }
+  .menu .mp h4 small { display:block; color:var(--muted); letter-spacing:.1em; font-weight:400; margin-top:.25em; text-transform:none; font-size:.95em; }
+  .menu .mp.cur h4 a::after { content:"  \2190 you are here"; color:var(--fg); letter-spacing:.08em; text-transform:none; font-weight:400; }
+  .menu a.mi { display:block; color:var(--muted); text-decoration:none; font-size:.8rem; line-height:1.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .menu a.mi b { display:inline-block; width:2.2em; color:var(--fg); font-weight:600; }
+  .menu a.mi:hover { color:var(--gold); }
+  .hero .menu { margin:2.6rem auto 0; max-width:980px; }
+  .menubtn { pointer-events:auto; margin-left:1.4vw; cursor:pointer; font:inherit; font-size:clamp(11px,1vw,15px); letter-spacing:.14em; text-transform:uppercase; color:var(--fg);
+    border:1px solid rgba(217,181,107,.55); padding:.6em 1.1em; border-radius:99px; background:rgba(7,9,13,.55); backdrop-filter:blur(8px); }
+  .tb-left { display:flex; align-items:center; }
+  #menuov { position:fixed; inset:0; z-index:200; background:rgba(7,9,13,.94); backdrop-filter:blur(10px); display:none; overflow:auto; padding:9vh 6vw 6vh; pointer-events:auto; }
+  #menuov.open { display:block; }
+  #menuov .mclose { position:fixed; top:2vw; right:3vw; cursor:pointer; font:inherit; color:var(--fg); background:none; border:1px solid var(--line); border-radius:99px; padding:.6em 1.2em; letter-spacing:.14em; text-transform:uppercase; font-size:12px; }
+  #menuov h3 { font-size:clamp(1.6rem,3vw,2.6rem); margin-bottom:2rem; }
+  body.mode-mini .pager .menu, body.mode-mini .menubtn { display:none; }
+  @media (max-width:820px) { .menu { grid-template-columns:1fr; gap:1.6rem; } .hero .menu { margin-top:1.8rem; } .menubtn { margin-left:2vw; } }
   @media (prefers-reduced-motion: reduce) { .wall { transform:rotateX(52deg) rotateZ(-20deg) !important; } }
 </style>
 </head>
@@ -315,6 +345,7 @@
       <h1>A studio built<br>around your <em>growth.</em></h1>
       <p>Scan the code. Your phone becomes the remote for this page. Swipe slowly on your phone and the website scrolls here.</p>
       <a class="btn" href="#cards">Let’s talk ↗</a>
+      <div class="menu" id="heroMenu"></div>
     </div>
   </section>
 
@@ -401,7 +432,7 @@
 <!-- display-only chrome -->
 <div id="chrome">
   <div class="topbar">
-    <img src="/images/Elettro-logo-white.png" alt="Elettro">
+    <div class="tb-left"><img src="/images/Elettro-logo-white.png" alt="Elettro"><button class="menubtn" id="menubtn" type="button">&#9776; Menu</button></div>
     <div class="pill" id="dstat"><span class="dot"></span><span id="dtxt">Waiting for phone</span></div>
   </div>
   <div class="hint" id="hint">Scan the code with your phone camera. No app, no account.</div>
@@ -411,6 +442,7 @@
     <small>SESSION <span id="sid"></span></small>
   </div>
   <div id="derr"></div>
+  <div id="menuov" data-lenis-prevent><button class="mclose" id="mclose" type="button">Close</button><h3>All sections</h3><div class="menu" id="bigMenu"></div></div>
   <div class="secbadge" id="secbadge" title="Click to copy a link to this section"><b id="sbn">01</b><span id="sbt">Hero</span><small id="sbc"></small></div>
 </div>
 
@@ -428,6 +460,7 @@
     <div class="pad"><div><span>↕</span>Swipe slowly up or down</div></div>
   </div>
   <div class="rbtns"><button id="btop">↑ Top</button><button id="bend">↓ End</button></div>
+  <div class="rbtns"><button id="bprev">&#9664; Prev page</button><button id="bnext">Next page &#9654;</button></div>
   <div id="rerr"></div>
 </div>
 
@@ -445,6 +478,33 @@ var PREFIX = 'elettro-sc-';
 document.body.classList.add('mode-' + MODE);
 if (MODE === 'mini') document.documentElement.classList.add('mini-root');
 function $(id){ return document.getElementById(id); }
+
+/* ---------------------------------------------------------------- PAGES
+   29 numbered sections split over 3 pages. Numbers are global, so "#14" always means the same section. */
+var PAGES = [
+  { title:'Scroll fundamentals', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask'] },
+  { title:'Motion, video and graphics', names:['Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve'] },
+  { title:'Graphics, liquid and finale', names:['Channel Flow','Connected Network','Four Dials','Liquid Pop 360','Liquid Crown','Fizz Column','Droplet Rain','Liquid Reform','Blur Reveal'] }
+];
+var FLAT = []; PAGES.forEach(function(p){ p.names.forEach(function(n){ FLAT.push(n); }); });
+function pageOf(n){ var c = 0; for (var i = 0; i < PAGES.length; i++) { c += PAGES[i].names.length; if (n <= c) return i + 1; } return 1; }
+var PAGE = Math.max(1, Math.min(PAGES.length, parseInt(params.get('p'), 10) || 1));
+(function(){ /* a #NN link that belongs to another page sends you there */
+  var m = /^#(\d\d?)$/.exec(location.hash);
+  if (m && MODE !== 'remote') { var pp = pageOf(+m[1]); if (pp !== PAGE) { location.replace(location.pathname + (pp > 1 ? '?p=' + pp : '') + location.hash); } }
+})();
+function inPage(name){ return PAGES[PAGE - 1].names.indexOf(name) > -1; }
+function pageUrl(p, hash){ return location.pathname + (p > 1 ? '?p=' + p : '') + (hash || ''); }
+function pad2(n){ return (n < 10 ? '0' : '') + n; }
+function renderMenu(el){
+  if (!el) return; var n = 0, html = '';
+  PAGES.forEach(function(pg, i){
+    html += '<div class="mp' + (i + 1 === PAGE ? ' cur' : '') + '"><h4><a href="' + pageUrl(i + 1) + '">Page ' + (i + 1) + '<small>' + pg.title + '</small></a></h4>';
+    pg.names.forEach(function(nm){ n++; html += '<a class="mi" href="' + pageUrl(i + 1, '#' + pad2(n)) + '"><b>' + pad2(n) + '</b>' + nm + '</a>'; });
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
 
 /* ============ EDIT THESE ============
    Images live in /scroll/img/. First 3 = pinned cards, the rest fill the tilted wall.
@@ -492,18 +552,22 @@ function startSite(){
   gsap.registerPlugin(ScrollTrigger);
   ST = ScrollTrigger;
 
-  var cardsEl = $('cards');
-  CARDS.forEach(function(c, i){
+  /* only this page's sections exist */
+  [].forEach.call(document.querySelectorAll('#site > [data-sec]'), function(el){ if (!inPage(el.getAttribute('data-sec'))) el.parentNode.removeChild(el); });
+  renderMenu($('heroMenu'));
+
+  var cardsEl = $('cards'); var cardEls = [];
+  if (cardsEl) CARDS.forEach(function(c, i){
     cardsEl.insertAdjacentHTML('beforeend',
       '<article class="card"><div class="bg">' + media(i) + '</div><div class="copy"><h2>' + c.title + '</h2><p>' + c.text + '</p></div></article>');
   });
-  var cardEls = [].slice.call(cardsEl.querySelectorAll('.card'));
+  if (cardsEl) cardEls = [].slice.call(cardsEl.querySelectorAll('.card'));
 
   var wall = $('wall');
-  for (var i = 0; i < 16; i++) wall.insertAdjacentHTML('beforeend', '<div class="tile">' + media(i + 3) + '</div>');
+  if (wall) for (var i = 0; i < 16; i++) wall.insertAdjacentHTML('beforeend', '<div class="tile">' + media(i + 3) + '</div>');
 
   var rt = $('revealText');
-  rt.innerHTML = rt.textContent.split(' ').map(function(w){ return '<span class="w">' + w + ' </span>'; }).join('');
+  if (rt) rt.innerHTML = rt.textContent.split(' ').map(function(w){ return '<span class="w">' + w + ' </span>'; }).join('');
 
   if (MODE === 'display') {
     lenis = new Lenis({ lerp: 0.09 });
@@ -519,19 +583,20 @@ function startSite(){
     });
   }
   layout(0);
-  ScrollTrigger.create({
+  if (cardsEl) ScrollTrigger.create({
     trigger:'#cards', start:'top top', end:function(){ return '+=' + (window.innerHeight * (CARDS.length - 1) * 0.9); },
     pin:true, scrub:true, invalidateOnRefresh:true,
     onUpdate:function(s){ layout(s.progress * (CARDS.length - 1)); }
   });
 
-  gsap.fromTo(wall, { yPercent:10, rotateZ:-20 }, { yPercent:-35, rotateZ:-12, ease:'none',
+  if (wall) gsap.fromTo(wall, { yPercent:10, rotateZ:-20 }, { yPercent:-35, rotateZ:-12, ease:'none',
     scrollTrigger:{ trigger:'#wallSec', start:'top bottom', end:'bottom top', scrub:1 } });
-  gsap.from('.wall-copy > *', { opacity:0, y:30, filter:'blur(10px)', stagger:.12, ease:'none',
+  if (wall) gsap.from('.wall-copy > *', { opacity:0, y:30, filter:'blur(10px)', stagger:.12, ease:'none',
     scrollTrigger:{ trigger:'#wallSec', start:'top 60%', end:'top 25%', scrub:true } });
   buildExtra();
   buildMore();
-  gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
+  buildPager();
+  if (rt) gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
     scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
   initSections();
 }
@@ -551,6 +616,7 @@ var vio = ('IntersectionObserver' in window) ? new IntersectionObserver(function
 function autoplayIn(el){ if (vio && el) vio.observe(el); }
 
 function buildExtra(){
+  if (inPage('Horizontal Travel')) {
   /* 1. horizontal travel */
   var HZ = [['01','Brand worlds',3],['02','Live and events',6],['03','Campaigns',9],['04','Product',12],['05','Music',15]];
   var track = $('hzTrack');
@@ -564,6 +630,9 @@ function buildExtra(){
       scrollTrigger:{ trigger:im.parentNode, containerAnimation:hzT, start:'left right', end:'right left', scrub:true } });
   });
 
+  }
+
+  if (inPage('Video Portal')) {
   /* 2. portal: a small window opens to fill the screen */
   $('pimg').innerHTML = vid('portal'); autoplayIn($('portal'));
   gsap.timeline({ scrollTrigger:{ trigger:'#portal', start:'top top', end:'+=160%', pin:true, scrub:1 } })
@@ -572,6 +641,9 @@ function buildExtra(){
     .fromTo('#pimg video', { scale:1.4 }, { scale:1, ease:'none', duration:1 }, 0)
     .fromTo('#portal .ptext > div', { opacity:0, y:40, filter:'blur(12px)' }, { opacity:1, y:0, filter:'blur(0px)', duration:.5 }, .7);
 
+  }
+
+  if (inPage('Live Counters')) {
   /* 3. counters tied to scroll position */
   [].forEach.call(document.querySelectorAll('#stats .stat'), function(st){
     var el = st.querySelector('[data-to]'), to = +el.getAttribute('data-to'), o = { v:0 };
@@ -580,6 +652,9 @@ function buildExtra(){
     gsap.fromTo(st.querySelector('.ln'), { scaleX:0 }, { scaleX:1, ease:'none', scrollTrigger:st1 });
   });
 
+  }
+
+  if (inPage('3D Ring')) {
   /* 4. 3D ring turns with the scroll */
   var ring = $('ring'), RING = [8,9,10,11,12,13,14,15];
   ring.innerHTML = RING.map(function(i, k){ return '<div class="face">' + (k === 1 ? vid('ring-2') : k === 5 ? vid('ring-3') : media(i)) + '</div>'; }).join('');
@@ -592,6 +667,9 @@ function buildExtra(){
   gsap.fromTo(ring, { rotationY:0, rotationX:-8 }, { rotationY:-360, ease:'none',
     scrollTrigger:{ trigger:'#ringSec', start:'top top', end:'+=260%', pin:true, scrub:1 } });
 
+  }
+
+  if (inPage('Tunnel Flight')) {
   /* 5. tunnel: frames rush toward the camera */
   var tun = $('tunnel'), TN = [10,11,12,13,14,15,16], frames = [];
   TN.forEach(function(i){
@@ -607,6 +685,9 @@ function buildExtra(){
     tl.to(f, { opacity:0, duration:.7, ease:'none' }, t + 1.9);
   });
 
+  }
+
+  if (inPage('Video Scrub')) {
   /* video A: scroll is the playhead */
   var vs = $('vsVideo'), vsTarget = 0, vsCur = 0;
   vs.addEventListener('loadedmetadata', function(){ var p = vs.play(); if (p && p.then) p.then(function(){ vs.pause(); }).catch(function(){}); });
@@ -619,6 +700,9 @@ function buildExtra(){
     $('vsTime').textContent = (vsCur * vs.duration).toFixed(1) + 's';
   });
 
+  }
+
+  if (inPage('Video Type Mask')) {
   /* video B: seen through giant type, then the type swallows the screen */
   autoplayIn($('vtype'));
   gsap.timeline({ scrollTrigger:{ trigger:'#vtype', start:'top top', end:'+=260%', pin:true, scrub:1 } })
@@ -626,6 +710,9 @@ function buildExtra(){
     .to('.vt-mask', { opacity:0, ease:'none', duration:.35 }, .8)
     .fromTo('.vt-cap', { opacity:0, y:30 }, { opacity:1, y:0, duration:.3 }, 1.05);
 
+  }
+
+  if (inPage('Speed Marquee')) {
   /* 6. marquee reacts to scroll speed */
   var rows = [].map.call(document.querySelectorAll('#marq .mrow'), function(el){ return { el:el, dir:+el.getAttribute('data-dir'), x:0, w:0 }; });
   var WORDS = [
@@ -653,6 +740,9 @@ function buildExtra(){
     });
   });
 
+  }
+
+  if (inPage('Stacking Cards')) {
   /* 7. stacking cards that shrink as the next one lands */
   var STEPS = [['01','Listen','We start with your business, audience and goals.',4],['02','Plan','Focus on the channels that matter most.',7],
     ['03','Create','Develop the message and creative direction.',9],['04','Publish','Launch across every channel, on schedule.',12],
@@ -668,6 +758,9 @@ function buildExtra(){
       scrollTrigger:{ trigger:sc[i + 1], start:'top 85%', end:'top 12%', scrub:true } });
   });
 
+  }
+
+  if (inPage('Path Draw')) {
   /* 8. a line draws itself as you scroll */
   var pfg = $('pfg'), pbox = $('pbox'), dot = $('pdot'), L = pfg.getTotalLength();
   pfg.style.strokeDasharray = L; pfg.style.strokeDashoffset = L;
@@ -687,6 +780,8 @@ function buildExtra(){
   } });
   var p0 = pfg.getPointAtLength(0); dot.style.left = (p0.x / 10) + '%'; dot.style.top = (p0.y / 5) + '%';
 
+  }
+
   window.addEventListener('load', function(){ ST.refresh(); });
 }
 
@@ -694,12 +789,12 @@ function buildExtra(){
 
 /* =================== BATCH 2: 5 video + 5 graphics + 5 liquid =================== */
 function buildMore(){
-  var reveal = document.querySelector('.reveal'), K = (MODE === 'mini') ? 0.55 : 1;
+  var reveal = document.querySelector('.reveal'), SITE = $('site'), K = (MODE === 'mini') ? 0.55 : 1;
   function clamp01(v){ return Math.max(0, Math.min(1, v)); }
   function ease(v){ v = clamp01(v); return v * v * (3 - 2 * v); }
   function mk(id, name, cls, inner, vh){
     var s = document.createElement('section'); s.id = id; s.className = 'x ' + cls; s.setAttribute('data-sec', name); s.style.height = vh + 'vh';
-    s.innerHTML = '<div class="xs">' + inner + '</div>'; reveal.parentNode.insertBefore(s, reveal); return s;
+    s.innerHTML = '<div class="xs">' + inner + '</div>'; if (reveal) reveal.parentNode.insertBefore(s, reveal); else SITE.appendChild(s); return s;
   }
   function prog(s, fn){
     ST.create({ trigger:s, start:'top top', end:'bottom bottom', onUpdate:function(self){ fn(self.progress); }, onRefresh:function(self){ fn(self.progress); } });
@@ -709,7 +804,7 @@ function buildMore(){
   function dashPrep(e){ var L = e.getTotalLength(); e.style.strokeDasharray = L; e.style.strokeDashoffset = L; return L; }
 
   /* ---------------- VIDEO 1: wall that zooms into one stream ---------------- */
-  (function(){
+  if (inPage('Video Wall Zoom')) (function(){
     var names = ['typemask','stack','ring-2','ring-3','portal','typemask','stack','ring-3','ring-2'];
     var s = mk('v6', 'Video Wall Zoom', 'vwx', '<div class="vw-grid" id="vwGrid">' + names.map(function(n){ return '<div class="vw-t">' + vid(n) + '</div>'; }).join('') + '</div><div class="vw-cap">Nine streams. <em>One story.</em></div>', 340);
     autoplayIn(s);
@@ -724,7 +819,7 @@ function buildMore(){
   })();
 
   /* ---------------- VIDEO 2: raw vs graded wipe ---------------- */
-  (function(){
+  if (inPage('Before and After Wipe')) (function(){
     var s = mk('v7', 'Before and After Wipe', 'bax',
       '<div class="ba"><video class="raw" src="vid/portal.mp4" poster="vid/portal.jpg" muted loop playsinline preload="metadata"></video>' +
       '<div class="ba-after"><video class="gr" src="vid/portal.mp4" poster="vid/portal.jpg" muted loop playsinline preload="metadata"></video><div class="tint"></div></div></div>' +
@@ -736,7 +831,7 @@ function buildMore(){
   })();
 
   /* ---------------- VIDEO 3: three phones, three speeds ---------------- */
-  (function(){
+  if (inPage('Phone Parallax')) (function(){
     var s = mk('v8', 'Phone Parallax', 'phx',
       '<div class="gh"><div class="sec-eyebrow">Vertical first</div><h2>Made for the phone <em>in your hand.</em></h2></div>' +
       '<div class="phs"><div class="phone" id="ph1">' + vid('ring-2') + '</div><div class="phone" id="ph2">' + vid('dean-scrub') + '</div><div class="phone" id="ph3">' + vid('ring-3') + '</div></div>', 300);
@@ -751,7 +846,7 @@ function buildMore(){
   })();
 
   /* ---------------- VIDEO 4: scroll speed is the time dial ---------------- */
-  (function(){
+  if (inPage('Velocity Time Ramp')) (function(){
     var s = mk('v9', 'Velocity Time Ramp', 'vr',
       '<video src="vid/typemask.mp4" poster="vid/typemask.jpg" muted loop playsinline preload="metadata"></video><div class="sh"></div>' +
       '<div class="gh"><div class="sec-eyebrow">Speed is time</div><h2>Scroll slow. <em>Time slows.</em></h2></div>' +
@@ -769,7 +864,7 @@ function buildMore(){
   })();
 
   /* ---------------- VIDEO 5: video cube ---------------- */
-  (function(){
+  if (inPage('Video Cube')) (function(){
     var s = mk('v10', 'Video Cube', 'cbx',
       '<div class="gh"><div class="sec-eyebrow">Four angles</div><h2>Turn the story <em>over.</em></h2></div>' +
       '<div class="cube-wrap"><div class="cube" id="cube"><div class="f">' + vid('stack') + '</div><div class="f">' + vid('typemask') + '</div><div class="f">' + vid('ring-2') + '</div><div class="f">' + vid('ring-3') + '</div><div class="f">' + media(4) + '</div><div class="f">' + media(7) + '</div></div></div>', 320);
@@ -784,7 +879,7 @@ function buildMore(){
   /* ================= GRAPHICS (same family as the path draw) ================= */
 
   /* G1: brand orbit */
-  (function(){
+  if (inPage('Brand OS Orbit')) (function(){
     var s = mk('g1', 'Brand OS Orbit', 'gx', '<div class="gh"><div class="sec-eyebrow">One system</div><h2>Nine brands. <em>One orbit.</em></h2></div><svg class="gsvg" viewBox="0 0 800 800"></svg><div class="gcap">Brands run from one operating system</div>', 320);
     var svg = s.querySelector('svg'), cx = 400, cy = 400, radii = [130, 220, 310], speeds = [1, -.7, .5];
     var rings = radii.map(function(r){ var c = svgEl(svg, 'circle', { cx:cx, cy:cy, r:r, fill:'none', stroke:'rgba(217,181,107,.55)', 'stroke-width':1.5 }); var L = 2 * Math.PI * r; c.style.strokeDasharray = L; c.style.strokeDashoffset = L; c._L = L; return c; });
@@ -807,7 +902,7 @@ function buildMore(){
   })();
 
   /* G2: growth curve */
-  (function(){
+  if (inPage('Growth Curve')) (function(){
     var s = mk('g2', 'Growth Curve', 'gx', '<div class="gh"><div class="sec-eyebrow">Attention to business</div><h2>Up and <em>to the right.</em></h2></div><svg class="gsvg" viewBox="0 0 1000 520" style="height:70vh"></svg><div class="gcap">Illustrative data</div>', 320);
     var svg = s.querySelector('svg'), vals = [12, 18, 31, 47, 72, 100], X0 = 90, X1 = 930, Y0 = 440, Y1 = 50;
     var defs = svgEl(svg, 'defs', {}); var lg = svgEl(svg, 'linearGradient', { id:'g2f', x1:0, y1:0, x2:0, y2:1 }, defs);
@@ -830,7 +925,7 @@ function buildMore(){
   })();
 
   /* G3: channels flow into one site, out to results */
-  (function(){
+  if (inPage('Channel Flow')) (function(){
     var s = mk('g3', 'Channel Flow', 'gx', '<div class="gh"><div class="sec-eyebrow">How it connects</div><h2>Every channel. <em>One destination.</em></h2></div><svg class="gsvg" viewBox="0 0 1000 560"></svg><div class="gcap">Search, social and ads feed one site that turns attention into results</div>', 320);
     var svg = s.querySelector('svg'), ins = ['Search','Social','Ads','Email','Referrals'], outs = ['Leads','Calls','Sales'], cols = ['#d9b56b','#ff6fa8','#4fe3d6','#ffd36a','#9fb8ff'], items = [];
     ins.forEach(function(nm, i){ var y = 70 + i * 105;
@@ -854,7 +949,7 @@ function buildMore(){
   })();
 
   /* G4: network that lights up edge by edge */
-  (function(){
+  if (inPage('Connected Network')) (function(){
     var s = mk('g4', 'Connected Network', 'gx', '<div class="gh"><div class="sec-eyebrow">Everything talks</div><h2>One network. <em>All lit.</em></h2></div><svg class="gsvg" viewBox="0 0 1000 520" style="height:70vh"></svg><div class="gcap" id="g4c">Connecting</div>', 320);
     var svg = s.querySelector('svg'), R = rng(21), pts = [], tries = 0;
     while (pts.length < 30 && tries++ < 4000) { var x = 60 + R() * 880, y = 50 + R() * 420, ok = true; for (var i = 0; i < pts.length; i++) { if (Math.hypot(pts[i][0] - x, pts[i][1] - y) < 105) { ok = false; break; } } if (ok) pts.push([x, y]); }
@@ -882,7 +977,7 @@ function buildMore(){
   })();
 
   /* G5: four dials */
-  (function(){
+  if (inPage('Four Dials')) (function(){
     var s = mk('g5', 'Four Dials', 'gx', '<div class="gh"><div class="sec-eyebrow">Dial it in</div><h2>Four rings. <em>Closed.</em></h2></div><svg class="gsvg" viewBox="0 0 600 600" style="left:34%"></svg><div class="g5l" id="g5l" style="position:absolute;left:62%;top:50%;translate:0 -50%;z-index:3"></div><div class="gcap">Sample figures</div>', 300);
     var svg = s.querySelector('svg'), rs = [250, 200, 150, 100], cols = ['#d9b56b','#ff6fa8','#4fe3d6','#ffd36a'], tg = [.92, .78, .64, .48], nm = ['Strategy','Creative','Production','Growth'], arcs = [], leg = s.querySelector('#g5l');
     rs.forEach(function(r, i){ svgEl(svg, 'circle', { cx:300, cy:300, r:r, fill:'none', stroke:cols[i], 'stroke-opacity':.16, 'stroke-width':34 });
@@ -964,7 +1059,7 @@ function buildMore(){
   function newPart(h, r){ return { x:0, y:0, z:0, r:r, h:h, vx:0, vy:0, vz:0, k:1, a:1 }; }
 
   /* L1: the pop, frozen mid-burst while the camera circles */
-  (function(){
+  if (inPage('Liquid Pop 360')) (function(){
     var R = rng(7), N = Math.round(460 * K), P = [], D = [];
     for (var i = 0; i < N; i++) { var u = R() * 2 - 1, th = R() * 6.2832, sq = Math.sqrt(1 - u * u), dx = sq * Math.cos(th), dy = u * .9 + .25, dz = sq * Math.sin(th), l = Math.hypot(dx, dy, dz);
       D.push({ dx:dx / l, dy:dy / l, dz:dz / l, sp:40 + Math.pow(R(), 1.6) * 360 }); P.push(newPart(PAL[(R() * PAL.length) | 0], 1.8 + Math.pow(R(), 3) * 11)); }
@@ -977,7 +1072,7 @@ function buildMore(){
   })();
 
   /* L2: the crown splash */
-  (function(){
+  if (inPage('Liquid Crown')) (function(){
     var R = rng(11), spikes = 22, m = 9, P = [], meta = [];
     for (var s2 = 0; s2 < spikes; s2++) for (var j = 0; j < m; j++) { P.push(newPart(PAL[(s2 + j) % PAL.length], 3.4 * (1 - j / m * .5) + (j === m - 1 ? 6 : 0))); meta.push({ th:s2 / spikes * 6.2832 + R() * .1, f:j / (m - 1), H:120 + (s2 % 3) * 28 }); }
     var NP = Math.round(150 * K); for (var a = 0; a < NP; a++) { P.push(newPart(PAL[(R() * PAL.length) | 0], 2 + R() * 5)); meta.push({ pool:true, th:R() * 6.2832, rho:50 + R() * 230 }); }
@@ -994,7 +1089,7 @@ function buildMore(){
   })();
 
   /* L3: fizz, a column of rising bubbles with depth of field */
-  (function(){
+  if (inPage('Fizz Column')) (function(){
     var R = rng(31), N = Math.round(360 * K), P = [], M = [];
     for (var i = 0; i < N; i++) { P.push(newPart(PAL[(R() * PAL.length) | 0], 2 + Math.pow(R(), 2) * 14)); M.push({ x:(R() - .5) * 760, z:(R() - .5) * 1100 - 100, y:(R() - .5) * 840, sp:.6 + R() * 1.0, w:R() * 6.28 }); }
     dropSection('d3', 'Fizz Column', 'dp3', 'Carbonation', 'Rise <em>with the fizz.</em>', 'Foreground drops melt into soft light, the middle layer stays crisp.', {
@@ -1005,7 +1100,7 @@ function buildMore(){
   })();
 
   /* L4: droplet rain, glyph trails, camera sweep */
-  (function(){
+  if (inPage('Droplet Rain')) (function(){
     var R = rng(41), C = Math.round(46 * K), per = 6, P = [], M = [], G = 'ｱｲｳｴｵｶｷｸｹｺ0123456789';
     for (var i = 0; i < C; i++) { var x = (R() - .5) * 1000, z = (R() - .5) * 900, sp = .7 + R() * 1.1, hh = PAL[(R() * PAL.length) | 0], g = G[(R() * G.length) | 0];
       for (var j = 0; j < per; j++) { var q = newPart(hh, 3.2 + (j === 0 ? 3 : 0) + R() * 1.5); q.vy = -70; q.k = 3.2; q.glyph = j === 0 ? g : null; P.push(q); M.push({ x:x, z:z, sp:sp, off:j * 70 + R() * 20, y0:(R() - .5) * 900 }); } }
@@ -1018,7 +1113,7 @@ function buildMore(){
   })();
 
   /* L5: the burst reforms into the word */
-  (function(){
+  if (inPage('Liquid Reform')) (function(){
     var R = rng(53), off = document.createElement('canvas'); off.width = 920; off.height = 260; var x = off.getContext('2d'); x.fillStyle = '#000'; x.font = '800 190px Inter, Arial, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('ELETTRO', 460, 134);
     var data = x.getImageData(0, 0, 920, 260).data, tg = [];
     for (var py = 0; py < 260; py += 5) for (var px = 0; px < 920; px += 5) { if (data[(py * 920 + px) * 4 + 3] > 140) tg.push([(px - 460) * .8, -(py - 130) * .8]); }
@@ -1058,14 +1153,28 @@ function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; 
 
 /* numbered sections: badge on the big screen, tags on each section, shareable #NN links */
 var curSec = null, secCb = null;
+
+/* ------------------------------------------------------- PAGER (end of every page) */
+function buildPager(){
+  var site = $('site'), prev = PAGE > 1 ? PAGES[PAGE - 2] : null, next = PAGE < PAGES.length ? PAGES[PAGE] : null, el = document.createElement('section');
+  el.className = 'pager'; el.id = 'pager';
+  el.innerHTML = '<div><div class="sec-eyebrow">Page ' + PAGE + ' of ' + PAGES.length + ' \u00B7 end</div>' +
+    (next ? '<h2>Next: <em>' + next.title + '</em></h2><p class="pg-sub">Sections ' + pad2(FLAT.indexOf(next.names[0]) + 1) + ' to ' + pad2(FLAT.indexOf(next.names[next.names.length - 1]) + 1) + '</p>'
+          : '<h2>That is <em>all of it.</em></h2><p class="pg-sub">Tell us the numbers you liked.</p>') +
+    '<div class="pg-btns">' + (prev ? '<a href="' + pageUrl(PAGE - 1) + '">&larr; Back to page ' + (PAGE - 1) + '</a>' : '') +
+    (next ? '<a class="primary" href="' + pageUrl(PAGE + 1) + '">Next page ' + (PAGE + 1) + ' &rarr;</a>' : '<a class="primary" href="' + pageUrl(1) + '">Back to start</a>') + '</div>' +
+    '<div class="menu" id="pagerMenu"></div></div>';
+  site.appendChild(el); renderMenu($('pagerMenu'));
+}
+
 function initSections(){
   var els = [].slice.call(document.querySelectorAll('[data-sec]'));
-  var total = els.length, pad = function(n){ return (n < 10 ? '0' : '') + n; };
+  var total = FLAT.length, pad = pad2;
   var list = els.map(function(el, i){
     var name = el.getAttribute('data-sec');
-    var tag = document.createElement('div'); tag.className = 'sectag'; tag.innerHTML = '<b>' + pad(i + 1) + '</b>' + name;
+    var gn = FLAT.indexOf(name) + 1, tag = document.createElement('div'); tag.className = 'sectag'; tag.innerHTML = '<b>' + pad(gn) + '</b>' + name;
     el.insertBefore(tag, el.firstChild);
-    return { el:el, n:i + 1, name:name };
+    return { el:el, n:gn, name:name };
   });
   function wrap(el){ return el.closest('.pin-spacer') || el; }
   function setSec(it){
@@ -1085,14 +1194,14 @@ function initSections(){
   var b = $('secbadge');
   if (b) b.addEventListener('click', function(){
     if (!curSec) return;
-    var url = location.origin + location.pathname + '#' + pad(curSec.n);
+    var url = location.origin + pageUrl(PAGE, '#' + pad(curSec.n));
     try { navigator.clipboard.writeText(url); } catch (e) {}
     $('sbc').textContent = 'link copied';
     setTimeout(function(){ $('sbc').textContent = '/ ' + pad(total); }, 1400);
   });
   function jump(){
     var m = /^#(\d\d?)$/.exec(location.hash); if (!m) return;
-    var it = list[+m[1] - 1]; if (!it) return;
+    var it = null; list.forEach(function(x){ if (x.n === +m[1]) it = x; }); if (!it) return;
     var y = wrap(it.el).getBoundingClientRect().top + window.scrollY;
     if (lenis) lenis.scrollTo(y, { immediate:true, force:true }); else window.scrollTo(0, y);
   }
@@ -1102,7 +1211,12 @@ function initSections(){
 
 /* ------------------------------------------------------------- DISPLAY */
 function startDisplay(){
-  var id = Math.random().toString(36).slice(2, 8);
+  function rid(){ return Math.random().toString(36).slice(2, 8); }
+  var id = null, reuse = false, idTries = 0;
+  try { id = sessionStorage.getItem('elsc_id'); } catch (e) {}
+  if (id) reuse = true; else id = rid();
+  function saveId(){ try { sessionStorage.setItem('elsc_id', id); } catch (e) {} }
+  saveId();
   var conn = null, lastRemote = 0, remoteTarget = null, lastPos = 0;
 
   function maxScroll(){ return ST.maxScroll(window); }
@@ -1118,10 +1232,10 @@ function startDisplay(){
     try { var q = qrcode(0, 'M'); q.addData(url); q.make(); $('qr').innerHTML = q.createSvgTag({ cellSize:6, margin:0, scalable:true }); }
     catch (e) { $('qr').textContent = url; }
   }
-  function sendSec(){ if (conn && conn.open && curSec) conn.send({ t:'sec', n:curSec.n, name:curSec.name }); }
+  function sendSec(){ if (conn && conn.open && curSec) conn.send({ t:'sec', n:curSec.n, name:curSec.name, p:PAGE }); }
   secCb = function(){ sendSec(); };
   function sendMeta(){
-    if (conn && conn.open) conn.send({ t:'meta', w:window.innerWidth, h:window.innerHeight, max:maxScroll() });
+    if (conn && conn.open) conn.send({ t:'meta', w:window.innerWidth, h:window.innerHeight, max:maxScroll(), p:PAGE });
   }
 
   /* ease the real scroll toward whatever the phone asked for */
@@ -1157,6 +1271,7 @@ function startDisplay(){
       c.on('data', function(m){
         if (!m) return;
         if (m.t === 'hello') sendMeta();
+        else if (m.t === 'nav') { var np = PAGE + (m.d > 0 ? 1 : -1); if (np >= 1 && np <= PAGES.length) location.href = pageUrl(np); }
         else if (m.t === 'p') { lastRemote = Date.now(); remoteTarget = Math.max(0, Math.min(1, m.v)) * maxScroll(); }
       });
       c.on('close', function(){ if (conn === c) { conn = null; setPaired(false); } });
@@ -1164,10 +1279,16 @@ function startDisplay(){
     });
     peer.on('disconnected', function(){ try { peer.reconnect(); } catch (e) {} });
     peer.on('error', function(e){
-      if (e.type === 'unavailable-id') { id = Math.random().toString(36).slice(2, 8); try { peer.destroy(); } catch (x) {} boot(); return; }
+      if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 8) { setTimeout(boot, 900); return; } reuse = false; id = rid(); saveId(); boot(); return; }
       var d = $('derr'); d.style.display = 'block'; d.textContent = 'Connection service error: ' + e.type;
     });
   }
+  var mo = $('menuov'); renderMenu($('bigMenu'));
+  function menu(on){ mo.classList.toggle('open', on); if (lenis) { if (on) lenis.stop(); else lenis.start(); } }
+  $('menubtn').addEventListener('click', function(){ menu(true); });
+  $('mclose').addEventListener('click', function(){ menu(false); });
+  mo.addEventListener('click', function(e){ var a = e.target.closest ? e.target.closest('a') : null; if (!a) return; var h = a.getAttribute('href'); if (h.split('#')[0] === pageUrl(PAGE)) menu(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menu(false); });
   boot();
 }
 
@@ -1177,7 +1298,6 @@ function startRemote(){
   var vw = 1440, vh = 900, max = 6000, pos = 0, scale = 0.25;
   var conn = null, dirty = false, active = false, mom = false, vel = 0, lastY = 0, lastMoveT = 0;
 
-  mvf.src = location.pathname + '?mini=1';
   function setStat(on, txt){ $('rstat').className = 'rstat' + (on ? ' on' : ''); $('rstat').textContent = txt; }
   function err(m){ var e = $('rerr'); e.style.display = 'block'; e.textContent = m; }
   function clamp(v){ return Math.max(0, Math.min(max, v)); }
@@ -1250,24 +1370,38 @@ function startRemote(){
   mvf.addEventListener('load', function(){ fit(); applyMini(); });
   fit();
 
-  var peer = new Peer();
-  peer.on('open', function(){
-    conn = peer.connect(PREFIX + target, { reliable:true });
-    conn.on('open', function(){ conn.send({ t:'hello' }); setStat(true, 'Connected'); });
-    conn.on('data', function(m){
+  var curPage = 0, tries = 0, retryT = null, everOn = false, busy = false, peer = new Peer();
+  function retry(){
+    if (busy) return;
+    if (tries++ > 25) { setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); return; }
+    setStat(false, 'Reconnecting'); clearTimeout(retryT); retryT = setTimeout(link, 1500);
+  }
+  function link(){
+    var c = peer.connect(PREFIX + target, { reliable:true }); conn = c;
+    c.on('open', function(){ tries = 0; everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
+    c.on('data', function(m){
       if (!m) return;
-      if (m.t === 'meta') { vw = m.w; vh = m.h; max = m.max; fit(); applyMini(); }
+      if (m.t === 'meta') {
+        vw = m.w; vh = m.h; max = m.max;
+        if (m.p && m.p !== curPage) { curPage = m.p; pos = 0; mvf.src = location.pathname + '?mini=1' + (m.p > 1 ? '&p=' + m.p : ''); }
+        fit(); applyMini();
+      }
       else if (m.t === 'pos') { if (!active && !mom) { pos = clamp(m.v * max); applyMini(); } }
-      else if (m.t === 'sec') { $('rsec').innerHTML = '<b>' + (m.n < 10 ? '0' : '') + m.n + '</b>' + m.name; }
-      else if (m.t === 'busy') { setStat(false, 'Screen in use'); err('Another phone is already controlling this screen.'); }
+      else if (m.t === 'sec') { $('rsec').innerHTML = '<b>' + (m.n < 10 ? '0' : '') + m.n + '</b>' + m.name + (m.p ? ' \u00B7 page ' + m.p : ''); }
+      else if (m.t === 'busy') { busy = true; setStat(false, 'Screen in use'); err('Another phone is already controlling this screen.'); }
     });
-    conn.on('close', function(){ setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); });
-    conn.on('error', function(){ setStat(false, 'Error'); });
-  });
+    c.on('close', function(){ if (conn === c) retry(); });
+    c.on('error', function(){ if (conn === c) retry(); });
+  }
+  peer.on('open', link);
   peer.on('error', function(e){
+    if (everOn && e.type === 'peer-unavailable') { retry(); return; }
     setStat(false, 'Could not connect');
     err(e.type === 'peer-unavailable' ? 'This session has ended. Scan the code on the screen again.' : 'Connection error: ' + e.type);
   });
+  function nav(d){ if (navigator.vibrate) navigator.vibrate(12); if (conn && conn.open) conn.send({ t:'nav', d:d }); }
+  $('bprev').addEventListener('click', function(){ nav(-1); });
+  $('bnext').addEventListener('click', function(){ nav(1); });
 }
 
 /* ---------------------------------------------------------------- BOOT */
