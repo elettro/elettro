@@ -153,7 +153,23 @@
   .scard .im video { position:absolute; inset:0; }
   .portal .pimg video { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.4); }
 
+  /* section numbering */
+  [data-sec] { position:relative; }
+  .sectag { position:absolute; left:3vw; top:11vh; z-index:60; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+    border:1px solid rgba(217,181,107,.4); border-radius:99px; padding:.5em 1em; background:rgba(7,9,13,.55); backdrop-filter:blur(6px); pointer-events:none; white-space:nowrap; }
+  .sectag b { font-weight:600; margin-right:.6em; color:var(--fg); }
+  .secbadge { position:fixed; top:2.1vw; left:50%; translate:-50% 0; z-index:101; display:none; align-items:center; gap:.8em; cursor:pointer;
+    font-size:clamp(11px,.95vw,14px); letter-spacing:.16em; text-transform:uppercase; color:var(--fg); border:1px solid rgba(217,181,107,.55);
+    padding:.65em 1.3em; border-radius:99px; background:rgba(7,9,13,.7); backdrop-filter:blur(8px); white-space:nowrap; user-select:none; }
+  .secbadge b { color:var(--gold); font-weight:600; } .secbadge small { color:var(--muted); letter-spacing:.14em; font-size:.8em; }
+  body.mode-display .secbadge { display:flex; }
+  body.mode-mini .secbadge, body.mode-mini .sectag { display:none; }
+  .rsec { font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); min-height:1.3em; }
+  .rsec b { color:var(--fg); margin-right:.5em; }
+
   @media (max-width:700px) {
+    .sectag { top:9vh; }
+    .secbadge { top:auto; bottom:3vw; }
     .vscrub { grid-template-columns:1fr; align-content:center; padding:0 6vw; gap:3vh; }
     .vs-phone { height:50vh; }
     .hz-panel { flex-basis:78vw; }
@@ -228,7 +244,7 @@
 <body>
 
 <div id="site">
-  <section class="hero">
+  <section class="hero" data-sec="Hero">
     <div>
       <h1>A studio built<br>around your <em>growth.</em></h1>
       <p>Scan the code. Your phone becomes the remote for this page. Swipe slowly on your phone and the website scrolls here.</p>
@@ -236,9 +252,9 @@
     </div>
   </section>
 
-  <section class="cards" id="cards"></section>
+  <section class="cards" id="cards" data-sec="Pinned Cards"></section>
 
-  <section class="wall-sec" id="wallSec">
+  <section class="wall-sec" id="wallSec" data-sec="Tilted Wall">
     <div class="wall-copy">
       <div class="eyebrow">A clearer way forward</div>
       <h2>Good businesses deserve to be <em>seen.</em></h2>
@@ -248,28 +264,28 @@
     <div class="wall" id="wall"></div>
   </section>
 
-  <section class="hz" id="hz"><div class="hz-track" id="hzTrack"></div></section>
+  <section class="hz" id="hz" data-sec="Horizontal Travel"><div class="hz-track" id="hzTrack"></div></section>
 
-  <section class="portal" id="portal">
+  <section class="portal" id="portal" data-sec="Video Portal">
     <div class="pimg" id="pimg"></div>
     <div class="pre" id="ppre">Keep scrolling</div>
     <div class="ptext"><div><img class="plogo" src="/images/Elettro-logo-white.png" alt="Elettro"><h2>Step <em>inside.</em></h2></div></div>
   </section>
 
-  <section class="stats" id="stats">
+  <section class="stats" id="stats" data-sec="Live Counters">
     <div class="stat"><div class="n"><span data-to="20">0</span><em>+</em></div><div class="l">years building for the web</div><div class="ln"></div></div>
     <div class="stat"><div class="n"><span data-to="9">0</span></div><div class="l">brands run from one operating system</div><div class="ln"></div></div>
     <div class="stat"><div class="n"><span data-to="1000">0</span><em>+</em></div><div class="l">posts in the race to publish</div><div class="ln"></div></div>
   </section>
 
-  <section class="ring-sec" id="ringSec">
+  <section class="ring-sec" id="ringSec" data-sec="3D Ring">
     <div class="ring-title"><div class="sec-eyebrow">Every angle</div><h2>Turn the <em>whole world.</em></h2></div>
     <div class="ring" id="ring"></div>
   </section>
 
-  <section class="tunnel" id="tunnel"><div class="tunnel-title"><h2>Fly <em>through.</em></h2></div></section>
+  <section class="tunnel" id="tunnel" data-sec="Tunnel Flight"><div class="tunnel-title"><h2>Fly <em>through.</em></h2></div></section>
 
-  <section class="vscrub" id="vscrub">
+  <section class="vscrub" id="vscrub" data-sec="Video Scrub">
     <div class="vs-copy">
       <div class="sec-eyebrow">Scroll is playback</div>
       <h2>Scrub the <em>intro.</em></h2>
@@ -279,24 +295,24 @@
     <div class="vs-phone"><video id="vsVideo" src="vid/dean-scrub.mp4" poster="vid/dean-scrub.jpg" muted playsinline preload="auto"></video></div>
   </section>
 
-  <section class="vtype" id="vtype">
+  <section class="vtype" id="vtype" data-sec="Video Type Mask">
     <video class="vt-v" src="vid/typemask.mp4" poster="vid/typemask.jpg" muted loop playsinline preload="metadata"></video>
     <div class="vt-mask"><span class="vt-t">ELETTRO</span></div>
     <div class="vt-cap">Your story, <em>in motion.</em></div>
   </section>
 
-  <section class="marq" id="marq">
+  <section class="marq" id="marq" data-sec="Speed Marquee">
     <div class="mrow" data-dir="-1"></div>
     <div class="mrow o" data-dir="1"></div>
     <div class="mrow" data-dir="-1"></div>
   </section>
 
-  <section class="stack" id="stack">
+  <section class="stack" id="stack" data-sec="Stacking Cards">
     <div class="stack-head"><div class="sec-eyebrow">How we work</div><h2>Five steps. <em>One stack.</em></h2></div>
     <div id="stackList"></div>
   </section>
 
-  <section class="pathsec" id="pathsec">
+  <section class="pathsec" id="pathsec" data-sec="Path Draw">
     <div class="pathwrap">
       <h2>Four moves. <em>One direction.</em></h2>
       <div class="pbox" id="pbox">
@@ -309,7 +325,7 @@
     </div>
   </section>
 
-  <section class="reveal">
+  <section class="reveal" data-sec="Blur Reveal">
     <div><h2 id="revealText">Turn attention into growth.</h2><a class="btn" href="/contact/">Let’s talk ↗</a></div>
   </section>
 </div>
@@ -329,6 +345,7 @@
     <small>SESSION <span id="sid"></span></small>
   </div>
   <div id="derr"></div>
+  <div class="secbadge" id="secbadge" title="Click to copy a link to this section"><b id="sbn">01</b><span id="sbt">Hero</span><small id="sbc"></small></div>
 </div>
 
 <!-- phone remote -->
@@ -338,6 +355,7 @@
     <div class="rstat" id="rstat">Connecting</div>
   </div>
   <div class="rtitle"><small>Elettro Remote</small>Swipe to scroll the website</div>
+  <div class="rsec" id="rsec"><b>01</b>Hero</div>
   <div id="surf">
     <div id="mvwrap"><div id="mvbox"><iframe id="mvf" title="Live mini view of the website" tabindex="-1"></iframe></div></div>
     <div class="rail"><i id="bar"></i></div>
@@ -448,6 +466,7 @@ function startSite(){
   buildExtra();
   gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
     scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
+  initSections();
 }
 
 
@@ -604,6 +623,51 @@ function buildExtra(){
   window.addEventListener('load', function(){ ST.refresh(); });
 }
 
+
+/* numbered sections: badge on the big screen, tags on each section, shareable #NN links */
+var curSec = null, secCb = null;
+function initSections(){
+  var els = [].slice.call(document.querySelectorAll('[data-sec]'));
+  var total = els.length, pad = function(n){ return (n < 10 ? '0' : '') + n; };
+  var list = els.map(function(el, i){
+    var name = el.getAttribute('data-sec');
+    var tag = document.createElement('div'); tag.className = 'sectag'; tag.innerHTML = '<b>' + pad(i + 1) + '</b>' + name;
+    el.insertBefore(tag, el.firstChild);
+    return { el:el, n:i + 1, name:name };
+  });
+  function wrap(el){ return el.closest('.pin-spacer') || el; }
+  function setSec(it){
+    if (curSec && curSec.n === it.n) return;
+    curSec = it;
+    var b = $('secbadge');
+    if (b) { $('sbn').textContent = pad(it.n); $('sbt').textContent = it.name; $('sbc').textContent = '/ ' + pad(total); }
+    if (secCb) secCb(it, pad);
+  }
+  var tick = 0;
+  gsap.ticker.add(function(){
+    if (++tick % 6) return;
+    var mid = window.innerHeight * .5, pick = list[0];
+    list.forEach(function(it){ if (wrap(it.el).getBoundingClientRect().top <= mid) pick = it; });
+    setSec(pick);
+  });
+  var b = $('secbadge');
+  if (b) b.addEventListener('click', function(){
+    if (!curSec) return;
+    var url = location.origin + location.pathname + '#' + pad(curSec.n);
+    try { navigator.clipboard.writeText(url); } catch (e) {}
+    $('sbc').textContent = 'link copied';
+    setTimeout(function(){ $('sbc').textContent = '/ ' + pad(total); }, 1400);
+  });
+  function jump(){
+    var m = /^#(\d\d?)$/.exec(location.hash); if (!m) return;
+    var it = list[+m[1] - 1]; if (!it) return;
+    var y = wrap(it.el).getBoundingClientRect().top + window.scrollY;
+    if (lenis) lenis.scrollTo(y, { immediate:true, force:true }); else window.scrollTo(0, y);
+  }
+  window.addEventListener('load', function(){ setTimeout(jump, 700); });
+  window.addEventListener('hashchange', jump);
+}
+
 /* ------------------------------------------------------------- DISPLAY */
 function startDisplay(){
   var id = Math.random().toString(36).slice(2, 8);
@@ -622,6 +686,8 @@ function startDisplay(){
     try { var q = qrcode(0, 'M'); q.addData(url); q.make(); $('qr').innerHTML = q.createSvgTag({ cellSize:6, margin:0, scalable:true }); }
     catch (e) { $('qr').textContent = url; }
   }
+  function sendSec(){ if (conn && conn.open && curSec) conn.send({ t:'sec', n:curSec.n, name:curSec.name }); }
+  secCb = function(){ sendSec(); };
   function sendMeta(){
     if (conn && conn.open) conn.send({ t:'meta', w:window.innerWidth, h:window.innerHeight, max:maxScroll() });
   }
@@ -655,7 +721,7 @@ function startDisplay(){
         return;
       }
       conn = c;
-      c.on('open', function(){ setPaired(true); sendMeta(); setTimeout(sendMeta, 1200); });
+      c.on('open', function(){ setPaired(true); sendMeta(); sendSec(); setTimeout(sendMeta, 1200); });
       c.on('data', function(m){
         if (!m) return;
         if (m.t === 'hello') sendMeta();
@@ -760,6 +826,7 @@ function startRemote(){
       if (!m) return;
       if (m.t === 'meta') { vw = m.w; vh = m.h; max = m.max; fit(); applyMini(); }
       else if (m.t === 'pos') { if (!active && !mom) { pos = clamp(m.v * max); applyMini(); } }
+      else if (m.t === 'sec') { $('rsec').innerHTML = '<b>' + (m.n < 10 ? '0' : '') + m.n + '</b>' + m.name; }
       else if (m.t === 'busy') { setStat(false, 'Screen in use'); err('Another phone is already controlling this screen.'); }
     });
     conn.on('close', function(){ setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); });
