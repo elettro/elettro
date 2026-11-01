@@ -324,6 +324,8 @@
   .menu a.mi { display:block; color:var(--muted); text-decoration:none; font-size:.8rem; line-height:1.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .menu a.mi b { display:inline-block; width:2.2em; color:var(--fg); font-weight:600; }
   .menu a.mi:hover { color:var(--gold); }
+  .menu.single { display:block; columns:3; column-gap:2.2vw; }
+  .menu.single .mp { break-inside:avoid; }
   .hero .menu { margin:2.6rem auto 0; max-width:980px; }
   .menubtn { pointer-events:auto; margin-left:1.4vw; cursor:pointer; font:inherit; font-size:clamp(11px,1vw,15px); letter-spacing:.14em; text-transform:uppercase; color:var(--fg);
     border:1px solid rgba(217,181,107,.55); padding:.6em 1.1em; border-radius:99px; background:rgba(7,9,13,.55); backdrop-filter:blur(8px); }
@@ -333,7 +335,7 @@
   #menuov .mclose { position:fixed; top:2vw; right:3vw; cursor:pointer; font:inherit; color:var(--fg); background:none; border:1px solid var(--line); border-radius:99px; padding:.6em 1.2em; letter-spacing:.14em; text-transform:uppercase; font-size:12px; }
   #menuov h3 { font-size:clamp(1.6rem,3vw,2.6rem); margin-bottom:2rem; }
   body.mode-mini .pager .menu, body.mode-mini .menubtn { display:none; }
-  @media (max-width:820px) { .menu { grid-template-columns:1fr; gap:1.6rem; } .hero .menu { margin-top:1.8rem; } .menubtn { margin-left:2vw; } }
+  @media (max-width:820px) { .menu.single { columns:1; } .menu { grid-template-columns:1fr; gap:1.6rem; } .hero .menu { margin-top:1.8rem; } .menubtn { margin-left:2vw; } }
   @media (prefers-reduced-motion: reduce) { .wall { transform:rotateX(52deg) rotateZ(-20deg) !important; } }
 </style>
 </head>
@@ -481,10 +483,13 @@ function $(id){ return document.getElementById(id); }
 
 /* ---------------------------------------------------------------- PAGES
    29 numbered sections split over 3 pages. Numbers are global, so "#14" always means the same section. */
+/* One page. The five Miami liquid scenes (Liquid Pop 360, Crown, Fizz, Droplet Rain, Reform) are parked:
+   their code is still below but they are not in this list, so they are never built. Add their names to a
+   second PAGES entry to bring them back on their own page. */
 var PAGES = [
-  { title:'Scroll fundamentals', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask'] },
-  { title:'Motion, video and graphics', names:['Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve'] },
-  { title:'Graphics, liquid and finale', names:['Channel Flow','Connected Network','Four Dials','Liquid Pop 360','Liquid Crown','Fizz Column','Droplet Rain','Liquid Reform','Blur Reveal'] }
+  { title:'All sections', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask',
+    'Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve',
+    'Channel Flow','Connected Network','Four Dials','Blur Reveal'] }
 ];
 var FLAT = []; PAGES.forEach(function(p){ p.names.forEach(function(n){ FLAT.push(n); }); });
 function pageOf(n){ var c = 0; for (var i = 0; i < PAGES.length; i++) { c += PAGES[i].names.length; if (n <= c) return i + 1; } return 1; }
@@ -497,9 +502,9 @@ function inPage(name){ return PAGES[PAGE - 1].names.indexOf(name) > -1; }
 function pageUrl(p, hash){ return location.pathname + (p > 1 ? '?p=' + p : '') + (hash || ''); }
 function pad2(n){ return (n < 10 ? '0' : '') + n; }
 function renderMenu(el){
-  if (!el) return; var n = 0, html = '';
+  if (!el) return; var n = 0, html = ''; if (PAGES.length < 2) el.classList.add('single');
   PAGES.forEach(function(pg, i){
-    html += '<div class="mp' + (i + 1 === PAGE ? ' cur' : '') + '"><h4><a href="' + pageUrl(i + 1) + '">Page ' + (i + 1) + '<small>' + pg.title + '</small></a></h4>';
+    html += '<div class="mp' + (i + 1 === PAGE ? ' cur' : '') + '">' + (PAGES.length < 2 ? '' : '<h4><a href="' + pageUrl(i + 1) + '">Page ' + (i + 1) + '<small>' + pg.title + '</small></a></h4>');
     pg.names.forEach(function(nm){ n++; html += '<a class="mi" href="' + pageUrl(i + 1, '#' + pad2(n)) + '"><b>' + pad2(n) + '</b>' + nm + '</a>'; });
     html += '</div>';
   });
@@ -1156,6 +1161,7 @@ var curSec = null, secCb = null;
 
 /* ------------------------------------------------------- PAGER (end of every page) */
 function buildPager(){
+  if (PAGES.length < 2) return;
   var site = $('site'), prev = PAGE > 1 ? PAGES[PAGE - 2] : null, next = PAGE < PAGES.length ? PAGES[PAGE] : null, el = document.createElement('section');
   el.className = 'pager'; el.id = 'pager';
   el.innerHTML = '<div><div class="sec-eyebrow">Page ' + PAGE + ' of ' + PAGES.length + ' \u00B7 end</div>' +
@@ -1400,6 +1406,7 @@ function startRemote(){
     err(e.type === 'peer-unavailable' ? 'This session has ended. Scan the code on the screen again.' : 'Connection error: ' + e.type);
   });
   function nav(d){ if (navigator.vibrate) navigator.vibrate(12); if (conn && conn.open) conn.send({ t:'nav', d:d }); }
+  if (PAGES.length < 2) $('bprev').parentNode.style.display = 'none';
   $('bprev').addEventListener('click', function(){ nav(-1); });
   $('bnext').addEventListener('click', function(){ nav(1); });
 }
