@@ -51,7 +51,7 @@ body.framed #back{display:none}
 #join .jc{margin-top:.4rem;font-weight:800;letter-spacing:.3em;font-size:1.1rem}
 #join .jc span{font-size:.5rem;letter-spacing:.14em;display:block;opacity:.55}
 #join .ju{font-size:.46rem;opacity:.5;margin-top:.2rem}
-#join.big{right:50%;bottom:50%;transform:translate(50%,50%) scale(1.9);box-shadow:0 2rem 6rem rgba(0,0,0,.5)}
+#join.big{right:50%;bottom:50%;transform:translate(50%,50%) scale(1.9);transform-origin:50% 50%;box-shadow:0 2rem 6rem rgba(0,0,0,.5)}
 #steps{left:50%;bottom:1.3rem;transform:translateX(-50%);padding:.55rem 1.4rem;display:flex;gap:1.6rem;font-size:.66rem;font-weight:700;white-space:nowrap}
 #steps em{font-style:normal;color:#06243a;background:var(--gold);width:1.2rem;height:1.2rem;border-radius:50%;display:inline-grid;place-items:center;margin-right:.45rem;font-size:.62rem;font-weight:800}
 #steps small{display:block;opacity:.55;font-weight:500;font-size:.55rem;margin-left:1.65rem}
@@ -73,6 +73,18 @@ body.framed #back{display:none}
 #alert{inset:0;z-index:4;background:radial-gradient(ellipse at 50% 50%,transparent 35%,rgba(200,20,20,.5));opacity:0;transition:opacity .6s}
 #alert.on{opacity:1;animation:pulse 1s infinite alternate}
 @keyframes pulse{to{opacity:.45}}
+@media (max-aspect-ratio:1/1){
+html{font-size:calc(var(--u)*2.7)}
+#brand{left:1rem;top:1rem}#brand small{display:none}
+#clock{right:1rem;top:1rem}
+#mid{top:4rem;width:calc(100vw - 2rem)}
+#board{top:auto;bottom:1.2rem;left:1rem;right:auto;width:13rem}
+#toasts{left:1rem;top:9.6rem}
+#steps{display:none!important}
+#join{width:11rem;bottom:1.2rem;right:1rem}
+#res .card{width:92vw}#res .pod{gap:.5rem}
+#join.big{right:50%;bottom:50%;width:11.5rem}
+}
 </style>
 </head>
 <body>
@@ -262,7 +274,7 @@ function initWorld() {
 /* ---------------- players ---------------- */
 var net = null;
 function freeColor() { var used = {}; for (var u in players) used[players[u].color] = 1; for (var i = 0; i < COLORS.length; i++) if (!used[COLORS[i]]) return COLORS[i]; return pick(COLORS); }
-function freeName() { var used = {}; for (var u in players) used[players[u].name] = 1; var pool = NAMES.filter(function (n) { return !used[n]; }); return pick(pool.length ? pool : NAMES); }
+function freeName() { var used = {}; for (var u in players) used[players[u].name.replace(/ \(demo\)$/, '')] = 1; var pool = NAMES.filter(function (n) { return !used[n]; }); return pick(pool.length ? pool : NAMES); }
 function newPlayer(uid, peer, send, type, bot) {
   var e = ent(type, rnd(W * .15, W * .85), H * .2); e.size = 1;
   var p = Object.assign(e, { uid: uid, peer: peer, send: send || function () {}, name: freeName(), color: freeColor(), score: 0, combo: 0, comboT: 0, connected: true, bot: !!bot, lastRx: Date.now(), lastAct: clock, joinAt: clock,
@@ -292,7 +304,7 @@ function tell(p, m) { if (p.send && !p.bot) try { p.send(m); } catch (e) {} }
 /* ---------------- effects ---------------- */
 function ring(x, y, col, r) { rings.push({ x: x, y: y, col: col, r: r || 160, t: 0, d: .9 }); }
 function burst(x, y, col, n) { for (var i = 0; i < n; i++) { var a = Math.random() * TAU, v = rnd(40, 200); parts.push({ x: x, y: y, vx: cos(a) * v, vy: sin(a) * v - 30, t: 0, d: rnd(.5, 1.1), col: col, s: rnd(2, 5), k: 'p' }); } }
-function pop(x, y, txt, col) { pops.push({ x: x, y: y, t: 0, txt: txt, col: col || '#fff' }); }
+function pop(x, y, txt, col) { if (Q.has('nopop')) return; pops.push({ x: x, y: y, t: 0, txt: txt, col: col || '#fff' }); }
 function toast(col, text) {
   var d = document.createElement('div'); d.className = 'toast pill'; d.innerHTML = '<i></i><span></span>'; d.firstChild.style.background = col; d.lastChild.textContent = text; $('toasts').appendChild(d);
   setTimeout(function () { d.classList.add('out'); setTimeout(function () { d.remove(); }, 700); }, 4600); while ($('toasts').children.length > 5) $('toasts').firstChild.remove();
@@ -422,7 +434,7 @@ function simPlayer(p, dt) {
 }
 function eat(p, q) {
   p.combo++; p.comboT = 1.6; var mult = 1 + min(3, Math.floor(p.combo / 5)), pts = (q.k ? 15 : 5) * mult; p.score += pts; energy += q.k ? 3 : 1; Snd.eat(p.combo);
-  parts.push({ x: q.x, y: q.y, vx: rnd(-20, 20), vy: -30, t: 0, d: .5, col: '#bff', s: 3, k: 'p' }); if (q.k || (mult > 1 && p.combo % 5 === 0)) pop(q.x, q.y - 20, '+' + pts + (mult > 1 ? ' ×' + mult : ''), q.k ? '#ffd9a0' : '#d8f6ff');
+  parts.push({ x: q.x, y: q.y, vx: rnd(-20, 20), vy: -30, t: 0, d: .5, col: '#bff', s: 3, k: 'p' }); if ((q.k || (mult > 1 && p.combo % 5 === 0)) && (!p._pt || clock - p._pt > .7) && (p._pt = clock)) pop(q.x, q.y - 20, '+' + pts + (mult > 1 ? ' ×' + mult : ''), q.k ? '#ffd9a0' : '#d8f6ff');
   if (p.combo === 20 && !p.frenzy) { p.frenzy = true; award(p, 100, 'FEEDING FRENZY'); }
 }
 function simNPCfood(e) { for (var i = plank.length - 1; i >= 0; i--) if (hyp(plank[i].x - e.x, plank[i].y - e.y) < WU[e.sp] * .22 * e.size) { plank.splice(i, 1); } }
@@ -587,7 +599,7 @@ function startNet() {
     error: function (e) { if (e && (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error')) showNote('Reconnecting to the phone link…'); }, join: function () {}, msg: onMsg, leave: onLeave });
   setInterval(function () { if (net) net.broadcast({ t: 'hb' }); }, 2000);
 }
-var botN = 0; function addBot() { if (count() >= MAXP) return; var id = 'bot' + (++botN), p = newPlayer(id, id, null, pick(PLAY), true); p.name = p.name + ' (demo)'; }
+var botN = 0; function addBot() { if (count() >= MAXP) return; var id = 'bot' + (++botN), p = newPlayer(id, id, null, pick(PLAY), true); if (!Q.has('clean')) p.name = p.name + ' (demo)'; }
 function clearBots() { for (var u in players) if (players[u].bot) removePlayer(players[u], 'bye'); }
 var DEMO = +Q.get('bots') || 0;
 addEventListener('keydown', function (e) {
