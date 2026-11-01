@@ -46,6 +46,103 @@
   .wall .tile { aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:#151817; }
   .wall .tile img { width:100%; height:100%; object-fit:cover; display:block; }
 
+
+  /* ================= IMMERSIVE SECTIONS ================= */
+  .sec-eyebrow { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+
+  /* 1. horizontal travel */
+  .hz { height:100vh; overflow:hidden; position:relative; }
+  .hz-track { display:flex; align-items:center; height:100%; width:max-content; padding:0 8vw; gap:4vw; will-change:transform; }
+  .hz-track::after { content:""; flex:0 0 4vw; }
+  .hz-intro { flex:0 0 min(38vw,460px); }
+  .hz-intro h2 { font-size:clamp(2.2rem,5vw,4.6rem); }
+  .hz-intro p { color:var(--muted); margin-top:1.2rem; line-height:1.6; }
+  .hz-panel { flex:0 0 min(60vw,860px); height:66vh; position:relative; border-radius:22px; overflow:hidden; background:#151817; }
+  .hz-panel .im { position:absolute; inset:0 -12% 0 -12%; }
+  .hz-panel img { width:100%; height:100%; object-fit:cover; display:block; }
+  .hz-panel::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.78),transparent 55%); }
+  .hz-panel .cap { position:absolute; left:5%; bottom:6%; z-index:2; }
+  .hz-panel .num { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:clamp(2.4rem,6vw,5rem); color:var(--gold); line-height:1; }
+  .hz-panel h3 { font-size:clamp(1.3rem,2.4vw,2.2rem); margin-top:.4rem; }
+
+  /* 2. portal */
+  .portal { height:100vh; position:relative; overflow:hidden; background:var(--bg); }
+  .portal .pimg { position:absolute; inset:0; clip-path:inset(30% 34% 30% 34% round 28px); will-change:clip-path; }
+  .portal .pimg img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.4); }
+  .portal .pimg::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,.38); }
+  .portal .pre { position:absolute; left:50%; top:calc(50% + 24vh); translate:-50% 0; z-index:3; font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+  .portal .ptext { position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:3; pointer-events:none; }
+  .portal h2 { font-size:clamp(2.6rem,8vw,8rem); }
+  .portal .plogo { height:clamp(26px,3.4vw,52px); margin-bottom:1.4rem; }
+
+  /* 3. counters */
+  .stats { min-height:120vh; display:grid; align-content:center; gap:7vh; padding:12vh 8vw; }
+  .stat { position:relative; display:flex; align-items:baseline; gap:3vw; padding-bottom:3vh; flex-wrap:wrap; }
+  .stat .n { font-size:clamp(4rem,16vw,15rem); line-height:.9; letter-spacing:-.04em; font-weight:500; font-variant-numeric:tabular-nums; }
+  .stat .n em { color:var(--gold); }
+  .stat .l { color:var(--muted); max-width:20ch; line-height:1.4; font-size:clamp(.9rem,1.3vw,1.2rem); }
+  .stat .ln { position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--gold); transform-origin:0 50%; }
+
+  /* 4. 3D ring */
+  .ring-sec { height:100vh; position:relative; overflow:hidden; perspective:1800px; display:grid; place-items:center; }
+  .ring-title { position:absolute; top:9vh; left:0; right:0; text-align:center; z-index:5; pointer-events:none; }
+  .ring-title h2 { font-size:clamp(2rem,5vw,4.4rem); }
+  .ring { position:relative; width:min(24vw,340px); aspect-ratio:3/4; transform-style:preserve-3d; margin-top:9vh; }
+  .ring .face { position:absolute; inset:0; border-radius:16px; overflow:hidden; backface-visibility:hidden; background:#151817; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+  .ring .face img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* 5. tunnel */
+  .tunnel { height:100vh; position:relative; overflow:hidden; display:grid; place-items:center; background:#000; }
+  .tf { position:absolute; width:min(36vw,520px); aspect-ratio:16/10; border-radius:14px; overflow:hidden; will-change:transform,opacity; }
+  .tf img { width:100%; height:100%; object-fit:cover; display:block; }
+  .tunnel-title { position:absolute; z-index:6; text-align:center; mix-blend-mode:difference; pointer-events:none; }
+  .tunnel-title h2 { font-size:clamp(2.4rem,7vw,7rem); color:#fff; }
+
+  /* 6. velocity marquee */
+  .marq { padding:16vh 0; overflow:hidden; }
+  .mrow { display:flex; width:max-content; white-space:nowrap; will-change:transform; margin:.6vh 0; }
+  .mrow .g { font-size:clamp(4rem,13vw,13rem); font-weight:500; letter-spacing:-.04em; line-height:1.02; padding-right:3vw; }
+  .mrow.o .g { color:transparent; -webkit-text-stroke:1.5px rgba(239,232,220,.55); }
+  .mrow .g em { color:var(--gold); -webkit-text-stroke:0; }
+
+  /* 7. stacking cards */
+  .stack { position:relative; padding:12vh 6vw 20vh; }
+  .stack-head { text-align:center; margin-bottom:8vh; }
+  .stack-head h2 { font-size:clamp(2.2rem,5vw,4.6rem); }
+  .scard { position:sticky; top:calc(10vh + var(--i) * 26px); height:min(66vh,560px); margin-bottom:10vh; border-radius:26px; overflow:hidden;
+    display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); transform-origin:50% 0; will-change:transform; }
+  .scard .t { padding:clamp(1.5rem,4vw,4rem); display:flex; flex-direction:column; justify-content:center; }
+  .scard .n { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--gold); font-size:clamp(3rem,7vw,6rem); line-height:1; }
+  .scard h3 { font-size:clamp(1.8rem,3.6vw,3.4rem); margin:.6rem 0 1rem; }
+  .scard p { color:#c9c3b8; line-height:1.6; max-width:30ch; }
+  .scard .im { position:relative; }
+  .scard .im img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* 8. path draw */
+  .pathsec { height:320vh; position:relative; }
+  .pathwrap { position:sticky; top:0; height:100vh; overflow:hidden; }
+  .pathwrap h2 { position:absolute; top:8vh; left:0; right:0; text-align:center; font-size:clamp(2rem,4.6vw,4rem); z-index:2; }
+  .pbox { position:absolute; left:6vw; right:6vw; top:24vh; bottom:8vh; }
+  .pbox svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .pbox path { fill:none; stroke-linecap:round; vector-effect:non-scaling-stroke; stroke-width:3; }
+  .pdot { position:absolute; width:18px; height:18px; border-radius:50%; background:var(--gold); box-shadow:0 0 22px var(--gold); translate:-50% -50%; left:0; top:86%; }
+  .ms { position:absolute; width:min(26vw,300px); opacity:.18; transform:translateY(14px); transition:opacity .5s,transform .5s; }
+  .ms.up { translate:-50% -125%; } .ms.down { translate:-50% 28%; }
+  .ms.on { opacity:1; transform:none; }
+  .ms b { display:block; font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--gold); font-size:clamp(1.6rem,2.6vw,2.6rem); font-weight:500; }
+  .ms p { color:var(--muted); font-size:.9rem; line-height:1.5; margin-top:.3rem; }
+  .ms::before { content:""; position:absolute; left:50%; width:10px; height:10px; border-radius:50%; background:var(--gold); translate:-50% 0; }
+  .ms.up::before { top:calc(100% + 0px); } .ms.down::before { bottom:calc(100% + 0px); }
+
+  @media (max-width:700px) {
+    .hz-panel { flex-basis:78vw; }
+    .hz-intro { flex-basis:72vw; }
+    .ring { width:46vw; }
+    .tf { width:66vw; }
+    .scard { grid-template-columns:1fr; grid-template-rows:1fr 1fr; }
+    .ms { width:34vw; }
+  }
+
   .reveal { min-height:110vh; display:grid; place-items:center; padding:0 8vw; text-align:center; }
   .reveal h2 { font-size:clamp(2.2rem,6vw,5.5rem); max-width:16ch; }
   .reveal .w { display:inline-block; white-space:pre; will-change:filter,opacity,transform; }
@@ -130,8 +227,53 @@
     <div class="wall" id="wall"></div>
   </section>
 
+  <section class="hz" id="hz"><div class="hz-track" id="hzTrack"></div></section>
+
+  <section class="portal" id="portal">
+    <div class="pimg" id="pimg"></div>
+    <div class="pre" id="ppre">Keep scrolling</div>
+    <div class="ptext"><div><img class="plogo" src="/images/Elettro-logo-white.png" alt="Elettro"><h2>Step <em>inside.</em></h2></div></div>
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="stat"><div class="n"><span data-to="20">0</span><em>+</em></div><div class="l">years building for the web</div><div class="ln"></div></div>
+    <div class="stat"><div class="n"><span data-to="9">0</span></div><div class="l">brands run from one operating system</div><div class="ln"></div></div>
+    <div class="stat"><div class="n"><span data-to="1000">0</span><em>+</em></div><div class="l">posts in the race to publish</div><div class="ln"></div></div>
+  </section>
+
+  <section class="ring-sec" id="ringSec">
+    <div class="ring-title"><div class="sec-eyebrow">Every angle</div><h2>Turn the <em>whole world.</em></h2></div>
+    <div class="ring" id="ring"></div>
+  </section>
+
+  <section class="tunnel" id="tunnel"><div class="tunnel-title"><h2>Fly <em>through.</em></h2></div></section>
+
+  <section class="marq" id="marq">
+    <div class="mrow" data-dir="-1"></div>
+    <div class="mrow o" data-dir="1"></div>
+    <div class="mrow" data-dir="-1"></div>
+  </section>
+
+  <section class="stack" id="stack">
+    <div class="stack-head"><div class="sec-eyebrow">How we work</div><h2>Five steps. <em>One stack.</em></h2></div>
+    <div id="stackList"></div>
+  </section>
+
+  <section class="pathsec" id="pathsec">
+    <div class="pathwrap">
+      <h2>Four moves. <em>One direction.</em></h2>
+      <div class="pbox" id="pbox">
+        <svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+          <path id="pbg" d="M0,430 C200,430 220,120 420,120 S640,400 800,380 S940,90 1000,70" stroke="rgba(255,255,255,.12)"/>
+          <path id="pfg" d="M0,430 C200,430 220,120 420,120 S640,400 800,380 S940,90 1000,70" stroke="#d9b56b"/>
+        </svg>
+        <div class="pdot" id="pdot"></div>
+      </div>
+    </div>
+  </section>
+
   <section class="reveal">
-    <h2 id="revealText">Turn attention into growth.</h2>
+    <div><h2 id="revealText">Turn attention into growth.</h2><a class="btn" href="/contact/">Let’s talk ↗</a></div>
   </section>
 </div>
 
@@ -205,7 +347,9 @@ var IMAGES = [
   'img/toots-a.webp',
   'img/toots-b.webp',
   'img/visualizer.webp',
-  'img/sm-f.webp'
+  'img/sm-f.webp',
+  'img/art-giorgio.webp',
+  'img/art-dylan.webp'
 ];
 var CARDS = [
   { title:'Reach the <em>right people.</em>',       text:'We shape your message and put it in front of your audience.' },
@@ -264,8 +408,129 @@ function startSite(){
     scrollTrigger:{ trigger:'#wallSec', start:'top bottom', end:'bottom top', scrub:1 } });
   gsap.from('.wall-copy > *', { opacity:0, y:30, filter:'blur(10px)', stagger:.12, ease:'none',
     scrollTrigger:{ trigger:'#wallSec', start:'top 60%', end:'top 25%', scrub:true } });
+  buildExtra();
   gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
     scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
+}
+
+
+function buildExtra(){
+  /* 1. horizontal travel */
+  var HZ = [['01','Brand worlds',3],['02','Live and events',6],['03','Campaigns',9],['04','Product',12],['05','Music',15]];
+  var track = $('hzTrack');
+  track.innerHTML = '<div class="hz-intro"><div class="sec-eyebrow">Selected work</div><h2>Keep going. <em>There is more.</em></h2><p>Your vertical scroll turns into travel. Swipe on, the work slides by.</p></div>' +
+    HZ.map(function(h){ return '<article class="hz-panel"><div class="im">' + media(h[2]) + '</div><div class="cap"><div class="num">' + h[0] + '</div><h3>' + h[1] + '</h3></div></article>'; }).join('');
+  function dist(){ return Math.max(0, track.scrollWidth - window.innerWidth); }
+  var hzT = gsap.to(track, { x:function(){ return -dist(); }, ease:'none',
+    scrollTrigger:{ trigger:'#hz', start:'top top', end:function(){ return '+=' + dist(); }, pin:true, scrub:1, invalidateOnRefresh:true } });
+  [].forEach.call(track.querySelectorAll('.hz-panel .im'), function(im){
+    gsap.fromTo(im, { xPercent:8 }, { xPercent:-8, ease:'none',
+      scrollTrigger:{ trigger:im.parentNode, containerAnimation:hzT, start:'left right', end:'right left', scrub:true } });
+  });
+
+  /* 2. portal: a small window opens to fill the screen */
+  $('pimg').innerHTML = media(1);
+  gsap.timeline({ scrollTrigger:{ trigger:'#portal', start:'top top', end:'+=160%', pin:true, scrub:1 } })
+    .to('#ppre', { opacity:0, duration:.2 }, 0)
+    .fromTo('#pimg', { clipPath:'inset(30% 34% 30% 34% round 28px)' }, { clipPath:'inset(0% 0% 0% 0% round 0px)', ease:'none', duration:1 }, 0)
+    .fromTo('#pimg img', { scale:1.4 }, { scale:1, ease:'none', duration:1 }, 0)
+    .fromTo('#portal .ptext > div', { opacity:0, y:40, filter:'blur(12px)' }, { opacity:1, y:0, filter:'blur(0px)', duration:.5 }, .7);
+
+  /* 3. counters tied to scroll position */
+  [].forEach.call(document.querySelectorAll('#stats .stat'), function(st){
+    var el = st.querySelector('[data-to]'), to = +el.getAttribute('data-to'), o = { v:0 };
+    var st1 = { trigger:st, start:'top 85%', end:'top 35%', scrub:true };
+    gsap.to(o, { v:to, ease:'none', onUpdate:function(){ el.textContent = Math.round(o.v).toLocaleString('en-US'); }, scrollTrigger:st1 });
+    gsap.fromTo(st.querySelector('.ln'), { scaleX:0 }, { scaleX:1, ease:'none', scrollTrigger:st1 });
+  });
+
+  /* 4. 3D ring turns with the scroll */
+  var ring = $('ring'), RING = [8,9,10,11,12,13,14,15];
+  ring.innerHTML = RING.map(function(i){ return '<div class="face">' + media(i) + '</div>'; }).join('');
+  function placeRing(){
+    var r = (ring.offsetWidth / 2) / Math.tan(Math.PI / RING.length) + 28;
+    [].forEach.call(ring.querySelectorAll('.face'), function(f, k){ f.style.transform = 'rotateY(' + (k * 360 / RING.length) + 'deg) translateZ(' + r + 'px)'; });
+  }
+  placeRing(); ST.addEventListener('refreshInit', placeRing);
+  gsap.fromTo(ring, { rotationY:0, rotationX:-8 }, { rotationY:-360, ease:'none',
+    scrollTrigger:{ trigger:'#ringSec', start:'top top', end:'+=260%', pin:true, scrub:1 } });
+
+  /* 5. tunnel: frames rush toward the camera */
+  var tun = $('tunnel'), TN = [10,11,12,13,14,15,16], frames = [];
+  TN.forEach(function(i){
+    var d = document.createElement('div'); d.className = 'tf'; d.innerHTML = media(i);
+    tun.insertBefore(d, tun.firstChild); frames.push(d);
+  });
+  gsap.set(frames, { opacity:0 });
+  var tl = gsap.timeline({ scrollTrigger:{ trigger:'#tunnel', start:'top top', end:'+=320%', pin:true, scrub:1 } });
+  frames.forEach(function(f, i){
+    var t = i * .8, rot = (i % 2 ? 1 : -1) * (4 + (i % 3) * 2);
+    tl.fromTo(f, { scale:.12, rotation:rot }, { scale:3, rotation:-rot, duration:2.6, ease:'none' }, t);
+    tl.to(f, { opacity:1, duration:.5, ease:'none' }, t);
+    tl.to(f, { opacity:0, duration:.7, ease:'none' }, t + 1.9);
+  });
+
+  /* 6. marquee reacts to scroll speed */
+  var rows = [].map.call(document.querySelectorAll('#marq .mrow'), function(el){ return { el:el, dir:+el.getAttribute('data-dir'), x:0, w:0 }; });
+  var WORDS = [
+    'Strategy <em>✦</em> Creative <em>✦</em> Production <em>✦</em> Growth <em>✦</em> ',
+    'Stashbox <em>✦</em> SolarMeister <em>✦</em> Elettro <em>✦</em> Weight Loss Davie <em>✦</em> ',
+    'Scroll <em>✦</em> Swipe <em>✦</em> Tilt <em>✦</em> Tap <em>✦</em> '
+  ];
+  rows.forEach(function(r, i){
+    var g = '<span class="g">' + WORDS[i] + '</span>';
+    r.el.innerHTML = g + g + g;
+  });
+  function measure(){ rows.forEach(function(r){ r.w = r.el.children[0].offsetWidth; }); }
+  measure(); ST.addEventListener('refreshInit', measure);
+  var vel = 0;
+  ST.create({ onUpdate:function(s){ vel = s.getVelocity(); } });
+  gsap.ticker.add(function(){
+    vel *= .92;
+    var v = Math.min(Math.abs(vel), 4000) / 4000, skew = Math.max(-12, Math.min(12, -vel / 250));
+    rows.forEach(function(r){
+      if (!r.w) return;
+      r.x += r.dir * (0.7 + v * 22);
+      if (r.x <= -r.w) r.x += r.w;
+      if (r.x > 0) r.x -= r.w;
+      r.el.style.transform = 'translate3d(' + r.x + 'px,0,0) skewX(' + skew + 'deg)';
+    });
+  });
+
+  /* 7. stacking cards that shrink as the next one lands */
+  var STEPS = [['01','Listen','We start with your business, audience and goals.',4],['02','Plan','Focus on the channels that matter most.',7],
+    ['03','Create','Develop the message and creative direction.',9],['04','Publish','Launch across every channel, on schedule.',12],
+    ['05','Measure','Review the signals and use them to shape the next move.',14]];
+  $('stackList').innerHTML = STEPS.map(function(s, i){
+    return '<article class="scard" style="--i:' + i + ';background:hsl(' + (30 + i * 12) + ' 14% ' + (11 + i) + '%)"><div class="t"><div class="n">' + s[0] + '</div><h3>' + s[1] + '</h3><p>' + s[2] + '</p></div><div class="im">' + media(s[3]) + '</div></article>';
+  }).join('');
+  var sc = [].slice.call(document.querySelectorAll('#stackList .scard'));
+  sc.forEach(function(c, i){
+    if (i === sc.length - 1) return;
+    gsap.to(c, { scale:1 - (sc.length - 1 - i) * .035, filter:'brightness(.55)', ease:'none',
+      scrollTrigger:{ trigger:sc[i + 1], start:'top 85%', end:'top 12%', scrub:true } });
+  });
+
+  /* 8. a line draws itself as you scroll */
+  var pfg = $('pfg'), pbox = $('pbox'), dot = $('pdot'), L = pfg.getTotalLength();
+  pfg.style.strokeDasharray = L; pfg.style.strokeDashoffset = L;
+  var MS = [[.14,'Strategy','Start with the business, the audience and the goal.','up'],[.40,'Creative','Shape the message and the look it travels in.','down'],
+            [.66,'Production','Build the site, the content and the campaigns.','up'],[.92,'Growth','Publish, measure and keep improving.','down']];
+  var msEls = MS.map(function(m){
+    var pt = pfg.getPointAtLength(L * m[0]), d = document.createElement('div');
+    d.className = 'ms ' + m[3]; d.style.left = (pt.x / 10) + '%'; d.style.top = (pt.y / 5) + '%';
+    d.innerHTML = '<b>' + m[1] + '</b><p>' + m[2] + '</p>'; pbox.appendChild(d);
+    return { el:d, f:m[0] };
+  });
+  ST.create({ trigger:'#pathsec', start:'top top', end:'bottom bottom', onUpdate:function(self){
+    var p = self.progress, pt = pfg.getPointAtLength(L * p);
+    pfg.style.strokeDashoffset = L * (1 - p);
+    dot.style.left = (pt.x / 10) + '%'; dot.style.top = (pt.y / 5) + '%';
+    msEls.forEach(function(m){ m.el.classList.toggle('on', p >= m.f - .02); });
+  } });
+  var p0 = pfg.getPointAtLength(0); dot.style.left = (p0.x / 10) + '%'; dot.style.top = (p0.y / 5) + '%';
+
+  window.addEventListener('load', function(){ ST.refresh(); });
 }
 
 /* ------------------------------------------------------------- DISPLAY */
