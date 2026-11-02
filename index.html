@@ -191,6 +191,7 @@
 <div class="hidden md:flex flex-1 items-center justify-end gap-5">
 <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/services/">Services</a>
 <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/ar/">AR</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/multi-cam/">MultiCam</a>
 <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="https://os.elettro.com">Social Media</a>
 <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#portfolio">Highlights</a>
 <a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="/portfolio/">Portfolio</a>
@@ -210,6 +211,7 @@
 <div class="mobile-menu-panel md:hidden" id="mobile-menu-panel" hidden>
 <a class="mobile-menu-link" href="/services/">Services</a>
 <a class="mobile-menu-link" href="/ar/">AR</a>
+<a class="mobile-menu-link" href="/multi-cam/">MultiCam</a>
 <a class="mobile-menu-link" href="https://os.elettro.com">Social Media</a>
 <a class="mobile-menu-link" href="#portfolio">Highlights</a>
 <a class="mobile-menu-link" href="/portfolio/">Portfolio</a>
@@ -260,6 +262,246 @@
 </div>
 </div>
 </section>
+<!-- Elettro Platform: OS, Remote, AR, Dashboards + Deep Reef games -->
+<style>
+.ep{--ep-ink:#eef3ff;--ep-dim:#a3aac4;--ep-line:#1d2a4a;--ep-cyan:#81ecff;--ep-green:#2efd7c;--ep-violet:#a18eff;--ep-gold:#ffd24a;--ep-coral:#ff7a6b;background:#060e20;color:var(--ep-ink);font-family:Manrope,system-ui,sans-serif;padding:96px 0 40px;position:relative;overflow:hidden}
+.ep *{box-sizing:border-box}
+.ep-wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.ep-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 40px;margin-bottom:48px}
+.ep-kick{display:flex;align-items:center;gap:12px;font:700 12px/1 "Space Grotesk",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ep-green)}
+.ep-kick::before{content:"";width:48px;height:1px;background:var(--ep-green)}
+.ep-head h2{margin:18px 0 0;font:800 clamp(40px,6vw,80px)/.92 "Space Grotesk",sans-serif;letter-spacing:-.03em}
+.ep-head h2 em{font-style:italic;color:var(--ep-cyan)}
+.ep-head p{margin:0;max-width:44ch;color:var(--ep-dim);font-size:16px;line-height:1.6}
+.ep-jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.ep-jump a{font:700 11px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--ep-ink);border:1px solid #ffffff26;padding:10px 14px;border-radius:99px;transition:border-color .2s,background .2s}
+.ep-jump a:hover,.ep-jump a:focus-visible{border-color:var(--ep-cyan);background:#81ecff14;outline:none}
+
+.ep-prod{scroll-margin-top:110px;margin:0 0 22px}
+.ep-card{--c:var(--ep-cyan);position:relative;display:grid;grid-template-columns:1fr 1.05fr;align-items:stretch;min-height:440px;border-radius:28px;overflow:hidden;isolation:isolate;text-decoration:none;color:inherit;background:linear-gradient(150deg,#0d1834,#070f22 70%);border:1px solid var(--ep-line);transition:transform .35s cubic-bezier(.2,.9,.2,1),border-color .35s,box-shadow .35s}
+.ep-card:hover,.ep-card:focus-visible{transform:translateY(-4px);border-color:var(--c);box-shadow:0 30px 80px #0009,0 0 0 1px var(--c);outline:none}
+.ep-card.flip{grid-template-columns:1.05fr 1fr}
+.ep-card.flip .ep-copy{order:2}
+.ep-copy{position:relative;padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;justify-content:center;gap:16px}
+.ep-num{position:absolute;right:28px;top:18px;font:800 120px/1 "Space Grotesk",sans-serif;color:var(--c);opacity:.12;letter-spacing:-.04em;pointer-events:none}
+.ep-card.flip .ep-num{right:auto;left:auto;right:28px}
+.ep-url{font:700 12px/1 "Space Grotesk",sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.ep-copy h3{margin:0;font:800 clamp(36px,4.6vw,60px)/.95 "Space Grotesk",sans-serif;letter-spacing:-.03em}
+.ep-copy .ep-line{margin:0;font-size:clamp(17px,1.6vw,20px);line-height:1.5;color:#d9e0f5;max-width:40ch}
+.ep-copy ul{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:9px}
+.ep-copy li{display:flex;gap:10px;align-items:baseline;color:var(--ep-dim);font-size:15px;line-height:1.45}
+.ep-copy li::before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:var(--c);transform:translateY(-1px) rotate(45deg)}
+.ep-go{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:8px;padding:15px 22px;border-radius:12px;background:var(--c);color:#06101f;font:800 13px/1 "Space Grotesk",sans-serif;letter-spacing:.1em;text-transform:uppercase;transition:gap .25s}
+.ep-card:hover .ep-go{gap:16px}
+.ep-vis{position:relative;overflow:hidden;min-height:300px;background:#040b1c}
+.ep-vis>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.9,.2,1)}
+.ep-card:hover .ep-vis>img{transform:scale(1.04)}
+.ep-vis::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#070f22 0,#070f2200 28%)}
+.ep-card.flip .ep-vis::after{background:linear-gradient(270deg,#070f22 0,#070f2200 28%)}
+.ep-badge{position:absolute;z-index:2;font:700 11px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;background:#060e20e6;border:1px solid var(--c);color:var(--c);padding:10px 13px;border-radius:99px;backdrop-filter:blur(6px)}
+.ep-badge i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ep-green);margin-right:8px;vertical-align:0}
+
+/* OS mock panel (illustrative) */
+.ep-os{position:absolute;inset:28px 28px 28px 40px;border-radius:18px;background:#0b1530;border:1px solid #23325a;box-shadow:0 30px 60px #0008;display:grid;grid-template-columns:120px 1fr;overflow:hidden}
+.ep-os .side{background:#081128;border-right:1px solid #1d2a4a;padding:18px 14px;display:grid;align-content:start;gap:10px}
+.ep-os .side b{font:800 15px/1 "Space Grotesk",sans-serif;color:#fff;margin-bottom:8px}
+.ep-os .side span{height:9px;border-radius:5px;background:#1d2a4a}
+.ep-os .side span.on{background:var(--ep-cyan)}
+.ep-os .main{padding:18px;display:grid;gap:12px;align-content:start}
+.ep-os .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ep-os .tile{border:1px solid #1d2a4a;border-radius:10px;padding:10px;font:700 9px/1.2 "Space Grotesk",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ep-dim)}
+.ep-os .tile b{display:block;font:800 20px/1 "Space Grotesk",sans-serif;color:var(--tc,#fff);margin-bottom:6px;letter-spacing:0}
+.ep-os .row{display:grid;grid-template-columns:28px 1fr 56px;align-items:center;gap:10px;border:1px solid #1d2a4a;border-radius:10px;padding:9px 10px}
+.ep-os .row i{width:28px;height:28px;border-radius:8px;background:var(--rc)}
+.ep-os .row .bar{height:8px;border-radius:5px;background:#1d2a4a;overflow:hidden}
+.ep-os .row .bar u{display:block;height:100%;background:var(--rc);border-radius:5px}
+.ep-os .row em{font:700 9px/1 "Space Grotesk",sans-serif;font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--ep-green);text-align:right}
+
+/* AR phone frame */
+.ep-phone{position:absolute;left:50%;top:50%;width:min(46%,250px);aspect-ratio:9/18.5;transform:translate(-50%,-50%) rotate(-4deg);border-radius:34px;border:8px solid #10182c;background:#000;overflow:hidden;box-shadow:0 30px 70px #000c,0 0 0 1px #2a3a63;z-index:2}
+.ep-phone img{width:100%;height:100%;object-fit:cover;object-position:42% 100%}
+.ep-phone::before,.ep-phone::after{content:"";position:absolute;width:30%;aspect-ratio:1;border:3px solid var(--ep-gold);z-index:1}
+.ep-phone::before{left:12%;top:24%;border-right:0;border-bottom:0;border-radius:10px 0 0 0}
+.ep-phone::after{right:12%;bottom:24%;border-left:0;border-top:0;border-radius:0 0 10px 0}
+.ep-arbg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#ffd24a2e,transparent 60%),repeating-linear-gradient(0deg,#ffffff07 0 1px,transparent 1px 44px),repeating-linear-gradient(90deg,#ffffff07 0 1px,transparent 1px 44px),#060e20}
+
+/* Deep Reef games */
+.ep-play{scroll-margin-top:110px;margin:40px 0 0;position:relative;border-radius:32px;overflow:hidden;isolation:isolate;border:2px solid #3fd0ff;box-shadow:0 0 0 6px #3fd0ff1f,0 40px 100px #000a}
+.ep-play>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.ep-play::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#03132bf2 0,#03132bd9 38%,#03132b33 75%),linear-gradient(0deg,#03132bcc,transparent 45%)}
+.ep-play .in{padding:clamp(28px,5vw,64px);max-width:700px;display:grid;gap:18px;min-height:560px;align-content:center}
+.ep-fun{display:inline-flex;align-self:start;justify-self:start;align-items:center;gap:10px;background:var(--ep-gold);color:#2a1a00;font:800 12px/1 "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:10px 15px;border-radius:99px;transform:rotate(-2deg)}
+.ep-play h3{margin:0;font:800 clamp(44px,6.4vw,88px)/.9 "Space Grotesk",sans-serif;letter-spacing:-.03em;text-shadow:0 6px 30px #0009}
+.ep-play h3 span{color:#ffd24a}
+.ep-play h3 em{font-style:normal;color:#3fd0ff}
+.ep-play p{margin:0;font-size:clamp(17px,1.8vw,21px);line-height:1.5;color:#e3f4ff;max-width:46ch;text-shadow:0 2px 12px #000}
+.ep-venues{display:flex;flex-wrap:wrap;gap:8px}
+.ep-venues span{font:700 12px/1 "Space Grotesk",sans-serif;letter-spacing:.08em;background:#ffffff1a;border:1px solid #ffffff38;padding:10px 13px;border-radius:99px;backdrop-filter:blur(4px)}
+.ep-how{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:620px}
+.ep-how div{background:#03132bb3;border:1px solid #3fd0ff55;border-radius:16px;padding:14px;backdrop-filter:blur(4px)}
+.ep-how b{display:block;font:800 30px/1 "Space Grotesk",sans-serif;color:#3fd0ff}
+.ep-how span{display:block;margin-top:6px;font-size:14px;line-height:1.35;color:#d7ecff}
+.ep-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.ep-btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:17px 24px;border-radius:14px;font:800 14px/1 "Space Grotesk",sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:transform .2s}
+.ep-btn:hover,.ep-btn:focus-visible{transform:translateY(-2px);outline:none}
+.ep-btn.y{background:#ffd24a;color:#2a1a00;box-shadow:0 12px 40px #ffd24a55}
+.ep-btn.b{background:#ffffff1a;border:1px solid #ffffff55;color:#fff}
+
+@media (max-width:900px){
+  .ep-card,.ep-card.flip{grid-template-columns:1fr}
+  .ep-card.flip .ep-copy{order:0}
+  .ep-vis{min-height:300px;order:-1}
+  .ep-vis::after,.ep-card.flip .ep-vis::after{background:linear-gradient(0deg,#070f22 0,#070f2200 35%)}
+  .ep-os{inset:18px}
+  .ep-os{grid-template-columns:80px 1fr}
+  .ep-num{font-size:84px}
+}
+@media (max-width:560px){
+  .ep{padding-top:72px}
+  .ep-wrap{padding:0 16px}
+  .ep-os .tiles{grid-template-columns:repeat(2,1fr)}
+  .ep-os .tile:nth-child(n+3){display:none}
+  .ep-how{grid-template-columns:1fr}
+  .ep-btn{width:100%;justify-content:center}
+  .ep-go{align-self:stretch;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.ep-card,.ep-vis>img,.ep-go,.ep-btn{transition:none}}
+</style>
+<section class="ep" id="platform" aria-labelledby="ep-h">
+  <div class="ep-wrap">
+    <div class="ep-head">
+      <div>
+        <div class="ep-kick">The Elettro Platform · Built in-house, live today</div>
+        <h2 id="ep-h">Four tools.<br><em>One studio.</em></h2>
+        <nav class="ep-jump" aria-label="Elettro products">
+          <a href="#ep-os">01 Elettro OS</a><a href="#ep-remote">02 Elettro Remote</a><a href="#ep-ar">03 Elettro AR</a><a href="#ep-dash">04 Dashboards</a><a href="#ep-games">Play: Deep Reef</a>
+        </nav>
+      </div>
+      <p>The same tools we use to run our own brands, ready for yours: publishing that runs itself, screens your phone controls, posters that play, and live numbers anyone can watch.</p>
+    </div>
+
+    <section class="ep-prod" id="ep-os" aria-label="Elettro OS">
+      <a class="ep-card" href="https://os.elettro.com" style="--c:var(--ep-cyan)">
+        <div class="ep-copy">
+          <div class="ep-num" aria-hidden="true">01</div>
+          <div class="ep-url">os.elettro.com</div>
+          <h3>Elettro OS</h3>
+          <p class="ep-line">The brand operating system. Plan, approve and publish to every social network from one place.</p>
+          <ul>
+            <li>Posts go out on their own to Instagram, Facebook, TikTok, YouTube, Threads, Pinterest and more</li>
+            <li>A media library for every brand: photos, videos, logos and folders</li>
+            <li>Calendar, weekly review and approvals before anything goes live</li>
+          </ul>
+          <span class="ep-go">Open Elettro OS <span aria-hidden="true">↗</span></span>
+        </div>
+        <div class="ep-vis" aria-hidden="true">
+          <div class="ep-os">
+            <div class="side"><b>elettro OS</b><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="main">
+              <div class="tiles">
+                <div class="tile" style="--tc:#81ecff"><b>Live</b>Publishing</div>
+                <div class="tile" style="--tc:#2efd7c"><b>10+</b>Networks</div>
+                <div class="tile" style="--tc:#ffd24a"><b>Auto</b>Schedule</div>
+                <div class="tile" style="--tc:#a18eff"><b>1</b>Library</div>
+              </div>
+              <div class="row" style="--rc:#e1306c"><i></i><div class="bar"><u style="width:86%"></u></div><em>Live</em></div>
+              <div class="row" style="--rc:#1877f2"><i></i><div class="bar"><u style="width:78%"></u></div><em>Live</em></div>
+              <div class="row" style="--rc:#25f4ee"><i></i><div class="bar"><u style="width:64%"></u></div><em>Live</em></div>
+              <div class="row" style="--rc:#ff3b30"><i></i><div class="bar"><u style="width:72%"></u></div><em>Live</em></div>
+              <div class="row" style="--rc:#a18eff"><i></i><div class="bar"><u style="width:55%"></u></div><em>Live</em></div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="ep-prod" id="ep-remote" aria-label="Elettro Remote">
+      <a class="ep-card flip" href="/remote/" style="--c:var(--ep-green)">
+        <div class="ep-copy">
+          <div class="ep-num" aria-hidden="true">02</div>
+          <div class="ep-url">elettro.com/remote</div>
+          <h3>Elettro Remote</h3>
+          <p class="ep-line">Your phone is the remote. Scan the code on any big screen and take control. No app, no account.</p>
+          <ul>
+            <li>Retail, hotels, lobbies and events: browse, watch and save to your phone</li>
+            <li>Many phones at once for trivia, games and live polls</li>
+            <li>Works on any TV or display that can open a web page</li>
+          </ul>
+          <span class="ep-go">Try Elettro Remote <span aria-hidden="true">→</span></span>
+        </div>
+        <div class="ep-vis">
+          <img src="/remote/img/mall-hero.jpg" alt="An outdoor luxury shopping street at dusk, shown on a big screen controlled by Elettro Remote" loading="lazy" width="1376" height="768">
+          <span class="ep-badge" style="right:22px;top:22px"><i></i>Phone connected</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="ep-prod" id="ep-ar" aria-label="Elettro AR">
+      <a class="ep-card" href="/ar/" style="--c:var(--ep-gold)">
+        <div class="ep-copy">
+          <div class="ep-num" aria-hidden="true">03</div>
+          <div class="ep-url">elettro.com/ar</div>
+          <h3>Elettro AR</h3>
+          <p class="ep-line">Point. Scan. It plays. Aim any phone at an album cover, a poster, a shirt or a box and it comes alive.</p>
+          <ul>
+            <li>Videos, shops and 3D objects on top of your own artwork</li>
+            <li>Runs in the phone's browser. Nothing to download</li>
+            <li>Every scan is counted, so you see what's working</li>
+          </ul>
+          <span class="ep-go">See Elettro AR <span aria-hidden="true">→</span></span>
+        </div>
+        <div class="ep-vis" aria-hidden="true">
+          <div class="ep-arbg"></div>
+          <div class="ep-phone"><img src="/ar/img/im-waiting.jpg" alt="" loading="lazy"></div>
+          <span class="ep-badge" style="left:22px;bottom:22px">Live in your browser</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="ep-prod" id="ep-dash" aria-label="Elettro Dashboards">
+      <a class="ep-card flip" href="/dash/" style="--c:var(--ep-violet)">
+        <div class="ep-copy">
+          <div class="ep-num" aria-hidden="true">04</div>
+          <div class="ep-url">elettro.com/dash</div>
+          <h3>Elettro Dashboards</h3>
+          <p class="ep-line">Live numbers anyone can watch. Every network, post, scan and phone, ticking up as it happens.</p>
+          <ul>
+            <li>The Connection Grand Prix: every social network racing to fully automatic</li>
+            <li>Post race, AR scan counter and Remote counter, all live</li>
+            <li>Scroll it from your phone: tap Phone remote and scan</li>
+          </ul>
+          <span class="ep-go">Open the dashboard <span aria-hidden="true">→</span></span>
+        </div>
+        <div class="ep-vis">
+          <img src="/images/home/dash-grand-prix.jpg" alt="The Elettro Connection Grand Prix dashboard: social networks racing toward 100 percent live" loading="lazy" width="1151" height="858" style="object-position:0 0">
+          <span class="ep-badge" style="right:22px;bottom:22px"><i></i>Live · no refresh</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="ep-play" id="ep-games" aria-labelledby="ep-games-h">
+      <img src="/remote/img/reef2-hero.jpg" alt="" loading="lazy" width="1600" height="900">
+      <div class="in">
+        <span class="ep-fun">Fun for kids · Fun for everyone</span>
+        <h3 id="ep-games-h">One screen.<br><span>Every phone</span> <em>plays.</em></h3>
+        <p>Multi-player games for public spaces. Guests scan the code on the big screen, pick a fish and swim in the same reef together. Up to 12 players at once, no app, no sign-up.</p>
+        <div class="ep-venues" aria-label="Great for">
+          <span>Restaurants</span><span>Bars</span><span>Waiting rooms</span><span>Hotel lobbies</span><span>Malls &amp; atriums</span><span>Family events</span>
+        </div>
+        <div class="ep-how">
+          <div><b>1</b><span>Scan the code on the screen</span></div>
+          <div><b>2</b><span>Pick your fish, steer with your phone</span></div>
+          <div><b>3</b><span>Eat, grow, dodge the shark, top the board</span></div>
+        </div>
+        <div class="ep-btns">
+          <a class="ep-btn y" href="/remote/reef2/" target="_blank" rel="noopener">Play Deep Reef →</a>
+          <a class="ep-btn b" href="/remote/reef/" target="_blank" rel="noopener">Little kids: the Reef</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
 <!-- Our Services -->
 <section id="services-section" class="py-24 relative overflow-hidden" style="background: radial-gradient(120% 140% at 20% 20%, #112750 0%, #08142d 45%, #040b1c 100%);">
 <canvas aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
