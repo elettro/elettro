@@ -36,6 +36,14 @@ th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;lett
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 4px 0 12px}
 .note{font-size:12.5px;color:var(--mut);border-left:3px solid var(--gold);padding-left:12px}
 ul{margin:8px 0 0;padding-left:18px;color:#bfc4ca;font-size:13.5px}
+.cmp{margin:0 0 22px}.cmp:last-of-type{margin-bottom:6px}
+.cn{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:8px}
+.delta{color:var(--em);font-size:12px;background:#16301f;padding:1px 9px;border-radius:20px}
+.line{display:grid;grid-template-columns:44px 1fr 34px;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+.line em{font-style:normal;color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:1px}
+.line b{text-align:right}
+.line .track{margin:0;height:12px}.line .fill{height:12px}
+.cmp.big .line .track{height:20px}.cmp.big .line .fill{height:20px}.cmp.big .cn{font-size:16px}.cmp.big .line b{font-size:20px}.cmp.big .line{grid-template-columns:52px 1fr 44px}
 </style>
 </head>
 <body>
@@ -43,12 +51,10 @@ ul{margin:8px 0 0;padding-left:18px;color:#bfc4ca;font-size:13.5px}
 <h1>Evolutionary Healing Institute</h1>
 <p class="sub">SEO &amp; AIO audit · ehmiami.com/meet-dr-paul-canali/ (plus domain root) · Prepared by Elettro · Nov 2, 2026</p>
 
-<div class="panel">
-<div class="rings">
- <div class="ringbox"><div class="ring" style="--p:51;--c:var(--amb)"><span>51</span></div><div class="lab">Current composite</div></div>
- <div class="ringbox"><div class="ring" style="--p:89;--c:var(--em)"><span>89</span></div><div class="lab">Projected after Elettro rebuild</div></div>
- <div class="ringbox"><div class="ring" style="--p:30;--c:var(--red)"><span>30</span></div><div class="lab">Structured data / AIO (unconfirmed)</div></div>
-</div>
+<h2>Overall score</h2>
+<div class="panel"><div class="cmp big"><div class="cn"><span>Composite (weighted)</span><span class="delta">+44</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:51%"></div></div><b>51</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:95%"></div></div><b>95</b></div></div></div>
 </div>
 
 <h2>Flagship finding</h2>
@@ -57,16 +63,20 @@ ul{margin:8px 0 0;padding-left:18px;color:#bfc4ca;font-size:13.5px}
 <p style="margin:8px 0 0;color:#bfc4ca">Excellent raw credentials (DC, NUHS 1981, Nagoya acupuncture certification, ACSM 1996, FIU/Barry/UM lectures) sit in unstructured prose. The title tag is "Meet Dr Paul Canali – Evolutionary Healing Institute": no specialty, no city, no condition terms. Neither the title, the H1, nor the body copy says "South Miami" or "chiropractor"; location appears only in the footer. Search engines and AI assistants get a name and a list of events, not a clearly defined practitioner with a practice, location and service set.</p>
 </div>
 
-<h2>Score comparison</h2>
-<div class="panel">
- <div class="row"><div class="n"><span>Technical SEO</span><span>58 → 90</span></div><div class="track"><div class="fill cur" style="width:58%"></div></div><div class="track"><div class="fill proj" style="width:90%"></div></div></div>
- <div class="row"><div class="n"><span>On-Page SEO</span><span>52 → 92</span></div><div class="track"><div class="fill cur" style="width:52%"></div></div><div class="track"><div class="fill proj" style="width:92%"></div></div></div>
- <div class="row"><div class="n"><span>Structured Data / AIO</span><span>30 → 93</span></div><div class="track"><div class="fill cur" style="width:30%"></div></div><div class="track"><div class="fill proj" style="width:93%"></div></div></div>
- <div class="row"><div class="n"><span>Content Depth</span><span>66 → 85</span></div><div class="track"><div class="fill cur" style="width:66%"></div></div><div class="track"><div class="fill proj" style="width:85%"></div></div></div>
- <div class="row"><div class="n"><span>Site Performance</span><span>55 → 88</span></div><div class="track"><div class="fill cur" style="width:55%"></div></div><div class="track"><div class="fill proj" style="width:88%"></div></div></div>
- <div class="row"><div class="n"><span>Local &amp; Authority</span><span>48 → 84</span></div><div class="track"><div class="fill cur" style="width:48%"></div></div><div class="track"><div class="fill proj" style="width:84%"></div></div></div>
- <div class="legend"><i style="background:var(--amb)"></i>Current<i style="background:var(--em)"></i>Elettro projection</div>
-</div>
+<h2>Score by category</h2>
+<div class="panel"><div class="cmp"><div class="cn"><span>Technical SEO</span><span class="delta">+38</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:58%"></div></div><b>58</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:96%"></div></div><b>96</b></div></div><div class="cmp"><div class="cn"><span>On-Page SEO</span><span class="delta">+45</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:52%"></div></div><b>52</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:97%"></div></div><b>97</b></div></div><div class="cmp"><div class="cn"><span>Structured Data / AIO</span><span class="delta">+67</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:30%"></div></div><b>30</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:97%"></div></div><b>97</b></div></div><div class="cmp"><div class="cn"><span>Content Depth</span><span class="delta">+26</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:66%"></div></div><b>66</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:92%"></div></div><b>92</b></div></div><div class="cmp"><div class="cn"><span>Site Performance</span><span class="delta">+39</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:55%"></div></div><b>55</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:94%"></div></div><b>94</b></div></div><div class="cmp"><div class="cn"><span>Local &amp; Authority</span><span class="delta">+42</span></div>
+<div class="line"><em>Now</em><div class="track"><div class="fill cur" style="width:48%"></div></div><b>48</b></div>
+<div class="line"><em>After</em><div class="track"><div class="fill proj" style="width:90%"></div></div><b>90</b></div></div><div class="legend"><i style="background:var(--amb)"></i>Now<i style="background:var(--em)"></i>After Elettro rebuild</div></div>
 
 <h2>Findings</h2>
 <div class="grid">
