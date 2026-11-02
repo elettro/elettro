@@ -601,6 +601,8 @@ function startSite(){
   buildExtra();
   buildMore();
   buildPager();
+  /* the phone's mini preview runs the whole page inside an iframe: no live video there, posters only (keeps the phone from running out of memory) */
+  if (MODE === 'mini') [].forEach.call(document.querySelectorAll('video'), function(v){ v.removeAttribute('src'); v.preload = 'none'; v.removeAttribute('loop'); try { v.load(); } catch (e) {} });
   if (rt) gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
     scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
   initSections();
