@@ -46,7 +46,9 @@ h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.
 .top nav a:hover{color:var(--ink);background:#ffffff10}
 .top nav a.cta{background:var(--sun);color:#111}
 .top nav a.cta:hover{background:#ffe14d}
-@media(max-width:760px){.top nav a:not(.cta){display:none}.brand i{display:none}}
+.top nav a.login{color:var(--ink);border:1px solid #ffffff40;margin-left:4px}
+.top nav a.login:hover{border-color:var(--ink);background:#ffffff10}
+@media(max-width:760px){.top nav a:not(.cta):not(.login){display:none}.brand i{display:none}}
 
 /* hero */
 .hero{position:relative;overflow:hidden;isolation:isolate;padding-block:64px 84px}
@@ -200,6 +202,7 @@ footer a{color:var(--cyan)}
       <a href="#scenarios">Scenarios</a>
       <a href="#sheets">One sheets</a>
       <a class="cta" href="#book">Book a session</a>
+      <a class="login" href="https://os.elettro.com/" rel="noopener" title="Log in to Elettro OS">Log in</a>
     </nav>
   </div>
 </header>
