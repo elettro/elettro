@@ -220,6 +220,11 @@ body.mode-display #gnav{display:flex}
 var params=new URLSearchParams(location.search);
 var target=params.get('c');
 var PREFIX='elettro-wl-';
+/* ICE: STUN plus free public TURN relays so pairing still works on VPNs, strict NATs and mobile data */
+var PEER_OPTS={config:{iceServers:[
+ {urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'},
+ {urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turns:openrelay.metered.ca:443?transport=tcp'],username:'openrelayproject',credential:'openrelayproject'}
+],iceCandidatePoolSize:4}};
 function etHit(t){ try { fetch('https://abacus.jasoncameron.dev/hit/elettro-com/remote-hub-' + t, { cache:'no-store', keepalive:true }).catch(function(){}); } catch(e){} } /* usage counter for elettro.com/dash: counts only */
 var etPhone=false;function etPhoneHit(){if(!etPhone){etPhone=true;etHit('phones')}}
 var body=document.body;
@@ -718,7 +723,7 @@ function startDisplay(){
     $('hint').textContent=on?'Use your phone as the remote. Swipe or tap the pad. Press Send to keep what you like.':'Scan the code with your phone camera. No app, no account.';
   }
   function boot(){
-    var peer=new Peer(PREFIX+id);
+    var peer=new Peer(PREFIX+id,PEER_OPTS);
     peer.on('open',function(){renderScene()});
     peer.on('connection',function(c){
       var role=null;
@@ -750,10 +755,11 @@ function startRemote(){
     if(navigator.vibrate)navigator.vibrate(12);
     if(conn&&conn.open)conn.send({t:'key',k:k});
   }
-  peer=new Peer();
+  peer=new Peer(PEER_OPTS);
   peer.on('open',function(){
     conn=peer.connect(PREFIX+target,{reliable:true});
-    conn.on('open',function(){etPhoneHit();conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
+    setTimeout(function(){if(!(conn&&conn.open)){setStat(false,'Not connected');err('Could not reach the screen. Make sure the big-screen page is still open, turn off any VPN or ad blocker for this page, then reload.')}},15000);
+    conn.on('open',function(){$('rerr').style.display='none';etPhoneHit();conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
     conn.on('data',function(m){
       if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
       else if(m.t==='saved'){
@@ -836,7 +842,7 @@ function startPlayer(){
     };
   }
   function connect(){
-    peer=new Peer();
+    peer=new Peer(PEER_OPTS);
     peer.on('open',function(){
       conn=peer.connect(PREFIX+target,{reliable:true});
       conn.on('open',function(){etPhoneHit();conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
