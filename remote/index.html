@@ -194,6 +194,8 @@ body.mode-player #player{display:flex}
 var params=new URLSearchParams(location.search);
 var target=params.get('c');
 var PREFIX='elettro-wl-';
+function etHit(t){ try { fetch('https://abacus.jasoncameron.dev/hit/elettro-com/remote-hub-' + t, { cache:'no-store', keepalive:true }).catch(function(){}); } catch(e){} } /* usage counter for elettro.com/dash: counts only */
+var etPhone=false;function etPhoneHit(){if(!etPhone){etPhone=true;etHit('phones')}}
 var body=document.body;
 function $(id){return document.getElementById(id)}
 
@@ -693,7 +695,7 @@ function startRemote(){
   peer=new Peer();
   peer.on('open',function(){
     conn=peer.connect(PREFIX+target,{reliable:true});
-    conn.on('open',function(){conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
+    conn.on('open',function(){etPhoneHit();conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
     conn.on('data',function(m){
       if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
       else if(m.t==='saved'){
@@ -779,7 +781,7 @@ function startPlayer(){
     peer=new Peer();
     peer.on('open',function(){
       conn=peer.connect(PREFIX+target,{reliable:true});
-      conn.on('open',function(){conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
+      conn.on('open',function(){etPhoneHit();conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
       conn.on('data',onMsg);
       conn.on('close',function(){view('<div class="pbig">Disconnected</div><button class="send" id="pre" style="width:min(90vw,340px)">Rejoin</button>');$('pre').onclick=function(){view('<div class="pbig">Connecting\u2026</div>');connect()}});
     });
@@ -815,7 +817,7 @@ function startPlayer(){
   joinForm();
 }
 
-if(target&&params.get('p'))startPlayer();else if(target)startRemote();else startDisplay();
+if(target&&params.get('p'))startPlayer();else if(target)startRemote();else{etHit('screens');startDisplay()}
 })();
 </script>
 </body>

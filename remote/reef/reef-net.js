@@ -19,6 +19,9 @@
     if (root.ELETTRO_PEER) for (var k in root.ELETTRO_PEER) o[k] = root.ELETTRO_PEER[k];
     return o;
   }
+  var TRACK = 'remote-reef-bh';
+  /* usage counter for elettro.com/dash (counts only; no names, no IDs) */
+  function hit(t) { try { fetch('https://abacus.jasoncameron.dev/hit/elettro-com/' + TRACK + '-' + t, { cache: 'no-store', keepalive: true }).catch(function () {}); } catch (e) {} }
   function randomCode() { var s = ''; for (var i = 0; i < 4; i++) s += ALPHABET[Math.floor(Math.random() * ALPHABET.length)]; return s; }
   function clean(code) { return String(code || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4); }
 
@@ -44,6 +47,7 @@
       });
     }
     start(code);
+    hit('screens');
     return {
       code: code,
       restart: function (cd) { try { peer.destroy(); } catch (e) {} conns = {}; start(cd); },
@@ -55,6 +59,7 @@
 
   /* ---------------- guest (phone) ---------------- */
   function join(code, h) {
+    var counted = false;
     var peer = null, conn = null, closed = false, lastRx = 0, timer = null, wd = null;
     function status(s) { h.status && h.status(s); }
     function retry(ms) {
@@ -69,7 +74,7 @@
       peer = new root.Peer(undefined, opts());
       peer.on('open', function () {
         conn = peer.connect(PREFIX + code, { reliable: true, serialization: 'json' });
-        conn.on('open', function () { lastRx = Date.now(); status('open'); h.open && h.open(); });
+        conn.on('open', function () { lastRx = Date.now(); if (!counted) { counted = true; hit('phones'); } status('open'); h.open && h.open(); });
         conn.on('data', function (d) { lastRx = Date.now(); h.msg && h.msg(d); });
         conn.on('close', function () { h.close && h.close(); retry(1200); });
         conn.on('error', function () { retry(1800); });

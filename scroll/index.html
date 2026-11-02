@@ -476,6 +476,7 @@ var params = new URLSearchParams(location.search);
 var target = params.get('c');
 var MODE = target ? 'remote' : (params.get('mini') === '1' ? 'mini' : 'display');
 var PREFIX = 'elettro-sc-';
+function etHit(t){ try { fetch('https://abacus.jasoncameron.dev/hit/elettro-com/remote-scroll-' + t, { cache:'no-store', keepalive:true }).catch(function(){}); } catch(e){} } /* usage counter for elettro.com/dash: counts only */
 document.body.classList.add('mode-' + MODE);
 if (MODE === 'mini') document.documentElement.classList.add('mini-root');
 function $(id){ return document.getElementById(id); }
@@ -1383,7 +1384,7 @@ function startRemote(){
   }
   function link(){
     var c = peer.connect(PREFIX + target, { reliable:true }); conn = c;
-    c.on('open', function(){ tries = 0; everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
+    c.on('open', function(){ tries = 0; if (!everOn) etHit('phones'); everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
     c.on('data', function(m){
       if (!m) return;
       if (m.t === 'meta') {
@@ -1412,7 +1413,7 @@ function startRemote(){
 
 /* ---------------------------------------------------------------- BOOT */
 if (MODE !== 'remote') startSite();
-if (MODE === 'display') startDisplay();
+if (MODE === 'display') { etHit('screens'); startDisplay(); }
 if (MODE === 'remote') startRemote();
 })();
 </script>

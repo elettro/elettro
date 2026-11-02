@@ -249,6 +249,21 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
 
 /* AR scan counter */
 #arscan{margin-top:6px}
+.rm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0 0 14px}
+.rm-card{position:relative;overflow:hidden;background:var(--asphalt);border:2px solid var(--line);border-radius:18px;padding:16px 16px 14px;transition:border-color .6s}
+.rm-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--rc)}
+.rm-card.hit{border-color:var(--rc)}
+.rm-card h3{font:400 24px/1 Anton,sans-serif;text-transform:uppercase;margin:0;color:var(--ink)}
+.rm-card .url{font:700 10px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--dim);margin-top:5px;word-break:break-all}
+.rm-card .big{font:400 clamp(48px,7vw,72px)/.9 Anton,sans-serif;color:var(--rc);margin-top:14px;font-variant-numeric:tabular-nums}
+.rm-card .lbl{font:700 10px "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-top:6px}
+.rm-card .row{display:flex;justify-content:space-between;gap:10px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font:700 11px "JetBrains Mono",monospace;color:var(--dim)}
+.rm-card .row b{color:var(--ink);font-weight:700}
+.rm-plus{position:absolute;right:16px;top:14px;font:400 30px/1 Anton,sans-serif;color:var(--rc);opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.rm-card.hit .rm-plus{opacity:1;transform:none}
+.rm-live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dim);margin-right:7px;vertical-align:1px}
+.rm-live.on{background:var(--volt)}
+@media (prefers-reduced-motion:reduce){.rm-plus,.rm-card{transition:none}}
 .ar-chart{padding:4px 2px 10px}
 .ar-chart svg{display:block;width:100%;height:auto;overflow:visible}
 .ar-chart .empty{font:700 11px "JetBrains Mono",monospace;letter-spacing:.16em;fill:var(--dim);text-anchor:middle;text-transform:uppercase}
@@ -361,6 +376,20 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
     <section class="track prace" aria-label="Scans by brand"><h3>By brand</h3>
       <div id="arBrands"></div></section>
     <p class="pr-note" id="arNote">Loading the counter…</p>
+  </section>
+
+  <section id="remotes" aria-label="Elettro Remote counter">
+    <div class="pr-head">
+      <div>
+        <div class="kicker">Elettro Remote · live, no refresh</div>
+        <h2>The <em>Remote</em> <span>Counter</span></h2>
+        <p class="sub">Every time a phone scans a Remote QR code and gets into the experience, it ticks up here the moment it happens. Counts only: no names, no phones, no faces.</p>
+      </div>
+      <div class="clock"><div class="digits" id="rmTotal">0</div><div class="l">Remote triggers · all experiences</div></div>
+    </div>
+    <div class="sys" id="rmSys"></div>
+    <div class="rm-grid" id="rmGrid"></div>
+    <p class="pr-note" id="rmNote">Connecting to the counter…</p>
   </section>
 
   <footer><span id="stamp"></span><span>Status from the EPE repo (develop) + Elettro OS DEV · edit STATUS in this file to move a racer</span></footer>
@@ -966,6 +995,79 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     });
   });
   load(); setInterval(load, 30000);
+})();
+
+// ---- Elettro Remote counter: live via Abacus server-sent events (no refresh) ----
+(function () {
+  var NS = "https://abacus.jasoncameron.dev/";
+  var EXP = [
+    { id: "remote-reef-bh", name: "Bal Harbour Reef", url: "elettro.com/clients/bal-harbour/reef · /remote/reef", color: "#22e6ff" },
+    { id: "remote-reef2", name: "Deep Reef", url: "elettro.com/remote/reef2", color: "#ffc83d" },
+    { id: "remote-scroll", name: "3D Scroll", url: "elettro.com/scroll", color: "#ff2e88" },
+    { id: "remote-hub", name: "Elettro Remote", url: "elettro.com/remote", color: "#d7ff1f" }
+  ];
+  var val = {}, lastAt = {}, session = 0, started = Date.now(), live = 0;
+  function el(id) { return document.getElementById(id); }
+  function fmt(n) { return Number(n || 0).toLocaleString("en-US"); }
+  function hhmm(t) { return new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); }
+  el("rmGrid").innerHTML = EXP.map(function (e) {
+    return '<div class="rm-card" id="rc-' + e.id + '" style="--rc:' + e.color + '"><div class="rm-plus" id="rp-' + e.id + '">+1</div>'
+      + '<h3>' + e.name + '</h3><div class="url">' + e.url + '</div>'
+      + '<div class="big" id="rv-' + e.id + '">0</div><div class="lbl">Phones in (QR triggers)</div>'
+      + '<div class="row"><span>Screens opened <b id="rs-' + e.id + '">0</b></span><span id="rl-' + e.id + '">waiting for a trigger</span></div></div>';
+  }).join("");
+  function sum(t) { return EXP.reduce(function (a, e) { return a + (val[e.id + "-" + t] || 0); }, 0); }
+  function paint() {
+    var phones = sum("phones"), screens = sum("screens");
+    el("rmTotal").textContent = fmt(phones);
+    EXP.forEach(function (e) {
+      el("rv-" + e.id).textContent = fmt(val[e.id + "-phones"]);
+      el("rs-" + e.id).textContent = fmt(val[e.id + "-screens"]);
+    });
+    var top = EXP.slice().sort(function (a, b) { return (val[b.id + "-phones"] || 0) - (val[a.id + "-phones"] || 0); })[0];
+    el("rmSys").innerHTML = [
+      [fmt(phones), "Phones in"], [fmt(screens), "Screens opened"],
+      [screens ? (phones / screens).toFixed(1) : "-", "Phones per screen"],
+      [phones ? top.name : "-", "Most played"], [fmt(session), "Since you opened this"]
+    ].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
+    el("rmNote").innerHTML = '<span class="rm-live' + (live ? " on" : "") + '"></span>' + (live ? "Live: " + live + "/" + (EXP.length * 2) + " counters streaming. New triggers appear instantly." : "Reconnecting to the live counter…") + " Counting since 02 Nov 2026.";
+  }
+  function set(key, v, fresh) {
+    v = +v || 0;
+    var prev = val[key];
+    val[key] = v;
+    if (fresh && prev !== undefined && v > prev) {
+      var id = key.replace(/-(phones|screens)$/, ""), card = el("rc-" + id);
+      if (/-phones$/.test(key)) session += v - prev;
+      lastAt[id] = Date.now();
+      el("rl-" + id).textContent = (/-phones$/.test(key) ? "phone in " : "screen opened ") + hhmm(lastAt[id]);
+      el("rp-" + id).textContent = "+" + (v - prev);
+      card.classList.add("hit");
+      clearTimeout(card._t); card._t = setTimeout(function () { card.classList.remove("hit"); }, 2600);
+    }
+    paint();
+  }
+  EXP.forEach(function (e) {
+    ["phones", "screens"].forEach(function (t) {
+      var key = e.id + "-" + t, up = false;
+      fetch(NS + "get/elettro-com/" + key, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : { value: 0 }; })
+        .then(function (j) { if (val[key] === undefined) set(key, j.value, false); }).catch(function () {});
+      if (!window.EventSource) return;
+      var es = new EventSource(NS + "stream/elettro-com/" + key);
+      es.onopen = function () { if (!up) { up = true; live++; paint(); } };
+      es.onmessage = function (m) { try { set(key, JSON.parse(m.data).value, val[key] !== undefined); } catch (x) {} };
+      es.onerror = function () { if (up) { up = false; live--; paint(); } };
+    });
+  });
+  // safety net: if a stream drops, a quiet re-read every 60 s keeps the numbers honest
+  setInterval(function () {
+    EXP.forEach(function (e) { ["phones", "screens"].forEach(function (t) {
+      var key = e.id + "-" + t;
+      fetch(NS + "get/elettro-com/" + key, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { if (j) set(key, j.value, val[key] !== undefined); }).catch(function () {});
+    }); });
+  }, 60000);
+  paint();
 })();
 </script>
 </body>
