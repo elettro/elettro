@@ -1244,7 +1244,7 @@ function startDisplay(){
   if (id) reuse = true; else id = rid();
   function saveId(){ try { sessionStorage.setItem('elsc_id', id); } catch (e) {} }
   saveId();
-  var conn = null, lastRemote = 0, remoteTarget = null, remoteSince = 0, lastPos = 0;
+  var rxN = 0, rxT = 0, conn = null, lastRemote = 0, remoteTarget = null, remoteSince = 0, lastPos = 0;
   /* the mouse, keyboard or touch on the big screen always wins over a pending phone target */
   ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(ev){ window.addEventListener(ev, function(){ remoteTarget = null; }, { passive:true }); });
 
@@ -1302,6 +1302,7 @@ function startDisplay(){
       c.on('open', function(){ setPaired(true); sendMeta(); sendSec(); setTimeout(sendMeta, 1200); });
       c.on('data', function(m){
         if (!m) return;
+        rxN++; rxT = performance.now();
         if (m.t === 'hello') sendMeta();
         else if (m.t === 'nav') { var np = PAGE + (m.d > 0 ? 1 : -1); if (np >= 1 && np <= PAGES.length) location.href = pageUrl(np); }
         else if (m.t === 'p') { lastRemote = Date.now(); remoteSince = performance.now(); remoteTarget = Math.max(0, Math.min(1, m.v)) * maxScroll(); }
@@ -1332,7 +1333,7 @@ function startDisplay(){
     gsap.ticker.add(function(){
       fN++; var n = performance.now();
       if (n - fT >= 500) { fps = Math.round(fN * 1000 / (n - fT)); fN = 0; fT = n; }
-      dbg.textContent = ['fps ' + fps + '   y ' + Math.round(window.scrollY) + '   lenis ' + Math.round(lenis.scroll) + (lenis.isStopped ? ' STOPPED' : ''), 'phone target ' + (remoteTarget === null ? '-' : Math.round(remoteTarget)) + '   conn ' + (conn && conn.open ? 'open' : 'none'), 'sec ' + (curSec ? curSec.n : '-') + '   mem ' + (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) + 'MB' : 'n/a')].join('\n');
+      dbg.textContent = ['fps ' + fps + '   y ' + Math.round(window.scrollY) + '   lenis ' + Math.round(lenis.scroll) + (lenis.isStopped ? ' STOPPED' : ''), 'phone target ' + (remoteTarget === null ? '-' : Math.round(remoteTarget)) + '   conn ' + (conn && conn.open ? 'open' : 'none'), 'rx ' + rxN + (rxT ? ' (' + ((performance.now() - rxT) / 1000).toFixed(1) + 's ago)' : '') + '   sec ' + (curSec ? curSec.n : '-') + '   mem ' + (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) + 'MB' : 'n/a')].join('\n');
     });
   }
 }
@@ -1341,7 +1342,7 @@ function startDisplay(){
 function startRemote(){
   var mvf = $('mvf'), surf = $('surf'), wrap = $('mvwrap'), box = $('mvbox'), bar = $('bar');
   var vw = 1440, vh = 900, max = 6000, pos = 0, scale = 0.25;
-  var conn = null, dirty = false, active = false, mom = false, vel = 0, lastY = 0, lastMoveT = 0;
+  var lastTx = 0, conn = null, dirty = false, active = false, mom = false, vel = 0, lastY = 0, lastMoveT = 0;
 
   function setStat(on, txt){ $('rstat').className = 'rstat' + (on ? ' on' : ''); $('rstat').textContent = txt; }
   function err(m){ var e = $('rerr'); e.style.display = 'block'; e.textContent = m; }
@@ -1371,8 +1372,10 @@ function startRemote(){
       dirty = true;
     }
     if (dirty) {
-      dirty = false; applyMini();
-      if (conn && conn.open) conn.send({ t:'p', v: max ? pos / max : 0 });
+      applyMini();
+      var nowT = performance.now(), dc = conn && conn.dataChannel;
+      if (!conn || !conn.open) dirty = false;
+      else if (nowT - lastTx >= 40 && !(dc && dc.bufferedAmount > 32768)) { dirty = false; lastTx = nowT; conn.send({ t:'p', v: max ? pos / max : 0 }); }
     }
     requestAnimationFrame(tick);
   }
