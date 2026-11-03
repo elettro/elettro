@@ -423,5 +423,49 @@
     "hosting": "dropbox",
     "src": "https://www.dropbox.com/scl/fi/oqihjl0b3b6xevw4n3qhb/Rompe-02a-Clem-Stashbox-Great-bossa-nova-Fire.wav?rlkey=ysuan39r6jwuic4crf2j1i3xc&raw=1",
     "added": "2026-11-02"
+  },
+  {
+    "id": "PIN-01",
+    "section": "pop-that-pina",
+    "type": "video",
+    "title": "Pina Lincoln Road",
+    "filename": "pina-lincoln-road.mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/tg8bk09rd2nwf9ncxihf7/pina-lincoln-road.mp4?rlkey=ps4puigx2vxkclqeagt4mgqmi&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/tg8bk09rd2nwf9ncxihf7/pina-lincoln-road.mp4?rlkey=ps4puigx2vxkclqeagt4mgqmi&raw=1",
+    "added": "2026-11-02"
+  },
+  {
+    "id": "PIN-02",
+    "section": "pop-that-pina",
+    "type": "video",
+    "title": "Piña Clip 02",
+    "filename": "17151cad-4a09-4931-bc54-ba214c75db7e.mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/yj7ha6zbk3hkbeu67usm8/17151cad-4a09-4931-bc54-ba214c75db7e.mp4?rlkey=xdygo60qiyxvloddxjamqflz8&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/yj7ha6zbk3hkbeu67usm8/17151cad-4a09-4931-bc54-ba214c75db7e.mp4?rlkey=xdygo60qiyxvloddxjamqflz8&raw=1",
+    "added": "2026-11-02"
+  },
+  {
+    "id": "PIN-03",
+    "section": "pop-that-pina",
+    "type": "video",
+    "title": "Piña Clip 03",
+    "filename": "d6f755e2-59a4-4183-bddf-d20283fc5af2.mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/nskjgnwf0yp0rl6q7z3w9/d6f755e2-59a4-4183-bddf-d20283fc5af2.mp4?rlkey=6l9rhfcyiqq4nniykz5glkkwo&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/nskjgnwf0yp0rl6q7z3w9/d6f755e2-59a4-4183-bddf-d20283fc5af2.mp4?rlkey=6l9rhfcyiqq4nniykz5glkkwo&raw=1",
+    "added": "2026-11-02"
+  },
+  {
+    "id": "PIN-04",
+    "section": "pop-that-pina",
+    "type": "video",
+    "title": "Piña Clip 04",
+    "filename": "eda1a55e-f75b-4079-bc1c-3c4edfca00c2.mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/2i7n2kuno9jnoxlfdyl0v/eda1a55e-f75b-4079-bc1c-3c4edfca00c2.mp4?rlkey=q5zy0wsm5lsnyfhl92ksh7gg7&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/2i7n2kuno9jnoxlfdyl0v/eda1a55e-f75b-4079-bc1c-3c4edfca00c2.mp4?rlkey=q5zy0wsm5lsnyfhl92ksh7gg7&raw=1",
+    "added": "2026-11-02"
   }
 ]
