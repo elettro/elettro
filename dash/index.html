@@ -392,6 +392,8 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
       <div class="clock"><div class="digits" id="prClock">0d 00:00:00</div><div class="l" id="prClockL">Race clock · whole system</div></div>
     </div>
     <div class="sys" id="prSys"></div>
+    <section class="track prace" aria-label="Posts per day"><h3>Last 30 days</h3>
+      <div class="ar-chart" id="prDays"></div></section>
     <section class="track prace" aria-label="Posts by network"><h3>By network</h3>
       <div class="scale"><span>NETWORK</span><div class="marks" id="prMarksN"></div><span style="text-align:right">POSTS</span></div>
       <div id="prNet"></div></section>
@@ -759,6 +761,7 @@ function renderRace() {
   });
   const brs = race.brands.filter((b) => b.slug !== "google-review" && b.name !== "Google Review").map((b, i) => ({ name: b.name, code: b.name.slice(0, 2).toUpperCase(), color: BRAND_COLORS[i % BRAND_COLORS.length],
     sub: (n => n + (n === 1 ? " network" : " networks"))(Object.keys(b.byDestination || {}).length), published: b.published, scheduled: b.scheduled, finishedAt: b.finishedAt, firstAt: b.firstAt }));
+  drawPostDays();
   lanes("prNet", nets, "prMarksN");
   lanes("prBrand", brs, "prMarksB");
   const best = (rows) => [...rows].sort((a, b) => b.published - a.published)[0];
@@ -778,6 +781,19 @@ function renderRace() {
     ? `LIVE from Elettro OS · counts every post in the publication ledger · race clock started ${fdate(new Date(race.raceStart))}`
     : "Race feed offline · showing an empty grid until it answers";
 }
+function drawPostDays() {
+  const days = race.days;
+  const box = document.getElementById("prDays");
+  if (!days || !days.length) { box.closest("section").hidden = true; return; }
+  box.closest("section").hidden = false;
+  const W = 600, H = 150, pad = 20, bw = W / days.length, max = Math.max(1, ...days.map((d) => d.posts)), total = days.reduce((a, d) => a + d.posts, 0);
+  const bars = days.map((d, i) => {
+    const h = Math.round((d.posts / max) * (H - pad - 14)), x = i * bw + 2, last = i === days.length - 1, bh = Math.max(h, d.posts ? 3 : 1.5);
+    return `<g><title>${d.d}: ${d.posts} posts</title><rect x="${x}" y="${H - pad - bh}" width="${bw - 4}" height="${bh}" rx="3" fill="${last ? "#ff2e88" : d.posts ? "#d7ff1f" : "var(--line)"}"/></g>`;
+  }).join("");
+  const label = (i, a) => `<text x="${i * bw + (a === "end" ? bw - 4 : 0)}" y="${H - 4}" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="${a}">${a === "end" ? "TODAY" : days[i].d.slice(5)}</text>`;
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Posts published per day, last 30 days">${bars}${label(0, "start")}${label(days.length - 1, "end")}<text x="${W}" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">${total ? "PEAK " + max : ""}</text></svg>`;
+}
 function raceClock() {
   const el = document.getElementById("prClock"), t = race.total;
   el.textContent = dhms(endOf(t) - new Date(race.raceStart));
@@ -792,7 +808,7 @@ async function pullRace() {
     if (!feed.ok) throw new Error("bad feed");
     race = feed; raceLive = true;
   } catch { /* keep the last good numbers */ }
-  const key = JSON.stringify([race.total, race.destinations, race.brands, raceLive]);
+  const key = JSON.stringify([race.total, race.destinations, race.brands, race.days, raceLive]);
   if (key !== raceKey) { raceKey = key; renderRace(); }
 }
 renderRace(); pullRace(); raceClock();
