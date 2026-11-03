@@ -177,6 +177,28 @@
   .gsvg { position:absolute; left:50%; top:54%; translate:-50% -50%; height:74vh; max-width:92vw; overflow:visible; }
   .gsvg text { font-family:Inter,system-ui,sans-serif; }
 
+  /* ============ PAGE 3: six 3D scenes (CSS 3D + light canvas, no WebGL: the phone renders this page too) ============ */
+  .p3 .xs { perspective:1300px; }
+  .p3 canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .hx { position:absolute; left:50%; top:56%; width:0; height:0; transform-style:preserve-3d; will-change:transform; }
+  .hx-c { position:absolute; left:0; top:0; width:clamp(104px,12vw,190px); aspect-ratio:3/4; translate:-50% -50%; border-radius:12px; overflow:hidden; border:1px solid rgba(217,181,107,.4); box-shadow:0 18px 50px rgba(0,0,0,.55); background:#111; }
+  .hx-c img, .hx-c .ph, .pf-f img, .pf-f .ph { width:100%; height:100%; object-fit:cover; display:block; }
+  .hx-r { position:absolute; left:0; top:0; height:2px; translate:-50% -50%; background:linear-gradient(90deg,rgba(217,181,107,.15),rgba(217,181,107,.85),rgba(217,181,107,.15)); }
+  .of { position:absolute; left:50%; top:56%; width:0; transform-style:preserve-3d; }
+  .of-p { position:absolute; top:0; height:100%; transform-style:preserve-3d; transform-origin:0 50%; background-repeat:no-repeat; background-color:#10151d; box-shadow:inset 1px 0 0 rgba(255,255,255,.28); }
+  .of-p::after { content:""; position:absolute; inset:0; background:#000; opacity:var(--sh,0); pointer-events:none; }
+  .ex { position:absolute; left:50%; top:61%; width:0; height:0; transform-style:preserve-3d; }
+  .ex-l { position:absolute; left:0; top:0; width:min(42vw,480px); aspect-ratio:16/10; translate:-50% -50%; border-radius:16px; border:1.5px solid; background:rgba(16,21,29,.9); padding:4%; display:grid; grid-template-columns:1fr 2.2fr; grid-template-rows:repeat(3,1fr); gap:5%; box-shadow:0 0 50px rgba(0,0,0,.4); }
+  .ex-l i { display:block; border-radius:6px; background:rgba(255,255,255,.09); }
+  .ex-l b { position:absolute; left:100%; top:50%; margin-left:1.2rem; translate:0 -50%; font-weight:600; letter-spacing:.18em; text-transform:uppercase; font-size:clamp(.7rem,1vw,.95rem); white-space:nowrap; }
+  .pf { position:absolute; left:50%; top:58%; width:min(62vw,800px); aspect-ratio:2/1.28; transform-style:preserve-3d; }
+  .pf-base { position:absolute; top:0; bottom:0; width:50%; background:#0d1118; border:1px solid var(--line); }
+  .pf-pg { position:absolute; left:50%; top:0; width:50%; height:100%; transform-origin:0 50%; transform-style:preserve-3d; }
+  .pf-f { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden; border-radius:0 8px 8px 0; background:#10151d; }
+  .pf-f.b { transform:rotateY(180deg); border-radius:8px 0 0 8px; }
+  .pf-f::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.4),transparent 16%); pointer-events:none; }
+  .pf-f.b::after { background:linear-gradient(270deg,rgba(0,0,0,.4),transparent 16%); }
+
   /* video wall */
   .vw-grid { position:absolute; left:12vw; right:12vw; top:50%; translate:0 -50%; display:grid; grid-template-columns:repeat(3,1fr); gap:1.2vw; will-change:transform; }
   .vw-t { aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:#151817; }
@@ -541,7 +563,7 @@ function $(id){ return document.getElementById(id); }
 var PAGES = [
   { title:'Scroll fundamentals', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask'] },
   { title:'Motion, video and graphics', names:['Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve'] },
-  { title:'Graphics and finale', names:['Channel Flow','Connected Network','Four Dials','Blur Reveal'] }
+  { title:'Graphics, 3D and finale', names:['Channel Flow','Connected Network','Four Dials','Card Helix','Particle Morph','Origami Fold','Exploded Layers','Page Flip','Wave Terrain','Blur Reveal'] }
 ];
 var FLAT = []; PAGES.forEach(function(p){ p.names.forEach(function(n){ FLAT.push(n); }); });
 function pageOf(n){ var c = 0; for (var i = 0; i < PAGES.length; i++) { c += PAGES[i].names.length; if (n <= c) return i + 1; } return 1; }
@@ -1062,6 +1084,147 @@ function buildMore(){
       var c = svgEl(svg, 'circle', { cx:300, cy:300, r:r, fill:'none', stroke:cols[i], 'stroke-width':34, 'stroke-linecap':'round', transform:'rotate(-90 300 300)' }); var L = 2 * Math.PI * r; c.style.strokeDasharray = L; c.style.strokeDashoffset = L; c._L = L; arcs.push(c); });
     leg.innerHTML = nm.map(function(n, i){ return '<div style="display:flex;align-items:baseline;gap:1rem;margin:1.2rem 0"><span style="width:14px;height:14px;border-radius:50%;background:' + cols[i] + '"></span><b style="font-size:clamp(2rem,4vw,3.4rem);font-weight:500;min-width:2.6ch;font-variant-numeric:tabular-nums" id="g5n' + i + '">0%</b><span style="color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem">' + n + '</span></div>'; }).join('');
     prog(s, function(p){ arcs.forEach(function(c, i){ var k = ease((p - i * .07) / .6) * tg[i]; c.style.strokeDashoffset = c._L * (1 - k); document.getElementById('g5n' + i).textContent = Math.round(k * 100) + '%'; }); });
+  })();
+
+  /* ================= PAGE 3: six 3D scenes =================
+     CSS 3D and small 2D canvases on purpose: the phone controller renders this page in its live preview,
+     and WebGL or heavy canvases there run a phone out of memory. Canvases draw only while on screen,
+     and in the phone preview (mini) they draw only when the scroll position changes. */
+  function canvasSec(s, draw){
+    var cv = s.querySelector('canvas'), ctx = cv.getContext('2d'), W = 2, H = 2, dpr = 1, P = 0, on = false, t0 = performance.now();
+    function size(){ var r = cv.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, MODE === 'mini' ? 1 : 1.5); W = Math.max(2, r.width); H = Math.max(2, r.height); cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    function frame(){ ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); draw(ctx, W, H, P, MODE === 'mini' ? 0 : (performance.now() - t0) / 1000); }
+    size(); ST.addEventListener('refresh', function(){ size(); frame(); });
+    prog(s, function(p){ P = p; if (MODE === 'mini' || !on) frame(); });
+    if (MODE !== 'mini') {
+      if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ on = es[0].isIntersecting; }).observe(s); else on = true;
+      gsap.ticker.add(function(){ if (on) frame(); });
+    }
+  }
+
+  /* 3D-1: double helix of cards you travel down */
+  if (inPage('Card Helix')) (function(){
+    var s = mk('t1', 'Card Helix', 'p3', '<div class="gh"><div class="sec-eyebrow">Double helix</div><h2>Spiral through <em>the work.</em></h2></div><div class="hx"></div><div class="gcap">Scroll to travel the strand</div>', 340);
+    var hx = s.querySelector('.hx'), N = 9, html = '', R = 0, gap = 0;
+    for (var i = 0; i < N; i++) html += '<div class="hx-r"></div><div class="hx-c">' + media(i * 2) + '</div><div class="hx-c">' + media(i * 2 + 1) + '</div>';
+    hx.innerHTML = html;
+    var rungs = hx.querySelectorAll('.hx-r'), cards = hx.querySelectorAll('.hx-c'), gh = s.querySelector('.gh');
+    function layout(){
+      R = Math.min(window.innerWidth * .28, 360); gap = Math.min(window.innerHeight * .19, 140);
+      for (var i = 0; i < N; i++) { var a = i * 40, y = (i - (N - 1) / 2) * gap;
+        rungs[i].style.width = (2 * R) + 'px'; rungs[i].style.transform = 'translateY(' + y + 'px) rotateY(' + (a + 90) + 'deg)';
+        cards[2 * i].style.transform = 'translateY(' + y + 'px) rotateY(' + a + 'deg) translateZ(' + R + 'px)'; cards[2 * i]._a = a;
+        cards[2 * i + 1].style.transform = 'translateY(' + y + 'px) rotateY(' + (a + 180) + 'deg) translateZ(' + R + 'px)'; cards[2 * i + 1]._a = a + 180; }
+    }
+    layout(); ST.addEventListener('refreshInit', layout);
+    prog(s, function(p){
+      var r = -p * 520; gh.style.opacity = (1 - clamp01((p - .08) / .1)).toFixed(3);
+      hx.style.transform = 'translateY(' + ((.5 - p) * (N - 1) * gap) + 'px) rotateX(-12deg) rotateY(' + r + 'deg)';
+      for (var j = 0; j < cards.length; j++) { var c = Math.cos((cards[j]._a + r) * Math.PI / 180); cards[j].style.opacity = (.3 + .7 * (c + 1) / 2).toFixed(3); }
+    });
+  })();
+
+  /* 3D-2: a point cloud that morphs sphere -> torus -> galaxy -> cube */
+  if (inPage('Particle Morph')) (function(){
+    var s = mk('t2', 'Particle Morph', 'p3', '<canvas></canvas><div class="gh"><div class="sec-eyebrow">Point cloud</div><h2>One shape. <em>Many forms.</em></h2></div><div class="gcap" id="pmc">Sphere</div>', 380);
+    var N = MODE === 'mini' ? 600 : 1800, R = rng(7), GA = Math.PI * (3 - Math.sqrt(5)), names = ['Sphere', 'Torus', 'Galaxy', 'Cube'], cap = s.querySelector('#pmc');
+    var S = [[], [], [], []];
+    for (var i = 0; i < N; i++) {
+      var y = 1 - 2 * (i + .5) / N, rr = Math.sqrt(1 - y * y), th = i * GA; S[0].push([Math.cos(th) * rr, y, Math.sin(th) * rr]);
+      var u = R() * 6.2832, v = R() * 6.2832; S[1].push([(.72 + .3 * Math.cos(v)) * Math.cos(u), .3 * Math.sin(v), (.72 + .3 * Math.cos(v)) * Math.sin(u)]);
+      var t = R(), rad = .06 + t * 1.05, ang = (i % 3) * 2.0944 + rad * 3.4 + (R() - .5) * .45; S[2].push([rad * Math.cos(ang), (R() - .5) * .14 * (1.2 - rad), rad * Math.sin(ang)]);
+      var f = i % 6, a = R() * 2 - 1, b = R() * 2 - 1, q = .74, sg = f % 2 ? -q : q;
+      S[3].push(f < 2 ? [sg, a * q, b * q] : f < 4 ? [a * q, sg, b * q] : [a * q, b * q, sg]);
+    }
+    var hues = ['rgba(217,181,107,', 'rgba(255,111,168,', 'rgba(79,227,214,'], xs = new Float32Array(N), ys = new Float32Array(N), ss = new Float32Array(N), last = '';
+    canvasSec(s, function(ctx, W, H, p, tm){
+      var f = clamp01((p - .04) / .9) * 3, i0 = Math.min(2, Math.floor(f)), k = ease((f - i0 - .12) / .7), A = S[i0], B = S[i0 + 1];
+      var nm = names[k < .5 ? i0 : i0 + 1]; if (nm !== last) { cap.textContent = nm; last = nm; }
+      var yaw = p * 9.4 + tm * .22, pitch = .5 - p * .25, cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), sc = Math.min(W, H) * .36, ox = W / 2, oy = H * .57;
+      for (var j = 0; j < N; j++) {
+        var a2 = A[j], b2 = B[j], x = a2[0] + (b2[0] - a2[0]) * k, y = a2[1] + (b2[1] - a2[1]) * k, z = a2[2] + (b2[2] - a2[2]) * k;
+        var x1 = x * cy - z * sy, z1 = x * sy + z * cy, y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp, d = 3.2 / (3.2 + z2);
+        xs[j] = ox + x1 * sc * d; ys[j] = oy - y2 * sc * d; ss[j] = d;
+      }
+      ctx.globalCompositeOperation = 'lighter';
+      for (var h = 0; h < 3; h++) {
+        for (var band = 0; band < 2; band++) {
+          ctx.fillStyle = hues[h] + (band ? 1 : .6) + ')';
+          for (var m = h; m < N; m += 3) { var dd = ss[m]; if ((dd > 1) !== !!band) continue; var w = 1.6 + dd * 2.2; ctx.fillRect(xs[m] - w / 2, ys[m] - w / 2, w, w); }
+        }
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    });
+  })();
+
+  /* 3D-3: one picture folded into a paper accordion that opens flat */
+  if (inPage('Origami Fold')) (function(){
+    var s = mk('t3', 'Origami Fold', 'p3', '<div class="gh"><div class="sec-eyebrow">Paper engineering</div><h2>Unfold <em>the idea.</em></h2></div><div class="of"></div><div class="gcap">Six folds, one picture</div>', 320);
+    var of = s.querySelector('.of'), N = 6, url = IMAGES.length ? IMAGES[5 % IMAGES.length] : null, panels = [], parent = of, W = 0, Hh = 0, pw = 0;
+    for (var i = 0; i < N; i++) { var d = document.createElement('div'); d.className = 'of-p';
+      d.style.backgroundImage = url ? 'url("' + url + '")' : 'linear-gradient(90deg,#d9b56b,#ff6fa8,#4fe3d6,#9fb8ff)';
+      parent.appendChild(d); panels.push(d); parent = d; }
+    function layout(){
+      W = Math.min(window.innerWidth * .84, 1000); Hh = Math.min(window.innerHeight * .5, W * .52); pw = W / N; of.style.height = Hh + 'px';
+      panels.forEach(function(d, i){ d.style.width = pw + 'px'; d.style.left = (i ? pw : 0) + 'px'; d.style.backgroundSize = url ? (W + 'px auto') : (W + 'px ' + Hh + 'px'); d.style.backgroundPosition = (-i * pw) + 'px 50%'; });
+    }
+    layout(); ST.addEventListener('refreshInit', layout);
+    prog(s, function(p){
+      var k = ease(p / .72), th = (1 - k) * 168;
+      of.style.transform = 'translateX(' + (-W / 2 + (1 - k) * (W / 2 - pw / 2)) + 'px) translateY(-50%) rotateX(' + (44 - 36 * k) + 'deg) rotateY(' + (-(1 - k) * 32) + 'deg)';
+      panels.forEach(function(d, i){ if (!i) return; d.style.transform = 'rotateY(' + (i % 2 ? th : -th) + 'deg)'; d.style.setProperty('--sh', ((1 - k) * (i % 2 ? .72 : .06)).toFixed(3)); });
+    });
+  })();
+
+  /* 3D-4: an isometric product stack that separates into its layers, then turns */
+  if (inPage('Exploded Layers')) (function(){
+    var s = mk('t4', 'Exploded Layers', 'p3', '<div class="gh"><div class="sec-eyebrow">Exploded view</div><h2>Every layer. <em>Pulled apart.</em></h2></div><div class="ex"></div><div class="gcap" id="exc">One product</div>', 320);
+    var ex = s.querySelector('.ex'), nm = ['Data', 'Code', 'Design', 'Content', 'Brand'], cols = ['#4fe3d6', '#9fb8ff', '#ff6fa8', '#ffd36a', '#d9b56b'], cap = s.querySelector('#exc'), last = '';
+    ex.innerHTML = nm.map(function(n, i){ return '<div class="ex-l" style="border-color:' + cols[i] + '"><i style="grid-row:span 3;background:' + cols[i] + '22"></i><i></i><i style="width:70%"></i><i style="width:45%;background:' + cols[i] + '55"></i><b style="color:' + cols[i] + '">' + n + '</b></div>'; }).join('');
+    var L = [].slice.call(ex.children);
+    prog(s, function(p){
+      var k = ease(p / .55), spin = ease((p - .55) / .45), z = Math.min(window.innerHeight * .15, 120);
+      ex.style.transform = 'rotateX(' + (58 - spin * 16) + 'deg) rotateZ(' + (-38 + spin * 76) + 'deg)';
+      L.forEach(function(l, i){ l.style.transform = 'translateZ(' + ((i - 2) * z * (.06 + k)) + 'px)'; });
+      var c = p < .25 ? 'One product' : 'Five layers that make it'; if (c !== last) { cap.textContent = c; last = c; }
+    });
+  })();
+
+  /* 3D-5: a lookbook whose pages turn in 3D */
+  if (inPage('Page Flip')) (function(){
+    var s = mk('t5', 'Page Flip', 'p3', '<div class="gh"><div class="sec-eyebrow">Lookbook</div><h2>Turn <em>the pages.</em></h2></div><div class="pf"><div class="pf-base" style="left:0;border-radius:8px 0 0 8px"></div><div class="pf-base" style="left:50%;border-radius:0 8px 8px 0"></div></div><div class="gcap" id="pfc">Spread 1</div>', 380);
+    var pf = s.querySelector('.pf'), N = 7, pages = [], cap = s.querySelector('#pfc'), last = '';
+    for (var i = 0; i < N; i++) { var d = document.createElement('div'); d.className = 'pf-pg'; d.innerHTML = '<div class="pf-f">' + media(10 + i * 2) + '</div><div class="pf-f b">' + media(11 + i * 2) + '</div>'; pf.appendChild(d); pages.push(d); }
+    prog(s, function(p){
+      var f = clamp01((p - .04) / .9) * N;
+      pf.style.transform = 'translate(-50%,-50%) rotateX(' + (18 - p * 8) + 'deg)';
+      pages.forEach(function(pg, i){ var k = ease(f - i), z = (k > .5 ? i + 1 : N - i) * .8 + Math.sin(k * Math.PI) * 30; pg.style.transform = 'translateZ(' + z.toFixed(1) + 'px) rotateY(' + (-180 * k).toFixed(2) + 'deg)'; });
+      var c = 'Spread ' + Math.min(N + 1, Math.floor(f + .5) + 1) + ' of ' + (N + 1); if (c !== last) { cap.textContent = c; last = c; }
+    });
+  })();
+
+  /* 3D-6: synthwave flyover of a wireframe landscape */
+  if (inPage('Wave Terrain')) (function(){
+    var s = mk('t6', 'Wave Terrain', 'p3', '<canvas></canvas><div class="gh"><div class="sec-eyebrow">Synthwave flyover</div><h2>Ride <em>the signal.</em></h2></div><div class="gcap">Scroll to fly</div>', 340);
+    var C = MODE === 'mini' ? 24 : 44, Rw = MODE === 'mini' ? 16 : 30, px = new Float32Array((C + 1) * Rw), py = new Float32Array((C + 1) * Rw);
+    canvasSec(s, function(ctx, W, H, p, tm){
+      var hor = H * .5, fly = p * 26 + tm * .5, fl = Math.floor(fly), fr = fly - fl, F = H * .6, cx = W / 2, camH = 1.5, amp = .7 + p * 1.1;
+      var g = ctx.createLinearGradient(0, H * .12, 0, hor); g.addColorStop(0, 'rgba(7,9,13,0)'); g.addColorStop(1, 'rgba(255,111,168,.28)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, hor);
+      var sr = Math.min(W, H) * .16, sy = hor - sr * (.2 + p * .5);
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, hor); ctx.clip();
+      var sg = ctx.createLinearGradient(0, sy - sr, 0, sy + sr); sg.addColorStop(0, '#ffd36a'); sg.addColorStop(1, '#ff6fa8'); ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(cx, sy, sr, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = '#07090d'; for (var b = 0; b < 6; b++) { var by = sy + sr * (.05 + b * .16), bh = 2 + b * 1.6; ctx.fillRect(cx - sr, by, sr * 2, bh); }
+      ctx.restore();
+      ctx.fillStyle = '#07090d'; ctx.fillRect(0, hor, W, H - hor);
+      for (var r = 0; r < Rw; r++) { var z = r + 1 - fr, wz = r + 1 + fl;
+        for (var c = 0; c <= C; c++) { var x = c - C / 2, edge = Math.min(1, Math.abs(x) / (C * .5)), h = (Math.sin(x * .55 + wz * .37) * .55 + Math.sin(wz * .19 - x * .23) * .7 + Math.sin((x + wz) * .9) * .18) * amp * (edge * edge * 2.4 + .12);
+          var k = r * (C + 1) + c; px[k] = cx + x * F / z * .9; py[k] = hor + (camH - Math.max(-.2, h)) * F / z; } }
+      ctx.lineWidth = 1.2;
+      for (var r2 = Rw - 1; r2 >= 0; r2--) { var a = Math.max(0, 1 - (r2 + 1 - fr) / Rw); ctx.strokeStyle = 'rgba(255,111,168,' + (a * .9).toFixed(3) + ')'; ctx.beginPath();
+        for (var c2 = 0; c2 <= C; c2++) { var k2 = r2 * (C + 1) + c2; if (c2) ctx.lineTo(px[k2], py[k2]); else ctx.moveTo(px[k2], py[k2]); } ctx.stroke(); }
+      ctx.strokeStyle = 'rgba(217,181,107,.5)';
+      for (var c3 = 0; c3 <= C; c3 += 2) { ctx.beginPath(); for (var r3 = 0; r3 < Rw; r3++) { var k3 = r3 * (C + 1) + c3; if (r3) ctx.lineTo(px[k3], py[k3]); else ctx.moveTo(px[k3], py[k3]); } ctx.stroke(); }
+    });
   })();
 
   /* ================= LIQUID: Miami macro bullet-time ================= */
