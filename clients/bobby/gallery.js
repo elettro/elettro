@@ -110,7 +110,7 @@ function setNewest(on, scroll = true) {
   }
   document.body.classList.toggle('newest-mode', on); view.hidden = !on;
   document.getElementById('view-newest').setAttribute('aria-pressed', String(on)); document.getElementById('view-collections').setAttribute('aria-pressed', String(!on));
-  try { history.replaceState(null, '', on ? '#newest' : location.pathname + location.search); } catch {}
+  try { history.replaceState(null, '', on ? '#newest' : '#collections'); } catch {}
   applyFilters(); if (scroll) { const bar = document.querySelector('.toolbar'); if (bar) bar.scrollIntoView({ block: 'start' }); }
 }
 document.getElementById('view-newest').addEventListener('click', () => setNewest(true));
@@ -144,4 +144,4 @@ fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.
     const card = document.getElementById(id);
     if (card && featuredGrid) featuredGrid.append(card);
   }
-  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '#newest') setNewest(true, false); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
+  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '' || location.hash === '#newest') setNewest(true, false); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
