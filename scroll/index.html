@@ -476,6 +476,35 @@ var params = new URLSearchParams(location.search);
 var target = params.get('c');
 var MODE = target ? 'remote' : (params.get('mini') === '1' ? 'mini' : 'display');
 var PREFIX = 'elettro-sc-';
+/* Own message relay (AWS WebSocket API, services/scroll-relay-lambda in elettro-brand-os). Empty = use only the free PeerJS service. */
+var RELAY_URL = '';
+/* A WebSocket link to the relay that reconnects by itself. onMsg(obj) gets every message; onState('open'|'close') reports the link. */
+function RelayLink(role, sid, onMsg, onState){
+  var ws = null, dead = false, tries = 0, ka = null, self = this;
+  self.ready = false;
+  function open(){
+    if (dead) return;
+    try { ws = new WebSocket(RELAY_URL + '?s=' + encodeURIComponent(sid) + '&r=' + role); } catch (e) { retry(); return; }
+    ws.onopen = function(){ self.ready = true; tries = 0; clearInterval(ka); ka = setInterval(function(){ self.send({ t:'_ka' }); }, 240000); if (onState) onState('open'); };
+    ws.onmessage = function(e){ var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && onMsg) onMsg(m); };
+    ws.onclose = function(){ var was = self.ready; self.ready = false; clearInterval(ka); if (was && onState) onState('close'); retry(); };
+    ws.onerror = function(){};
+  }
+  function retry(){ if (dead) return; tries++; setTimeout(open, Math.min(5000, 600 + tries * 600)); }
+  self.send = function(m){ if (ws && ws.readyState === 1) { try { ws.send(JSON.stringify(m)); return true; } catch (e) {} } return false; };
+  self.setId = function(n){ sid = n; if (ws) { try { ws.close(); } catch (e) {} } };
+  self.close = function(){ dead = true; clearInterval(ka); try { if (ws) ws.close(); } catch (e) {} };
+  open();
+}
+/* Makes a relay look like a PeerJS connection (on/send/open/close) so the existing screen and phone code can use either. */
+function relayConn(sender){
+  var h = {}, c = { open:false,
+    send:function(m){ return sender(m); },
+    close:function(){},
+    on:function(ev, fn){ (h[ev] = h[ev] || []).push(fn); },
+    emit:function(ev, a){ if (ev === 'open') c.open = true; if (ev === 'close') c.open = false; (h[ev] || []).slice().forEach(function(f){ f(a); }); } };
+  return c;
+}
 function etHit(t){ try { fetch('https://abacus.jasoncameron.dev/hit/elettro-com/remote-scroll-' + t, { cache:'no-store', keepalive:true }).catch(function(){}); } catch(e){} } /* usage counter for elettro.com/dash: counts only */
 document.body.classList.add('mode-' + MODE);
 if (MODE === 'mini') document.documentElement.classList.add('mini-root');
@@ -1238,7 +1267,7 @@ function initSections(){
 
 /* ------------------------------------------------------------- DISPLAY */
 function startDisplay(){
-  function rid(){ return Math.random().toString(36).slice(2, 8); }
+  function rid(){ return (Math.random().toString(36) + '000000').slice(2, 8); }
   var id = null, reuse = false, idTries = 0;
   try { id = sessionStorage.getItem('elsc_id'); } catch (e) {}
   if (id) reuse = true; else id = rid();
@@ -1288,12 +1317,7 @@ function startDisplay(){
   window.addEventListener('resize', function(){ setTimeout(sendMeta, 400); });
   ScrollTrigger.addEventListener('refresh', sendMeta);
 
-  function boot(){
-    drawQR();
-    var peer = new Peer(PREFIX + id);
-    /* free the session name at once when this page goes away, so the next page (or a reload) can take it back without waiting */
-    window.addEventListener('pagehide', function(){ try { peer.destroy(); } catch (x) {} });
-    peer.on('connection', function(c){
+  function onConn(c){
       if (conn && conn.open) {
         c.on('open', function(){ c.send({ t:'busy' }); setTimeout(function(){ try { c.close(); } catch (e) {} }, 400); });
         return;
@@ -1309,10 +1333,17 @@ function startDisplay(){
       });
       c.on('close', function(){ if (conn === c) { conn = null; setPaired(false); } });
       c.on('error', function(){ if (conn === c) { conn = null; setPaired(false); } });
-    });
+    }
+  var rlinkD = null;
+  function boot(){
+    drawQR();
+    var peer = new Peer(PREFIX + id);
+    /* free the session name at once when this page goes away, so the next page (or a reload) can take it back without waiting */
+    window.addEventListener('pagehide', function(){ try { peer.destroy(); } catch (x) {} });
+    peer.on('connection', onConn);
     peer.on('disconnected', function(){ try { peer.reconnect(); } catch (e) {} });
     peer.on('error', function(e){
-      if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 25) { setTimeout(boot, 400); return; } reuse = false; id = rid(); saveId(); boot(); return; }
+      if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 25) { setTimeout(boot, 400); return; } reuse = false; id = rid(); saveId(); if (rlinkD) rlinkD.setId(id); boot(); return; }
       var d = $('derr'); d.style.display = 'block';
       if (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error' || e.type === 'socket-closed' || e.type === 'disconnected') {
         /* the free broker is slow or briefly unreachable: keep trying, never leave a dead QR code */
@@ -1332,6 +1363,14 @@ function startDisplay(){
   mo.addEventListener('click', function(e){ var a = e.target.closest ? e.target.closest('a') : null; if (!a) return; var h = a.getAttribute('href'); if (h.split('#')[0] === pageUrl(PAGE)) menu(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menu(false); });
   boot();
+  if (RELAY_URL) {
+    var rcur = null;
+    rlinkD = new RelayLink('display', id, function(m){
+      if (m.t === '_join') { if (rcur) rcur.emit('close'); rcur = relayConn(function(x){ return rlinkD.send(x); }); onConn(rcur); rcur.emit('open'); }
+      else if (m.t === '_leave') { if (rcur) { var o = rcur; rcur = null; o.emit('close'); } }
+      else if (rcur) rcur.emit('data', m);
+    }, function(st){ if (st === 'open') rlinkD.send({ t:'_hi' }); });
+  }
 
   /* ?debug=1 shows a live health readout (frame rate, scroll position, phone target) so a lock-up can be photographed */
   if (params.get('debug') === '1') {
@@ -1427,14 +1466,16 @@ function startRemote(){
   mvf.addEventListener('load', function(){ fit(); applyMini(); });
   fit();
 
-  var curPage = 0, tries = 0, retryT = null, everOn = false, busy = false, peer = new Peer();
+  var curPage = 0, tries = 0, retryT = null, everOn = false, busy = false, peer = null, via = RELAY_URL ? 'relay' : 'peer', rlink = null;
   function retry(){
     if (busy) return;
+    if (via === 'relay') { setStat(false, 'Reconnecting'); return; }
     if (tries++ > 45) { setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); return; }
     setStat(false, 'Reconnecting'); clearTimeout(retryT); retryT = setTimeout(link, 700);
   }
-  function link(){
-    var c = peer.connect(PREFIX + target, { reliable:true }); conn = c;
+  function link(){ wire(peer.connect(PREFIX + target, { reliable:true })); }
+  function wire(c){
+    conn = c;
     c.on('open', function(){ tries = 0; try { sessionStorage.removeItem('elsc_rl'); } catch (x) {} if (!everOn) etHit('phones'); everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
     c.on('data', function(m){
       if (!m) return;
@@ -1450,16 +1491,26 @@ function startRemote(){
     c.on('close', function(){ if (conn === c) retry(); });
     c.on('error', function(){ if (conn === c) retry(); });
   }
-  peer.on('open', link);
-  peer.on('error', function(e){
-    if (everOn && e.type === 'peer-unavailable') { retry(); return; }
-    if (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error' || e.type === 'socket-closed') {
-      var rl = 0; try { rl = +sessionStorage.getItem('elsc_rl') || 0; sessionStorage.setItem('elsc_rl', String(rl + 1)); } catch (x) {}
-      if (rl < 8) { setStat(false, 'Reconnecting'); setTimeout(function(){ location.reload(); }, 1500); return; }
-    }
-    setStat(false, 'Could not connect');
-    err(e.type === 'peer-unavailable' ? 'This session has ended. Scan the code on the screen again.' : 'Connection error: ' + e.type);
-  });
+  function startPeer(){
+    peer = new Peer();
+    peer.on('open', link);
+    peer.on('error', function(e){
+      if (everOn && e.type === 'peer-unavailable') { retry(); return; }
+      if (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error' || e.type === 'socket-closed') {
+        var rl = 0; try { rl = +sessionStorage.getItem('elsc_rl') || 0; sessionStorage.setItem('elsc_rl', String(rl + 1)); } catch (x) {}
+        if (rl < 8) { setStat(false, 'Reconnecting'); setTimeout(function(){ location.reload(); }, 1500); return; }
+      }
+      setStat(false, 'Could not connect');
+      err(e.type === 'peer-unavailable' ? 'This session has ended. Scan the code on the screen again.' : 'Connection error: ' + e.type);
+    });
+  }
+  if (via === 'relay') {
+    var rconn = relayConn(function(x){ return rlink && rlink.send(x); });
+    rlink = new RelayLink('phone', target, function(m){ rconn.emit('data', m); }, function(st){ rconn.emit(st === 'open' ? 'open' : 'close'); });
+    wire(rconn);
+    /* if the relay cannot be reached, fall back to the free PeerJS service */
+    setTimeout(function(){ if (!rlink.ready && !everOn) { via = 'peer'; rlink.close(); startPeer(); } }, 3500);
+  } else startPeer();
   function nav(d){ if (navigator.vibrate) navigator.vibrate(12); if (conn && conn.open) conn.send({ t:'nav', d:d }); }
   if (PAGES.length < 2) $('bprev').parentNode.style.display = 'none';
   $('bprev').addEventListener('click', function(){ nav(-1); });
