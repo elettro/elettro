@@ -95,9 +95,9 @@ function setView(mode, scroll = true) {
   viewMode = mode;
   if (mode !== 'collections') {
     origins = [...document.querySelectorAll('[data-item-id]')].map(card => ({ card, parent: card.parentElement }));
-    const byNewest = [...items].sort((x, y) => (y.added || '0000-00-00').localeCompare(x.added || '0000-00-00'));
+    const byNewest = [...items].reverse().sort((x, y) => (y.added || '0000-00-00').localeCompare(x.added || '0000-00-00'));
     const buckets = mode === 'newest'
-      ? [...new Set(items.map(i => i.added || '0000-00-00'))].sort().reverse().map(date => ({ label: date === '0000-00-00' ? 'Earlier' : prettyDate(date), list: items.filter(i => (i.added || '0000-00-00') === date) }))
+      ? [...new Set(items.map(i => i.added || '0000-00-00'))].sort().reverse().map(date => ({ label: date === '0000-00-00' ? 'Earlier' : prettyDate(date), list: items.filter(i => (i.added || '0000-00-00') === date).reverse() }))
       : FORMATS.map(([type, label]) => ({ label, list: byNewest.filter(i => i.type === type) }));
     for (const { label, list } of buckets) {
       if (!list.length) continue;
