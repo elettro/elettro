@@ -528,7 +528,7 @@ var PAGE = Math.max(1, Math.min(PAGES.length, parseInt(params.get('p'), 10) || 1
   if (m && MODE !== 'remote') { var pp = pageOf(+m[1]); if (pp !== PAGE) { location.replace(location.pathname + (pp > 1 ? '?p=' + pp : '') + location.hash); } }
 })();
 function inPage(name){ return PAGES[PAGE - 1].names.indexOf(name) > -1; }
-function pageUrl(p, hash){ return location.pathname + (p > 1 ? '?p=' + p : '') + (hash || ''); }
+function pageUrl(p, hash){ var q = []; if (p > 1) q.push('p=' + p); if (/[?&]debug=1/.test(location.search)) q.push('debug=1'); return location.pathname + (q.length ? '?' + q.join('&') : '') + (hash || ''); }
 function pad2(n){ return (n < 10 ? '0' : '') + n; }
 function renderMenu(el){
   if (!el) return; var n = 0, html = ''; if (PAGES.length < 2) el.classList.add('single');
