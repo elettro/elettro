@@ -83,7 +83,7 @@ function render(item) {
 }
 const COLLECTION_LABELS = { fun: 'Just for Fun', rompe: 'Rompe', limoncito: 'Limoncito', 'mojito-magico': 'Mojito Mágico', 'pop-that-pina': 'Pop That Piña' };
 let newestOn = false; let origins = [];
-function setNewest(on) {
+function setNewest(on, scroll = true) {
   if (on === newestOn || !items.length) return;
   newestOn = on;
   const view = document.getElementById('newest-view'); const groups = document.getElementById('newest-groups');
@@ -111,7 +111,7 @@ function setNewest(on) {
   document.body.classList.toggle('newest-mode', on); view.hidden = !on;
   document.getElementById('view-newest').setAttribute('aria-pressed', String(on)); document.getElementById('view-collections').setAttribute('aria-pressed', String(!on));
   try { history.replaceState(null, '', on ? '#newest' : location.pathname + location.search); } catch {}
-  applyFilters(); window.scrollTo({ top: 0 });
+  applyFilters(); if (scroll) { const bar = document.querySelector('.toolbar'); if (bar) bar.scrollIntoView({ block: 'start' }); }
 }
 document.getElementById('view-newest').addEventListener('click', () => setNewest(true));
 document.getElementById('view-collections').addEventListener('click', () => setNewest(false));
@@ -144,4 +144,4 @@ fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.
     const card = document.getElementById(id);
     if (card && featuredGrid) featuredGrid.append(card);
   }
-  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '#newest') setNewest(true); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
+  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '#newest') setNewest(true, false); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
