@@ -1244,7 +1244,7 @@ function startDisplay(){
   if (id) reuse = true; else id = rid();
   function saveId(){ try { sessionStorage.setItem('elsc_id', id); } catch (e) {} }
   saveId();
-  var rxN = 0, rxT = 0, conn = null, lastRemote = 0, remoteTarget = null, remoteSince = 0, lastPos = 0;
+  var netTries = 0, rxN = 0, rxT = 0, conn = null, lastRemote = 0, remoteTarget = null, remoteSince = 0, lastPos = 0;
   /* the mouse, keyboard or touch on the big screen always wins over a pending phone target */
   ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(ev){ window.addEventListener(ev, function(){ remoteTarget = null; }, { passive:true }); });
 
@@ -1313,8 +1313,17 @@ function startDisplay(){
     peer.on('disconnected', function(){ try { peer.reconnect(); } catch (e) {} });
     peer.on('error', function(e){
       if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 25) { setTimeout(boot, 400); return; } reuse = false; id = rid(); saveId(); boot(); return; }
-      var d = $('derr'); d.style.display = 'block'; d.textContent = 'Connection service error: ' + e.type;
+      var d = $('derr'); d.style.display = 'block';
+      if (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error' || e.type === 'socket-closed' || e.type === 'disconnected') {
+        /* the free broker is slow or briefly unreachable: keep trying, never leave a dead QR code */
+        d.textContent = 'Connecting to the service, retrying...';
+        try { peer.destroy(); } catch (x) {}
+        netTries++; setTimeout(boot, Math.min(8000, 1500 + netTries * 700));
+        return;
+      }
+      d.textContent = 'Connection service error: ' + e.type;
     });
+    peer.on('open', function(){ netTries = 0; var d = $('derr'); d.style.display = 'none'; });
   }
   var mo = $('menuov'); renderMenu($('bigMenu'));
   function menu(on){ mo.classList.toggle('open', on); if (lenis) { if (on) lenis.stop(); else lenis.start(); } }
@@ -1426,7 +1435,7 @@ function startRemote(){
   }
   function link(){
     var c = peer.connect(PREFIX + target, { reliable:true }); conn = c;
-    c.on('open', function(){ tries = 0; if (!everOn) etHit('phones'); everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
+    c.on('open', function(){ tries = 0; try { sessionStorage.removeItem('elsc_rl'); } catch (x) {} if (!everOn) etHit('phones'); everOn = true; $('rerr').style.display = 'none'; c.send({ t:'hello' }); setStat(true, 'Connected'); });
     c.on('data', function(m){
       if (!m) return;
       if (m.t === 'meta') {
@@ -1444,6 +1453,10 @@ function startRemote(){
   peer.on('open', link);
   peer.on('error', function(e){
     if (everOn && e.type === 'peer-unavailable') { retry(); return; }
+    if (e.type === 'network' || e.type === 'server-error' || e.type === 'socket-error' || e.type === 'socket-closed') {
+      var rl = 0; try { rl = +sessionStorage.getItem('elsc_rl') || 0; sessionStorage.setItem('elsc_rl', String(rl + 1)); } catch (x) {}
+      if (rl < 8) { setStat(false, 'Reconnecting'); setTimeout(function(){ location.reload(); }, 1500); return; }
+    }
     setStat(false, 'Could not connect');
     err(e.type === 'peer-unavailable' ? 'This session has ended. Scan the code on the screen again.' : 'Connection error: ' + e.type);
   });
