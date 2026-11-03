@@ -1291,6 +1291,8 @@ function startDisplay(){
   function boot(){
     drawQR();
     var peer = new Peer(PREFIX + id);
+    /* free the session name at once when this page goes away, so the next page (or a reload) can take it back without waiting */
+    window.addEventListener('pagehide', function(){ try { peer.destroy(); } catch (x) {} });
     peer.on('connection', function(c){
       if (conn && conn.open) {
         c.on('open', function(){ c.send({ t:'busy' }); setTimeout(function(){ try { c.close(); } catch (e) {} }, 400); });
@@ -1309,7 +1311,7 @@ function startDisplay(){
     });
     peer.on('disconnected', function(){ try { peer.reconnect(); } catch (e) {} });
     peer.on('error', function(e){
-      if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 8) { setTimeout(boot, 900); return; } reuse = false; id = rid(); saveId(); boot(); return; }
+      if (e.type === 'unavailable-id') { try { peer.destroy(); } catch (x) {} if (reuse && idTries++ < 25) { setTimeout(boot, 400); return; } reuse = false; id = rid(); saveId(); boot(); return; }
       var d = $('derr'); d.style.display = 'block'; d.textContent = 'Connection service error: ' + e.type;
     });
   }
@@ -1403,8 +1405,8 @@ function startRemote(){
   var curPage = 0, tries = 0, retryT = null, everOn = false, busy = false, peer = new Peer();
   function retry(){
     if (busy) return;
-    if (tries++ > 25) { setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); return; }
-    setStat(false, 'Reconnecting'); clearTimeout(retryT); retryT = setTimeout(link, 1500);
+    if (tries++ > 45) { setStat(false, 'Disconnected'); err('Session ended. Scan the code on the screen again.'); return; }
+    setStat(false, 'Reconnecting'); clearTimeout(retryT); retryT = setTimeout(link, 700);
   }
   function link(){
     var c = peer.connect(PREFIX + target, { reliable:true }); conn = c;
