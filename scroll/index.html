@@ -1426,7 +1426,7 @@ function startRemote(){
       applyMini();
       var nowT = performance.now(), dc = conn && conn.dataChannel;
       if (!conn || !conn.open) dirty = false;
-      else if (nowT - lastTx >= 40 && !(dc && dc.bufferedAmount > 32768)) { dirty = false; lastTx = nowT; conn.send({ t:'p', v: max ? pos / max : 0 }); }
+      else if (nowT - lastTx >= (via === 'relay' ? 120 : 40) &&!(dc && dc.bufferedAmount > 32768)) { dirty = false; lastTx = nowT; conn.send({ t:'p', v: max ? pos / max : 0 }); }
     }
     requestAnimationFrame(tick);
   }
