@@ -1378,10 +1378,13 @@ function startDisplay(){
     dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:rgba(0,0,0,.8);color:#5be3a2;font:12px/1.4 monospace;padding:6px 9px;border:1px solid #5be3a2;border-radius:6px;pointer-events:none;white-space:pre';
     document.body.appendChild(dbg);
     var fN = 0, fT = performance.now(), fps = 0;
+    var wN = 0, wT = 0, longMax = 0;
+    window.addEventListener('wheel', function(){ wN++; wT = performance.now(); }, { passive:true, capture:true });
+    try { new PerformanceObserver(function(l){ l.getEntries().forEach(function(e){ if (e.duration > longMax) longMax = e.duration; }); }).observe({ entryTypes:['longtask'] }); } catch(e){}
     gsap.ticker.add(function(){
       fN++; var n = performance.now();
       if (n - fT >= 500) { fps = Math.round(fN * 1000 / (n - fT)); fN = 0; fT = n; }
-      dbg.textContent = ['fps ' + fps + '   y ' + Math.round(window.scrollY) + '   lenis ' + Math.round(lenis.scroll) + (lenis.isStopped ? ' STOPPED' : ''), 'phone target ' + (remoteTarget === null ? '-' : Math.round(remoteTarget)) + '   conn ' + (conn && conn.open ? 'open' : 'none'), 'rx ' + rxN + (rxT ? ' (' + ((performance.now() - rxT) / 1000).toFixed(1) + 's ago)' : '') + '   sec ' + (curSec ? curSec.n : '-') + '   mem ' + (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) + 'MB' : 'n/a')].join('\n');
+      dbg.textContent = ['fps ' + fps + '   y ' + Math.round(window.scrollY) + '   lenis ' + Math.round(lenis.scroll) + (lenis.isStopped ? ' STOPPED' : ''), 'phone target ' + (remoteTarget === null ? '-' : Math.round(remoteTarget)) + '   conn ' + (conn && conn.open ? 'open' : 'none'), 'rx ' + rxN + (rxT ? ' (' + ((performance.now() - rxT) / 1000).toFixed(1) + 's ago)' : '') + '   sec ' + (curSec ? curSec.n : '-') + '   mem ' + (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) + 'MB' : 'n/a'), 'wheel ' + wN + (wT ? ' (' + ((performance.now() - wT) / 1000).toFixed(1) + 's ago)' : '') + '   lenis ' + (lenis.isStopped ? 'stopped' : 'ok') + (lenis.isLocked ? ' locked' : '') + '   limit ' + Math.round(lenis.limit) + '   ovf ' + document.documentElement.style.overflow + '/' + getComputedStyle(document.body).overflow + '   longtask ' + Math.round(longMax) + 'ms   at ' + (function(){ var e = document.elementFromPoint(innerWidth / 2, innerHeight / 2); return e ? e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (typeof e.className === 'string' && e.className ? '.' + e.className.split(' ')[0] : '') : '-'; })()].join('\n');
     });
   }
 }
