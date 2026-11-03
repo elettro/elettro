@@ -28,9 +28,11 @@ function addReview(parent, item) {
   textarea.addEventListener('input', () => save(item.id, { notes: textarea.value }));
   wrapper.append(label, select, noteLabel, textarea); parent.append(wrapper);
 }
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function prettyDate(iso) { const [y, m, d] = iso.split('-').map(Number); return `${MONTHS[m - 1]} ${d}, ${y}`; }
 function addFileDetail(parent, item) {
   const detail = el('details', 'file-detail'); detail.append(el('summary', '', 'Original filename'), el('p', '', item.filename)); parent.append(detail);
-  if (item.added) parent.append(el('p', 'added-date', 'ADDED ' + item.added.slice(2).replace(/-/g, '')));
+  if (item.added) parent.append(el('p', 'added-date', 'Added ' + prettyDate(item.added)));
 }
 function pauseOthers(player) { document.querySelectorAll('video,audio').forEach(other => { if (other !== player) other.pause(); }); }
 // Show an actual opening video frame when the player enters the viewport.
@@ -104,7 +106,7 @@ function updateSummary() {
 }
 function summaryText() {
   const lines = ['BOBBY × ROMPE / CREATIVE REVIEW', new Date().toLocaleString(), ''];
-  for (const item of items) { const value = current(item.id); lines.push(`${item.id} | ${statuses[value.status]} | ${item.title}`, `File: ${item.filename}${item.added ? ' | Added: ' + item.added : ''}`); if (value.notes.trim()) lines.push(`Notes: ${value.notes.trim()}`); lines.push(''); }
+  for (const item of items) { const value = current(item.id); lines.push(`${item.id} | ${statuses[value.status]} | ${item.title}`, `File: ${item.filename}${item.added ? ' | Added: ' + prettyDate(item.added) : ''}`); if (value.notes.trim()) lines.push(`Notes: ${value.notes.trim()}`); lines.push(''); }
   return lines.join('\n');
 }
 document.getElementById('search').addEventListener('input', applyFilters);
