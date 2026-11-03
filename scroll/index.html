@@ -480,20 +480,30 @@ var PREFIX = 'elettro-sc-';
 var RELAY_URL = 'wss://l7pixcmace.execute-api.us-east-1.amazonaws.com/dev';
 /* A WebSocket link to the relay that reconnects by itself. onMsg(obj) gets every message; onState('open'|'close') reports the link. */
 function RelayLink(role, sid, onMsg, onState){
-  var ws = null, dead = false, tries = 0, ka = null, self = this;
+  var ws = null, dead = false, tries = 0, hb = null, lastRx = 0, self = this;
   self.ready = false;
+  /* A browser can miss a silently dropped socket (network blip, idle router), so the page never learns it is deaf.
+     Ping every 5s; the relay answers. 12s of silence = throw the socket away and open a fresh one. */
+  function lost(){ var was = self.ready; self.ready = false; clearInterval(hb); if (was && onState) onState('close'); retry(); }
+  function beat(){
+    if (Date.now() - lastRx > 12000) { var old = ws; ws = null; try { old.close(); } catch (e) {} lost(); return; }
+    self.send({ t:'_ping' });
+  }
   function open(){
     if (dead) return;
-    try { ws = new WebSocket(RELAY_URL + '?s=' + encodeURIComponent(sid) + '&r=' + role); } catch (e) { retry(); return; }
-    ws.onopen = function(){ self.ready = true; tries = 0; clearInterval(ka); ka = setInterval(function(){ self.send({ t:'_ka' }); }, 240000); if (onState) onState('open'); };
-    ws.onmessage = function(e){ var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && onMsg) onMsg(m); };
-    ws.onclose = function(){ var was = self.ready; self.ready = false; clearInterval(ka); if (was && onState) onState('close'); retry(); };
-    ws.onerror = function(){};
+    var w;
+    try { w = new WebSocket(RELAY_URL + '?s=' + encodeURIComponent(sid) + '&r=' + role); } catch (e) { retry(); return; }
+    ws = w;
+    setTimeout(function(){ if (ws === w && !self.ready) { ws = null; try { w.close(); } catch (e) {} retry(); } }, 8000);
+    w.onopen = function(){ if (ws !== w) return; self.ready = true; tries = 0; lastRx = Date.now(); clearInterval(hb); hb = setInterval(beat, 5000); if (onState) onState('open'); };
+    w.onmessage = function(e){ if (ws !== w) return; lastRx = Date.now(); var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && m.t === '_pong') return; if (m && onMsg) onMsg(m); };
+    w.onclose = function(){ if (ws !== w) return; ws = null; lost(); };
+    w.onerror = function(){};
   }
   function retry(){ if (dead) return; tries++; setTimeout(open, Math.min(5000, 600 + tries * 600)); }
   self.send = function(m){ if (ws && ws.readyState === 1) { try { ws.send(JSON.stringify(m)); return true; } catch (e) {} } return false; };
-  self.setId = function(n){ sid = n; if (ws) { try { ws.close(); } catch (e) {} } };
-  self.close = function(){ dead = true; clearInterval(ka); try { if (ws) ws.close(); } catch (e) {} };
+  self.setId = function(n){ sid = n; if (ws) { var old = ws; ws = null; try { old.close(); } catch (e) {} lost(); } };
+  self.close = function(){ dead = true; clearInterval(hb); try { if (ws) ws.close(); } catch (e) {} };
   open();
 }
 /* Makes a relay look like a PeerJS connection (on/send/open/close) so the existing screen and phone code can use either. */
@@ -1362,14 +1372,19 @@ function startDisplay(){
   $('mclose').addEventListener('click', function(){ menu(false); });
   mo.addEventListener('click', function(e){ var a = e.target.closest ? e.target.closest('a') : null; if (!a) return; var h = a.getAttribute('href'); if (h.split('#')[0] === pageUrl(PAGE)) menu(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menu(false); });
-  boot();
+  /* With the relay on, PeerJS is not started at all: its flaky broker used to make this page pick a NEW session code
+     mid-session (unavailable-id), which silently orphaned the phone. One path, one fixed code. */
+  if (RELAY_URL) drawQR(); else boot();
   if (RELAY_URL) {
     var rcur = null;
     rlinkD = new RelayLink('display', id, function(m){
       if (m.t === '_join') { if (rcur) rcur.emit('close'); rcur = relayConn(function(x){ return rlinkD.send(x); }); onConn(rcur); rcur.emit('open'); }
       else if (m.t === '_leave') { if (rcur) { var o = rcur; rcur = null; o.emit('close'); } }
       else if (rcur) rcur.emit('data', m);
-    }, function(st){ if (st === 'open') rlinkD.send({ t:'_hi' }); });
+    }, function(st){
+      if (st === 'open') rlinkD.send({ t:'_hi' });
+      else if (rcur) { var o = rcur; rcur = null; o.emit('close'); }
+    });
   }
 
   /* ?debug=1 shows a live health readout (frame rate, scroll position, phone target) so a lock-up can be photographed */
@@ -1511,8 +1526,7 @@ function startRemote(){
     var rconn = relayConn(function(x){ return rlink && rlink.send(x); });
     rlink = new RelayLink('phone', target, function(m){ rconn.emit('data', m); }, function(st){ rconn.emit(st === 'open' ? 'open' : 'close'); });
     wire(rconn);
-    /* if the relay cannot be reached, fall back to the free PeerJS service */
-    setTimeout(function(){ if (!rlink.ready && !everOn) { via = 'peer'; rlink.close(); startPeer(); } }, 3500);
+    /* no PeerJS fallback: the screen only listens on the relay, and the relay link keeps retrying by itself */
   } else startPeer();
   function nav(d){ if (navigator.vibrate) navigator.vibrate(12); if (conn && conn.open) conn.send({ t:'nav', d:d }); }
   if (PAGES.length < 2) $('bprev').parentNode.style.display = 'none';
