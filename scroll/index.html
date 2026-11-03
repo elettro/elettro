@@ -480,7 +480,7 @@ var PREFIX = 'elettro-sc-';
 var RELAY_URL = 'wss://l7pixcmace.execute-api.us-east-1.amazonaws.com/dev';
 /* A WebSocket link to the relay that reconnects by itself. onMsg(obj) gets every message; onState('open'|'close') reports the link. */
 function RelayLink(role, sid, onMsg, onState){
-  var ws = null, dead = false, tries = 0, hb = null, pingAt = 0, self = this;
+  var ws = null, dead = false, tries = 0, hb = null, pingAt = 0, rt = null, self = this;
   self.ready = false;
   /* A browser can miss a silently dropped socket (network blip, idle router), so the page never learns it is deaf.
      Ping every 5s; the relay answers. 12s of silence = throw the socket away and open a fresh one. */
@@ -492,6 +492,7 @@ function RelayLink(role, sid, onMsg, onState){
     if (!pingAt && self.send({ t:'_ping' })) pingAt = Date.now();
   }
   function open(){
+    clearTimeout(rt);
     if (dead) return;
     var w;
     try { w = new WebSocket(RELAY_URL + '?s=' + encodeURIComponent(sid) + '&r=' + role); } catch (e) { retry(); return; }
@@ -502,10 +503,20 @@ function RelayLink(role, sid, onMsg, onState){
     w.onclose = function(){ if (ws !== w) return; ws = null; lost(); };
     w.onerror = function(){};
   }
-  function retry(){ if (dead) return; tries++; setTimeout(open, Math.min(5000, 600 + tries * 600)); }
+  function retry(){ if (dead) return; tries++; clearTimeout(rt); rt = setTimeout(open, Math.min(5000, 600 + tries * 600)); }
   self.send = function(m){ if (ws && ws.readyState === 1) { try { ws.send(JSON.stringify(m)); return true; } catch (e) {} } return false; };
   self.setId = function(n){ sid = n; if (ws) { var old = ws; ws = null; try { old.close(); } catch (e) {} lost(); } };
   self.close = function(){ dead = true; clearInterval(hb); try { if (ws) ws.close(); } catch (e) {} };
+  /* A phone put down for a while: iOS freezes the page and its socket is usually dead when it wakes. Do not wait for the
+     heartbeat to notice: on coming back after more than 3s away (or from the back/forward cache), reconnect at once. */
+  function fresh(){ if (dead) return; var old = ws; ws = null; pingAt = 0; tries = 0; try { if (old) old.close(); } catch (e) {} var was = self.ready; self.ready = false; clearInterval(hb); if (was && onState) onState('close'); open(); }
+  var awayAt = 0;
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) { awayAt = Date.now(); return; }
+    if (awayAt && Date.now() - awayAt > 3000) fresh();
+    awayAt = 0;
+  });
+  window.addEventListener('pageshow', function(e){ if (e.persisted) fresh(); });
   open();
 }
 /* Makes a relay look like a PeerJS connection (on/send/open/close) so the existing screen and phone code can use either. */
