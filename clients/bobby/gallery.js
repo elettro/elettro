@@ -81,23 +81,47 @@ function render(item) {
     const original = el('a', 'dropbox-link', 'Open in Dropbox ↗'); original.href = item.sourceUrl; original.target = '_blank'; original.rel = 'noopener'; body.append(original); addFileDetail(body, item); addReview(body, item); article.append(wrap, body); document.querySelector(`[data-section="${item.section}"]`).append(article);
   }
 }
-function applySort() {
-  const mode = document.getElementById('sort-order').value;
-  const order = new Map(items.map((item, i) => [item.id, i]));
-  const added = new Map(items.map(item => [item.id, item.added || '']));
-  for (const grid of document.querySelectorAll('[data-section],[data-audio]')) {
-    const cards = [...grid.querySelectorAll(':scope > [data-item-id]')];
-    cards.sort((a, b) => { const x = a.dataset.itemId, y = b.dataset.itemId; if (mode === 'default') return order.get(x) - order.get(y); const c = added.get(x).localeCompare(added.get(y)); return (mode === 'newest' ? -c : c) || order.get(x) - order.get(y); });
-    cards.forEach(card => grid.append(card));
+const COLLECTION_LABELS = { fun: 'Just for Fun', rompe: 'Rompe', limoncito: 'Limoncito', 'mojito-magico': 'Mojito Mágico', 'pop-that-pina': 'Pop That Piña' };
+let newestOn = false; let origins = [];
+function setNewest(on) {
+  if (on === newestOn || !items.length) return;
+  newestOn = on;
+  const view = document.getElementById('newest-view'); const groups = document.getElementById('newest-groups');
+  if (on) {
+    origins = [...document.querySelectorAll('[data-item-id]')].map(card => ({ card, parent: card.parentElement }));
+    const dates = [...new Set(items.map(i => i.added || '0000-00-00'))].sort().reverse();
+    for (const date of dates) {
+      const inGroup = items.filter(i => (i.added || '0000-00-00') === date);
+      const block = el('div', 'date-group-block'); const audioGrid = el('div', 'audio-grid'); const mediaGrid = el('div', 'media-grid');
+      block.append(el('h3', 'date-group', date === '0000-00-00' ? 'Earlier' : prettyDate(date)), audioGrid, mediaGrid);
+      block.firstChild.append(el('span', '', `${inGroup.length} item${inGroup.length === 1 ? '' : 's'}`));
+      for (const item of inGroup) {
+        const card = document.getElementById(item.id); if (!card) continue;
+        const holder = card.querySelector('.card-body, .audio-main'); if (holder) holder.prepend(el('span', 'collection-tag', COLLECTION_LABELS[item.section] || item.section));
+        (item.type === 'audio' ? audioGrid : mediaGrid).append(card);
+      }
+      if (!audioGrid.children.length) audioGrid.remove();
+      if (!mediaGrid.children.length) mediaGrid.remove();
+      groups.append(block);
+    }
+  } else {
+    for (const { card, parent } of origins) { parent.append(card); card.querySelectorAll('.collection-tag').forEach(t => t.remove()); }
+    groups.replaceChildren(); origins = [];
   }
+  document.body.classList.toggle('newest-mode', on); view.hidden = !on;
+  document.getElementById('view-newest').setAttribute('aria-pressed', String(on)); document.getElementById('view-collections').setAttribute('aria-pressed', String(!on));
+  try { history.replaceState(null, '', on ? '#newest' : location.pathname + location.search); } catch {}
+  applyFilters(); window.scrollTo({ top: 0 });
 }
-document.getElementById('sort-order').addEventListener('change', applySort);
+document.getElementById('view-newest').addEventListener('click', () => setNewest(true));
+document.getElementById('view-collections').addEventListener('click', () => setNewest(false));
 function applyFilters() {
   const query = document.getElementById('search').value.trim().toLowerCase(); const status = document.getElementById('status-filter').value; let visible = 0;
   for (const item of items) { const match = (!query || `${item.id} ${item.title} ${item.filename}`.toLowerCase().includes(query)) && (status === 'all' || current(item.id).status === status); document.getElementById(item.id).hidden = !match; if (match) visible++; }
   document.getElementById('visible-count').textContent = `${visible} of ${items.length} items`;
   for (const section of document.querySelectorAll('.collection:not(.pina):not(.feature-row)')) { const sectionItems = section.querySelectorAll('[data-item-id]'); section.hidden = sectionItems.length > 0 && [...sectionItems].every(n => n.hidden); }
   document.getElementById('pop-that-pina').hidden = Boolean(query) || status !== 'all';
+  for (const block of document.querySelectorAll('.date-group-block')) block.hidden = [...block.querySelectorAll('[data-item-id]')].every(n => n.hidden);
 }
 function updateSummary() {
   const values = items.map(item => current(item.id)); const approved = values.filter(v => v.status === 'approved').length; const changes = values.filter(v => v.status === 'changes').length; const hold = values.filter(v => v.status === 'hold').length; const notes = values.filter(v => v.notes.trim()).length;
@@ -120,4 +144,4 @@ fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.
     const card = document.getElementById(id);
     if (card && featuredGrid) featuredGrid.append(card);
   }
-  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
+  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '#newest') setNewest(true); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
