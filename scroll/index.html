@@ -525,12 +525,10 @@ function $(id){ return document.getElementById(id); }
 /* One page. The five Miami liquid scenes (Liquid Pop 360, Crown, Fizz, Droplet Rain, Reform) are parked:
    their code is still below but they are not in this list, so they are never built. Add their names to a
    second PAGES entry to bring them back on their own page. */
-/* All 24 on one long page (261103). The 3-page split was a guess at a memory problem that never existed: the random
-   drops were the screen switching session code (see the relay notes). To split again, add more entries here. */
 var PAGES = [
-  { title:'All sections', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask',
-    'Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve',
-    'Channel Flow','Connected Network','Four Dials','Blur Reveal'] }
+  { title:'Scroll fundamentals', names:['Hero','Pinned Cards','Tilted Wall','Horizontal Travel','Video Portal','Live Counters','3D Ring','Tunnel Flight','Video Scrub','Video Type Mask'] },
+  { title:'Motion, video and graphics', names:['Speed Marquee','Stacking Cards','Path Draw','Video Wall Zoom','Before and After Wipe','Phone Parallax','Velocity Time Ramp','Video Cube','Brand OS Orbit','Growth Curve'] },
+  { title:'Graphics and finale', names:['Channel Flow','Connected Network','Four Dials','Blur Reveal'] }
 ];
 var FLAT = []; PAGES.forEach(function(p){ p.names.forEach(function(n){ FLAT.push(n); }); });
 function pageOf(n){ var c = 0; for (var i = 0; i < PAGES.length; i++) { c += PAGES[i].names.length; if (n <= c) return i + 1; } return 1; }
