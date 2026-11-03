@@ -480,14 +480,16 @@ var PREFIX = 'elettro-sc-';
 var RELAY_URL = 'wss://l7pixcmace.execute-api.us-east-1.amazonaws.com/dev';
 /* A WebSocket link to the relay that reconnects by itself. onMsg(obj) gets every message; onState('open'|'close') reports the link. */
 function RelayLink(role, sid, onMsg, onState){
-  var ws = null, dead = false, tries = 0, hb = null, lastRx = 0, self = this;
+  var ws = null, dead = false, tries = 0, hb = null, pingAt = 0, self = this;
   self.ready = false;
   /* A browser can miss a silently dropped socket (network blip, idle router), so the page never learns it is deaf.
      Ping every 5s; the relay answers. 12s of silence = throw the socket away and open a fresh one. */
   function lost(){ var was = self.ready; self.ready = false; clearInterval(hb); if (was && onState) onState('close'); retry(); }
+  /* Only a ping that was really sent and not answered counts: a background tab's timers can be slowed to once a minute,
+     and that must never look like a dead link. */
   function beat(){
-    if (Date.now() - lastRx > 12000) { var old = ws; ws = null; try { old.close(); } catch (e) {} lost(); return; }
-    self.send({ t:'_ping' });
+    if (pingAt && Date.now() - pingAt > 8000) { var old = ws; ws = null; pingAt = 0; try { old.close(); } catch (e) {} lost(); return; }
+    if (!pingAt && self.send({ t:'_ping' })) pingAt = Date.now();
   }
   function open(){
     if (dead) return;
@@ -495,8 +497,8 @@ function RelayLink(role, sid, onMsg, onState){
     try { w = new WebSocket(RELAY_URL + '?s=' + encodeURIComponent(sid) + '&r=' + role); } catch (e) { retry(); return; }
     ws = w;
     setTimeout(function(){ if (ws === w && !self.ready) { ws = null; try { w.close(); } catch (e) {} retry(); } }, 8000);
-    w.onopen = function(){ if (ws !== w) return; self.ready = true; tries = 0; lastRx = Date.now(); clearInterval(hb); hb = setInterval(beat, 5000); if (onState) onState('open'); };
-    w.onmessage = function(e){ if (ws !== w) return; lastRx = Date.now(); var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && m.t === '_pong') return; if (m && onMsg) onMsg(m); };
+    w.onopen = function(){ if (ws !== w) return; self.ready = true; tries = 0; pingAt = 0; clearInterval(hb); hb = setInterval(beat, 5000); if (onState) onState('open'); };
+    w.onmessage = function(e){ if (ws !== w) return; pingAt = 0; var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && m.t === '_pong') return; if (m && onMsg) onMsg(m); };
     w.onclose = function(){ if (ws !== w) return; ws = null; lost(); };
     w.onerror = function(){};
   }
@@ -1504,7 +1506,7 @@ function startRemote(){
       }
       else if (m.t === 'pos') { if (!active && !mom) { pos = clamp(m.v * max); applyMini(); } }
       else if (m.t === 'sec') { $('rsec').innerHTML = '<b>' + (m.n < 10 ? '0' : '') + m.n + '</b>' + m.name + (m.p ? ' \u00B7 page ' + m.p : ''); }
-      else if (m.t === 'busy') { busy = true; setStat(false, 'Screen in use'); err('Another phone is already controlling this screen.'); }
+      else if (m.t === 'busy') { busy = true; if (rlink) rlink.close(); setStat(false, 'Screen in use'); err('This screen is now controlled from another tab or phone. Reload this page to take control back.'); }
     });
     c.on('close', function(){ if (conn === c) retry(); });
     c.on('error', function(){ if (conn === c) retry(); });
