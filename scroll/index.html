@@ -477,7 +477,7 @@ var target = params.get('c');
 var MODE = target ? 'remote' : (params.get('mini') === '1' ? 'mini' : 'display');
 var PREFIX = 'elettro-sc-';
 /* Own message relay (AWS WebSocket API, services/scroll-relay-lambda in elettro-brand-os). Empty = use only the free PeerJS service. */
-var RELAY_URL = '';
+var RELAY_URL = 'wss://l7pixcmace.execute-api.us-east-1.amazonaws.com/dev';
 /* A WebSocket link to the relay that reconnects by itself. onMsg(obj) gets every message; onState('open'|'close') reports the link. */
 function RelayLink(role, sid, onMsg, onState){
   var ws = null, dead = false, tries = 0, ka = null, self = this;
