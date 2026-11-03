@@ -605,6 +605,25 @@ function startSite(){
   if (MODE === 'mini') [].forEach.call(document.querySelectorAll('video'), function(v){ v.removeAttribute('src'); v.preload = 'none'; v.removeAttribute('loop'); try { v.load(); } catch (e) {} });
   if (rt) gsap.fromTo('.reveal .w', { opacity:0, filter:'blur(14px)', y:30 }, { opacity:1, filter:'blur(0px)', y:0, stagger:.15, ease:'none',
     scrollTrigger:{ trigger:'.reveal', start:'top 70%', end:'center 50%', scrub:true } });
+  /* memory guard: a section more than 1.5 screens away is hidden (frees its GPU layers) and drops its videos; it wakes before you reach it */
+  if ('IntersectionObserver' in window) {
+    var farIO = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var s = e.target, on = e.isIntersecting;
+        s.style.visibility = on ? '' : 'hidden';
+        [].forEach.call(s.querySelectorAll('video'), function(v){
+          if (on) {
+            var ds = v.getAttribute('data-src');
+            if (ds && !v.getAttribute('src')) { v.setAttribute('src', ds); v.removeAttribute('data-src'); v.preload = 'metadata'; try { v.load(); } catch (x) {} }
+          } else {
+            var sr = v.getAttribute('src');
+            if (sr) { try { v.pause(); } catch (x) {} v.setAttribute('data-src', sr); v.removeAttribute('src'); try { v.load(); } catch (x) {} }
+          }
+        });
+      });
+    }, { rootMargin:'150% 0px 150% 0px' });
+    [].forEach.call(document.querySelectorAll('#site > [data-sec]'), function(s){ farIO.observe(s); });
+  }
   initSections();
 }
 
