@@ -1244,7 +1244,9 @@ function startDisplay(){
   if (id) reuse = true; else id = rid();
   function saveId(){ try { sessionStorage.setItem('elsc_id', id); } catch (e) {} }
   saveId();
-  var conn = null, lastRemote = 0, remoteTarget = null, lastPos = 0;
+  var conn = null, lastRemote = 0, remoteTarget = null, remoteSince = 0, lastPos = 0;
+  /* the mouse, keyboard or touch on the big screen always wins over a pending phone target */
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(ev){ window.addEventListener(ev, function(){ remoteTarget = null; }, { passive:true }); });
 
   function maxScroll(){ return ST.maxScroll(window); }
   function setPaired(on){
@@ -1269,7 +1271,8 @@ function startDisplay(){
   gsap.ticker.add(function(){
     if (remoteTarget === null) return;
     var cur = lenis.scroll, diff = remoteTarget - cur;
-    if (Math.abs(diff) < 0.5) { lenis.scrollTo(remoteTarget, { immediate:true, force:true }); remoteTarget = null; return; }
+    /* done when close (the browser snaps scroll to whole device pixels, so "within 0.5" can never be reached), or when it has been chasing too long */
+    if (Math.abs(diff) < 1.5 || performance.now() - remoteSince > 2500) { if (Math.abs(diff) < 1.5) lenis.scrollTo(remoteTarget, { immediate:true, force:true }); remoteTarget = null; return; }
     lenis.scrollTo(cur + diff * 0.2, { immediate:true, force:true });
   });
 
@@ -1299,7 +1302,7 @@ function startDisplay(){
         if (!m) return;
         if (m.t === 'hello') sendMeta();
         else if (m.t === 'nav') { var np = PAGE + (m.d > 0 ? 1 : -1); if (np >= 1 && np <= PAGES.length) location.href = pageUrl(np); }
-        else if (m.t === 'p') { lastRemote = Date.now(); remoteTarget = Math.max(0, Math.min(1, m.v)) * maxScroll(); }
+        else if (m.t === 'p') { lastRemote = Date.now(); remoteSince = performance.now(); remoteTarget = Math.max(0, Math.min(1, m.v)) * maxScroll(); }
       });
       c.on('close', function(){ if (conn === c) { conn = null; setPaired(false); } });
       c.on('error', function(){ if (conn === c) { conn = null; setPaired(false); } });
