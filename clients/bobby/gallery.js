@@ -119,7 +119,7 @@ function applyFilters() {
   const query = document.getElementById('search').value.trim().toLowerCase(); const status = document.getElementById('status-filter').value; let visible = 0;
   for (const item of items) { const match = (!query || `${item.id} ${item.title} ${item.filename}`.toLowerCase().includes(query)) && (status === 'all' || current(item.id).status === status); document.getElementById(item.id).hidden = !match; if (match) visible++; }
   document.getElementById('visible-count').textContent = `${visible} of ${items.length} items`;
-  for (const section of document.querySelectorAll('.collection:not(.pina):not(.feature-row)')) { const sectionItems = section.querySelectorAll('[data-item-id]'); section.hidden = sectionItems.length > 0 && [...sectionItems].every(n => n.hidden); }
+  for (const section of document.querySelectorAll('.collection:not(.pina):not(.feature-row):not(#newest-view)')) { const sectionItems = section.querySelectorAll('[data-item-id]'); section.hidden = sectionItems.length > 0 && [...sectionItems].every(n => n.hidden); }
   document.getElementById('pop-that-pina').hidden = Boolean(query) || status !== 'all';
   for (const block of document.querySelectorAll('.date-group-block')) block.hidden = [...block.querySelectorAll('[data-item-id]')].every(n => n.hidden);
 }
