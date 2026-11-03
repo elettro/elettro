@@ -82,20 +82,29 @@ function render(item) {
   }
 }
 const COLLECTION_LABELS = { fun: 'Just for Fun', rompe: 'Rompe', limoncito: 'Limoncito', 'mojito-magico': 'Mojito Mágico', 'pop-that-pina': 'Pop That Piña' };
-let newestOn = false; let origins = [];
-function setNewest(on, scroll = true) {
-  if (on === newestOn || !items.length) return;
-  newestOn = on;
+let viewMode = 'collections'; let origins = [];
+const FORMATS = [['video', 'Videos'], ['audio', 'Songs'], ['image', 'Images']];
+const VIEW_HASH = { collections: '#collections', newest: '#newest', format: '#format' };
+function setView(mode, scroll = true) {
+  if (mode === viewMode || !items.length) return;
   const view = document.getElementById('newest-view'); const groups = document.getElementById('newest-groups');
-  if (on) {
+  if (viewMode !== 'collections') {
+    for (const { card, parent } of origins) { parent.append(card); card.querySelectorAll('.collection-tag').forEach(t => t.remove()); }
+    groups.replaceChildren(); origins = [];
+  }
+  viewMode = mode;
+  if (mode !== 'collections') {
     origins = [...document.querySelectorAll('[data-item-id]')].map(card => ({ card, parent: card.parentElement }));
-    const dates = [...new Set(items.map(i => i.added || '0000-00-00'))].sort().reverse();
-    for (const date of dates) {
-      const inGroup = items.filter(i => (i.added || '0000-00-00') === date);
+    const byNewest = [...items].sort((x, y) => (y.added || '0000-00-00').localeCompare(x.added || '0000-00-00'));
+    const buckets = mode === 'newest'
+      ? [...new Set(items.map(i => i.added || '0000-00-00'))].sort().reverse().map(date => ({ label: date === '0000-00-00' ? 'Earlier' : prettyDate(date), list: items.filter(i => (i.added || '0000-00-00') === date) }))
+      : FORMATS.map(([type, label]) => ({ label, list: byNewest.filter(i => i.type === type) }));
+    for (const { label, list } of buckets) {
+      if (!list.length) continue;
       const block = el('div', 'date-group-block'); const audioGrid = el('div', 'audio-grid'); const mediaGrid = el('div', 'media-grid');
-      block.append(el('h3', 'date-group', date === '0000-00-00' ? 'Earlier' : prettyDate(date)), audioGrid, mediaGrid);
-      block.firstChild.append(el('span', '', `${inGroup.length} item${inGroup.length === 1 ? '' : 's'}`));
-      for (const item of inGroup) {
+      block.append(el('h3', 'date-group', label), audioGrid, mediaGrid);
+      block.firstChild.append(el('span', '', `${list.length} item${list.length === 1 ? '' : 's'}`));
+      for (const item of list) {
         const card = document.getElementById(item.id); if (!card) continue;
         const holder = card.querySelector('.card-body, .audio-main'); if (holder) holder.prepend(el('span', 'collection-tag', COLLECTION_LABELS[item.section] || item.section));
         (item.type === 'audio' ? audioGrid : mediaGrid).append(card);
@@ -104,17 +113,35 @@ function setNewest(on, scroll = true) {
       if (!mediaGrid.children.length) mediaGrid.remove();
       groups.append(block);
     }
-  } else {
-    for (const { card, parent } of origins) { parent.append(card); card.querySelectorAll('.collection-tag').forEach(t => t.remove()); }
-    groups.replaceChildren(); origins = [];
+    document.getElementById('newest-title').firstChild.textContent = mode === 'format' ? 'BY FORMAT' : 'NEWEST';
+    document.getElementById('newest-eyebrow').textContent = mode === 'format' ? 'VIDEOS / SONGS / IMAGES' : 'LATEST FIRST';
+    document.getElementById('newest-blurb').textContent = mode === 'format' ? 'Everything sorted by what it is, newest first within each type.' : 'Everything, newest additions on top, grouped by the day it was added.';
   }
-  document.body.classList.toggle('newest-mode', on); view.hidden = !on;
-  document.getElementById('view-newest').setAttribute('aria-pressed', String(on)); document.getElementById('view-collections').setAttribute('aria-pressed', String(!on));
-  try { history.replaceState(null, '', on ? '#newest' : '#collections'); } catch {}
+  document.body.classList.toggle('newest-mode', mode !== 'collections'); view.hidden = mode === 'collections';
+  for (const [m, id] of [['collections', 'view-collections'], ['newest', 'view-newest'], ['format', 'view-format']]) document.getElementById(id).setAttribute('aria-pressed', String(m === mode));
+  try { history.replaceState(null, '', VIEW_HASH[mode]); } catch {}
   applyFilters(); if (scroll) { const bar = document.querySelector('.toolbar'); if (bar) bar.scrollIntoView({ block: 'start' }); }
 }
-document.getElementById('view-newest').addEventListener('click', () => setNewest(true));
-document.getElementById('view-collections').addEventListener('click', () => setNewest(false));
+document.getElementById('view-newest').addEventListener('click', () => setView('newest'));
+document.getElementById('view-format').addEventListener('click', () => setView('format'));
+document.getElementById('view-collections').addEventListener('click', () => setView('collections'));
+function updateCounts() {
+  const n = (list, type) => list.filter(i => i.type === type).length; const pad = v => String(v).padStart(2, '0');
+  const strongs = document.querySelectorAll('.inventory strong');
+  if (strongs[0]) strongs[0].firstChild.textContent = String(n(items, 'video'));
+  if (strongs[1]) strongs[1].firstChild.textContent = pad(n(items, 'audio'));
+  for (const link of document.querySelectorAll('.section-nav a')) {
+    const section = link.getAttribute('href').slice(1); const span = link.querySelector('span'); if (!span) continue;
+    if (section === 'angry-wife') continue;
+    span.textContent = pad(items.filter(i => i.section === section).length);
+  }
+  for (const section of document.querySelectorAll('.collection[id]')) {
+    const total = section.querySelector('.collection-total'); if (!total || section.id === 'angry-wife' || section.id === 'newest-view') continue;
+    const list = items.filter(i => i.section === section.id); const v = n(list, 'video'); const a = n(list, 'audio');
+    const parts = []; if (v) parts.push(`${v} VIDEO${v === 1 ? '' : 'S'}`); if (a) parts.push(`${a} TRACK${a === 1 ? '' : 'S'}`);
+    total.textContent = parts.join(' / ') || '0 VIDEOS';
+  }
+}
 function applyFilters() {
   const query = document.getElementById('search').value.trim().toLowerCase(); const status = document.getElementById('status-filter').value; let visible = 0;
   for (const item of items) { const match = (!query || `${item.id} ${item.title} ${item.filename}`.toLowerCase().includes(query)) && (status === 'all' || current(item.id).status === status); document.getElementById(item.id).hidden = !match; if (match) visible++; }
@@ -144,4 +171,4 @@ fetch('gallery.json?v=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.
     const card = document.getElementById(id);
     if (card && featuredGrid) featuredGrid.append(card);
   }
-  document.getElementById('load-status').textContent = ''; applyFilters(); updateSummary(); if (location.hash === '' || location.hash === '#newest') setNewest(true, false); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
+  document.getElementById('load-status').textContent = ''; updateCounts(); applyFilters(); updateSummary(); if (location.hash === '#format') setView('format', false); else if (location.hash === '' || location.hash === '#newest') setView('newest', false); }).catch(() => { document.getElementById('load-status').textContent = 'The media collection is being prepared. Please refresh shortly.'; });
