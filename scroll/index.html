@@ -498,7 +498,7 @@ function RelayLink(role, sid, onMsg, onState){
     ws = w;
     setTimeout(function(){ if (ws === w && !self.ready) { ws = null; try { w.close(); } catch (e) {} retry(); } }, 8000);
     w.onopen = function(){ if (ws !== w) return; self.ready = true; tries = 0; pingAt = 0; clearInterval(hb); hb = setInterval(beat, 5000); if (onState) onState('open'); };
-    w.onmessage = function(e){ if (ws !== w) return; pingAt = 0; var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && m.t === '_pong') return; if (m && onMsg) onMsg(m); };
+    w.onmessage = function(e){ if (ws !== w) return; pingAt = 0; var m = null; try { m = JSON.parse(e.data); } catch (x) {} if (m && m.t === '_pong') return; if (m && m.t === '_reset') { ws = null; try { w.close(); } catch (x) {} lost(); return; } if (m && onMsg) onMsg(m); };
     w.onclose = function(){ if (ws !== w) return; ws = null; lost(); };
     w.onerror = function(){};
   }
