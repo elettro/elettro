@@ -30,6 +30,7 @@ function addReview(parent, item) {
 }
 function addFileDetail(parent, item) {
   const detail = el('details', 'file-detail'); detail.append(el('summary', '', 'Original filename'), el('p', '', item.filename)); parent.append(detail);
+  if (item.added) parent.append(el('p', 'added-date', 'ADDED ' + item.added.slice(2).replace(/-/g, '')));
 }
 function pauseOthers(player) { document.querySelectorAll('video,audio').forEach(other => { if (other !== player) other.pause(); }); }
 // Show an actual opening video frame when the player enters the viewport.
@@ -78,6 +79,17 @@ function render(item) {
     const original = el('a', 'dropbox-link', 'Open in Dropbox ↗'); original.href = item.sourceUrl; original.target = '_blank'; original.rel = 'noopener'; body.append(original); addFileDetail(body, item); addReview(body, item); article.append(wrap, body); document.querySelector(`[data-section="${item.section}"]`).append(article);
   }
 }
+function applySort() {
+  const mode = document.getElementById('sort-order').value;
+  const order = new Map(items.map((item, i) => [item.id, i]));
+  const added = new Map(items.map(item => [item.id, item.added || '']));
+  for (const grid of document.querySelectorAll('[data-section],[data-audio]')) {
+    const cards = [...grid.querySelectorAll(':scope > [data-item-id]')];
+    cards.sort((a, b) => { const x = a.dataset.itemId, y = b.dataset.itemId; if (mode === 'default') return order.get(x) - order.get(y); const c = added.get(x).localeCompare(added.get(y)); return (mode === 'newest' ? -c : c) || order.get(x) - order.get(y); });
+    cards.forEach(card => grid.append(card));
+  }
+}
+document.getElementById('sort-order').addEventListener('change', applySort);
 function applyFilters() {
   const query = document.getElementById('search').value.trim().toLowerCase(); const status = document.getElementById('status-filter').value; let visible = 0;
   for (const item of items) { const match = (!query || `${item.id} ${item.title} ${item.filename}`.toLowerCase().includes(query)) && (status === 'all' || current(item.id).status === status); document.getElementById(item.id).hidden = !match; if (match) visible++; }
@@ -92,7 +104,7 @@ function updateSummary() {
 }
 function summaryText() {
   const lines = ['BOBBY × ROMPE / CREATIVE REVIEW', new Date().toLocaleString(), ''];
-  for (const item of items) { const value = current(item.id); lines.push(`${item.id} | ${statuses[value.status]} | ${item.title}`, `File: ${item.filename}`); if (value.notes.trim()) lines.push(`Notes: ${value.notes.trim()}`); lines.push(''); }
+  for (const item of items) { const value = current(item.id); lines.push(`${item.id} | ${statuses[value.status]} | ${item.title}`, `File: ${item.filename}${item.added ? ' | Added: ' + item.added : ''}`); if (value.notes.trim()) lines.push(`Notes: ${value.notes.trim()}`); lines.push(''); }
   return lines.join('\n');
 }
 document.getElementById('search').addEventListener('input', applyFilters);
