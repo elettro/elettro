@@ -782,17 +782,37 @@ function renderRace() {
     : "Race feed offline · showing an empty grid until it answers";
 }
 function drawPostDays() {
-  const days = race.days;
+  const past = race.days;
   const box = document.getElementById("prDays");
-  if (!days || !days.length) { box.closest("section").hidden = true; return; }
+  if (!past || !past.length) { box.closest("section").hidden = true; return; }
   box.closest("section").hidden = false;
-  const W = 600, H = 150, pad = 20, bw = W / days.length, max = Math.max(1, ...days.map((d) => d.posts)), total = days.reduce((a, d) => a + d.posts, 0);
-  const bars = days.map((d, i) => {
-    const h = Math.round((d.posts / max) * (H - pad - 14)), x = i * bw + 2, last = i === days.length - 1, bh = Math.max(h, d.posts ? 3 : 1.5);
-    return `<g><title>${d.d}: ${d.posts} posts</title><rect x="${x}" y="${H - pad - bh}" width="${bw - 4}" height="${bh}" rx="3" fill="${last ? "#ff2e88" : d.posts ? "#d7ff1f" : "var(--line)"}"/></g>`;
+  // Next 30 days of approved posts waiting to go out. upcoming[0] is today's not-yet-sent posts; the rest are future days.
+  const up = race.upcoming || [], todayQ = up.length ? up[0].posts : 0, future = up.slice(1);
+  const cols = [...past.map((d, i) => ({ d: d.d, pub: d.posts, q: i === past.length - 1 ? todayQ : 0, kind: i === past.length - 1 ? "today" : "past" })),
+                ...future.map((d) => ({ d: d.d, pub: 0, q: d.posts, kind: "future" }))];
+  const W = 720, H = 170, pad = 20, top = 16, bw = W / cols.length, plot = H - pad - top;
+  const max = Math.max(1, ...cols.map((c) => c.pub + c.q)), totalPub = past.reduce((a, d) => a + d.posts, 0), totalQ = up.reduce((a, d) => a + d.posts, 0);
+  const BLUE = "#4fb3ff", PINK = "#ff2e88", LIME = "#d7ff1f";
+  const bars = cols.map((c, i) => {
+    const x = i * bw + 2, w = bw - 4, hp = c.pub ? Math.max(Math.round((c.pub / max) * plot), 3) : 0, hq = c.q ? Math.max(Math.round((c.q / max) * plot), 3) : 0;
+    const base = H - pad, empty = !hp && !hq;
+    const tip = `${c.d}: ${c.pub ? c.pub + " published" : ""}${c.pub && c.q ? " · " : ""}${c.q ? c.q + " scheduled" : ""}${empty ? "0" : ""}`;
+    return `<g><title>${tip}</title>${empty ? `<rect x="${x}" y="${base - 1.5}" width="${w}" height="1.5" rx="1" fill="var(--line)"/>` : ""}` +
+      (hp ? `<rect x="${x}" y="${base - hp}" width="${w}" height="${hp}" rx="3" fill="${c.kind === "today" ? PINK : LIME}"/>` : "") +
+      (hq ? `<rect x="${x}" y="${base - hp - hq - (hp ? 1 : 0)}" width="${w}" height="${hq}" rx="3" fill="${BLUE}" opacity="${c.kind === "today" ? 1 : .9}"/>` : "") + `</g>`;
   }).join("");
-  const label = (i, a) => `<text x="${i * bw + (a === "end" ? bw - 4 : 0)}" y="${H - 4}" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="${a}">${a === "end" ? "TODAY" : days[i].d.slice(5)}</text>`;
-  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Posts published per day, last 30 days">${bars}${label(0, "start")}${label(days.length - 1, "end")}<text x="${W}" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">${total ? "PEAK " + max : ""}</text></svg>`;
+  const tx = past.length * bw - bw / 2; // centre of today's column
+  const lab = (x, a, t, fill) => `<text x="${x}" y="${H - 4}" fill="${fill || "var(--dim)"}" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="${a}">${t}</text>`;
+  const divider = future.length ? `<line x1="${past.length * bw}" y1="${top - 4}" x2="${past.length * bw}" y2="${H - pad}" stroke="var(--dim)" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>` : "";
+  const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Posts published per day for the last 30 days and approved posts scheduled for the next 30 days">${divider}${bars}` +
+    lab(0, "start", cols[0].d.slice(5)) + lab(Math.min(Math.max(tx, 24), W - 24), "middle", "TODAY", PINK) + (future.length ? lab(W, "end", cols[cols.length - 1].d.slice(5)) : "") +
+    `<text x="${W}" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">PEAK ${max}</text></svg>`;
+  const key = (c, t) => `<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:3px;background:${c};display:inline-block"></i>${t}</span>`;
+  const legend = `<div style="display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)">` +
+    key(LIME, `Published · ${totalPub.toLocaleString()} in 30 days`) + key(PINK, "Today") + (up.length ? key(BLUE, `Locked &amp; loaded · ${totalQ.toLocaleString()} scheduled, next 30 days`) : "") + `</div>`;
+  box.innerHTML = svg + legend;
+  const h3 = box.closest("section").querySelector("h3");
+  if (h3) h3.textContent = up.length ? "Last 30 days · Next 30 days" : "Last 30 days";
 }
 function raceClock() {
   const el = document.getElementById("prClock"), t = race.total;
@@ -808,7 +828,7 @@ async function pullRace() {
     if (!feed.ok) throw new Error("bad feed");
     race = feed; raceLive = true;
   } catch { /* keep the last good numbers */ }
-  const key = JSON.stringify([race.total, race.destinations, race.brands, race.days, raceLive]);
+  const key = JSON.stringify([race.total, race.destinations, race.brands, race.days, race.upcoming, raceLive]);
   if (key !== raceKey) { raceKey = key; renderRace(); }
 }
 renderRace(); pullRace(); raceClock();
