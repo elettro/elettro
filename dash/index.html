@@ -335,6 +335,18 @@ html.dm-remote #dremote{display:flex;flex-direction:column;gap:12px;height:100dv
 a.rm-card{display:block;color:inherit;text-decoration:none;cursor:pointer}
 a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
 .rm-open{display:inline-block;margin-top:10px;font:700 10px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--rc)}
+
+/* Ready Stack: approved, ready-to-post assets */
+.rs-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font:500 11px "JetBrains Mono",monospace;color:var(--dim)}
+.rs-key span{display:inline-flex;align-items:center;gap:6px}.rs-key i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.rs-brand{display:grid;grid-template-columns:200px 1fr 130px;gap:14px;align-items:center;margin:0 0 10px}
+.rs-brand .who{font:400 20px Anton,sans-serif;text-transform:uppercase;letter-spacing:.02em;display:flex;align-items:center;gap:8px;min-width:0}
+.rs-brand .who i{width:12px;height:12px;border-radius:4px;background:var(--hc);flex:none}
+.rs-brand .bar{display:flex;height:22px;border-radius:8px;background:var(--lane);overflow:hidden}
+.rs-brand .bar b{display:block;height:100%;width:0;transition:width 1.6s cubic-bezier(.2,.9,.2,1)}
+.rs-brand .nums{text-align:right;font:400 30px/1 Anton,sans-serif}
+.rs-brand .nums small{display:block;font:500 10px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--dim);margin-top:3px}
+@media(max-width:820px){.rs-brand{grid-template-columns:1fr 96px}.rs-brand .who{grid-column:1/-1}}
 </style>
 <script>(function(){var q=new URLSearchParams(location.search);window.DASH_MODE=q.get('c')?'remote':(q.get('mini')==='1'?'mini':'display');document.documentElement.classList.add('dm-'+window.DASH_MODE);})();</script>
 </head>
@@ -447,6 +459,23 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
     <div class="sys" id="rmSys"></div>
     <div class="rm-grid" id="rmGrid"></div>
     <p class="pr-note" id="rmNote">Connecting to the counter…</p>
+  </section>
+
+  <section id="assetsec" aria-label="Ready to post assets">
+    <div class="pr-head">
+      <div>
+        <div class="kicker">Elettro OS · The content pool</div>
+        <h2>The <em>Ready</em> <span>Stack</span></h2>
+        <p class="sub">Every image and video that is approved, tagged and ready to post, brand by brand. The bars show what was added each day; the line is the pile growing.</p>
+      </div>
+      <div class="clock"><div class="digits" id="rsTotal">0</div><div class="l">Assets ready to post · all brands</div></div>
+    </div>
+    <div class="sys" id="rsSys"></div>
+    <section class="track prace" aria-label="Assets added per day"><h3>Last 30 days</h3>
+      <div class="ar-chart" id="rsDays"></div></section>
+    <section class="track prace" aria-label="Ready assets by brand"><h3>By brand</h3>
+      <div id="rsBrands"></div></section>
+    <p class="pr-note" id="rsNote">Counting the stack…</p>
   </section>
 
   <footer><span id="stamp"></span><span>Status from the EPE repo (develop) + Elettro OS DEV · edit STATUS in this file to move a racer</span></footer>
@@ -1162,6 +1191,77 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
   paint();
 })();
 </script>
+<script>
+// ---- The Ready Stack: approved + ready images and videos per brand, added per day (Elettro OS /status/assets) ----
+(function () {
+  var API = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/assets";
+  var IMG = "#d7ff1f", VID = "#ff2e88", LINE = "#22e6ff";
+  var el = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
+  var shown = 0, anim = 0;
+  function countUp(to) {
+    cancelAnimationFrame(anim);
+    var from = shown, t0 = performance.now(), dur = from === to ? 0 : 1300;
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    (function step(now) {
+      var k = reduce || !dur ? 1 : Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      shown = Math.round(from + (to - from) * e); el("rsTotal").textContent = fmt(shown);
+      if (k < 1) anim = requestAnimationFrame(step);
+    })(t0);
+  }
+  function chart(days) {
+    var W = 600, H = 190, pad = 20, top = 16, bw = W / days.length, plot = H - pad - top;
+    var maxAdd = Math.max(1, Math.max.apply(null, days.map(function (d) { return d.images + d.videos; })));
+    var totals = days.map(function (d) { return d.total; }), lo = Math.min.apply(null, totals), hi = Math.max(lo + 1, Math.max.apply(null, totals));
+    var yT = function (v) { return top + plot - ((v - lo) / (hi - lo)) * plot; };
+    var bars = days.map(function (d, i) {
+      var x = i * bw + 2, w = bw - 4, hI = Math.round((d.images / maxAdd) * plot * 0.55), hV = Math.round((d.videos / maxAdd) * plot * 0.55), base = H - pad;
+      var tip = d.d + ": +" + d.images + " images, +" + d.videos + " videos · " + d.total + " ready";
+      return '<g><title>' + tip + '</title>' + (hI + hV ? "" : '<rect x="' + x + '" y="' + (base - 1.5) + '" width="' + w + '" height="1.5" rx="1" fill="var(--line)"/>') +
+        (hI ? '<rect x="' + x + '" y="' + (base - hI) + '" width="' + w + '" height="' + hI + '" rx="3" fill="' + IMG + '"/>' : "") +
+        (hV ? '<rect x="' + x + '" y="' + (base - hI - hV - (hI ? 1 : 0)) + '" width="' + w + '" height="' + hV + '" rx="3" fill="' + VID + '"/>' : "") + '</g>';
+    }).join("");
+    var pts = days.map(function (d, i) { return (i * bw + bw / 2).toFixed(1) + "," + yT(d.total).toFixed(1); });
+    var area = '<path d="M' + pts[0] + " L" + pts.join(" L") + " L" + (W - bw / 2) + "," + (H - pad) + " L" + (bw / 2) + "," + (H - pad) + ' Z" fill="' + LINE + '" opacity=".10"/>';
+    var line = '<polyline points="' + pts.join(" ") + '" fill="none" stroke="' + LINE + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+    var last = pts[pts.length - 1].split(","), dot = '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="4.5" fill="' + LINE + '"/>';
+    var lab = function (x, a, t, f) { return '<text x="' + x + '" y="' + (H - 4) + '" fill="' + (f || "var(--dim)") + '" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="' + a + '">' + t + '</text>'; };
+    el("rsDays").innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Ready assets added per day and the running total, last 30 days">' + area + bars + line + dot +
+      lab(0, "start", days[0].d.slice(5)) + lab(W, "end", "TODAY", "#ff2e88") +
+      '<text x="0" y="10" fill="' + LINE + '" font-family="JetBrains Mono,monospace" font-size="10">' + fmt(days[days.length - 1].total) + ' READY</text>' +
+      '<text x="' + W + '" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">PEAK +' + maxAdd + ' / DAY</text></svg>' +
+      '<div class="rs-key"><span><i style="background:' + IMG + '"></i>Images added</span><span><i style="background:' + VID + '"></i>Videos added</span><span><i style="background:' + LINE + '"></i>Total ready (line)</span></div>';
+  }
+  var BRAND_C = ["#ffc83d", "#22e6ff", "#ff5fd2", "#d7ff1f", "#4fb3ff", "#ff4f6b", "#c9c4ff", "#ff9f43", "#b48cff", "#7cffb2"];
+  function render(f) {
+    countUp(f.total.total);
+    var d = f.days, today = d[d.length - 1], n = function (x) { return x.images + x.videos; };
+    var week = d.slice(-7).reduce(function (a, x) { return a + n(x); }, 0), month = d.reduce(function (a, x) { return a + n(x); }, 0);
+    var best = d.reduce(function (a, x) { return n(x) > a.n ? { n: n(x), d: x.d } : a; }, { n: 0, d: "" });
+    var live = f.brands.filter(function (b) { return b.total > 0; }).length;
+    el("rsSys").innerHTML = [
+      [fmt(f.total.images), "Images ready"], [fmt(f.total.videos), "Videos ready"], ["+" + fmt(n(today)), "Added today"],
+      ["+" + fmt(week), "Added · 7 days"], ["+" + fmt(month), "Added · 30 days"], [best.n ? "+" + fmt(best.n) : "-", best.n ? "Best day · " + best.d.slice(5) : "Best day"]
+    ].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
+    chart(d);
+    var bmax = Math.max(1, f.brands.length ? f.brands[0].total : 0);
+    el("rsBrands").innerHTML = f.brands.map(function (b, i) {
+      var c = BRAND_C[i % BRAND_C.length], wi = (b.images / bmax) * 100, wv = (b.videos / bmax) * 100;
+      return '<div class="rs-brand" style="--hc:' + c + '"><div class="who"><i></i>' + b.name.replace(/</g, "") + '</div>' +
+        '<div class="bar" title="' + b.images + ' images · ' + b.videos + ' videos"><b data-w="' + wi.toFixed(2) + '" style="background:' + IMG + '"></b><b data-w="' + wv.toFixed(2) + '" style="background:' + VID + '"></b></div>' +
+        '<div class="nums">' + fmt(b.total) + '<small>' + fmt(b.images) + ' IMG · ' + fmt(b.videos) + ' VID</small></div></div>';
+    }).join("");
+    requestAnimationFrame(function () { setTimeout(function () { Array.prototype.forEach.call(document.querySelectorAll("#rsBrands .bar b"), function (b) { b.style.width = b.dataset.w + "%"; }); }, 60); });
+    el("rsNote").textContent = live + " of " + f.brands.length + " brands have assets ready · approved, tagged and not retired · counts only · updates every minute.";
+  }
+  function load() {
+    fetch(API, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (f) { if (!f.ok) throw 0; render(f); }).catch(function () {
+      el("rsNote").textContent = "The asset counter is offline right now. It will come back by itself.";
+    });
+  }
+  load(); setInterval(load, 60000);
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
@@ -1170,7 +1270,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
   var MODE = window.DASH_MODE, PREFIX = "elettro-dash-", q = new URLSearchParams(location.search), target = q.get("c");
   function $(id) { return document.getElementById(id); }
   function hit(t) { try { fetch("https://abacus.jasoncameron.dev/hit/elettro-com/remote-dash-" + t, { cache: "no-store", keepalive: true }).catch(function () {}); } catch (e) {} }
-  var SECS = [["Grand Prix", ".wrap > header"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["1000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["End", "footer"]];
+  var SECS = [["Grand Prix", ".wrap > header"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["1000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["Ready", "#assetsec"], ["End", "footer"]];
   function maxS() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
 
   if (MODE === "display") {
