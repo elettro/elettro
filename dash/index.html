@@ -528,11 +528,11 @@ const STATUS = [
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261029: Elettro OS publishes to Mastodon for Stashbox." },
   { name: "Snapchat", dest: "snapchat", handle: "@stashboxcom", code: "SC", color: "#fffc00",
-    done: { account: 1 },
-    note: "Account confirmed 261105. Connect + publisher built in Elettro OS; waiting on Snap's Public Profile API allowlist (OAuth app + client ID emailed to Snap)." },
+    done: { account: 1, oauth: 1 },
+    note: "Connected 261105: Stashbox is plugged into Snapchat via Elettro OS. Not posting yet." },
   { name: "Substack", dest: "substack", handle: "@elettro", code: "SS", color: "#ff6719",
-    done: { account: 1 },
-    note: "Account + handle @elettro confirmed 261105. Connector built in Elettro OS (no official posting API; uses a session cookie); not connected or posting yet." },
+    done: { account: 1, api: 1, oauth: 1, test: 1 },
+    note: "Connected 261105: OAuth works and the test post went out from Elettro OS (no official API; uses a session cookie). Not auto-posting yet." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261104: Google Business Profile posting is live for Stashbox." },
@@ -1005,6 +1005,11 @@ async function pullMatrix() {
       const live = { destination: "linkedin", done: ALL, pct: 100, note: "LIVE: LinkedIn approved and posting from Elettro OS." };
       const i = b.profiles.findIndex((x) => x.destination === "linkedin");
       if (i < 0) b.profiles.push({ handle: "LinkedIn", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; });
+    // Substack is wired for every brand (261105, Dean); only Elettro has a profile row, so pin the rest. Plugged in, not Live.
+    mxBrands.forEach((b) => { if (b.slug === "elettro") return;
+      const wired = { destination: "substack", handle: "Substack", done: { account: 1, oauth: 1 }, pct: 20, note: "Wired 261105. Not auto-posting yet." };
+      const i = b.profiles.findIndex((x) => x.destination === "substack");
+      if (i < 0) b.profiles.push(wired); else b.profiles[i] = { ...b.profiles[i], ...wired }; });
     mxBrands.forEach((b) => { if (!BLUESKY_LIVE.includes(b.slug)) return;
       const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
       const i = b.profiles.findIndex((x) => x.destination === "bluesky");
