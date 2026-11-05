@@ -527,6 +527,9 @@ const STATUS = [
   { name: "Mastodon", dest: "mastodon", handle: "Stashbox Mastodon", code: "M", color: "#a98bff",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261029: Elettro OS publishes to Mastodon for Stashbox." },
+  { name: "Snapchat", dest: "snapchat", handle: "Snapchat (handle to confirm)", code: "SC", color: "#fffc00",
+    done: { account: 1 },
+    note: "Account confirmed 261105. Connect + publisher built in Elettro OS; waiting on Snap's Public Profile API allowlist (OAuth app + client ID emailed to Snap)." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261104: Google Business Profile posting is live for Stashbox." },
@@ -719,7 +722,7 @@ async function pull() {
       const r = STATUS.find((x) => x.dest === p.destination);
       if (!r) continue;
       if (r.dest === "linkedin" || r.dest === "bluesky" || r.dest === "mastodon") continue; // pinned at 100%: approved and live
-      r.done = p.done;
+      r.done = r.dest === "snapchat" ? Object.fromEntries(Object.keys({ ...r.done, ...p.done }).map((k) => [k, Math.max(r.done[k] || 0, p.done[k] || 0)])) : p.done; // Snapchat: the confirmed account stays a floor
       if (p.handle) r.handle = p.handle;
       if (p.note) r.note = r.dest === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note);
     }
@@ -901,7 +904,7 @@ function cellSvg(color, code, pct) {
     <text class="pc" x="32" y="53">${pct}%</text></svg>`;
 }
 function renderMatrix() {
-  const cols = STATUS; // the ten networks the dashboard races
+  const cols = STATUS; // the networks the dashboard races
   const rows = mxBrands.map((b, bi) => {
     const cells = cols.map((c) => {
       const p = b.profiles.find((x) => x.destination === c.dest);
