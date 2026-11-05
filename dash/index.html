@@ -1025,6 +1025,13 @@ async function pullMatrix() {
       const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
       const i = b.profiles.findIndex((x) => x.destination === "bluesky");
       if (i < 0) b.profiles.push(live); else b.profiles[i] = { ...b.profiles[i], ...live }; });
+    // Bluesky, Google Business and YouTube: every brand that is not live or plugged in yet is at least WIRED (orange), 261105.
+    mxBrands.forEach((b) => ["bluesky", "gmb", "youtube"].forEach((dest) => {
+      const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
+      if (["live", "plugged", "wired"].includes(levelOf(p))) return;
+      const wired = { wired: true, done: { account: 1, ...(p && p.done), oauth: 1 }, pct: Math.max(20, (p && p.pct) || 0) };
+      if (i < 0) b.profiles.push({ destination: dest, handle: dest === "gmb" ? "Google Business" : dest === "youtube" ? "YouTube" : "Bluesky", ...wired, note: "Wired 261105. Not auto-posting yet." });
+      else b.profiles[i] = { ...p, ...wired, note: p.note || "Wired 261105. Not auto-posting yet." }; }));
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
