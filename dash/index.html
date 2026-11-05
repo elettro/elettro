@@ -530,6 +530,9 @@ const STATUS = [
   { name: "Snapchat", dest: "snapchat", handle: "Snapchat (handle to confirm)", code: "SC", color: "#fffc00",
     done: { account: 1 },
     note: "Account confirmed 261105. Connect + publisher built in Elettro OS; waiting on Snap's Public Profile API allowlist (OAuth app + client ID emailed to Snap)." },
+  { name: "Substack", dest: "substack", handle: "@elettro", code: "SS", color: "#ff6719",
+    done: { account: 1 },
+    note: "Account + handle @elettro confirmed 261105. Connector built in Elettro OS (no official posting API; uses a session cookie); not connected or posting yet." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261104: Google Business Profile posting is live for Stashbox." },
@@ -722,7 +725,7 @@ async function pull() {
       const r = STATUS.find((x) => x.dest === p.destination);
       if (!r) continue;
       if (r.dest === "linkedin" || r.dest === "bluesky" || r.dest === "mastodon") continue; // pinned at 100%: approved and live
-      r.done = r.dest === "snapchat" ? Object.fromEntries(Object.keys({ ...r.done, ...p.done }).map((k) => [k, Math.max(r.done[k] || 0, p.done[k] || 0)])) : p.done; // Snapchat: the confirmed account stays a floor
+      r.done = (r.dest === "snapchat" || r.dest === "substack") ? Object.fromEntries(Object.keys({ ...r.done, ...p.done }).map((k) => [k, Math.max(r.done[k] || 0, p.done[k] || 0)])) : p.done; // Snapchat and Substack: the confirmed account stays a floor
       if (p.handle) r.handle = p.handle;
       if (p.note) r.note = r.dest === "pinterest" ? STATUS_PIN_NOTE : cleanNote(p.note);
     }
