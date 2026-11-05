@@ -534,8 +534,8 @@ const STATUS = [
     done: { account: 1, oauth: 1 },
     note: "Connected 261105: Stashbox is plugged into Snapchat via Elettro OS. Not posting yet." },
   { name: "Substack", dest: "substack", handle: "@elettro", code: "SS", color: "#ff6719",
-    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1 },
-    note: "Fully dialed in 261105: connected, test post worked. Last test: the week of scheduled posts rolling out, then the official 100%." },
+    done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
+    note: "LIVE 261105: Elettro OS publishes scheduled posts to Substack. Every checkpoint cleared." },
   { name: "Google Business", dest: "gmb", handle: "Stashbox (Davie)", code: "G", color: "#ffc83d",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261104: Google Business Profile posting is live for Stashbox." },
@@ -1017,7 +1017,7 @@ async function pullMatrix() {
     mxBrands.forEach((b) => {
       const pin = (dest, patch) => { const i = b.profiles.findIndex((x) => x.destination === dest);
         if (i < 0) b.profiles.push({ destination: dest, handle: dest === "substack" ? "Substack" : "Snapchat", done: { account: 1 }, pct: 20, ...patch }); else b.profiles[i] = { ...b.profiles[i], ...patch }; };
-      if (b.slug === "elettro") pin("substack", { done: ALL, pct: 90, note: "LIVE: Elettro OS publishes to Substack. Last test: the week of scheduled posts rolling out, then the official 100%." });
+      if (b.slug === "elettro") pin("substack", { done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Substack." });
       else if (b.slug === "solarmeister") pin("substack", { done: { account: 1, oauth: 1 }, pct: 25, note: "Plugged in 261105: SolarMeister is connected to Substack. Not posting yet." });
       else pin("substack", { wired: true, done: { account: 1, oauth: 1 }, note: "Wired 261105. Not auto-posting yet." });
       if (b.slug === "stashbox") pin("snapchat", { done: { account: 1, oauth: 1 }, pct: 25, note: "Plugged in 261105: Stashbox is connected to Snapchat. Not posting yet." });
