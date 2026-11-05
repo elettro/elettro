@@ -995,11 +995,13 @@ async function pullMatrix() {
     mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return; const l = b.profiles.find((x) => x.destination === "linkedin"); if (l && /davie/i.test(l.handle || "")) l.handle = ""; });
     // TikTok posts to the inbox as drafts only until the Direct Post audit passes: Plugged in, not Live.
     mxBrands.forEach((b) => { if (b.slug !== "stashbox") return; const t = b.profiles.find((x) => x.destination === "tiktok"); if (t) t.done = { ...t.done, live: 0 }; });
-    // Mastodon is live for Stashbox.
-    mxBrands.forEach((b) => { if (b.slug !== "stashbox") return;
-      const live = { destination: "mastodon", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Mastodon." };
+    // Mastodon is live for Stashbox and SolarMeister; every other brand is WIRED (orange), 261105.
+    mxBrands.forEach((b) => {
+      const live = ["stashbox", "solarmeister"].includes(b.slug);
+      const patch = live ? { done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Mastodon." }
+        : { wired: true, done: { account: 1, oauth: 1 }, pct: 20, note: "Wired 261105. Not auto-posting yet." };
       const i = b.profiles.findIndex((x) => x.destination === "mastodon");
-      if (i < 0) b.profiles.push({ handle: "Mastodon", ...live }); else b.profiles[i] = { ...b.profiles[i], ...live }; });
+      if (i < 0) b.profiles.push({ destination: "mastodon", handle: "Mastodon", ...patch }); else b.profiles[i] = { ...b.profiles[i], ...patch }; });
     // Threads is connected and live for these brands.
     mxBrands.forEach((b) => { if (!["elettro", "weightlossdavie", "solarmeister"].includes(b.slug)) return;
       const live = { destination: "threads", done: ALL, pct: 100, note: "LIVE: Threads connected and posting from Elettro OS." };
