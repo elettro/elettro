@@ -1027,9 +1027,9 @@ async function pullMatrix() {
       const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
       const i = b.profiles.findIndex((x) => x.destination === "bluesky");
       if (i < 0) b.profiles.push(live); else b.profiles[i] = { ...b.profiles[i], ...live }; });
-    // SolarMeister is LIVE on YouTube, Instagram, Facebook (Threads and LinkedIn are pinned live above), 261105.
+    // SolarMeister is LIVE on YouTube, Instagram, Facebook, Pinterest, Substack and Google Business (Threads and LinkedIn are pinned live above), 261105.
     mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return;
-      ["youtube", "instagram", "facebook"].forEach((dest) => {
+      ["youtube", "instagram", "facebook", "pinterest", "substack", "gmb"].forEach((dest) => {
         const live = { done: ALL, pct: 100, note: "LIVE: SolarMeister posts through Elettro OS." }, i = b.profiles.findIndex((x) => x.destination === dest);
         if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; }); });
     // Bluesky, Google Business and YouTube: every brand that is not live or plugged in yet is at least WIRED (orange), 261105.
