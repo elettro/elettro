@@ -1018,6 +1018,7 @@ async function pullMatrix() {
       const pin = (dest, patch) => { const i = b.profiles.findIndex((x) => x.destination === dest);
         if (i < 0) b.profiles.push({ destination: dest, handle: dest === "substack" ? "Substack" : "Snapchat", done: { account: 1 }, pct: 20, ...patch }); else b.profiles[i] = { ...b.profiles[i], ...patch }; };
       if (b.slug === "elettro") pin("substack", { done: ALL, pct: 90, note: "LIVE: Elettro OS publishes to Substack. Last test: the week of scheduled posts rolling out, then the official 100%." });
+      else if (b.slug === "solarmeister") pin("substack", { done: { account: 1, oauth: 1 }, pct: 25, note: "Plugged in 261105: SolarMeister is connected to Substack. Not posting yet." });
       else pin("substack", { wired: true, done: { account: 1, oauth: 1 }, note: "Wired 261105. Not auto-posting yet." });
       if (b.slug === "stashbox") pin("snapchat", { done: { account: 1, oauth: 1 }, pct: 25, note: "Plugged in 261105: Stashbox is connected to Snapchat. Not posting yet." });
       else pin("snapchat", { wired: true, done: { account: 1, oauth: 1 }, note: "Wired 261105. Not auto-posting yet." });
@@ -1026,6 +1027,11 @@ async function pullMatrix() {
       const live = { destination: "bluesky", handle: "Bluesky", done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to Bluesky." };
       const i = b.profiles.findIndex((x) => x.destination === "bluesky");
       if (i < 0) b.profiles.push(live); else b.profiles[i] = { ...b.profiles[i], ...live }; });
+    // SolarMeister is LIVE on YouTube, Instagram, Facebook (Threads and LinkedIn are pinned live above), 261105.
+    mxBrands.forEach((b) => { if (b.slug !== "solarmeister") return;
+      ["youtube", "instagram", "facebook"].forEach((dest) => {
+        const live = { done: ALL, pct: 100, note: "LIVE: SolarMeister posts through Elettro OS." }, i = b.profiles.findIndex((x) => x.destination === dest);
+        if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; }); });
     // Bluesky, Google Business and YouTube: every brand that is not live or plugged in yet is at least WIRED (orange), 261105.
     mxBrands.forEach((b) => ["bluesky", "gmb", "youtube"].forEach((dest) => {
       const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
