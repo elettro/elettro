@@ -466,9 +466,9 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
       <div>
         <div class="kicker">Elettro OS · The content pool</div>
         <h2>The <em>Ready</em> <span>Stack</span></h2>
-        <p class="sub">Every image and video that is approved, tagged and ready to post, brand by brand. The bars show what was added each day; the line is the pile growing.</p>
+        <p class="sub">Every image, video and audio clip that is approved, tagged and ready to post, brand by brand, with the Elettro Stock Gallery on its own line. The bars show what was added each day; the line is the pile growing.</p>
       </div>
-      <div class="clock"><div class="digits" id="rsTotal">0</div><div class="l">Assets ready to post · all brands</div></div>
+      <div class="clock"><div class="digits" id="rsTotal">0</div><div class="l">Assets ready to post · brands + stock gallery</div></div>
     </div>
     <div class="sys" id="rsSys"></div>
     <section class="track prace" aria-label="Assets added per day"><h3>Last 30 days</h3>
@@ -819,7 +819,7 @@ function drawPostDays() {
   const up = race.upcoming || [], todayQ = up.length ? up[0].posts : 0, future = up.slice(1);
   const cols = [...past.map((d, i) => ({ d: d.d, pub: d.posts, q: i === past.length - 1 ? todayQ : 0, kind: i === past.length - 1 ? "today" : "past" })),
                 ...future.map((d) => ({ d: d.d, pub: 0, q: d.posts, kind: "future" }))];
-  const W = 720, H = 170, pad = 20, top = 16, bw = W / cols.length, plot = H - pad - top;
+  const W = Math.max(720, cols.length * 17), H = Math.round(W * 0.24), pad = 20, top = 28, bw = W / cols.length, plot = H - pad - top;
   const max = Math.max(1, ...cols.map((c) => c.pub + c.q)), totalPub = past.reduce((a, d) => a + d.posts, 0), totalQ = up.reduce((a, d) => a + d.posts, 0);
   const BLUE = "#4fb3ff", PINK = "#ff2e88", LIME = "#d7ff1f";
   const bars = cols.map((c, i) => {
@@ -828,7 +828,8 @@ function drawPostDays() {
     const tip = `${c.d}: ${c.pub ? c.pub + " published" : ""}${c.pub && c.q ? " · " : ""}${c.q ? c.q + " scheduled" : ""}${empty ? "0" : ""}`;
     return `<g><title>${tip}</title>${empty ? `<rect x="${x}" y="${base - 1.5}" width="${w}" height="1.5" rx="1" fill="var(--line)"/>` : ""}` +
       (hp ? `<rect x="${x}" y="${base - hp}" width="${w}" height="${hp}" rx="3" fill="${c.kind === "today" ? PINK : LIME}"/>` : "") +
-      (hq ? `<rect x="${x}" y="${base - hp - hq - (hp ? 1 : 0)}" width="${w}" height="${hq}" rx="3" fill="${BLUE}" opacity="${c.kind === "today" ? 1 : .9}"/>` : "") + `</g>`;
+      (hq ? `<rect x="${x}" y="${base - hp - hq - (hp ? 1 : 0)}" width="${w}" height="${hq}" rx="3" fill="${BLUE}" opacity="${c.kind === "today" ? 1 : .9}"/>` : "") +
+      (empty ? "" : `<text x="${x + w / 2}" y="${base - hp - hq - (hp && hq ? 1 : 0) - 4}" fill="var(--ink)" font-family="JetBrains Mono,monospace" font-weight="700" font-size="9.5" text-anchor="middle">${c.pub + c.q}</text>`) + `</g>`;
   }).join("");
   const tx = past.length * bw - bw / 2; // centre of today's column
   const lab = (x, a, t, fill) => `<text x="${x}" y="${H - 4}" fill="${fill || "var(--dim)"}" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="${a}">${t}</text>`;
@@ -1058,8 +1059,9 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     var W = 600, H = 150, pad = 20, bw = W / days.length, max = Math.max(1, Math.max.apply(null, days.map(function (d) { return d.scans; })));
     var bars = days.map(function (d, i) {
       var h = Math.round((d.scans / max) * (H - pad - 14)), x = i * bw + 2, last = i === days.length - 1;
+      var cnt = d.scans ? '<text x="' + (x + (bw - 4) / 2) + '" y="' + (H - pad - Math.max(h, 3) - 4) + '" fill="var(--ink)" font-family="JetBrains Mono,monospace" font-weight="700" font-size="10" text-anchor="middle">' + d.scans + '</text>' : "";
       var tap = d.taps ? '<circle cx="' + (x + (bw - 4) / 2) + '" cy="' + (H - pad - Math.round((d.taps / max) * (H - pad - 14)) - 6) + '" r="3.2" fill="#22e6ff"/>' : "";
-      return '<g><title>' + d.d + ': ' + d.scans + ' scans, ' + d.taps + ' taps</title><rect x="' + x + '" y="' + (H - pad - Math.max(h, d.scans ? 3 : 1.5)) + '" width="' + (bw - 4) + '" height="' + Math.max(h, d.scans ? 3 : 1.5) + '" rx="3" fill="' + (last ? "#ff2e88" : d.scans ? "#d7ff1f" : "var(--line)") + '"/>' + tap + '</g>';
+      return '<g><title>' + d.d + ': ' + d.scans + ' scans, ' + d.taps + ' taps</title><rect x="' + x + '" y="' + (H - pad - Math.max(h, d.scans ? 3 : 1.5)) + '" width="' + (bw - 4) + '" height="' + Math.max(h, d.scans ? 3 : 1.5) + '" rx="3" fill="' + (last ? "#ff2e88" : d.scans ? "#d7ff1f" : "var(--line)") + '"/>' + cnt + tap + '</g>';
     }).join("");
     var label = function (i, a) { return '<text x="' + (i * bw + (a === "end" ? bw - 4 : 0)) + '" y="' + (H - 4) + '" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="' + a + '">' + (a === "end" ? "TODAY" : days[i].d.slice(5)) + '</text>'; };
     var empty = total ? "" : '<text class="empty" x="' + W / 2 + '" y="' + (H / 2 - 12) + '">The first scan lights this up</text>';
@@ -1195,7 +1197,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
 // ---- The Ready Stack: approved + ready images and videos per brand, added per day (Elettro OS /status/assets) ----
 (function () {
   var API = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/assets";
-  var IMG = "#d7ff1f", VID = "#ff2e88", LINE = "#22e6ff";
+  var IMG = "#d7ff1f", VID = "#ff2e88", AUD = "#ffc83d", LINE = "#22e6ff";
   var el = function (id) { return document.getElementById(id); };
   var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
   var shown = 0, anim = 0;
@@ -1210,49 +1212,52 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     })(t0);
   }
   function chart(days) {
-    var W = 600, H = 190, pad = 20, top = 16, bw = W / days.length, plot = H - pad - top;
-    var maxAdd = Math.max(1, Math.max.apply(null, days.map(function (d) { return d.images + d.videos; })));
+    var W = 600, H = 210, pad = 20, top = 30, bw = W / days.length, plot = H - pad - top;
+    var n3 = function (d) { return d.images + d.videos + (d.audio || 0); };
+    var maxAdd = Math.max(1, Math.max.apply(null, days.map(n3)));
     var totals = days.map(function (d) { return d.total; }), lo = Math.min.apply(null, totals), hi = Math.max(lo + 1, Math.max.apply(null, totals));
     var yT = function (v) { return top + plot - ((v - lo) / (hi - lo)) * plot; };
     var bars = days.map(function (d, i) {
-      var x = i * bw + 2, w = bw - 4, hI = Math.round((d.images / maxAdd) * plot * 0.55), hV = Math.round((d.videos / maxAdd) * plot * 0.55), base = H - pad;
-      var tip = d.d + ": +" + d.images + " images, +" + d.videos + " videos · " + d.total + " ready";
-      return '<g><title>' + tip + '</title>' + (hI + hV ? "" : '<rect x="' + x + '" y="' + (base - 1.5) + '" width="' + w + '" height="1.5" rx="1" fill="var(--line)"/>') +
+      var x = i * bw + 2, w = bw - 4, hI = Math.round((d.images / maxAdd) * plot * 0.55), hV = Math.round((d.videos / maxAdd) * plot * 0.55), hA = Math.round(((d.audio || 0) / maxAdd) * plot * 0.55), base = H - pad;
+      var tip = d.d + ": +" + d.images + " images, +" + d.videos + " videos, +" + (d.audio || 0) + " audio · " + d.total + " ready";
+      return '<g><title>' + tip + '</title>' + (hI + hV + hA ? "" : '<rect x="' + x + '" y="' + (base - 1.5) + '" width="' + w + '" height="1.5" rx="1" fill="var(--line)"/>') +
         (hI ? '<rect x="' + x + '" y="' + (base - hI) + '" width="' + w + '" height="' + hI + '" rx="3" fill="' + IMG + '"/>' : "") +
-        (hV ? '<rect x="' + x + '" y="' + (base - hI - hV - (hI ? 1 : 0)) + '" width="' + w + '" height="' + hV + '" rx="3" fill="' + VID + '"/>' : "") + '</g>';
+        (hV ? '<rect x="' + x + '" y="' + (base - hI - hV - (hI ? 1 : 0)) + '" width="' + w + '" height="' + hV + '" rx="3" fill="' + VID + '"/>' : "") +
+        (hA ? '<rect x="' + x + '" y="' + (base - hI - hV - hA - (hI ? 1 : 0) - (hV ? 1 : 0)) + '" width="' + w + '" height="' + hA + '" rx="3" fill="' + AUD + '"/>' : "") +
+        (n3(d) ? '<text x="' + (x + w / 2) + '" y="' + (base - hI - hV - hA - (hI ? 1 : 0) - (hV ? 1 : 0) - 4) + '" fill="var(--ink)" font-family="JetBrains Mono,monospace" font-weight="700" font-size="10" text-anchor="middle">' + n3(d) + '</text>' : "") + '</g>';
     }).join("");
     var pts = days.map(function (d, i) { return (i * bw + bw / 2).toFixed(1) + "," + yT(d.total).toFixed(1); });
     var area = '<path d="M' + pts[0] + " L" + pts.join(" L") + " L" + (W - bw / 2) + "," + (H - pad) + " L" + (bw / 2) + "," + (H - pad) + ' Z" fill="' + LINE + '" opacity=".10"/>';
     var line = '<polyline points="' + pts.join(" ") + '" fill="none" stroke="' + LINE + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
     var last = pts[pts.length - 1].split(","), dot = '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="4.5" fill="' + LINE + '"/>';
     var lab = function (x, a, t, f) { return '<text x="' + x + '" y="' + (H - 4) + '" fill="' + (f || "var(--dim)") + '" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="' + a + '">' + t + '</text>'; };
-    el("rsDays").innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Ready assets added per day and the running total, last 30 days">' + area + bars + line + dot +
+    el("rsDays").innerHTML = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Ready images, videos and audio added per day and the running total, last 30 days">' + area + bars + line + dot +
       lab(0, "start", days[0].d.slice(5)) + lab(W, "end", "TODAY", "#ff2e88") +
       '<text x="0" y="10" fill="' + LINE + '" font-family="JetBrains Mono,monospace" font-size="10">' + fmt(days[days.length - 1].total) + ' READY</text>' +
       '<text x="' + W + '" y="10" fill="var(--dim)" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">PEAK +' + maxAdd + ' / DAY</text></svg>' +
-      '<div class="rs-key"><span><i style="background:' + IMG + '"></i>Images added</span><span><i style="background:' + VID + '"></i>Videos added</span><span><i style="background:' + LINE + '"></i>Total ready (line)</span></div>';
+      '<div class="rs-key"><span><i style="background:' + IMG + '"></i>Images added</span><span><i style="background:' + VID + '"></i>Videos added</span><span><i style="background:' + AUD + '"></i>Audio added</span><span><i style="background:' + LINE + '"></i>Total ready (line)</span></div>';
   }
   var BRAND_C = ["#ffc83d", "#22e6ff", "#ff5fd2", "#d7ff1f", "#4fb3ff", "#ff4f6b", "#c9c4ff", "#ff9f43", "#b48cff", "#7cffb2"];
   function render(f) {
     countUp(f.total.total);
-    var d = f.days, today = d[d.length - 1], n = function (x) { return x.images + x.videos; };
+    var d = f.days, today = d[d.length - 1], n = function (x) { return x.images + x.videos + (x.audio || 0); };
     var week = d.slice(-7).reduce(function (a, x) { return a + n(x); }, 0), month = d.reduce(function (a, x) { return a + n(x); }, 0);
     var best = d.reduce(function (a, x) { return n(x) > a.n ? { n: n(x), d: x.d } : a; }, { n: 0, d: "" });
     var live = f.brands.filter(function (b) { return b.total > 0; }).length;
     el("rsSys").innerHTML = [
-      [fmt(f.total.images), "Images ready"], [fmt(f.total.videos), "Videos ready"], ["+" + fmt(n(today)), "Added today"],
+      [fmt(f.total.images), "Images ready"], [fmt(f.total.videos), "Videos ready"], [fmt(f.total.audio), "Audio clips ready"], ["+" + fmt(n(today)), "Added today"],
       ["+" + fmt(week), "Added · 7 days"], ["+" + fmt(month), "Added · 30 days"], [best.n ? "+" + fmt(best.n) : "-", best.n ? "Best day · " + best.d.slice(5) : "Best day"]
     ].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
     chart(d);
     var bmax = Math.max(1, f.brands.length ? f.brands[0].total : 0);
     el("rsBrands").innerHTML = f.brands.map(function (b, i) {
-      var c = BRAND_C[i % BRAND_C.length], wi = (b.images / bmax) * 100, wv = (b.videos / bmax) * 100;
+      var c = b.stock ? "#22e6ff" : BRAND_C[i % BRAND_C.length], wi = (b.images / bmax) * 100, wv = (b.videos / bmax) * 100, wa = ((b.audio || 0) / bmax) * 100;
       return '<div class="rs-brand" style="--hc:' + c + '"><div class="who"><i></i>' + b.name.replace(/</g, "") + '</div>' +
-        '<div class="bar" title="' + b.images + ' images · ' + b.videos + ' videos"><b data-w="' + wi.toFixed(2) + '" style="background:' + IMG + '"></b><b data-w="' + wv.toFixed(2) + '" style="background:' + VID + '"></b></div>' +
-        '<div class="nums">' + fmt(b.total) + '<small>' + fmt(b.images) + ' IMG · ' + fmt(b.videos) + ' VID</small></div></div>';
+        '<div class="bar" title="' + b.images + ' images · ' + b.videos + ' videos · ' + (b.audio || 0) + ' audio"><b data-w="' + wi.toFixed(2) + '" style="background:' + IMG + '"></b><b data-w="' + wv.toFixed(2) + '" style="background:' + VID + '"></b><b data-w="' + wa.toFixed(2) + '" style="background:' + AUD + '"></b></div>' +
+        '<div class="nums">' + fmt(b.total) + '<small>' + fmt(b.images) + ' IMG · ' + fmt(b.videos) + ' VID · ' + fmt(b.audio) + ' AUD</small></div></div>';
     }).join("");
     requestAnimationFrame(function () { setTimeout(function () { Array.prototype.forEach.call(document.querySelectorAll("#rsBrands .bar b"), function (b) { b.style.width = b.dataset.w + "%"; }); }, 60); });
-    el("rsNote").textContent = live + " of " + f.brands.length + " brands have assets ready · approved, tagged and not retired · counts only · updates every minute.";
+    el("rsNote").textContent = live + " of " + f.brands.length + " lines have assets ready · approved, tagged and not retired · counts only · updates every minute.";
   }
   function load() {
     fetch(API, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (f) { if (!f.ok) throw 0; render(f); }).catch(function () {
