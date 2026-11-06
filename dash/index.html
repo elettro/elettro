@@ -1039,6 +1039,11 @@ async function pullMatrix() {
       ["youtube", "instagram", "facebook", "pinterest", "substack", "gmb"].forEach((dest) => {
         const live = { done: ALL, pct: 100, note: "LIVE: SolarMeister posts through Elettro OS." }, i = b.profiles.findIndex((x) => x.destination === dest);
         if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; }); });
+    // Elettro is LIVE on YouTube, Instagram, Facebook, Threads, Mastodon and Google Business (261106, Dean); LinkedIn, Bluesky, Substack and X are pinned live above.
+    mxBrands.forEach((b) => { if (b.slug !== "elettro") return;
+      ["youtube", "instagram", "facebook", "threads", "mastodon", "gmb"].forEach((dest) => {
+        const live = { done: ALL, pct: 100, note: "LIVE: Elettro posts through Elettro OS." }, i = b.profiles.findIndex((x) => x.destination === dest);
+        if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...b.profiles[i], ...live, tokenExpiresAt: null }; }); });
     // Bluesky, Google Business and YouTube: every brand that is not live or plugged in yet is at least WIRED (orange), 261105.
     mxBrands.forEach((b) => ["bluesky", "gmb", "youtube"].forEach((dest) => {
       const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
