@@ -1052,6 +1052,13 @@ async function pullMatrix() {
       const patch = live ? { done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to X." } : { wired: true, done: { account: 1, oauth: 1 }, pct: 20, note: "Wired 261106. Not auto-posting yet." };
       const i = b.profiles.findIndex((x) => x.destination === "x");
       if (i < 0) b.profiles.push({ destination: "x", handle: "X", ...patch }); else b.profiles[i] = { ...b.profiles[i], ...patch, tokenExpiresAt: null }; });
+    // Neckermann Strom is WIRED on YouTube, Pinterest, Bluesky, Substack, GBP, X and Reddit (261106, Dean); Mastodon stays Live above.
+    mxBrands.forEach((b) => { if (b.slug !== "neckermann-strom") return;
+      ["youtube", "pinterest", "bluesky", "substack", "gmb", "x", "reddit"].forEach((dest) => {
+        const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
+        if (p && ["live", "plugged"].includes(levelOf(p))) return;
+        const w = { wired: true, done: { account: 1, oauth: 1 }, pct: 25, note: "Wired 261106. Not auto-posting yet." };
+        if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...w }); else b.profiles[i] = { ...p, ...w }; }); });
     // Neckermann Strom is WIRED on Pinterest (261106, Dean).
     mxBrands.forEach((b) => { if (b.slug !== "neckermann-strom") return;
       const i = b.profiles.findIndex((x) => x.destination === "pinterest"), w = { wired: true, done: { account: 1, oauth: 1 }, pct: 25, note: "Wired 261106. Not auto-posting yet." };
