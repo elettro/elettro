@@ -461,7 +461,7 @@ async function drawVisits() {
     const feed = await (await fetch(FEED, { cache: "no-store" })).json();
     const b = (feed.brands || []).find((x) => x.slug === "stashbox"); if (!b) return;
     const W = { strategy:5, account:5, planner:10, content:10, copy:10, plan:10, api:15, oauth:15, test:10, live:10 };
-    const meta = { instagram:["Instagram","IG","#ff5fd2"], youtube:["YouTube","YT","#ff3b3b"], tiktok:["TikTok","TT","#22e6ff"], facebook:["Facebook","FB","#3b8bff"], threads:["Threads","TH","#c9c4ff"], linkedin:["LinkedIn","in","#4fb3ff"], pinterest:["Pinterest","P","#ff4f6b"], gmb:["Google Business","G","#ffc83d"] };
+    const meta = { instagram:["Instagram","IG","#ff5fd2"], youtube:["YouTube","YT","#ff3b3b"], tiktok:["TikTok","TT","#22e6ff"], facebook:["Facebook","FB","#3b8bff"], threads:["Threads","TH","#c9c4ff"], linkedin:["LinkedIn","in","#4fb3ff"], pinterest:["Pinterest","P","#ff4f6b"], gmb:["Google Business","G","#ffc83d"], x:["X","X","#e7e7ee"], reddit:["Reddit","R","#ff6a2b"] };
     const rows = b.profiles.filter((p) => meta[p.destination]).map((p) => [meta[p.destination][0], meta[p.destination][1],
       Math.round(Object.entries(W).reduce((s, [k, w]) => s + w * (p.done[k] || 0), 0)), meta[p.destination][2]]).sort((a, c) => c[2] - a[2]);
     if (rows.length) { board = rows; drawBoard(); }
