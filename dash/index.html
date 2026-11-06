@@ -923,8 +923,8 @@ function renderMatrix() {
       const p = b.profiles.find((x) => x.destination === c.dest);
       return { c, p, lv: levelOf(p) };
     });
-    return { b, bi, cells, plugged: cells.filter((x) => x.lv === "live" || x.lv === "plugged").length };
-  }).sort((a, z) => z.plugged - a.plugged || z.b.pct - a.b.pct || a.b.name.localeCompare(z.b.name));
+    return { b, bi, cells, plugged: cells.filter((x) => x.lv === "live" || x.lv === "plugged").length, wired: cells.filter((x) => x.lv === "wired").length };
+  }).sort((a, z) => z.plugged - a.plugged || z.wired - a.wired || z.b.pct - a.b.pct || a.b.name.localeCompare(z.b.name));
   const counts = Object.fromEntries(LEVEL_ORDER.map((l) => [l, 0]));
   rows.forEach((r) => r.cells.forEach((x) => { if (counts[x.lv] !== undefined) counts[x.lv]++; }));
   const total = rows.length * cols.length, up = counts.live + counts.plugged;
