@@ -1046,23 +1046,18 @@ async function pullMatrix() {
       const wired = { wired: true, done: { account: 1, ...(p && p.done), oauth: 1 }, pct: Math.max(20, (p && p.pct) || 0) };
       if (i < 0) b.profiles.push({ destination: dest, handle: dest === "gmb" ? "Google Business" : dest === "youtube" ? "YouTube" : "Bluesky", ...wired, note: "Wired 261105. Not auto-posting yet." });
       else b.profiles[i] = { ...p, ...wired, note: p.note || "Wired 261105. Not auto-posting yet." }; }));
-    // X is LIVE for Elettro, Stashbox, SolarMeister and Neckermann Strom; every other brand is PLUGGED IN (261106, Dean).
+    // X is LIVE for Elettro, Stashbox, SolarMeister and Neckermann Strom; every other brand is WIRED (261106, Dean).
     mxBrands.forEach((b) => {
       const live = ["elettro", "stashbox", "solarmeister", "neckermann-strom"].includes(b.slug);
-      const patch = live ? { done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to X." } : { wired: false, done: { account: 1, oauth: 1 }, pct: 25, note: "Plugged in 261106: connected to X. Not posting yet." };
+      const patch = live ? { done: ALL, pct: 100, note: "LIVE: Elettro OS publishes to X." } : { wired: true, done: { account: 1, oauth: 1 }, pct: 20, note: "Wired 261106. Not auto-posting yet." };
       const i = b.profiles.findIndex((x) => x.destination === "x");
       if (i < 0) b.profiles.push({ destination: "x", handle: "X", ...patch }); else b.profiles[i] = { ...b.profiles[i], ...patch, tokenExpiresAt: null }; });
-    // Neckermann Strom is WIRED on YouTube, Pinterest, Bluesky, Substack and GBP (261106, Dean); Mastodon stays Live above.
+    // Neckermann Strom is LIVE on YouTube, Pinterest, Bluesky, Mastodon, Substack and GBP (261106, Dean).
     mxBrands.forEach((b) => { if (b.slug !== "neckermann-strom") return;
-      ["youtube", "pinterest", "bluesky", "substack", "gmb"].forEach((dest) => {
+      ["youtube", "pinterest", "bluesky", "mastodon", "substack", "gmb"].forEach((dest) => {
         const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
-        if (p && ["live", "plugged"].includes(levelOf(p))) return;
-        const w = { wired: true, done: { account: 1, oauth: 1 }, pct: 25, note: "Wired 261106. Not auto-posting yet." };
-        if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...w }); else b.profiles[i] = { ...p, ...w }; }); });
-    // Neckermann Strom is WIRED on Pinterest (261106, Dean).
-    mxBrands.forEach((b) => { if (b.slug !== "neckermann-strom") return;
-      const i = b.profiles.findIndex((x) => x.destination === "pinterest"), w = { wired: true, done: { account: 1, oauth: 1 }, pct: 25, note: "Wired 261106. Not auto-posting yet." };
-      if (i < 0) b.profiles.push({ destination: "pinterest", handle: "Pinterest", ...w }); else b.profiles[i] = { ...b.profiles[i], ...w }; });
+        const live = { wired: false, done: ALL, pct: 100, note: "LIVE: Neckermann Strom posts through Elettro OS.", tokenExpiresAt: null };
+        if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...p, ...live }; }); });
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
