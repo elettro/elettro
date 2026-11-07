@@ -533,9 +533,6 @@ const STATUS = [
   { name: "X", dest: "x", handle: "@stashboxmusic", code: "X", color: "#e7e7ee",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, api: 1, oauth: 1, test: 1, live: 1 },
     note: "LIVE 261106: Elettro OS publishes to X." },
-  { name: "Reddit", dest: "reddit", handle: "Reddit", code: "R", color: "#ff6a2b",
-    done: { strategy: 1 },
-    note: "Being dialed in now. Not connected to Elettro OS yet." },
   { name: "Snapchat", dest: "snapchat", handle: "@stashboxcom", code: "SC", color: "#fffc00",
     done: { strategy: 1, account: 1, planner: 1, content: 1, copy: 1, plan: 1, oauth: 1 },
     note: "Wired across all brands 261105; Stashbox is plugged in. Public Profile API approval was requested from Snap at noon EST on 261105: waiting on Snap." },
@@ -631,7 +628,6 @@ const WAITING = [
   { dest: "x", name: "X", what: "Pay Per Use project approved, posting publicly", since: "2026-11-06T09:00:00-05:00", exact: false, state: "open" },
   { dest: "tiktok", name: "TikTok (final)", what: "Final TikTok API approval, estimated 2-4 weeks", since: "2026-10-28T12:00:00-04:00", exact: false, state: "waiting" },
   { dest: "snapchat", name: "Snapchat", what: "Public Profile API approval requested from Snap", since: "2026-11-05T12:00:00-05:00", exact: true, state: "waiting" },
-  { dest: "reddit", name: "Reddit", what: "API access request submitted to Reddit", since: "2026-11-06T15:05:00-05:00", exact: true, state: "waiting" },
   { dest: "bedrock", name: "Haiku 5.5 (AWS Bedrock)", what: "New AWS Support ticket to unlock Claude Haiku 5.5 on Bedrock (AI picks + captions run on Haiku 4.5 meanwhile)", since: "2026-11-07T10:30:00-05:00", exact: false, state: "waiting" }
 ];
 const damMs = (w) => Math.max(0, Date.now() - new Date(w.since).getTime());
@@ -922,7 +918,7 @@ function cellSvg(color, code, pct) {
     <text class="pc" x="32" y="53">${pct}%</text></svg>`;
 }
 function renderMatrix() {
-  const LAST = ["tiktok", "reddit", "snapchat"]; // matrix only: these three sit at the far right (261107, Dean)
+  const LAST = ["tiktok", "snapchat"]; // matrix only: these two sit at the far right (261107, Dean)
   const cols = [...STATUS.filter((c) => !LAST.includes(c.dest)), ...LAST.map((d) => STATUS.find((c) => c.dest === d)).filter(Boolean)];
   const rows = mxBrands.map((b, bi) => {
     const cells = cols.map((c) => {
@@ -1066,10 +1062,7 @@ async function pullMatrix() {
         const i = b.profiles.findIndex((x) => x.destination === dest), p = i < 0 ? null : b.profiles[i];
         const live = { wired: false, done: ALL, pct: 100, note: "LIVE: Neckermann Strom posts through Elettro OS.", tokenExpiresAt: null };
         if (i < 0) b.profiles.push({ destination: dest, handle: dest, ...live }); else b.profiles[i] = { ...p, ...live }; });
-      // Reddit stays WIRED (not live) for Neckermann Strom until Reddit approves API access (261106, Dean).
-      const wr = { wired: true, done: { account: 1, oauth: 1 }, pct: 20, note: "Wired 261106. Not auto-posting yet." };
-      const ri = b.profiles.findIndex((x) => x.destination === "reddit");
-      if (ri < 0) b.profiles.push({ destination: "reddit", handle: "Reddit", ...wr }); else b.profiles[ri] = { ...b.profiles[ri], ...wr }; });
+    });
   } catch { if (!mxBrands.length) document.getElementById("mx").firstElementChild.textContent = "Connections feed offline · the grid fills in as soon as it answers"; return; }
   const key = JSON.stringify(mxBrands.map((b) => b.profiles.map((p) => [p.done, p.tokenExpiresAt])));
   if (key !== mxKey) { mxKey = key; const sel = document.querySelector("#mx .cell.sel"); const keep = sel && [sel.dataset.b, sel.dataset.d]; renderMatrix();
