@@ -921,7 +921,8 @@ function cellSvg(color, code, pct) {
     <text class="pc" x="32" y="53">${pct}%</text></svg>`;
 }
 function renderMatrix() {
-  const cols = STATUS; // the networks the dashboard races
+  const LAST = ["tiktok", "reddit", "snapchat"]; // matrix only: these three sit at the far right (261107, Dean)
+  const cols = [...STATUS.filter((c) => !LAST.includes(c.dest)), ...LAST.map((d) => STATUS.find((c) => c.dest === d)).filter(Boolean)];
   const rows = mxBrands.map((b, bi) => {
     const cells = cols.map((c) => {
       const p = b.profiles.find((x) => x.destination === c.dest);
