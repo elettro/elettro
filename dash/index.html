@@ -63,6 +63,30 @@ h1 span{-webkit-text-stroke:1.5px var(--ink);color:transparent}
 .leg .w{font:700 11px "JetBrains Mono",monospace;color:var(--dim)}
 .leg .bar{grid-column:1/-1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
 .leg .bar i{display:block;height:100%;background:var(--volt)}
+/* ---- Milestones ---- */
+#milestones{margin:6px 0 8px}
+.ms-ladders{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.ms-card{background:var(--asphalt);border:2px solid var(--line);border-top:6px solid var(--c);border-radius:16px;padding:14px 16px}
+.ms-card .k{font:700 10px "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+.ms-card .v{font:400 44px/1 Anton,sans-serif;color:var(--c);margin:6px 0 2px}
+.ms-card .nx{font:500 12px "JetBrains Mono",monospace;color:var(--dim)}
+.ms-card .bar{height:10px;border-radius:6px;background:var(--lane);margin:10px 0;overflow:hidden}
+.ms-card .bar b{display:block;height:100%;width:0;background:var(--c);border-radius:6px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.ms-card .steps{display:flex;gap:5px;flex-wrap:wrap}
+.ms-card .steps i{font:700 10px "JetBrains Mono",monospace;font-style:normal;padding:3px 7px;border-radius:6px;border:1px solid var(--line);color:var(--dim)}
+.ms-card .steps i.hit{background:var(--c);border-color:var(--c);color:#0b0b10}
+.ms-time{margin-top:14px;background:var(--asphalt);border:2px solid var(--line);border-radius:16px;padding:6px 16px;max-height:344px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--dim) transparent}
+.ms-more{font:700 10px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:8px 2px 0;text-align:right}
+.ms-ev{display:grid;grid-template-columns:96px 14px 1fr;gap:12px;padding:11px 0;border-top:1px dashed var(--line);align-items:start}
+.ms-ev:first-child{border-top:0}
+.ms-ev .d{font:700 11px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--dim);padding-top:3px}
+.ms-ev .dot{width:12px;height:12px;border-radius:50%;background:var(--c);margin-top:4px;box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
+.ms-ev .t{font-weight:800;font-size:15px}
+.ms-ev .t em{font:700 9px "JetBrains Mono",monospace;font-style:normal;letter-spacing:.14em;color:#0b0b10;background:var(--c);border-radius:5px;padding:2px 6px;margin-left:8px;vertical-align:middle}
+.ms-ev .n{font-size:13px;color:var(--dim);margin-top:2px}
+.ms-ev.new .d{color:var(--volt)}
+@media (max-width:900px){.ms-ladders{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.ms-ladders{grid-template-columns:1fr}.ms-ev{grid-template-columns:78px 12px 1fr}}
 h2{font:400 34px/1 Anton,sans-serif;text-transform:uppercase;margin:36px 0 12px}
 h2 em{font-style:normal;color:var(--cyan)}
 .pits{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
@@ -379,6 +403,14 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
   </header>
 
   <div class="ticker"><div id="ticker"></div></div>
+
+  <section id="milestones" aria-label="Milestones">
+    <div class="kicker">Elettro OS · what we have reached</div>
+    <h2>The <em>Milestones</em></h2>
+    <div class="ms-ladders" id="msLadders"></div>
+    <div class="ms-time" id="msTime" tabindex="0" aria-label="Milestone timeline, scrollable"></div>
+    <div class="ms-more" id="msMore"></div>
+  </section>
 
   <section class="track" aria-label="Race track">
     <div class="scale"><span>RACER</span><div class="marks" id="marks"></div><span style="text-align:right">LIVE %</span></div>
@@ -1346,7 +1378,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
   var MODE = window.DASH_MODE, PREFIX = "elettro-dash-", q = new URLSearchParams(location.search), target = q.get("c");
   function $(id) { return document.getElementById(id); }
   function hit(t) { try { fetch("https://abacus.jasoncameron.dev/hit/elettro-com/remote-dash-" + t, { cache: "no-store", keepalive: true }).catch(function () {}); } catch (e) {} }
-  var SECS = [["Grand Prix", ".wrap > header"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["1000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["Ready", "#assetsec"], ["End", "footer"]];
+  var SECS = [["Grand Prix", ".wrap > header"], ["Milestones", "#milestones"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["1000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["Ready", "#assetsec"], ["End", "footer"]];
   function maxS() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
 
   if (MODE === "display") {
@@ -1509,6 +1541,73 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     stat(false, "Could not connect");
     err(e.type === "peer-unavailable" ? "This dash session has ended. Scan the code on the screen again." : "Connection error: " + e.type);
   });
+})();
+</script>
+<script>
+// ---- Milestones: counter ladders (live) + a hand-kept feature timeline. To add a milestone, add a line to EVENTS (it sorts itself by date). ----
+(function () {
+  var EVENTS = [
+    { d: "2026-11-08", c: "#d7ff1f", tag: "TRACKING", t: "Instagram link-in-bio click tracking", n: "Clicks on the link in bio are now counted and tied back to the post that sent them." },
+    { d: "2026-11-07", c: "#22e6ff", tag: "ANALYTICS", t: "Plugged into the analytics of 8+ social networks", n: "Views, likes and clicks now flow back from the networks into Elettro OS." },
+    { d: "2026-11-07", c: "#d7ff1f", tag: "TRACKING", t: "Social-to-Shopify click tracking works", n: "Short links plus the Shopify pixel follow a post from the feed to the store." },
+    { d: "2026-11-06", c: "#ffc83d", tag: "NETWORK", t: "X is live in Elettro OS", n: "Scheduled photo and video posts publish to X automatically." },
+    { d: "2026-11-05", c: "#ffc83d", tag: "NETWORK", t: "Substack is live in Elettro OS", n: "Scheduled posts publish to Substack automatically." },
+    { d: "2026-11-04", c: "#ffc83d", tag: "NETWORK", t: "Google Business Profile posting is live", n: "Stashbox is the first brand posting to Google Business." },
+    { d: "2026-10-29", c: "#ffc83d", tag: "NETWORK", t: "Bluesky and Mastodon are live", n: "Elettro OS publishes to both for the first brands." },
+    { d: "2026-10-28", c: "#ffc83d", tag: "NETWORK", t: "TikTok approved", n: "TikTok approved the Elettro OS app, so public posts with captions are unlocked." },
+    { d: "2026-10-27", c: "#ffc83d", tag: "NETWORK", t: "Instagram and Facebook are live", n: "Elettro OS publishes Reels, photos and posts to both." },
+    { d: "2026-10-26", c: "#ffc83d", tag: "NETWORK", t: "Pinterest is live", n: "Real public image and video Pins go to the Stashbox board." },
+    { d: "2026-10-25", c: "#ffc83d", tag: "NETWORK", t: "LinkedIn is live", n: "The LinkedIn worker is posting from Elettro OS." },
+    { d: "2026-10-22", c: "#ffc83d", tag: "NETWORK", t: "Threads is live", n: "@stashboxmusic posts approved items on its own every 15 minutes." },
+    { d: "2026-10-20", c: "#ffc83d", tag: "NETWORK", t: "First YouTube upload through Elettro OS", n: "A private test on @stashboxband proved the upload worker." },
+    { d: "2026-11-03", c: "#ff2e88", tag: "SCROLL", t: "Elettro Scroll site added", n: "elettro.com/scroll with its own phone-remote relay." },
+    { d: "2026-11-02", c: "#b48cff", tag: "REMOTE", t: "Elettro Remote added", n: "Phone remotes with live trigger counting for every experience." },
+    { d: "2026-11-01", c: "#ff5fd2", tag: "MULTICAM", t: "Elettro MultiCam added", n: "Phone clips from a shoot upload into one session. Phase 1 live." },
+    { d: "2026-10-26", c: "#22e6ff", tag: "AR", t: "Elettro AR added", n: "Live at ar.elettro.com: scan a marker, get the experience." }
+  ];
+  var LADDERS = [
+    { id: "posts", c: "#ff2e88", k: "Posts published", steps: [1000, 5000, 10000, 25000, 50000, 100000] },
+    { id: "assets", c: "#d7ff1f", k: "Assets in the system", steps: [5000, 10000, 25000, 50000, 100000] },
+    { id: "ar", c: "#22e6ff", k: "AR scans", steps: [100, 500, 1000, 5000, 10000] },
+    { id: "remote", c: "#b48cff", k: "Remote triggers", steps: [100, 500, 1000, 5000, 10000] }
+  ];
+  var el = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
+  var short = function (n) { return n >= 1000 ? (n / 1000) + "k" : String(n); };
+  var vals = {};
+  function drawLadders() {
+    el("msLadders").innerHTML = LADDERS.map(function (L) {
+      var v = vals[L.id], have = typeof v === "number";
+      var next = L.steps.filter(function (x) { return !have || x > v; })[0], prev = L.steps.filter(function (x) { return have && x <= v; }).pop() || 0;
+      var pct = !have ? 0 : next ? Math.min(100, ((v - prev) / (next - prev)) * 100) : 100;
+      var steps = L.steps.map(function (x) { return '<i class="' + (have && v >= x ? "hit" : "") + '">' + (have && v >= x ? "✓ " : "") + short(x) + '</i>'; }).join("");
+      return '<div class="ms-card" style="--c:' + L.c + '"><div class="k">' + L.k + '</div><div class="v">' + (have ? fmt(v) : "…") + '</div>' +
+        '<div class="nx">' + (!have ? "loading" : next ? fmt(next - v) + " to " + fmt(next) : "every milestone cleared") + '</div>' +
+        '<div class="bar"><b data-w="' + pct.toFixed(1) + '"></b></div><div class="steps">' + steps + '</div></div>';
+    }).join("");
+    requestAnimationFrame(function () { setTimeout(function () { Array.prototype.forEach.call(document.querySelectorAll("#msLadders .bar b"), function (b) { b.style.width = b.dataset.w + "%"; }); }, 60); });
+  }
+  function drawEvents() {
+    var today = new Date().toLocaleDateString("en-CA");
+    el("msTime").innerHTML = EVENTS.slice().sort(function (a, b) { return a.d < b.d ? 1 : -1; }).map(function (e) {
+      var dt = new Date(e.d + "T12:00:00"), label = e.d === today ? "TODAY" : dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase();
+      return '<div class="ms-ev' + (e.d === today ? " new" : "") + '" style="--c:' + e.c + '"><div class="d">' + label + '</div><div class="dot"></div><div><div class="t">' + e.t + '<em>' + e.tag + '</em></div><div class="n">' + e.n + '</div></div></div>';
+    }).join("");
+    el("msMore").textContent = EVENTS.length + " milestones · scroll the list for more";
+  }
+  var get = function (u) { return fetch(u, { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); };
+  function load() {
+    var jobs = [
+      get("https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/posts").then(function (f) { vals.posts = f.total.published; }),
+      get("https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/assets").then(function (f) { vals.assets = f.total.total; }),
+      get("https://77vr7dbzgn733xvyqcs32lllvu0tqoph.lambda-url.us-east-1.on.aws/ar/stats").then(function (f) { vals.ar = f.total.scans; }),
+      Promise.all(["remote-reef-bh", "remote-reef2", "remote-scroll", "remote-hub", "remote-dash"].map(function (id) {
+        return get("https://abacus.jasoncameron.dev/get/elettro-com/" + id + "-phones").then(function (j) { return +j.value || 0; }).catch(function () { return 0; });
+      })).then(function (a) { vals.remote = a.reduce(function (x, y) { return x + y; }, 0); })
+    ];
+    Promise.all(jobs.map(function (p) { return p.catch(function () {}); })).then(drawLadders);
+  }
+  drawEvents(); drawLadders(); load(); setInterval(load, 60000);
 })();
 </script>
 </body>
