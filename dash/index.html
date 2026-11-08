@@ -75,7 +75,8 @@ h1 span{-webkit-text-stroke:1.5px var(--ink);color:transparent}
 .ms-card .steps{display:flex;gap:5px;flex-wrap:wrap}
 .ms-card .steps i{font:700 10px "JetBrains Mono",monospace;font-style:normal;padding:3px 7px;border-radius:6px;border:1px solid var(--line);color:var(--dim)}
 .ms-card .steps i.hit{background:var(--c);border-color:var(--c);color:#0b0b10}
-.ms-time{margin-top:14px;background:var(--asphalt);border:2px solid var(--line);border-radius:16px;padding:6px 16px}
+.ms-time{margin-top:14px;background:var(--asphalt);border:2px solid var(--line);border-radius:16px;padding:6px 16px;max-height:344px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--dim) transparent}
+.ms-more{font:700 10px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:8px 2px 0;text-align:right}
 .ms-ev{display:grid;grid-template-columns:96px 14px 1fr;gap:12px;padding:11px 0;border-top:1px dashed var(--line);align-items:start}
 .ms-ev:first-child{border-top:0}
 .ms-ev .d{font:700 11px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--dim);padding-top:3px}
@@ -407,7 +408,8 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
     <div class="kicker">Elettro OS · what we have reached</div>
     <h2>The <em>Milestones</em></h2>
     <div class="ms-ladders" id="msLadders"></div>
-    <div class="ms-time" id="msTime"></div>
+    <div class="ms-time" id="msTime" tabindex="0" aria-label="Milestone timeline, scrollable"></div>
+    <div class="ms-more" id="msMore"></div>
   </section>
 
   <section class="track" aria-label="Race track">
@@ -1549,6 +1551,14 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
     { d: "2026-11-07", c: "#22e6ff", tag: "ANALYTICS", t: "Plugged into the analytics of 8+ social networks", n: "Views, likes and clicks now flow back from the networks into Elettro OS." },
     { d: "2026-11-07", c: "#d7ff1f", tag: "TRACKING", t: "Social-to-Shopify click tracking works", n: "Short links plus the Shopify pixel follow a post from the feed to the store." },
     { d: "2026-11-06", c: "#ffc83d", tag: "NETWORK", t: "X is live in Elettro OS", n: "Scheduled photo and video posts publish to X automatically." },
+    { d: "2026-11-05", c: "#ffc83d", tag: "NETWORK", t: "Substack is live in Elettro OS", n: "Scheduled posts publish to Substack automatically." },
+    { d: "2026-11-04", c: "#ffc83d", tag: "NETWORK", t: "Google Business Profile posting is live", n: "Stashbox is the first brand posting to Google Business." },
+    { d: "2026-10-29", c: "#ffc83d", tag: "NETWORK", t: "Bluesky and Mastodon are live", n: "Elettro OS publishes to both for the first brands." },
+    { d: "2026-10-28", c: "#ffc83d", tag: "NETWORK", t: "TikTok approved", n: "TikTok approved the Elettro OS app, so public posts with captions are unlocked." },
+    { d: "2026-10-26", c: "#ffc83d", tag: "NETWORK", t: "Pinterest is live", n: "Real public image and video Pins go to the Stashbox board." },
+    { d: "2026-10-25", c: "#ffc83d", tag: "NETWORK", t: "LinkedIn is live", n: "The LinkedIn worker is posting from Elettro OS." },
+    { d: "2026-10-22", c: "#ffc83d", tag: "NETWORK", t: "Threads is live", n: "@stashboxmusic posts approved items on its own every 15 minutes." },
+    { d: "2026-10-20", c: "#ffc83d", tag: "NETWORK", t: "First YouTube upload through Elettro OS", n: "A private test on @stashboxband proved the upload worker." },
     { d: "2026-11-03", c: "#ff2e88", tag: "SCROLL", t: "Elettro Scroll site added", n: "elettro.com/scroll with its own phone-remote relay." },
     { d: "2026-11-02", c: "#b48cff", tag: "REMOTE", t: "Elettro Remote added", n: "Phone remotes with live trigger counting for every experience." },
     { d: "2026-11-01", c: "#ff5fd2", tag: "MULTICAM", t: "Elettro MultiCam added", n: "Phone clips from a shoot upload into one session. Phase 1 live." },
@@ -1582,6 +1592,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
       var dt = new Date(e.d + "T12:00:00"), label = e.d === today ? "TODAY" : dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase();
       return '<div class="ms-ev' + (e.d === today ? " new" : "") + '" style="--c:' + e.c + '"><div class="d">' + label + '</div><div class="dot"></div><div><div class="t">' + e.t + '<em>' + e.tag + '</em></div><div class="n">' + e.n + '</div></div></div>';
     }).join("");
+    el("msMore").textContent = EVENTS.length + " milestones · scroll the list for more";
   }
   var get = function (u) { return fetch(u, { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); };
   function load() {
