@@ -771,8 +771,19 @@ function paceNote(o) {
   const since = o.firstAt && new Date(o.firstAt) < start ? new Date(o.firstAt) : start;
   if (o.finishedAt) return `🏁 finished in ${dhms(ms)}`;
   if (!o.published) return o.scheduled ? `${o.scheduled} queued · none out yet` : "waiting for first post";
-  const perDay = o.published / Math.max((endOf(o) - since) / 86400000, 1); // first day counts as a full day so early pace isn't absurd
-  const eta = new Date(Date.now() + ((race.goal - o.published) / perDay) * 86400000);
+  // Queue-based ETA: walk the approved schedule day by day. A lane uses its share of the whole queue.
+  const up = race.upcoming || [], qTotal = up.reduce((n, d) => n + d.posts, 0), need = race.goal - o.published;
+  if (o.scheduled && qTotal && o.published + o.scheduled >= race.goal) {
+    const want = (need / o.scheduled) * qTotal; let acc = 0;
+    for (const d of up) { acc += d.posts; if (acc >= want) {
+      const today = new Date().toLocaleDateString("en-CA"), day = new Date(d.d + "T12:00:00");
+      return `queue crosses ${race.goal} ${d.d === today ? "TODAY" : fdate(day)}`; } }
+  }
+  // Queue too short: recent pace (last 3 full days), falling back to the race average
+  const recent = (race.days || []).slice(-4, -1), rPace = recent.length ? recent.reduce((n, d) => n + d.posts, 0) / recent.length : 0;
+  const avgPace = o.published / Math.max((endOf(o) - since) / 86400000, 1);
+  const perDay = Math.max(rPace * (o === race.total ? 1 : (o.published / Math.max(race.total.published, 1))), avgPace);
+  const eta = new Date(Date.now() + (need / perDay) * 86400000);
   return `${perDay < 10 ? perDay.toFixed(1) : Math.round(perDay)}/day · ETA ${fdate(eta)}`;
 }
 function lanes(el, rows, scaleEl) {
