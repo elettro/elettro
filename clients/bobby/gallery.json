@@ -502,6 +502,30 @@
     "added": "2026-11-02"
   },
   {
+    "id": "PIN-A05",
+    "section": "pop-that-pina",
+    "type": "audio",
+    "title": "Pass The Piña Rave · 01b · EPIC Fire",
+    "filename": "Pass The Pina Rave 01b EPIC - Downloaded Fire.wav",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/p496lhul3js29r37q51ew/Pass-The-Pina-Rave-01b-EPIC-Downloaded-Fire.wav?rlkey=813ukm1989eg9gdz3wid6em4r&dl=0",
+    "fileId": "id:UM9GhyUcVDgAAAAAAAMsMg",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/p496lhul3js29r37q51ew/Pass-The-Pina-Rave-01b-EPIC-Downloaded-Fire.wav?rlkey=813ukm1989eg9gdz3wid6em4r&raw=1",
+    "added": "2026-11-13"
+  },
+  {
+    "id": "ROM-A06",
+    "section": "rompe",
+    "type": "audio",
+    "title": "Nice Cans · 01b · Mastered Fire",
+    "filename": "Nice Cans 01b  Downloaded Mastered Fire.wav",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/numxu6w5wz5e4g5xl47bf/Nice-Cans-01b-Downloaded-Mastered-Fire.wav?rlkey=5936sgc7oq2lyo069relqftkr&dl=0",
+    "fileId": "id:UM9GhyUcVDgAAAAAAAMsMQ",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/numxu6w5wz5e4g5xl47bf/Nice-Cans-01b-Downloaded-Mastered-Fire.wav?rlkey=5936sgc7oq2lyo069relqftkr&raw=1",
+    "added": "2026-11-13"
+  },
+  {
     "id": "ROM-A05",
     "section": "rompe",
     "type": "audio",
