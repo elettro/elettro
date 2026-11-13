@@ -502,6 +502,28 @@
     "added": "2026-11-02"
   },
   {
+    "id": "ROM-A03",
+    "section": "rompe",
+    "type": "audio",
+    "title": "Its Going Down · 05b · P-Funk Vibe",
+    "filename": "Its Goin Down 05b Pfunk Vibe - Downloaded.wav",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/l671c3hs53vce3geo7f1s/Its-Goin-Down-05b-Pfunk-Vibe-Downloaded.wav?rlkey=vjrnzlzcvm8wmtdsz06qoa08k&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/l671c3hs53vce3geo7f1s/Its-Goin-Down-05b-Pfunk-Vibe-Downloaded.wav?rlkey=vjrnzlzcvm8wmtdsz06qoa08k&raw=1",
+    "added": "2026-11-13"
+  },
+  {
+    "id": "ROM-A04",
+    "section": "rompe",
+    "type": "audio",
+    "title": "Thirst for Life · 01b",
+    "filename": "Thirst for Life 01b Downloaded.wav",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/rd9ek744zsqza6o3wulnf/Thirst-for-Life-01b-Downloaded.wav?rlkey=s8pbyes9r3h32zt67a1lyjgsx&dl=0",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/rd9ek744zsqza6o3wulnf/Thirst-for-Life-01b-Downloaded.wav?rlkey=s8pbyes9r3h32zt67a1lyjgsx&raw=1",
+    "added": "2026-11-13"
+  },
+  {
     "id": "ROM-A02",
     "section": "rompe",
     "type": "audio",
