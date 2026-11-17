@@ -128,7 +128,12 @@ footer{margin-top:32px;font:500 12px "JetBrains Mono",monospace;color:var(--dim)
   .lane{grid-template-columns:1fr 64px;row-gap:4px}
   .who{grid-column:1/-1}.road{grid-column:1}.pct{font-size:26px}.next{display:none}
 }
-/* ---- 2000 Post Race (goal #1 = 1000 done) ---- */
+/* ---- 5000 Post Race (goal #1 = 1000 and goal #2 = 2000 done) ---- */
+.ms{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+.ms div{flex:1 1 200px;background:var(--lane);border:2px solid var(--gold);border-radius:12px;padding:10px 14px}
+.ms b{display:block;font:400 30px/1.05 Anton,sans-serif;color:var(--gold)}
+.ms span{display:block;font:700 10px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-top:3px}
+.ms .next{border-color:var(--line);border-style:dashed}.ms .next b{color:var(--dim)}
 .pr-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin:54px 0 14px;padding-top:26px;border-top:3px solid var(--ink)}
 .pr-head h2{margin:8px 0 0;font-size:clamp(40px,6.5vw,76px);line-height:.9}
 .pr-head h2 span{-webkit-text-stroke:1.5px var(--ink);color:transparent}
@@ -429,15 +434,16 @@ a.rm-card:hover,a.rm-card:focus-visible{border-color:var(--rc);outline:none}
     <div class="waits" id="damWaits"></div>
   </section>
 
-  <section id="postrace" aria-label="2000 post race">
+  <section id="postrace" aria-label="5000 post race">
     <div class="pr-head">
       <div>
         <div class="kicker">Elettro OS × Stashbox · Posts published</div>
-        <h2>The <em>2000</em> <span>Post Race</span></h2>
-        <p class="sub">Every post published through Elettro OS counts. Goal #1 (1,000) is in the books. The clock is back on and the new finish line is <b>2,000</b>; it keeps running until someone crosses it. Faint trails are posts approved and waiting in the pipe.</p>
+        <h2>The <em>5000</em> <span>Post Race</span></h2>
+        <p class="sub">Every post published through Elettro OS counts. Goals #1 (1,000) and #2 (2,000) are in the books. The clock keeps running and the new finish line is <b>5,000</b>. Faint trails are posts approved and waiting in the pipe.</p>
       </div>
       <div class="clock"><div class="digits" id="prClock">0d 00:00:00</div><div class="l" id="prClockL">Race clock · whole system</div></div>
     </div>
+    <div class="ms" id="prMs"></div>
     <div class="sys" id="prSys"></div>
     <section class="track prace" aria-label="Posts per day"><h3>Last 30 days</h3>
       <div class="ar-chart" id="prDays"></div></section>
@@ -782,10 +788,10 @@ async function pull() {
 }
 pull();
 
-// ---- 2000 Post Race: posts published per network and per brand, pulled from Elettro OS ----
+// ---- 5000 Post Race: posts published per network and per brand, pulled from Elettro OS ----
 const POSTS_FEED = "https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/posts";
 const BRAND_COLORS = ["#ffc83d", "#22e6ff", "#ff5fd2", "#d7ff1f", "#4fb3ff", "#ff4f6b", "#c9c4ff", "#ff9f43"];
-let race = { goal: 2000, raceStart: "2026-10-25T00:00:00-04:00", total: { published: 0, scheduled: 0, finishedAt: null }, destinations: [], brands: [] };
+let race = { goal: 5000, raceStart: "2026-10-25T00:00:00-04:00", total: { published: 0, scheduled: 0, finishedAt: null }, destinations: [], brands: [] };
 let raceLive = false, raceKey = "";
 const carSvg = (color, code) => `<svg width="64" height="30" viewBox="0 0 64 30" aria-hidden="true">
   <path d="M4 18 L10 10 Q14 6 22 6 L38 6 Q44 6 50 11 L60 15 Q63 16 63 19 L63 22 Q63 24 61 24 L4 24 Q2 24 2 22 Z" fill="${color}" stroke="#0b0b10" stroke-width="2"/>
@@ -820,7 +826,7 @@ function paceNote(o) {
 }
 function lanes(el, rows, scaleEl) {
   const goal = race.goal;
-  document.getElementById(scaleEl).innerHTML = [0, 500, 1000, 1500, 2000].map((v) => `<b style="left:${(v / goal) * 100}%">${v}</b>`).join("");
+  document.getElementById(scaleEl).innerHTML = [0, 1000, 2000, 3000, 4000, 5000].map((v) => `<b style="left:${(v / goal) * 100}%">${v}</b>`).join("");
   const sorted = [...rows].sort((a, b) => b.published - a.published || b.scheduled - a.scheduled || a.name.localeCompare(b.name));
   document.getElementById(el).innerHTML = sorted.map((r, i) => {
     const p = Math.min(100, (r.published / goal) * 100), g = Math.min(100, ((r.published + r.scheduled) / goal) * 100);
@@ -829,7 +835,7 @@ function lanes(el, rows, scaleEl) {
       <div class="who"><div class="pos">${i + 1}</div><div class="badge" style="background:${r.color}">${r.code}</div>
         <div style="min-width:0"><div class="name">${r.name}</div><div class="handle">${r.sub || ""}</div></div></div>
       <div class="road ${win ? "win" : ""}">
-        ${[500, 1000, 1500].map((v) => `<i class="cp ${v === 1000 ? "big" : ""}" style="left:${(v / goal) * 100}%"></i>`).join("")}
+        ${[1000, 2000, 3000, 4000].map((v) => `<i class="cp ${v === 2000 ? "big" : ""}" style="left:${(v / goal) * 100}%"></i>`).join("")}
         <i class="finish"></i>
         <i class="ghost" data-pct="${g}" style="background:${r.color}"></i>
         <i class="trail" data-pct="${p}" style="background:linear-gradient(90deg,transparent,${r.color})"></i>
@@ -848,6 +854,7 @@ function renderRace() {
   });
   const brs = race.brands.filter((b) => b.slug !== "google-review" && b.name !== "Google Review").map((b, i) => ({ name: b.name, code: b.name.slice(0, 2).toUpperCase(), color: BRAND_COLORS[i % BRAND_COLORS.length],
     sub: (n => n + (n === 1 ? " network" : " networks"))(Object.keys(b.byDestination || {}).length), published: b.published, scheduled: b.scheduled, finishedAt: b.finishedAt, firstAt: b.firstAt }));
+  drawMilestones();
   drawPostDays();
   lanes("prNet", nets, "prMarksN");
   lanes("prBrand", brs, "prMarksB");
@@ -906,17 +913,21 @@ function raceClock() {
   const el = document.getElementById("prClock"), t = race.total;
   el.textContent = dhms(endOf(t) - new Date(race.raceStart));
   el.classList.toggle("done", !!t.finishedAt);
-  const l1 = race.lap1 ? dhms(new Date(race.lap1) - new Date(race.raceStart)) : null;
-  document.getElementById("prClockL").textContent = t.finishedAt ? "Whole system hit 2,000 · clock stopped"
-    : l1 ? `Clock resumed · Goal #1 (1,000) took ${l1} · Goal #2 lap ${dhms(Date.now() - new Date(race.lap1))}` : "Race clock · whole system";
+  document.getElementById("prClockL").textContent = t.finishedAt ? "Whole system hit 5,000 · clock stopped"
+    : "Race clock · 1,000 in 14d · 2,000 in 23d";
 }
-// Feed (until its Lambda is updated) still reports the 1,000 finish. Treat that as Goal #1's split and race to 2,000.
-const GOAL1_AT = "2026-11-08T21:36:44.775Z";
+// Milestones (days counted on the race clock from raceStart). The feed still reports goal 1,000, so race to 5,000 here.
+const MILESTONES = [{ n: 1000, at: "2026-11-08T21:36:44.775Z", days: 14 }, { n: 2000, at: "2026-11-17T12:00:00-05:00", days: 23 }];
 function adaptGoal2(f) {
-  if (f.goal >= 2000) return f;
-  const g = 2000, none = (o) => ({ ...o, finishedAt: o.published >= g ? o.lastAt : null });
-  return { ...f, goal: g, lap1: (f.total && f.total.finishedAt) || (f.total.published >= 1000 ? GOAL1_AT : null),
-    total: none(f.total), destinations: (f.destinations || []).map(none), brands: (f.brands || []).map(none) };
+  if (f.goal >= 5000) return f;
+  const g = 5000, none = (o) => ({ ...o, finishedAt: o.published >= g ? o.lastAt : null });
+  return { ...f, goal: g, total: none(f.total), destinations: (f.destinations || []).map(none), brands: (f.brands || []).map(none) };
+}
+function drawMilestones() {
+  const pub = race.total.published || 0;
+  document.getElementById("prMs").innerHTML = MILESTONES.map((m) =>
+    `<div><b>${m.n.toLocaleString()} posts · ${m.days} days</b><span>🏁 ${fdate(new Date(m.at))}</span></div>`).join("") +
+    `<div class="next"><b>${race.goal.toLocaleString()} posts</b><span>Next · ${Math.max(0, race.goal - pub).toLocaleString()} to go</span></div>`;
 }
 async function pullRace() {
   try {
@@ -1388,7 +1399,7 @@ setInterval(() => { if (Date.now() >= nextAt) pull(); tick(); }, 1000);
   var MODE = window.DASH_MODE, PREFIX = "elettro-dash-", q = new URLSearchParams(location.search), target = q.get("c");
   function $(id) { return document.getElementById(id); }
   function hit(t) { try { fetch("https://abacus.jasoncameron.dev/hit/elettro-com/remote-dash-" + t, { cache: "no-store", keepalive: true }).catch(function () {}); } catch (e) {} }
-  var SECS = [["Grand Prix", ".wrap > header"], ["Milestones", "#milestones"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["2000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["Ready", "#assetsec"], ["End", "footer"]];
+  var SECS = [["Grand Prix", ".wrap > header"], ["Milestones", "#milestones"], ["Pit boards", "#pits"], ["Approvals", ".dam"], ["5000 posts", "#postrace"], ["Matrix", "#matrix"], ["AR scans", "#arscan"], ["Remote", "#remotes"], ["Ready", "#assetsec"], ["End", "footer"]];
   function maxS() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
 
   if (MODE === "display") {
