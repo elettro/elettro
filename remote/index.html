@@ -206,6 +206,7 @@ body.mode-display #gnav{display:flex}
     <button data-k="volup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a4 4 0 010 6M19.5 6.5a8 8 0 010 11"/></svg>Vol +</button>
   </div>
   <button class="send" id="tiltbtn" type="button" style="background:#121821;color:var(--gold);border:1px solid var(--gold)">Tilt background: off</button>
+  <button class="send" id="gamebtn" type="button" style="display:none;background:#52e0a8;color:#04251b;font-weight:800">Join the game</button>
   <button class="send" data-k="send">Send to my phone</button>
   <div class="saved" id="saved"></div>
   <div class="rerr" id="rerr"></div>
@@ -239,12 +240,12 @@ var SCENES=[
  {id:'trivia',trivia:true,hero:'img/mall-2.jpg',name:'Dylan Trivia · many phones',kicker:'Multiplayer · everyone answers on their own phone',title:'Bob Dylan Song Trivia',sub:'Scan to join. No app, no account. Ten questions about songs from tonight’s setlist, faster answers score more, and the leaderboard updates live on the big screen.',cta:'Start a game',
   grad:'linear-gradient(135deg,#0b0d12,#3a1b4d 50%,#f0b429)',
   tiles:[['Start a Game','Opens the lobby with a join code. Players scan it with their own phones. Press OK on this remote to start.','Play','#7a3a5a','img/mall-2.jpg',null],['How It Works','Everyone sees the question on the big screen and taps A, B, C or D on their own phone. Correct answers score up to 1,000 points, faster is better.','Info','#2a6a8a','img/hotel-2.jpg',null],['Great For','Bars, restaurants, hotel lobbies and live-music nights. Between rounds the screen can promote the band, specials and offers.','Venues','#1f5a3a','img/sealord-1.jpg',null]]},
- {id:'reef',shops:[{l:'Play the Reef on the big screen',u:'/remote/reef/'},{l:'Open the phone controller',u:'/remote/reef/play.html'}],hero:'img/reef-hero.jpg',name:'Bal Harbour Reef · kids game',kicker:'Bal Harbour Shops · Kids\u2019 experience (concept)',title:'The Reef in the Atrium',sub:'A giant living aquarium on the big screen. Parents scan the QR code and every child steers their own sea creature from a phone. No app, many players at once.',cta:'Play the Reef',
+ {id:'reef',reef:{u:'/remote/reef/',ctrl:'play.html',label:'The Reef'},hero:'img/reef-hero.jpg',name:'Bal Harbour Reef · kids game',kicker:'Bal Harbour Shops · Kids\u2019 experience (concept)',title:'The Reef in the Atrium',sub:'A giant living aquarium on the big screen. Parents scan the QR code and every child steers their own sea creature from a phone. No app, many players at once.',cta:'Play the Reef',
   grad:'linear-gradient(180deg,#7be9ff 0%,#18a8e8 45%,#0a3d8f 100%)',
-  tiles:[['Play on the Big Screen','Opens the full-screen reef with a join QR code. Best on the atrium display or a TV.','Play','#1a8fd0','img/reef-hero.jpg'],['Join with Your Phone','Scan the QR, pick a buddy (clownfish, turtle, octopus and more), then steer with the joystick or by tilting.','Join','#e0629a','img/reef-2.jpg'],['Zoom, Bubbles, Spin, Sing','Four big buttons make your creature dash, blow bubbles, twirl and sing. Collect pearls to fill the Reef Magic meter.','4 buttons','#e08a1a','img/reef-1.jpg']]},
- {id:'reef2',shops:[{l:'Play Deep Reef on the big screen',u:'/remote/reef2/'},{l:'Open the phone controller',u:'/remote/reef2/play.html'}],hero:'img/reef2-hero.jpg',name:'Deep Reef · survival game',kicker:'Elettro Remote · Many phones, one reef (teens + adults)',title:'Deep Reef',sub:'Scan, pick a real reef fish and survive the food chain. Eat plankton, dodge barracuda and sharks, hide in the anemones, then climb the leaderboard before the round ends.',cta:'Play Deep Reef',
+  tiles:[['Play on the Big Screen','Starts the reef on this screen. Your phone becomes the first controller automatically, and the join QR code lets everyone else in.','Play','#1a8fd0','img/reef-hero.jpg'],['Join with Your Phone','Scan the QR on the reef screen, pick a buddy (clownfish, turtle, octopus and more), then steer with the joystick or by tilting.','Join','#e0629a','img/reef-2.jpg'],['Zoom, Bubbles, Spin, Sing','Four big buttons make your creature dash, blow bubbles, twirl and sing. Collect pearls to fill the Reef Magic meter.','4 buttons','#e08a1a','img/reef-1.jpg']]},
+ {id:'reef2',reef:{u:'/remote/reef2/',ctrl:'play.html',label:'Deep Reef'},hero:'img/reef2-hero.jpg',name:'Deep Reef · survival game',kicker:'Elettro Remote · Many phones, one reef (teens + adults)',title:'Deep Reef',sub:'Scan, pick a real reef fish and survive the food chain. Eat plankton, dodge barracuda and sharks, hide in the anemones, then climb the leaderboard before the round ends.',cta:'Play Deep Reef',
   grad:'linear-gradient(180deg,#46d0dc 0%,#0a5f95 50%,#04213f 100%)',
-  tiles:[['Play on the Big Screen','Full-screen realistic reef with a join QR code. Rounds last 2:30 with a live leaderboard and a podium at the end.','Play','#0a5f95','img/reef2-hero.jpg'],['Pick Your Fish','Eight species, each with a power: shield, surge, dazzle, decoys, plankton magnet, sand cloud, inflate or venom sting.','8 fish','#1a7a8a','img/reef2-1.jpg'],['Dash, Power, Flair, Ping','Steer with the joystick or by tilting. Ping reveals food and predators. Hit the team energy goal to call in the manta ray.','4 buttons','#c07a1a','img/reef2-2.jpg']]},
+  tiles:[['Play on the Big Screen','Starts the reef on this screen. Your phone becomes the first controller automatically, and the join QR code lets everyone else in. Rounds last 2:30 with a live leaderboard.','Play','#0a5f95','img/reef2-hero.jpg'],['Pick Your Fish','Eight species, each with a power: shield, surge, dazzle, decoys, plankton magnet, sand cloud, inflate or venom sting.','8 fish','#1a7a8a','img/reef2-1.jpg'],['Dash, Power, Flair, Ping','Steer with the joystick or by tilting. Ping reveals food and predators. Hit the team energy goal to call in the manta ray.','4 buttons','#c07a1a','img/reef2-2.jpg']]},
  {id:'candyman',shops:[{l:'Get tickets on Tixr',u:'https://www.tixr.com/promoters/CandyMan'},{l:'Tonight: DJ Pauly D tickets',u:'https://www.tixr.com/pr/candyman/204541'}],hero:'img/candyman-hero.jpg',name:'Candy Man · DAER at Hard Rock Hollywood',kicker:'Candy Man Presents · DAER · Hard Rock Hollywood, FL',title:'Scan. Tap. You’re On The List.',sub:'How we sell the night: one QR on the screen, flyers on the big display, and tickets, tables and reminders in your fans’ pockets before they leave the couch. Live lineup from Candy Man on Tixr.',cta:'See this weekend’s lineup',act2:'Get tickets',
   grad:'linear-gradient(135deg,#1a0508,#7a1a12 55%,#f0902a)',
   tiles:[['DJ Pauly D','Halloween Weekend at DAER Nightclub. Fri Oct 30, doors 11 PM. Tap to buy on your phone, tickets land in your wallet.','Fri Oct 30','#b3260f','img/candyman-paulyd.jpg'],['Marco Ninni','Halloween Weekend at DAER Dayclub. Sat Oct 31, doors 12 PM. Pool, music and sun.','Sat Oct 31','#e08a1a','img/candyman-marco.jpg'],['Łaszewo','Halloween at DAER Nightclub. Sat Oct 31, doors 10 PM. Costume night on the big floor.','Sat Oct 31','#5a1a10','img/candyman-laszewo.jpg'],['Sech','DAER Nightclub. Fri Nov 6, doors 10 PM. Reggaeton headliner, a big night for the Miami and Broward crowd.','Fri Nov 6','#a8261c','img/candyman-sech.jpg'],['Kodak Black','DAER Nightclub. Fri Nov 13, doors 10 PM. Reserve a table from 954.779.4750.','Fri Nov 13','#2a2a2a','img/candyman-kodak.jpg']]},
@@ -311,7 +312,7 @@ function startDisplay(){
     var f=focused();st.overlay='detail';st.detIdx=0;
     var c=f.color||'#4b3a22',art=f.img?'url('+f.img+') center/cover':'linear-gradient(135deg,'+c+',#0b0d12)';
     var artHtml=f.can?'<div class="art can" style="background:linear-gradient(135deg,'+c+',#0b0d12)"><img src="'+f.img+'" alt="">'+(f.img2?'<img src="'+f.img2+'" alt="">':'')+'</div>':'<div class="art" style="background:'+art+'"></div>';
-    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div>'+artHtml+'<h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts"><div class="pri">Send to my phone</div>'+mids().map(function(x){return '<div>'+x+'</div>'}).join('')+'<div>Back</div></div></div>';
+    $('ov').innerHTML='<div class="card"><div class="kicker">'+sc().kicker+'</div>'+artHtml+'<h2>'+f.name+'</h2><p>'+f.desc+'</p><div class="acts">'+(sc().reef?'<div class="pri">Play on the big screen ▶</div>':'<div class="pri">Send to my phone</div>'+mids().map(function(x){return '<div>'+x+'</div>'}).join(''))+'<div>Back</div></div></div>';
     $('ov').classList.add('show');paintDetail();pushState();
   }
   function shopsList(){
@@ -354,6 +355,26 @@ function startDisplay(){
   function paintDetail(){
     [].forEach.call($('ov').querySelectorAll('.acts div'),function(el,i){el.classList.toggle('focus',i===st.detIdx)});
   }
+  /* Reef games: run full-screen on THIS screen (iframe). The phone gets the matching controller link, so it joins as player one. */
+  function startReef(){
+    var r=sc().reef,A='ABCDEFGHJKLMNPQRSTUVWXYZ',code='';
+    for(var i=0;i<4;i++)code+=A[Math.floor(Math.random()*A.length)];
+    st.overlay='reef';st.reefRoom=code;
+    $('ov').className='overlay show';
+    $('ov').innerHTML='<iframe id="rf" src="'+r.u+'?room='+code+'" allow="fullscreen; autoplay" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#021827"></iframe><button id="rfx" type="button" style="position:absolute;left:50%;transform:translateX(-50%);bottom:1rem;z-index:2;padding:.6rem 1.1rem;border-radius:99rem;border:1px solid rgba(255,255,255,.5);background:rgba(5,15,30,.7);color:#fff;font:700 .85rem Inter,system-ui,sans-serif;cursor:pointer">Exit game</button>';
+    $('rfx').onclick=stopReef;
+    if(conn&&conn.open)conn.send({t:'game',url:r.u+r.ctrl+'?room='+code,label:r.label});
+    pushState();
+  }
+  function stopReef(){
+    closeOv();$('ov').className='overlay';
+    if(conn&&conn.open)conn.send({t:'gameend'});
+    pushState();
+  }
+  window.addEventListener('message',function(e){
+    if(e.origin!==location.origin||!e.data)return;
+    if(e.data.type==='reef-exit'&&st.overlay==='reef')stopReef();
+  });
   function openMenu(){
     st.overlay='menu';st.menuIdx=st.scene;renderMenu();$('ov').classList.add('show');pushState();
   }
@@ -586,7 +607,7 @@ function startDisplay(){
   function pushState(){
     if(!conn||!conn.open)return;
     var f=focused();
-    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='trivia'&&T?'Trivia: '+({lobby:livePlayers().length+' in lobby',q:'Question '+(T.qi+1)+' of '+QS.length,reveal:'Answer revealed',final:'Final scores'})[T.phase]:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||''});
+    conn.send({t:'state',scene:sc().name,focus:st.overlay==='menu'?'Choose an experience':st.overlay==='reef'?'Playing on the big screen':st.overlay==='video'?'Playing: '+VIDEOS[st.vlist[st.vidx]].t:st.overlay==='trivia'&&T?'Trivia: '+({lobby:livePlayers().length+' in lobby',q:'Question '+(T.qi+1)+' of '+QS.length,reveal:'Answer revealed',final:'Final scores'})[T.phase]:st.overlay==='game'&&G?(G.over?'Final score '+G.score:'Score '+G.score+' · '+G.lives+' lives'):f.name,overlay:st.overlay||'',nosend:!!sc().reef||st.overlay==='game'||st.overlay==='trivia'||st.overlay==='video'||st.overlay==='reef'});
   }
   function key(k){
     if(st.overlay==='trivia'&&T){
@@ -597,6 +618,10 @@ function startDisplay(){
         else if(T.phase==='reveal'){clearTimeout(T.to);nextQ()}
         else startTrivia();
       }
+      return;
+    }
+    if(st.overlay==='reef'){
+      if(k==='back'||k==='menu'||k==='home')stopReef();
       return;
     }
     if(st.overlay==='game'){
@@ -620,8 +645,9 @@ function startDisplay(){
     }
     if(st.overlay==='detail'){
       if(k==='left'||k==='up'){st.detIdx=Math.max(0,st.detIdx-1);paintDetail()}
-      else if(k==='right'||k==='down'){st.detIdx=Math.min(mids().length+1,st.detIdx+1);paintDetail()}
+      else if(k==='right'||k==='down'){st.detIdx=Math.min(sc().reef?1:mids().length+1,st.detIdx+1);paintDetail()}
       else if(k==='select'){
+        if(sc().reef){if(st.detIdx===0)startReef();else closeOv();pushState();return}
         if(st.detIdx===0)send();
         else if(st.detIdx===mids().length+1)closeOv();
         else if(shopsList())openShop(shopsList()[st.detIdx-1]);
@@ -629,7 +655,7 @@ function startDisplay(){
         else closeOv();
       }
       else if(k==='back'){closeOv()}
-      else if(k==='send'){send()}
+      else if(k==='send'){if(!sc().reef)send()}
       else if(k==='menu')openMenu();
       else if(k==='home'){closeOv();st.row=0;st.col=0;paintFocus()}
       pushState();
@@ -642,8 +668,9 @@ function startDisplay(){
         case 'select':
           if(sc().game&&(st.row===0||st.col<4)){startGame(st.row===0?1:st.col);return}
           if(sc().trivia&&(st.row===0||st.col===0)){startTrivia();return}
+          if(sc().reef&&(st.row===0||st.col===0)){startReef();return}
           openDetail();return;
-        case 'send':send();break;
+        case 'send':if(!sc().reef)send();break;
         case 'menu':openMenu();return;
         case 'home':st.scene=DEF;renderScene();toast('Home');return;
         case 'back':break;
@@ -761,7 +788,9 @@ function startRemote(){
     setTimeout(function(){if(!(conn&&conn.open)){setStat(false,'Not connected');err('Could not reach the screen. Make sure the big-screen page is still open, turn off any VPN or ad blocker for this page, then reload.')}},15000);
     conn.on('open',function(){$('rerr').style.display='none';etPhoneHit();conn.send({t:'hello',role:'remote'});setStat(true,'Connected');$('rnow').innerHTML='Controlling the screen'});
     conn.on('data',function(m){
-      if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene}
+      if(m.t==='state'){$('rnow').innerHTML='<b>'+m.focus+'</b><br>'+m.scene;var sb=document.querySelector('#remote .send[data-k=send]');if(sb)sb.style.display=m.nosend?'none':''}
+      else if(m.t==='game'){var gb=$('gamebtn');gb.textContent='Join '+m.label+' on this phone';gb.dataset.u=m.url;gb.style.display='block'}
+      else if(m.t==='gameend'){$('gamebtn').style.display='none'}
       else if(m.t==='saved'){
         var d=document.createElement('div');d.innerHTML='<span>'+m.name+(m.price?' · '+m.price:'')+'</span><small>Saved</small>';
         $('saved').insertBefore(d,$('saved').firstChild);
@@ -782,6 +811,7 @@ function startRemote(){
     if(b.closest('#pad'))return;
     b.addEventListener('click',function(){send(b.dataset.k)});
   });
+  $('gamebtn').addEventListener('click',function(){var u=this.dataset.u;if(u)window.open(u,'_blank')||(location.href=u)});
   /* pad: tap arrows, plus swipe anywhere on pad */
   pad.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){send(b.dataset.k)})});
   /* tilt: the phone's orientation moves the background on the screen (iPhones ask permission on tap) */
