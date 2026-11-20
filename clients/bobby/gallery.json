@@ -24,6 +24,45 @@
     "added": "2026-10-16"
   },
   {
+    "id": "ROM-11",
+    "section": "rompe",
+    "type": "video",
+    "title": "HOLOFAN Files · 1",
+    "filename": "rompe-holofan-1.mp4",
+    "sourcePath": "holofan/rompe-holofan- (1).mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/i85kblazzvb0xipvaabnk/rompe-holofan-1.mp4?rlkey=icy6bsdyfzu3trm7qofigr57w&dl=0",
+    "fileId": "id:UM9GhyUcVDgAAAAAAAMtcw",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/i85kblazzvb0xipvaabnk/rompe-holofan-1.mp4?rlkey=icy6bsdyfzu3trm7qofigr57w&raw=1",
+    "added": "2026-11-20"
+  },
+  {
+    "id": "ROM-12",
+    "section": "rompe",
+    "type": "video",
+    "title": "HOLOFAN Files · 2",
+    "filename": "rompe-holofan-2.mp4",
+    "sourcePath": "holofan/rompe-holofan- (2).mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/pdq2ahh974s1vyyc5d0jz/rompe-holofan-2.mp4?rlkey=sanhwzm0el0daoxr5rqke19hu&dl=0",
+    "fileId": "id:UM9GhyUcVDgAAAAAAAMtdA",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/pdq2ahh974s1vyyc5d0jz/rompe-holofan-2.mp4?rlkey=sanhwzm0el0daoxr5rqke19hu&raw=1",
+    "added": "2026-11-20"
+  },
+  {
+    "id": "ROM-13",
+    "section": "rompe",
+    "type": "video",
+    "title": "HOLOFAN Files · 3",
+    "filename": "rompe-holofan-3.mp4",
+    "sourcePath": "holofan/rompe-holofan- (3).mp4",
+    "sourceUrl": "https://www.dropbox.com/scl/fi/bue2xpdjab90udh1e6bge/rompe-holofan-3.mp4?rlkey=fk26w5h6i2p15ydmmlqx96uu4&dl=0",
+    "fileId": "id:UM9GhyUcVDgAAAAAAAMtcg",
+    "hosting": "dropbox",
+    "src": "https://www.dropbox.com/scl/fi/bue2xpdjab90udh1e6bge/rompe-holofan-3.mp4?rlkey=fk26w5h6i2p15ydmmlqx96uu4&raw=1",
+    "added": "2026-11-20"
+  },
+  {
     "id": "ROM-09",
     "section": "rompe",
     "type": "video",
