@@ -82,7 +82,7 @@ conn.on('error',()=>{status.textContent='Connection failed. Try another network.
 peer.on('error',e=>{status.textContent='Remote error: '+(e.type||'connection failed')});
 const send=m=>{if(conn&&conn.open)conn.send(m);else status.textContent='Not connected. Wait for connection or scan QR again.'};
 document.querySelectorAll('#phoneButtons button').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.action;send(a==='top'||a==='bottom'?{t:'go',v:a}:{t:'step',v:a==='up'?-1:1})}));
-let y=null;const pad=$('touchpad');pad.addEventListener('pointerdown',e=>{y=e.clientY;pad.setPointerCapture(e.pointerId)});pad.addEventListener('pointermove',e=>{if(y===null)return;const d=y-e.clientY;y=e.clientY;send({t:'delta',v:d*2.5})});['pointerup','pointercancel'].forEach(event=>pad.addEventListener(event,()=>y=null));
+let y=null;const pad=$('touchpad');pad.addEventListener('pointerdown',e=>{y=e.clientY;pad.setPointerCapture(e.pointerId)});pad.addEventListener('pointermove',e=>{if(y===null)return;const d=y-e.clientY;y=e.clientY;send({t:'delta',v:d*2.95})});['pointerup','pointercancel'].forEach(event=>pad.addEventListener(event,()=>y=null));
 }
 })();
 </script></body></html>
