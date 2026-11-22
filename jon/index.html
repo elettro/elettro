@@ -147,7 +147,7 @@ section.must{padding-block:56px 8px}
   .hero .l,.hero .r{width:60%}
 }
 @media (max-width:620px){
-  .bar nav a:nth-child(n+5){display:none}
+  .bar nav a:nth-child(n+5){display:flex}
   .reels{grid-template-columns:repeat(2,1fr)}
   .hero .copy{padding-block:96px 40px}
   .hero::before{background:linear-gradient(180deg,#0e0d0c88 0,#0e0d0ccc 45%,#0e0d0cf5 95%)}
@@ -246,6 +246,71 @@ section.mc{padding-block:96px 8px}
 .silverback-launch .sl-cta:hover{transform:translateY(-4px)}
 @media(max-width:760px){.silverback-launch .wrap{grid-template-columns:1fr}.silverback-launch .sl-cta{justify-content:center;white-space:normal}}
 
+
+/* Complete responsive navigation and phone layout */
+.mobile-menu-toggle{display:none}
+html,body{max-width:100%;overflow-x:clip}
+@media(max-width:900px){
+  .bar{z-index:1000}
+  .bar .wrap{height:64px;min-height:64px;gap:12px;flex-wrap:nowrap}
+  .bar .brand{flex:0 0 auto;font-size:30px}
+  .mobile-menu-toggle{display:flex;align-items:center;justify-content:center;gap:4px;flex-direction:column;position:relative;min-width:100px;min-height:46px;margin-left:auto;border:1px solid #ffffff45;border-radius:12px;background:#ffffff13;color:#fff;cursor:pointer;padding:8px 15px 8px 36px;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .mobile-menu-toggle>span:not(.menu-label){position:absolute;left:13px;width:16px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s,top .2s,opacity .2s}
+  .mobile-menu-toggle>span:nth-child(1){top:15px}
+  .mobile-menu-toggle>span:nth-child(2){top:21px}
+  .mobile-menu-toggle>span:nth-child(3){top:27px}
+  .mobile-menu-toggle[aria-expanded=true]>span:nth-child(1){top:21px;transform:rotate(45deg)}
+  .mobile-menu-toggle[aria-expanded=true]>span:nth-child(2){opacity:0}
+  .mobile-menu-toggle[aria-expanded=true]>span:nth-child(3){top:21px;transform:rotate(-45deg)}
+  .bar nav{display:none;position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain;flex-direction:column;flex-wrap:nowrap;gap:5px;padding:12px max(18px,env(safe-area-inset-right)) max(22px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));background:#151411f7;border-bottom:1px solid #ffffff30;box-shadow:0 22px 45px #000a;backdrop-filter:blur(18px)}
+  .bar nav.is-open{display:flex}
+  .bar nav a,.bar nav a:nth-child(n+5){display:flex!important;align-items:center;min-height:49px;padding:13px 16px;border-radius:10px;font-size:12px;letter-spacing:.08em;color:#f4eee1}
+  .bar nav a:focus-visible,.mobile-menu-toggle:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  .bar nav a:first-child{background:#c9f45b18;border:1px solid #c9f45b60}
+  section{scroll-margin-top:76px}
+  .hero{min-height:550px}
+  .hero .copy{padding-block:76px 48px}
+  .artist,.tools,.mc .grid{min-width:0}
+  .artist .body,.artist .art{min-width:0}
+  .remote-visual{max-width:100%}
+  .silverback-launch .wrap{grid-template-columns:minmax(0,1fr)}
+  .silverback-launch .sl-cta{width:100%;max-width:100%;justify-content:center;white-space:normal;text-align:center;overflow-wrap:anywhere}
+}
+@media(max-width:620px){
+  .wrap{padding-inline:max(16px,env(safe-area-inset-left)) max(16px,env(safe-area-inset-right))}
+  .hero{min-height:520px;min-height:calc(78svh - 64px)}
+  .hero .l{width:75%;background-position:50% 30%}
+  .hero .r{width:72%;background-position:60% 30%}
+  .hero .copy{padding-block:90px 40px}
+  h1{font-size:clamp(54px,15vw,92px)}
+  .lede{font-size:16px;line-height:1.55}
+  .cta{display:grid;grid-template-columns:1fr}
+  .cta .btn{justify-content:center;width:100%;min-height:48px;text-align:center}
+  section{padding-block:54px 8px}
+  .head h2{font-size:clamp(40px,12vw,62px)}
+  .artist{border-radius:16px}
+  .artist .art{min-height:260px}
+  .artist .body{padding:22px 18px}
+  .artist h3{font-size:clamp(40px,11vw,62px)}
+  .marley h3{font-size:clamp(30px,9vw,46px)}
+  .link{padding:13px 14px;min-width:0}
+  .link b{font-size:23px}
+  .link span{overflow-wrap:anywhere}
+  .reels{gap:9px}
+  .tool{min-height:220px;padding:22px}
+  .tool h3{font-size:clamp(34px,10vw,48px)}
+  .remote-visual{grid-template-columns:minmax(0,1fr);gap:14px}
+  .remote-signal{display:none}
+  .remote-handset{max-width:220px;width:100%;margin-inline:auto}
+  .remote-stage{width:100%}
+  .remote-showcase .remote-shell{padding:20px 16px}
+  .silverback-launch h2{font-size:clamp(48px,13vw,76px)}
+  .silverback-launch .wrap{padding-block:38px}
+  #jonRemoteDock{right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom))}
+  #jonRemoteButton{padding:12px 15px;font-size:12px}
+  #jonRemoteCard{max-width:min(300px,calc(100vw - 20px))}
+}
+@media(max-width:360px){.reels{grid-template-columns:repeat(2,minmax(0,1fr))}.bar .brand{font-size:26px}.mobile-menu-toggle{min-width:90px}}
 </style>
 <style>
 #jonRemoteDock{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:system-ui,sans-serif}
@@ -270,7 +335,8 @@ html.jon-phone #jonPhone{display:flex}
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Jon hub, top">JON<span>.</span></a>
-    <nav aria-label="Sections">
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Open navigation menu" aria-controls="jonNavigation" aria-expanded="false"><span></span><span></span><span></span><span class="menu-label">Menu</span></button>
+    <nav id="jonNavigation" aria-label="Sections">
       <a href="/jon/silverback/" style="color:#c9f45b">NEW: Silverback Site ↗</a>
       <a href="#ar" style="color:var(--gold)">Must try: AR</a>
       <a href="#stoopid">Stoopid</a>
@@ -505,6 +571,18 @@ html.jon-phone #jonPhone{display:flex}
 
 <div id="jonRemoteDock"><div id="jonRemoteCard"><div id="jonRemoteQR"></div><div>Scan to control this page</div><div id="jonRemoteStatus">Starting…</div></div><button id="jonRemoteButton" type="button">Phone Remote</button></div>
 <div id="jonPhone"><h2>Elettro · Jon Remote</h2><div id="jonPhoneStatus">Connecting…</div><div id="jonTouch">Swipe here to scroll the desktop</div><div id="jonPhoneControls"><button data-scroll="top">Top</button><button data-scroll="end">Bottom</button><button data-scroll="up">Up</button><button data-scroll="down">Down</button></div></div>
+<script>
+(function(){
+const button=document.getElementById('mobileMenuToggle'),nav=document.getElementById('jonNavigation');
+if(!button||!nav)return;
+function close(){nav.classList.remove('is-open');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label','Open navigation menu');document.body.classList.remove('jon-menu-open')}
+button.addEventListener('click',()=>{const open=!nav.classList.contains('is-open');nav.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Close navigation menu':'Open navigation menu');document.body.classList.toggle('jon-menu-open',open)});
+nav.addEventListener('click',e=>{if(e.target.closest('a'))close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+document.addEventListener('click',e=>{if(!nav.contains(e.target)&&!button.contains(e.target))close()});
+matchMedia('(min-width:901px)').addEventListener('change',e=>{if(e.matches)close()});
+})();
+</script>
 <script>
 (function(){
 function start(){
