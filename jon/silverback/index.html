@@ -68,29 +68,41 @@ const peer=new Peer(prefix+id,peerOptions);let conn;
 peer.on('open',()=>{status.textContent='Ready. Scan QR with your phone.'});
 peer.on('connection',c=>{if(conn&&conn.open){c.on('open',()=>c.close());return}conn=c;status.textContent='Phone detected. Establishing connection…';
 c.on('open',()=>{status.textContent='Phone connected. Swipe on your phone.';toggle.textContent='PHONE CONNECTED';showPanel();c.send({t:'ack'})});
-let scrollTarget=window.scrollY,scrollAnimating=false;
-function scrollFrame(){const max=Math.max(0,document.documentElement.scrollHeight-innerHeight);scrollTarget=Math.max(0,Math.min(max,scrollTarget));const distance=scrollTarget-window.scrollY;if(Math.abs(distance)<1.5){window.scrollTo(0,scrollTarget);scrollAnimating=false;return}window.scrollTo(0,window.scrollY+distance*.34);requestAnimationFrame(scrollFrame)}
-function scrollAmount(amount){scrollTarget=Math.max(0,Math.min(Math.max(0,document.documentElement.scrollHeight-innerHeight),scrollTarget+amount));if(!scrollAnimating){scrollAnimating=true;requestAnimationFrame(scrollFrame)}}
-c.on('data',m=>{if(!m||typeof m!=='object')return;const max=Math.max(0,document.documentElement.scrollHeight-innerHeight);if(m.t==='delta')scrollAmount(Math.max(-650,Math.min(650,Number(m.v)||0)));if(m.t==='step')scrollAmount((Number(m.v)||0)*innerHeight*1.6);if(m.t==='go'){scrollTarget=m.v==='bottom'?max:0;if(!scrollAnimating){scrollAnimating=true;requestAnimationFrame(scrollFrame)}}});
+let lastPhoneMove=0;
+c.on('open',()=>{status.textContent='Phone connected. Swipe on your phone.';toggle.textContent='PHONE CONNECTED';showPanel();c.send({t:'meta',max:Math.max(0,document.documentElement.scrollHeight-innerHeight),height:innerHeight});c.send({t:'pos',v:Math.max(0,document.documentElement.scrollHeight-innerHeight)?scrollY/Math.max(0,document.documentElement.scrollHeight-innerHeight):0})});
+c.on('data',m=>{if(!m||typeof m!=='object')return;const max=Math.max(0,document.documentElement.scrollHeight-innerHeight);if(m.t==='p'){lastPhoneMove=Date.now();window.scrollTo({top:Math.max(0,Math.min(1,Number(m.v)||0))*max,behavior:'instant'})}if(m.t==='hello'){c.send({t:'meta',max,height:innerHeight});c.send({t:'pos',v:max?scrollY/max:0})}});
+const onLocalScroll=()=>{if(!conn||!conn.open||Date.now()-lastPhoneMove<350)return;const max=Math.max(0,document.documentElement.scrollHeight-innerHeight);conn.send({t:'pos',v:max?scrollY/max:0})};window.addEventListener('scroll',onLocalScroll,{passive:true});
 c.on('close',()=>{conn=null;toggle.textContent='PHONE REMOTE ↗';status.textContent='Disconnected. Scan again.'});c.on('error',()=>{status.textContent='Connection failed. Try another network.'})});
 peer.on('disconnected',()=>{status.textContent='Signaling interrupted. Reconnecting…';try{peer.reconnect()}catch(e){}});
 peer.on('error',e=>{status.textContent='Remote error: '+(e.type||'connection failed')+'. Reload to generate a new QR.'});
 }else{
 const peer=new Peer(undefined,peerOptions);let conn;
 peer.on('open',()=>{status.textContent='Connecting to computer…';conn=peer.connect(prefix+code,{reliable:true});
-conn.on('open',()=>{status.textContent='Connected. Swipe to scroll the computer.'});
+conn.on('open',()=>{status.textContent='Connected. Swipe to scroll the computer.';conn.send({t:'hello'})});
 conn.on('data',m=>{if(m&&m.t==='ack')status.textContent='Connected. Swipe to scroll the computer.'});
 conn.on('close',()=>{status.textContent='Connection lost. Scan a fresh QR on the computer.'});
 conn.on('error',()=>{status.textContent='Connection failed. Try another network.'})});
 peer.on('error',e=>{status.textContent='Remote error: '+(e.type||'connection failed')});
 const send=m=>{if(conn&&conn.open)conn.send(m);else status.textContent='Not connected. Wait for connection or scan QR again.'};
 document.querySelectorAll('#phoneButtons button').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.action;send(a==='top'||a==='bottom'?{t:'go',v:a}:{t:'step',v:a==='up'?-1:1})}));
-let y=null,lastTime=0,velocity=0;const pad=$('touchpad');
-pad.addEventListener('pointerdown',e=>{y=e.clientY;lastTime=performance.now();velocity=0;pad.setPointerCapture(e.pointerId)});
-pad.addEventListener('pointermove',e=>{if(y===null)return;const now=performance.now(),d=y-e.clientY,dt=Math.max(8,now-lastTime);y=e.clientY;lastTime=now;velocity=velocity*.45+(d/dt)*.55;send({t:'delta',v:d*4.5})});
-pad.addEventListener('pointerup',()=>{if(y!==null&&Math.abs(velocity)>.12)send({t:'delta',v:Math.max(-950,Math.min(950,velocity*260))});y=null});
-pad.addEventListener('pointercancel',()=>y=null);
-document.querySelectorAll('#phoneButtons button[data-action="up"],#phoneButtons button[data-action="down"]').forEach(b=>{let timer=null;const stop=()=>{if(timer!==null){clearInterval(timer);timer=null}};b.addEventListener('pointerdown',()=>{stop();timer=setInterval(()=>send({t:'delta',v:b.dataset.action==='up'?-150:150}),100)});['pointerup','pointercancel','pointerleave'].forEach(type=>b.addEventListener(type,stop))});
+let max=6000,pos=0,active=false,momentum=false,velocity=0,lastY=0,lastMoveT=0,dirty=false,lastTx=0;
+const pad=$('touchpad'),clamp=v=>Math.max(0,Math.min(max,v));
+const gain=()=>Math.max(3.5,max/Math.max(650,pad.clientHeight*6));
+function tick(){if(momentum){pos=clamp(pos+velocity);velocity*=.94;if(Math.abs(velocity)<.4||pos<=0||pos>=max)momentum=false;dirty=true}if(dirty&&performance.now()-lastTx>=35){send({t:'p',v:max?pos/max:0});lastTx=performance.now();dirty=false}requestAnimationFrame(tick)}requestAnimationFrame(tick);
+if(conn&&conn.open)send({t:'hello'});
+peer.on('open',()=>{if(conn&&conn.open)send({t:'hello'})});
+function updateMeta(m){if(m.t==='meta'){max=Math.max(0,Number(m.max)||0);pos=clamp(pos);send({t:'hello'})}if(m.t==='pos'&&!active&&!momentum)pos=clamp((Number(m.v)||0)*max)}
+const originalData=()=>{};const hookData=()=>{if(conn){conn.on('data',updateMeta);send({t:'hello'})}};
+peer.on('connection',hookData);
+const linkTimer=setInterval(()=>{if(conn&&conn.open&&!conn._silverbackMetaHook){conn._silverbackMetaHook=true;conn.on('data',updateMeta);send({t:'hello'});clearInterval(linkTimer)}},150);
+pad.addEventListener('pointerdown',e=>{active=true;momentum=false;velocity=0;lastY=e.clientY;lastMoveT=performance.now();pad.setPointerCapture(e.pointerId)});
+pad.addEventListener('pointermove',e=>{if(!active)return;const d=(lastY-e.clientY)*gain();lastY=e.clientY;lastMoveT=performance.now();pos=clamp(pos+d);velocity=velocity*.6+d*.4;dirty=true});
+function release(){if(!active)return;active=false;if(performance.now()-lastMoveT>90)velocity=0;if(Math.abs(velocity)>1.5)momentum=true}
+pad.addEventListener('pointerup',release);pad.addEventListener('pointercancel',release);
+let glideToken=0;function glide(to){const token=++glideToken,from=pos,t0=performance.now();momentum=false;(function step(now){if(token!==glideToken)return;const k=Math.min(1,(now-t0)/500);pos=clamp(from+(to-from)*(1-Math.pow(1-k,3)));dirty=true;if(k<1)requestAnimationFrame(step)})(performance.now())}
+document.querySelectorAll('#phoneButtons button').forEach(b=>{const a=b.dataset.action;b.replaceWith(b.cloneNode(true))});
+document.querySelectorAll('#phoneButtons button').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.action;if(a==='top')glide(0);else if(a==='bottom')glide(max);else glide(pos+(a==='up'?-1:1)*Math.max(innerHeight*2,max*.12))}));
+
 }
 })();
 </script></body></html>
