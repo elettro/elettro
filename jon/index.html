@@ -187,6 +187,35 @@ section.mc{padding-block:96px 8px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 /* mobile remote explainer */
+
+.remote-visual{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 100px 205px;align-items:center;gap:10px;margin:30px 0 34px;padding:32px;border:1px solid #326f61;border-radius:20px;background:radial-gradient(ellipse at 35% 20%,#245b4c 0%,#101d1a 65%);overflow:hidden}
+.remote-stage{min-width:0;border:9px solid #101313;border-bottom-width:15px;border-radius:13px;background:#080c0b;box-shadow:0 20px 45px #0009}
+.remote-stage-top,.remote-stage-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 11px;color:#b0d3c5;font:700 10px var(--mono);letter-spacing:.08em}
+.remote-stage-top span:last-child{margin-left:auto;color:#779b8e}
+.remote-live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#68f0b0;box-shadow:0 0 10px #68f0b0}
+.remote-stage-art{position:relative;aspect-ratio:16/9;overflow:hidden;background:#142b26}
+.remote-stage-art img{width:100%;height:100%;object-fit:cover}
+.remote-stage-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000c,transparent 95%)}
+.remote-stage-overlay{position:absolute;z-index:1;left:7%;bottom:10%;display:grid;color:white;text-shadow:0 3px 12px #000}
+.remote-stage-overlay span{font:700 clamp(11px,2vw,20px) var(--mono);letter-spacing:.12em}
+.remote-stage-overlay strong{font:400 clamp(26px,5vw,68px)/1 var(--display);color:#f7c61a}
+.remote-stage-overlay small{font:700 clamp(8px,1vw,12px) var(--mono);letter-spacing:.08em}
+.remote-signal{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;color:#77e9d2;font:700 10px var(--mono);letter-spacing:.1em}
+.remote-wave{font-size:38px;letter-spacing:-.2em;transform:rotate(180deg);animation:remote-pulse 2s ease-in-out infinite}
+.remote-arrow{font-size:35px;transform:rotate(180deg)}
+@keyframes remote-pulse{50%{opacity:.35}}
+.remote-handset{height:355px;border:7px solid #050807;border-radius:31px;background:linear-gradient(165deg,#204a3e,#0a1916);box-shadow:0 20px 40px #000b;padding:16px 13px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.remote-speaker{width:46px;height:5px;border-radius:8px;background:#050807}
+.remote-phone-title{font:700 11px var(--mono);color:#d8f7ed}
+.remote-phone-connected{font:700 10px var(--mono);color:#8df4c7}
+.remote-phone-pad{flex:1;width:100%;border:1px solid #5b9c88;border-radius:15px;display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:#c3fff1;background:#255347}
+.remote-phone-pad span{font-size:28px}.remote-phone-pad strong{font:700 13px/1.6 var(--mono)}
+.remote-phone-buttons{display:flex;gap:7px;width:100%}.remote-phone-buttons span{flex:1;border:1px solid #5b9c88;border-radius:6px;padding:6px 0;font:700 10px var(--mono)}
+.remote-home{width:45px;height:4px;border-radius:6px;background:#d0e5dd}
+.remote-visual-caption{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;color:#92cbbb;font:700 10px var(--mono);letter-spacing:.1em}
+@media(max-width:760px){.remote-visual{grid-template-columns:minmax(0,1fr) 55px 125px;padding:12px;gap:4px}.remote-stage{border-width:5px;border-bottom-width:8px}.remote-stage-top,.remote-stage-foot{font-size:7px;padding:5px}.remote-stage-overlay strong{font-size:clamp(17px,5vw,35px)}.remote-stage-overlay span{font-size:9px}.remote-stage-overlay small{font-size:7px}.remote-handset{height:245px;border-width:4px;border-radius:20px;padding:9px 6px;gap:7px}.remote-phone-title,.remote-phone-connected{font-size:7px}.remote-phone-pad strong{font-size:9px}.remote-phone-pad span{font-size:20px}.remote-signal{font-size:7px}.remote-wave{font-size:23px}.remote-arrow{font-size:22px}.remote-visual-caption{font-size:7px;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.remote-wave{animation:none}}
+
 .remote-showcase{padding:72px 0;background:linear-gradient(145deg,#12342f 0%,#121a18 52%,#0e0d0c 100%);border-block:1px solid #2b6158}
 .remote-showcase .remote-shell{border:1px solid #397e70;border-radius:24px;padding:clamp(24px,4vw,52px);background:#10241f;box-shadow:0 20px 70px #0004}
 .remote-showcase .remote-label{color:#67dec7}
@@ -351,6 +380,16 @@ html.jon-phone #jonPhone{display:flex}
         <div class="mono remote-label">Elettro interactive experiences / Live demo</div>
         <h2 id="mobile-remote-h">THE SHOW IS ON THE SCREEN.<br><em>THE CONTROL IS IN YOUR HAND.</em></h2>
         <p class="remote-intro">Imagine Slightly Stoopid walking into a promoter meeting, backstage lounge or tour planning session. The band's website, tour visuals, videos and merch are on the big screen. One QR scan turns a phone into the remote. Swipe to move through the presentation without touching the computer.</p>
+        <div class="remote-visual" aria-label="Illustration showing a phone controlling a large Slightly Stoopid tour presentation screen">
+ <div class="remote-stage">
+  <div class="remote-stage-top"><span class="remote-live-dot"></span> LIVE PRESENTATION <span>DISPLAY 01</span></div>
+  <div class="remote-stage-art"><img src="img/banner.jpg" alt="Slightly Stoopid tour artwork"><div class="remote-stage-overlay"><span>SLIGHTLY STOOPID</span><strong>ROAD TRIPPIN'</strong><small>TOUR VISUALS · MERCH · VIP</small></div></div>
+  <div class="remote-stage-foot"><span>TOUR PRESENTATION</span><span>01 / 04</span></div>
+ </div>
+ <div class="remote-signal"><span class="remote-wave">)))</span><span>WIRELESS<br>CONTROL</span><span class="remote-arrow">➜</span></div>
+ <div class="remote-handset"><div class="remote-speaker"></div><div class="remote-phone-title">ELETTRO REMOTE</div><div class="remote-phone-connected"><span class="remote-live-dot"></span> CONNECTED</div><div class="remote-phone-pad"><span>↑</span><strong>SWIPE<br>TO SCROLL</strong><span>↓</span></div><div class="remote-phone-buttons"><span>TOP</span><span>NEXT</span></div><div class="remote-home"></div></div>
+ <div class="remote-visual-caption"><span>01 · BIG SCREEN</span><span>02 · PHONE REMOTE</span><span>03 · INSTANT CONTROL</span></div>
+</div>
         <div class="remote-cases">
           <div class="remote-case"><b>01 / Promoter pitches</b><p>Put tour dates, venue concepts, sponsor opportunities and performance clips on a large display. Present and navigate from anywhere in the room.</p></div>
           <div class="remote-case"><b>02 / Merch and VIP previews</b><p>Walk partners through new merchandise, VIP packages and limited drops while the full-size artwork stays on screen.</p></div>
