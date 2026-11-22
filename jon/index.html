@@ -232,6 +232,20 @@ section.mc{padding-block:96px 8px}
 .remote-showcase .remote-trigger:hover{background:#a2f8e8}
 @media(max-width:760px){.remote-showcase .remote-cases{grid-template-columns:1fr}}
 
+
+
+/* Silverback concept launch banner */
+.silverback-launch{position:relative;overflow:hidden;background:#101c16;border-bottom:2px solid #c9f45b}
+.silverback-launch:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#09130ff5 0%,#09130fe8 48%,#09130f55 100%),url('img/banner.jpg') center 45%/cover;opacity:.95}
+.silverback-launch .wrap{position:relative;z-index:1;padding-block:clamp(42px,6vw,86px);display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:32px}
+.silverback-launch .sl-tag{font:700 12px var(--mono);letter-spacing:.16em;color:#c9f45b;text-transform:uppercase}
+.silverback-launch h2{font:400 clamp(48px,8vw,112px)/.92 var(--display);margin:14px 0 18px;color:#fff}
+.silverback-launch h2 span{color:#c9f45b}
+.silverback-launch p{max-width:660px;margin:0;color:#e4e9df;font-size:clamp(16px,1.8vw,21px)}
+.silverback-launch .sl-cta{display:inline-flex;align-items:center;gap:15px;background:#c9f45b;color:#0c1811;border-radius:999px;padding:22px 29px;font:700 14px var(--mono);text-decoration:none;white-space:nowrap;box-shadow:0 15px 40px #0007;transition:transform .2s}
+.silverback-launch .sl-cta:hover{transform:translateY(-4px)}
+@media(max-width:760px){.silverback-launch .wrap{grid-template-columns:1fr}.silverback-launch .sl-cta{justify-content:center;white-space:normal}}
+
 </style>
 <style>
 #jonRemoteDock{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:system-ui,sans-serif}
@@ -257,6 +271,7 @@ html.jon-phone #jonPhone{display:flex}
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Jon hub, top">JON<span>.</span></a>
     <nav aria-label="Sections">
+      <a href="/jon/silverback/" style="color:#c9f45b">NEW: Silverback Site ↗</a>
       <a href="#ar" style="color:var(--gold)">Must try: AR</a>
       <a href="#stoopid">Stoopid</a>
       <a href="#marley">Marley</a>
@@ -268,6 +283,18 @@ html.jon-phone #jonPhone{display:flex}
 </header>
 
 <main id="top">
+
+  <section class="silverback-launch" id="silverback-preview" aria-labelledby="silverback-preview-title">
+    <div class="wrap">
+      <div>
+        <div class="sl-tag">New Elettro website concept / Silverback Music</div>
+        <h2 id="silverback-preview-title">SILVERBACK.<br><span>REIMAGINED.</span></h2>
+        <p>Explore the cinematic new Silverback Music website concept. Immersive scrolling, artist showcases, festivals, bold visuals and a phone-controlled presentation you can try yourself.</p>
+      </div>
+      <a class="sl-cta" href="/jon/silverback/">EXPLORE THE NEW SILVERBACK SITE <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
   <div class="hero">
     <div class="stripe"></div>
     <div class="l" role="img" aria-label="Slightly Stoopid Road Trippin' tour artwork: palm trees against a sunset"></div>
