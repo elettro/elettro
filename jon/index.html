@@ -186,6 +186,23 @@ section.mc{padding-block:96px 8px}
 @media (max-width:620px){.steps{grid-template-columns:1fr}.fanwall{grid-template-columns:repeat(3,1fr)}.mc .big .btn{width:100%;justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
+<style>
+#jonRemoteDock{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:system-ui,sans-serif}
+#jonRemoteButton{background:#2bb5a6;color:#071c19;border:0;border-radius:30px;padding:14px 20px;font-weight:800;cursor:pointer;box-shadow:0 8px 30px #0009}
+#jonRemoteCard{display:none;background:#171512;color:#f4eee1;border:1px solid #2bb5a6;border-radius:14px;padding:18px;margin-bottom:10px;text-align:center;box-shadow:0 12px 40px #000b}
+#jonRemoteDock.open #jonRemoteCard{display:block}
+#jonRemoteQR svg{width:190px;height:190px;background:white;padding:8px;border-radius:8px}
+#jonRemoteStatus{font-size:12px;margin-top:8px;color:#b5ab98}
+#jonPhone{display:none;position:fixed;inset:0;z-index:10000;background:#0e0d0c;color:#f4eee1;padding:24px;font-family:system-ui,sans-serif;flex-direction:column;gap:18px;text-align:center}
+html.jon-phone body> :not(#jonPhone){display:none!important}
+html.jon-phone #jonPhone{display:flex}
+#jonPhone button{border:1px solid #2bb5a6;background:#173e39;color:white;border-radius:14px;padding:20px;font-size:20px;touch-action:none}
+#jonTouch{flex:1;border:1px solid #555;border-radius:20px;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;background:#171512}
+#jonPhoneControls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
+<script>if(new URLSearchParams(location.search).has('c'))document.documentElement.classList.add('jon-phone');</script>
 </head>
 <body>
 
@@ -381,5 +398,27 @@ section.mc{padding-block:96px 8px}
   </div>
 </footer>
 
+<div id="jonRemoteDock"><div id="jonRemoteCard"><div id="jonRemoteQR"></div><div>Scan to control this page</div><div id="jonRemoteStatus">Starting…</div></div><button id="jonRemoteButton" type="button">Phone Remote</button></div>
+<div id="jonPhone"><h2>Elettro · Jon Remote</h2><div id="jonPhoneStatus">Connecting…</div><div id="jonTouch">Swipe here to scroll the desktop</div><div id="jonPhoneControls"><button data-scroll="top">Top</button><button data-scroll="end">Bottom</button><button data-scroll="up">Up</button><button data-scroll="down">Down</button></div></div>
+<script>
+(function(){
+function start(){
+const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),code=params.get('c'),prefix='elettro-jon-';
+if(!window.Peer){(code?$('jonPhoneStatus'):$('jonRemoteStatus')).textContent='Remote service unavailable. Reload to retry.';return}
+if(!code){
+const dock=$('jonRemoteDock'),button=$('jonRemoteButton');button.onclick=()=>dock.classList.toggle('open');
+let id=sessionStorage.getItem('elettro_jon_remote_id')||Math.random().toString(36).slice(2,10);sessionStorage.setItem('elettro_jon_remote_id',id);
+const url=location.origin+location.pathname+'?c='+encodeURIComponent(id);
+try{const qr=qrcode(0,'M');qr.addData(url);qr.make();$('jonRemoteQR').innerHTML=qr.createSvgTag({cellSize:5,margin:0,scalable:true})}catch(e){$('jonRemoteQR').textContent=url}
+let peer,conn;function boot(){peer=new Peer(prefix+id);peer.on('open',()=>{$('jonRemoteStatus').textContent='Ready · session '+id.toUpperCase()});peer.on('connection',c=>{if(conn&&conn.open){c.on('open',()=>c.close());return}conn=c;c.on('open',()=>{$('jonRemoteStatus').textContent='Phone connected';button.textContent='Phone Connected';dock.classList.remove('open');c.send({t:'pos',v:window.scrollY})});c.on('data',m=>{if(!m)return;const max=Math.max(0,document.documentElement.scrollHeight-innerHeight);if(m.t==='delta')window.scrollBy({top:Number(m.v)||0,behavior:'instant'});if(m.t==='go')window.scrollTo({top:Math.max(0,Math.min(max,Number(m.v)||0)),behavior:'smooth'});if(m.t==='step')window.scrollBy({top:(Number(m.v)||0)*innerHeight*.75,behavior:'smooth'})});c.on('close',()=>{conn=null;button.textContent='Phone Remote';$('jonRemoteStatus').textContent='Ready for another phone'})});peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}});peer.on('error',e=>{if(e.type==='unavailable-id'){id=Math.random().toString(36).slice(2,10);sessionStorage.setItem('elettro_jon_remote_id',id);peer.destroy();location.reload()}else $('jonRemoteStatus').textContent='Connection issue. Reload to retry.'})}boot();return;
+}
+const status=$('jonPhoneStatus'),peer=new Peer(),target=prefix+code;let conn;peer.on('open',()=>{conn=peer.connect(target,{reliable:true});conn.on('open',()=>status.textContent='Connected · swipe to scroll');conn.on('close',()=>status.textContent='Disconnected · rescan the QR');conn.on('error',()=>status.textContent='Connection lost · rescan the QR')});peer.on('error',()=>status.textContent='Session unavailable · rescan the QR');
+const send=m=>{if(conn&&conn.open)conn.send(m)};
+document.querySelectorAll('#jonPhoneControls button').forEach(b=>b.onclick=()=>{const a=b.dataset.scroll;send(a==='top'?{t:'go',v:0}:a==='end'?{t:'go',v:1e9}:{t:'step',v:a==='up'?-1:1})});
+const touch=$('jonTouch');let y=null;touch.addEventListener('pointerdown',e=>{y=e.clientY;touch.setPointerCapture(e.pointerId)});touch.addEventListener('pointermove',e=>{if(y===null)return;const d=y-e.clientY;y=e.clientY;send({t:'delta',v:d*2.5})});['pointerup','pointercancel'].forEach(ev=>touch.addEventListener(ev,()=>y=null));
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
 </body>
 </html>
