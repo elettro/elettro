@@ -185,6 +185,24 @@ section.mc{padding-block:96px 8px}
 @media (max-width:980px){.mc .grid{grid-template-columns:1fr}.flyer{max-width:520px;margin:10px auto 26px}}
 @media (max-width:620px){.steps{grid-template-columns:1fr}.fanwall{grid-template-columns:repeat(3,1fr)}.mc .big .btn{width:100%;justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* mobile remote explainer */
+.remote-showcase{padding:72px 0;background:linear-gradient(145deg,#12342f 0%,#121a18 52%,#0e0d0c 100%);border-block:1px solid #2b6158}
+.remote-showcase .remote-shell{border:1px solid #397e70;border-radius:24px;padding:clamp(24px,4vw,52px);background:#10241f;box-shadow:0 20px 70px #0004}
+.remote-showcase .remote-label{color:#67dec7}
+.remote-showcase h2{font:400 clamp(42px,6vw,76px)/.95 var(--display);margin:16px 0 20px}
+.remote-showcase h2 em{font-style:normal;color:#67dec7}
+.remote-showcase .remote-intro{font-size:clamp(17px,2vw,21px);color:#e1e7dd;max-width:790px}
+.remote-showcase .remote-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:30px 0}
+.remote-showcase .remote-case{border:1px solid #386258;border-radius:15px;background:#17352d;padding:22px}
+.remote-showcase .remote-case b{display:block;font-size:17px;margin-bottom:9px}
+.remote-showcase .remote-case p{margin:0;color:#c7d7cd;font-size:14px}
+.remote-showcase .remote-demo{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px solid #386258;padding-top:25px}
+.remote-showcase .remote-demo p{margin:6px 0 0;color:#c7d7cd;max-width:580px}
+.remote-showcase .remote-trigger{background:#67dec7;border:0;border-radius:99px;padding:16px 24px;color:#09241e;font:700 13px var(--mono);cursor:pointer}
+.remote-showcase .remote-trigger:hover{background:#a2f8e8}
+@media(max-width:760px){.remote-showcase .remote-cases{grid-template-columns:1fr}}
+
 </style>
 <style>
 #jonRemoteDock{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:system-ui,sans-serif}
@@ -213,6 +231,7 @@ html.jon-phone #jonPhone{display:flex}
       <a href="#ar" style="color:var(--gold)">Must try: AR</a>
       <a href="#stoopid">Stoopid</a>
       <a href="#marley">Marley</a>
+      <a href="#mobile-remote" style="color:#67dec7">Phone Remote</a>
       <a href="#tools">Tools</a>
       <a href="#multicam" style="color:var(--teal)">MultiCam</a>
     </nav>
@@ -321,6 +340,26 @@ html.jon-phone #jonPhone{display:flex}
         <a class="reel" href="/tour/stephen/" aria-label="Now Spinning: Old Soul 2LP video"><img src="img/stephen_spin_lp.jpg" alt="" loading="lazy"><small>Now spinning</small></a>
         <a class="reel" href="/tour/stephen/" aria-label="Tour reel video"><img src="img/stephen_reel.jpg" alt="" loading="lazy"><small>Tour reel</small></a>
         <a class="reel" href="/tour/stephen/" aria-label="Jamrock countdown video"><img src="img/stephen_count.jpg" alt="" loading="lazy"><small>Countdown</small></a>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="remote-showcase" id="mobile-remote" aria-labelledby="mobile-remote-h">
+    <div class="wrap">
+      <div class="remote-shell">
+        <div class="mono remote-label">Elettro interactive experiences / Live demo</div>
+        <h2 id="mobile-remote-h">THE SHOW IS ON THE SCREEN.<br><em>THE CONTROL IS IN YOUR HAND.</em></h2>
+        <p class="remote-intro">Imagine Slightly Stoopid walking into a promoter meeting, backstage lounge or tour planning session. The band's website, tour visuals, videos and merch are on the big screen. One QR scan turns a phone into the remote. Swipe to move through the presentation without touching the computer.</p>
+        <div class="remote-cases">
+          <div class="remote-case"><b>01 / Promoter pitches</b><p>Put tour dates, venue concepts, sponsor opportunities and performance clips on a large display. Present and navigate from anywhere in the room.</p></div>
+          <div class="remote-case"><b>02 / Merch and VIP previews</b><p>Walk partners through new merchandise, VIP packages and limited drops while the full-size artwork stays on screen.</p></div>
+          <div class="remote-case"><b>03 / Backstage and on tour</b><p>Control a tour briefing or creative review from a phone. Keep the laptop connected to the screen while the team moves through content.</p></div>
+        </div>
+        <div class="remote-demo">
+          <div><b>TRY IT ON THIS PAGE</b><p>Open this page on a computer. Click Phone Remote, scan the QR code with your phone, then swipe or tap to scroll the computer's page. No app required. This demo controls page navigation, not concert lighting or audio systems.</p></div>
+          <button class="remote-trigger" type="button" onclick="document.getElementById('jonRemoteDock')?.classList.add('open');document.getElementById('jonRemoteButton')?.focus()">OPEN PHONE REMOTE &amp; QR</button>
+        </div>
       </div>
     </div>
   </section>
