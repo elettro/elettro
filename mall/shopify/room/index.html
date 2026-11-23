@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stashbox.ai Department Store · Elettro Mall</title>
+<style>
+:root{--ink:#14213d;--acc:#8fd13f;--bg:#f3efe6}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#cfe6f5;font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none;color:var(--ink)}
+canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab}
+canvas#gl.hover{cursor:pointer}
+.glass{background:#fffffff0;border:1px solid #14213d22;border-radius:14px;box-shadow:0 8px 30px #14213d33;backdrop-filter:blur(8px)}
+.top{position:fixed;top:12px;left:14px;right:14px;z-index:5;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{padding:9px 15px;font-weight:800;letter-spacing:2.5px;font-size:13px}
+.brand small{display:block;font-weight:600;letter-spacing:1px;font-size:10.5px;color:#5b6b88;margin-top:2px}
+.btn{background:#fff;color:var(--ink);border:1px solid #14213d33;border-radius:999px;padding:8px 15px;font:700 13px "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;display:inline-block}
+.btn:hover{background:#eef3ff}
+.btn.exit{background:#b3261e;color:#fff;border-color:#b3261e}
+.btn.pri{background:var(--ink);color:#fff}
+#dir{position:fixed;left:14px;top:62px;bottom:14px;width:250px;z-index:5;display:flex;flex-direction:column;overflow:hidden}
+#dir h3{font-size:12px;letter-spacing:2px;padding:12px 14px 6px;color:#5b6b88}
+#sq{margin:0 12px 8px;border:1px solid #14213d33;border-radius:9px;padding:8px 11px;font:600 13px "Segoe UI",sans-serif;outline:none}
+#sq:focus{border-color:var(--ink)}
+#list{overflow:auto;padding:0 8px 10px;flex:1}
+.d{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:none;border:0;border-radius:9px;padding:7px 8px;font:600 13px "Segoe UI",sans-serif;color:var(--ink);cursor:pointer}
+.d:hover{background:#14213d12}
+.d i{width:14px;height:14px;border-radius:4px;flex:none}
+.d span{margin-left:auto;font-size:11px;color:#7a869c;font-weight:600}
+.res{padding:6px 9px;font-size:12.5px;cursor:pointer;border-radius:8px;display:flex;gap:8px;align-items:center}
+.res:hover{background:#14213d12}
+.res img{width:34px;height:34px;border-radius:6px;object-fit:cover}
+#tg{display:none}
+@media(max-width:800px){#dir{width:190px}}
+#info{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:6;padding:11px 18px;min-width:280px;max-width:min(560px,92vw);text-align:center;opacity:0;transition:opacity .15s;pointer-events:none}
+#info.on{opacity:1}
+#info b{display:block;font-size:15px}
+#info span{font-size:13px;color:#4d5b78}
+#info em{display:block;font-style:normal;font-size:11.5px;font-weight:700;color:#2f7a12;margin-top:3px}
+#cross{position:fixed;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;border:2px solid #14213dcc;z-index:4;pointer-events:none;display:none}
+#hint{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:4;padding:9px 18px;font-size:13px;text-align:center;max-width:calc(100% - 28px);transition:opacity .6s}
+#hint.off{opacity:0;pointer-events:none}
+#where{position:fixed;right:14px;top:62px;z-index:5;padding:8px 14px;font-weight:800;font-size:14px;letter-spacing:1px}
+#load{position:fixed;inset:0;z-index:30;background:#14213d;color:#fff;display:grid;place-items:center;text-align:center;transition:opacity .8s}
+#load.off{opacity:0;pointer-events:none}
+#load h1{font-size:22px;letter-spacing:4px}
+#load p{margin-top:8px;color:#8fd13f;letter-spacing:2px;font-size:12px}
+#joy{position:fixed;right:22px;bottom:30px;width:110px;height:110px;border-radius:50%;border:2px solid #14213d44;background:#ffffff77;z-index:5;display:none;touch-action:none}
+#joy b{position:absolute;left:35px;top:35px;width:40px;height:40px;border-radius:50%;background:#14213d77}
+@media(pointer:coarse){#joy{display:block}#cross{display:none!important}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="cross"></div>
+<div class="top">
+  <div class="glass brand">STASHBOX.AI DEPARTMENT STORE<small id="stats">LOADING REAL PRODUCTS…</small></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><a class="btn pri" href="https://stashbox.ai" target="_blank" rel="noopener">Open the real store ↗</a><a class="btn exit" href="/mall/">← Mall street</a></div>
+</div>
+<div id="dir" class="glass"><h3>STORE DIRECTORY</h3><input id="sq" placeholder="Search products…"><div id="list"></div></div>
+<div id="where" class="glass">Lobby</div>
+<div id="info" class="glass"></div>
+<div id="hint" class="glass">Walk with W A S D (Shift to run) · drag to look · click any product to open it on stashbox.ai · use the directory to jump to a department</div>
+<div id="joy"><b></b></div>
+<div id="load"><div><h1>STASHBOX.AI</h1><p>OPENING THE DOORS…</p></div></div>
+<script type="module" src="store.js"></script>
+</body>
+</html>
