@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elettro Street</title>
+<style>
+:root{--ink:#0b0e24;--brick:#4a3a46;--brick2:#3b2f3d;--glow:#ffc86b}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;color:#fff;user-select:none}
+#sky{position:fixed;inset:0;background:linear-gradient(#070a22 0%,#1a1f4d 55%,#3a3366 100%)}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.moon{position:absolute;top:9%;left:62%;width:70px;height:70px;border-radius:50%;box-shadow:inset -18px 6px 0 0 #f4ecd2;filter:drop-shadow(0 0 24px #f4ecd2aa)}
+#stage{position:fixed;inset:0;perspective:1100px;overflow:hidden}
+#world{position:absolute;inset:0;transform-style:preserve-3d;}
+.layer{position:absolute;left:0;bottom:0;height:100%;will-change:transform}
+/* far skyline */
+#far{bottom:22%;height:40%;transform-style:preserve-3d}
+.sk{position:absolute;bottom:0;background:#141838;border-radius:3px 3px 0 0}
+.sk i{position:absolute;width:6px;height:8px;background:#ffc86b55;border-radius:1px}
+/* street */
+#street{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#2a2748,#14132b);border-top:6px solid #3d3862}
+#street:before{content:"";position:absolute;left:0;right:0;top:55%;border-top:4px dashed #ffffff22}
+/* track */
+#track{bottom:21%;height:62%;display:flex;align-items:flex-end;gap:0;padding:0 40vw;transform-style:preserve-3d}
+.bld{position:relative;width:360px;height:100%;flex:none;margin:0 6px;transform-style:preserve-3d;transition:transform .35s,filter .35s;cursor:pointer}
+.bld .body{position:absolute;inset:0;bottom:0;background:
+ repeating-linear-gradient(0deg,#0000 0 17px,#0003 17px 19px),repeating-linear-gradient(90deg,#0000 0 38px,#0002 38px 40px),linear-gradient(var(--brick),var(--brick2));
+ border-radius:4px 4px 0 0;box-shadow:inset 0 0 60px #0008;transform:translateZ(0)}
+.bld .cornice{position:absolute;left:-10px;right:-10px;top:-6px;height:16px;background:#5a4a5a;border-radius:3px;transform:translateZ(20px);box-shadow:0 8px 14px #0006}
+.win{position:absolute;top:13%;width:64px;height:92px;background:#1b2447;border:6px solid #cfc6d4;border-radius:3px;transform:translateZ(8px);box-shadow:inset 0 0 0 2px #0006}
+.win:before,.win:after{content:"";position:absolute;background:#cfc6d4}
+.win:before{left:50%;top:0;bottom:0;width:4px;margin-left:-2px}.win:after{top:50%;left:0;right:0;height:4px;margin-top:-2px}
+.win.lit{background:linear-gradient(#ffd98a,#ff9f45);box-shadow:0 0 40px #ffb04caa}
+.sign{position:absolute;left:8%;right:8%;top:38%;height:62px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;letter-spacing:.5px;font-size:20px;text-align:center;padding:0 10px;transform:translateZ(46px);box-shadow:0 10px 22px #0009,0 0 0 3px #0005 inset;white-space:nowrap}
+.sign small{display:block;font-weight:600;font-size:11px;opacity:.85;letter-spacing:1.2px;text-transform:uppercase}
+.sign .ic{font-size:26px}
+.num{position:absolute;top:calc(38% + 74px);left:50%;transform:translate(-50%,0) translateZ(30px);background:#0008;border:1px solid #fff4;border-radius:4px;padding:1px 8px;font-size:12px;color:#ffd98a}
+.shopwin{position:absolute;bottom:0;width:30%;height:34%;background:linear-gradient(#202a52,#141a38);border:6px solid #2a2230;transform:translateZ(14px);display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:8px;overflow:hidden}
+.shopwin span{display:block;width:22%;background:#ffffff1a;border-radius:3px 3px 0 0}
+.door{position:absolute;bottom:0;left:50%;width:30%;aspect-ratio:1/1.75;margin-left:-15%;background:#1a1626;border:6px solid #2a2230;border-bottom:0;transform:translateZ(16px);perspective:500px;cursor:pointer}
+.door.open{background:radial-gradient(circle at 50% 60%,#fff6d0,#ffb04c 70%);box-shadow:0 0 90px 20px #ffb04c}
+.leaf{position:absolute;inset:0;background:linear-gradient(90deg,#3a2c44,#2b2236);transform-origin:left center;transition:transform .9s cubic-bezier(.5,0,.2,1),background .3s;box-shadow:inset 0 0 0 5px #0003,inset 0 0 0 14px #ffffff0d}
+.leaf:after{content:"";position:absolute;right:8px;top:52%;width:8px;height:8px;border-radius:50%;background:#e8c46a}
+.door.open .leaf{transform:rotateY(-82deg)}
+.awning{position:absolute;left:3%;right:3%;top:calc(38% + 62px);height:24px;transform:translateZ(54px) rotateX(-14deg);transform-origin:top;border-radius:0 0 8px 8px;background:repeating-linear-gradient(90deg,var(--c) 0 28px,#fff9 28px 56px);box-shadow:0 10px 14px #0008}
+.bld:hover,.bld.active{transform:translateZ(60px) translateY(-6px);filter:brightness(1.18)}
+.bld:hover .leaf,.bld.active .leaf{background:linear-gradient(#ffe29a,#ff9f45)}
+.bld:hover .win,.bld.active .win{background:linear-gradient(#ffd98a,#ff9f45);box-shadow:0 0 40px #ffb04caa}
+.step{cursor:pointer;position:absolute;left:50%;bottom:calc(37% + 10px);transform:translate(-50%,0) translateZ(70px);background:#fff;color:#111;font-weight:700;font-size:13px;padding:6px 12px;border-radius:99px;opacity:0;transition:.25s;white-space:nowrap}
+.bld:hover .step{opacity:1;bottom:calc(37% + 22px)}
+/* lamps */
+.lamp{position:relative;width:14px;height:78%;flex:none;transform-style:preserve-3d;transform:translateZ(80px)}
+.lamp:before{content:"";position:absolute;left:5px;top:6%;bottom:0;width:5px;background:#14152e}
+.lamp:after{content:"";position:absolute;left:-6px;top:3%;width:28px;height:14px;border-radius:6px;background:#ffd98a;box-shadow:0 0 70px 30px #ffc86b66}
+/* foreground */
+#fore{bottom:0;height:100%;pointer-events:none;transform-style:preserve-3d}
+.tree{position:absolute;bottom:14%;width:60px;opacity:.9}
+.tree .trunk{position:absolute;left:50%;bottom:0;width:8px;height:150px;margin-left:-4px;background:#0b0d1e}
+.tree .crown{position:absolute;left:50%;bottom:110px;width:110px;height:120px;margin-left:-55px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#17234a,#0a0e24 70%);box-shadow:-26px 22px 0 -10px #0c1330,26px 16px 0 -10px #0c1330}
+/* ui */
+.top{position:fixed;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;z-index:5;pointer-events:none}
+.brand{background:#fff;color:#111;font-weight:900;letter-spacing:2px;padding:9px 16px;border-radius:10px;pointer-events:auto}
+.hint{background:#0007;border:1px solid #fff3;padding:8px 14px;border-radius:99px;font-size:13px;backdrop-filter:blur(6px)}
+.nav{position:fixed;top:44%;z-index:5;width:52px;height:52px;border-radius:50%;border:0;background:#fffe;color:#111;font-size:24px;font-weight:700;cursor:pointer}
+#prev{left:14px}#next{right:14px}
+#panel{position:fixed;left:50%;bottom:16px;width:min(920px,calc(100% - 28px));transform:translate(-50%,0);background:#fff;color:#111;border-radius:14px;padding:14px 18px;display:flex;gap:16px;align-items:center;z-index:6;box-shadow:0 14px 50px #000a;transition:.3s}
+#panel .big{font-size:34px;width:56px;height:56px;border-radius:12px;display:grid;place-items:center;flex:none}
+#panel h2{font-size:19px}#panel p{font-size:14px;color:#444;margin-top:2px}
+#panel .tag{font-size:11px;letter-spacing:1.4px;color:#777;text-transform:uppercase;font-weight:700}
+#panel .grow{flex:1;min-width:0}
+#panel a{background:#111;color:#fff;text-decoration:none;font-weight:700;padding:11px 18px;border-radius:10px;white-space:nowrap}
+.dots{position:fixed;bottom:98px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:5}
+.dots b{width:10px;height:10px;border-radius:50%;background:#fff5;cursor:pointer}.dots b.on{background:#fff;transform:scale(1.3)}
+#inside{position:fixed;inset:0;z-index:20;opacity:0;pointer-events:none;transition:opacity .6s;display:grid;place-items:center;perspective:900px;overflow:hidden}
+#inside.on{opacity:1;pointer-events:auto}
+#inside .wall{position:absolute;inset:0 0 38% 0;background:var(--bg);box-shadow:inset 0 -40px 80px #0008}
+#inside .floor{position:absolute;left:-20%;right:-20%;bottom:0;height:62%;transform-origin:top;transform:rotateX(62deg);background:repeating-linear-gradient(90deg,#0000 0 90px,#0003 90px 92px),linear-gradient(#5a3c22,#2c1b0e)}
+#inside .card{position:relative;background:#fff;color:#111;border-radius:16px;padding:26px 30px;max-width:560px;width:calc(100% - 32px);text-align:center;box-shadow:0 20px 70px #000a;transform:translateY(20px);transition:transform .6s .2s}
+#inside.on .card{transform:none}
+#inside .ico{font-size:54px}
+#inside h1{font-size:28px;margin:6px 0}
+#inside p{color:#444;line-height:1.5;margin:8px 0 18px}
+#inside .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#inside a,#inside button{border:0;background:#111;color:#fff;text-decoration:none;font:700 14px "Segoe UI",sans-serif;padding:12px 20px;border-radius:10px;cursor:pointer}
+#inside button{background:#e9e9ef;color:#111}
+@media(max-width:700px){#panel{flex-wrap:wrap}#panel a{width:100%;text-align:center}.hint{display:none}.nav{top:36%}}
+</style>
+</head>
+<body>
+<div id="sky"><canvas id="stars"></canvas><div class="moon"></div></div>
+<div id="stage"><div id="world">
+  <div class="layer" id="far"></div>
+  <div class="layer" id="track"></div>
+  <div id="street"></div>
+  <div class="layer" id="fore"></div>
+</div></div>
+<div class="top"><div class="brand">ELETTRO</div><div class="hint">Move the mouse · drag, scroll or use ← → to walk the street</div></div>
+<button class="nav" id="prev" aria-label="Previous">‹</button><button class="nav" id="next" aria-label="Next">›</button>
+<div class="dots" id="dots"></div>
+<div id="panel"></div>
+<div id="inside"><div class="wall"></div><div class="floor"></div><div class="card"></div></div>
+
+<script>
+const SHOPS=[
+ {n:'1',name:'Web Dev',sub:'Custom websites',ic:'🖥️',c:'#2f7bff',bg:'#10244f',fg:'#fff',door:'4101',
+  d:'Custom-built websites are the front door to your business. Designed, built and hosted by Elettro.',link:'https://elettro.com',cta:'See the work'},
+ {n:'2',name:'Social Media',sub:'Curating & scheduling',ic:'📅',c:'#ff4f9a',bg:'#4d1233',fg:'#fff',door:'4102',
+  d:'Elettro OS curates your best content and schedules it across every social channel, per brand.',link:'https://elettro.com',cta:'See Elettro OS'},
+ {n:'3',name:'AR',sub:'Augmented reality',ic:'🔮',c:'#9b5cff',bg:'#2b1659',fg:'#fff',door:'4103',
+  d:'Point a phone at a marker and your product, poster or sign comes to life.',link:'https://ar.elettro.com',cta:'Open Elettro AR'},
+ {n:'4',name:'Remote Mobile',sub:'Phone as controller',ic:'📱',c:'#18c29c',bg:'#0b3d36',fg:'#fff',door:'4104',
+  d:'Turn any phone into a remote: scroll, control and capture with a quick QR scan.',link:'https://elettro.com',cta:'Try the remote'},
+ {n:'5',name:'Shopify',sub:'Stores that sell',ic:'🛍️',c:'#8fd13f',bg:'#243d0c',fg:'#fff',door:'4105',
+  d:'Shopify stores set up, themed and loaded with products, collections and content.',link:'https://elettro.com',cta:'Browse stores'},
+ {n:'6',name:'Stashbox Radio',sub:'stashbox.com',ic:'📻',c:'#ffb02e',bg:'#4a2c05',fg:'#fff',door:'4106',
+  d:'Live band videos, music and the Stashbox radio, all in one place.',link:'https://stashbox.com',cta:'Go to Stashbox.com'}
+];
+const track=document.getElementById('track'),far=document.getElementById('far'),fore=document.getElementById('fore'),world=document.getElementById('world');
+const dots=document.getElementById('dots'),panel=document.getElementById('panel');
+const BW=372; // building width + margins
+SHOPS.forEach((s,i)=>{
+  const b=document.createElement('div');b.className='bld';b.style.setProperty('--c',s.c);
+  const wins=[10,30,50,70].map((x,k)=>`<div class="win ${(i+k)%2?'lit':''}" style="left:${x}%;"></div>`).join('').replace(/left:(\d+)%/g,(m,x)=>`left:${x-5}%`);
+  b.innerHTML=`<div class="body"></div><div class="cornice"></div>${wins.slice(0,0)}
+   <div class="win ${i%2?'lit':''}" style="left:8%"></div><div class="win ${i%2?'':'lit'}" style="right:8%"></div>
+   <div class="sign" style="background:${s.bg};color:${s.fg};border:2px solid ${s.c}"><span class="ic">${s.ic}</span><span>${s.name}<small>${s.sub}</small></span></div>
+   <div class="awning"></div><div class="num">${s.door}</div>
+   <div class="shopwin" style="left:3%"><span style="height:50%"></span><span style="height:70%"></span><span style="height:40%"></span></div>
+   <div class="shopwin" style="right:3%"><span style="height:60%"></span><span style="height:45%"></span><span style="height:75%"></span></div>
+   <div class="door"><div class="leaf"></div></div><div class="step">Step inside →</div>`;
+  b.onclick=()=>go(i);
+  b.querySelector('.door').onclick=b.querySelector('.step').onclick=e=>{e.stopPropagation();enter(i)};
+  track.appendChild(b);
+  if(i<SHOPS.length-1){const l=document.createElement('div');l.className='lamp';track.appendChild(l)}
+  const d=document.createElement('b');d.onclick=()=>go(i);dots.appendChild(d);
+});
+// far skyline
+let x=0;while(x<4200){const w=50+Math.random()*80,h=60+Math.random()*180;const e=document.createElement('div');e.className='sk';e.style.cssText=`left:${x}px;width:${w}px;height:${h}px`;
+ for(let k=0;k<12;k++){const wi=document.createElement('i');wi.style.left=(6+Math.random()*(w-14))+'px';wi.style.top=(8+Math.random()*(h-16))+'px';if(Math.random()<.5)e.appendChild(wi)}
+ far.appendChild(e);x+=w+6}
+for(let k=0;k<4;k++){const t=document.createElement('div');t.className='tree';t.style.left=(k*1500+80)+'px';t.innerHTML='<div class="trunk"></div><div class="crown"></div>';fore.appendChild(t)}
+// stars
+const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
+function sz(){cv.width=innerWidth;cv.height=innerHeight;stars=Array.from({length:140},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height*.6,r:Math.random()*1.4+.3,p:Math.random()*6}))}
+sz();addEventListener('resize',sz);
+(function tw(t){cx.clearRect(0,0,cv.width,cv.height);stars.forEach(s=>{cx.globalAlpha=.5+.5*Math.sin(t/900+s.p);cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x,s.y,s.r,0,7);cx.fill()});requestAnimationFrame(tw)})(0);
+// motion
+let idx=0,pan=0,target=0,mx=0,my=0,zoom=1,zt=1,entering=false;
+function center(i){return -(40*innerWidth/100+i*BW+BW/2-innerWidth/2 + i*14*0)} // approx; refined in go()
+function trackCenter(i){const el=track.querySelectorAll('.bld')[i];return -(el.offsetLeft+el.offsetWidth/2-innerWidth/2)}
+const maxPan=()=>trackCenter(0), minPan=()=>trackCenter(SHOPS.length-1);
+function go(i){idx=Math.max(0,Math.min(SHOPS.length-1,i));target=trackCenter(idx);
+  const s=SHOPS[idx];
+  document.querySelectorAll('.bld').forEach((b,k)=>b.classList.toggle('active',k===idx));
+  [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===idx));
+  panel.innerHTML=`<div class="big" style="background:${s.bg}">${s.ic}</div><div class="grow"><div class="tag">Pillar #${s.n}</div><h2>${s.name} — ${s.sub}</h2><p>${s.d}</p></div><a href="${s.link}" target="_blank" rel="noopener">${s.cta} →</a>`}
+function frame(){pan+=(target-pan)*.08;
+  track.style.transform=`translate3d(${pan}px,0,0)`;
+  far.style.transform=`translate3d(${pan*.25}px,0,-300px) scale(1.3)`;
+  fore.style.transform=`translate3d(${pan*1.25}px,0,120px)`;
+  zoom+=(zt-zoom)*(zt>zoom?.045:.1);const k=entering?0:1;
+  world.style.transform=`scale(${zoom}) rotateY(${mx*4*k}deg) rotateX(${-my*2.5*k}deg) translate3d(${-mx*14*k}px,${-my*8*k}px,0)`;
+  requestAnimationFrame(frame)}
+addEventListener('mousemove',e=>{mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1});
+addEventListener('wheel',e=>{target=Math.max(minPan()-40,Math.min(maxPan()+40,target-(e.deltaY+e.deltaX)));
+  let best=0,bd=1e9;for(let k=0;k<SHOPS.length;k++){const d=Math.abs(trackCenter(k)-target);if(d<bd){bd=d;best=k}}
+  if(best!==idx){idx=best;go(idx);target=target}},{passive:true});
+let drag=null;addEventListener('pointerdown',e=>{drag={x:e.clientX,t:target,m:false}});
+addEventListener('pointermove',e=>{if(drag&&Math.abs(e.clientX-drag.x)>6){drag.m=true;target=drag.t+(e.clientX-drag.x)}});
+addEventListener('pointerup',()=>{if(drag&&drag.m){let best=0,bd=1e9;for(let k=0;k<SHOPS.length;k++){const d=Math.abs(trackCenter(k)-target);if(d<bd){bd=d;best=k}}go(best)}setTimeout(()=>drag=null,0)},true);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(idx+1);if(e.key==='ArrowLeft')go(idx-1)});
+document.getElementById('next').onclick=()=>go(idx+1);document.getElementById('prev').onclick=()=>go(idx-1);
+addEventListener('resize',()=>go(idx));
+const inside=document.getElementById('inside');
+function enter(i){if(entering)return;entering=true;go(i);target=trackCenter(i);
+  const door=track.querySelectorAll('.door')[i];
+  setTimeout(()=>{door.classList.add('open');
+   const r=door.getBoundingClientRect();world.style.transformOrigin=(r.left+r.width/2)+'px '+(r.top+r.height*0.6)+'px';
+   setTimeout(()=>{zt=9;},650);
+   setTimeout(()=>{if(i===0){location.href='museum/index.html';return}const s=SHOPS[i];inside.style.setProperty('--bg',`linear-gradient(${s.bg},${s.c}55)`);
+    inside.querySelector('.card').innerHTML=`<div class="ico">${s.ic}</div><div class="tag" style="font-size:11px;letter-spacing:1.4px;color:#777;text-transform:uppercase;font-weight:700">Pillar #${s.n}</div><h1>${s.name}</h1><div style="font-weight:600;color:#666">${s.sub}</div><p>${s.d}</p><div class="row"><a href="${s.link}" target="_blank" rel="noopener">${s.cta} →</a><button id="back">← Back to the street</button></div>`;
+    inside.classList.add('on');document.getElementById('back').onclick=leave},1500)
+  },750)}
+function leave(){inside.classList.remove('on');zt=1;
+  setTimeout(()=>{track.querySelectorAll('.door').forEach(d=>d.classList.remove('open'));entering=false},700)}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&entering)leave()});
+go(0);frame();
+</script>
+</body>
+</html>
