@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elettro Social Media Room</title>
+<style>
+:root{--ink:#f4efe6;--amber:#ffb84d;--cy:#22e6ff;--pk:#ff5fd2;--bg:#07080f}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas#gl{position:fixed;inset:0;display:block;width:100%;height:100%;cursor:grab}
+canvas#gl.hover{cursor:pointer}
+.top{position:fixed;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:5;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{font-weight:800;letter-spacing:3px;font-size:13px;text-shadow:0 2px 10px #000}
+.brand small{display:block;font-weight:500;letter-spacing:1.5px;color:var(--amber);font-size:10px;margin-top:2px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{background:#07080fcc;color:var(--ink);border:1px solid #ffffff30;border-radius:999px;padding:9px 16px;font:600 13px "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;backdrop-filter:blur(8px)}
+.btn:hover{background:#ffffff22}
+.btn.pri{background:#1b6cff;border-color:#1b6cff}
+.btn.exit{background:#b3261e;border-color:#b3261e}
+#hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:9px 18px;font-size:13px;color:#d8d3c8;backdrop-filter:blur(8px);transition:opacity .6s;text-align:center;max-width:calc(100% - 28px)}
+#hint.off{opacity:0;pointer-events:none}
+#tip{position:fixed;z-index:6;pointer-events:none;background:#07080fee;border:1px solid var(--amber);padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translate(14px,14px);transition:opacity .15s;white-space:nowrap}
+#pad{position:fixed;right:16px;bottom:18px;z-index:5;display:none;flex-direction:column;gap:8px}
+#pad .btn{width:52px;height:52px;padding:0;font-size:20px}
+@media(pointer:coarse){#pad{display:flex}#hint{bottom:90px}}
+#load{position:fixed;inset:0;z-index:30;background:var(--bg);display:grid;place-items:center;text-align:center;transition:opacity .8s}
+#load.off{opacity:0;pointer-events:none}
+#load h1{font:800 30px "Segoe UI",sans-serif;letter-spacing:4px}
+#load p{color:var(--amber);letter-spacing:3px;font-size:11px;margin-top:10px}
+#live{position:fixed;left:14px;bottom:18px;z-index:5;font-size:11px;letter-spacing:1.5px;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:6px 12px;display:flex;gap:7px;align-items:center}
+#live i{width:8px;height:8px;border-radius:50%;background:#3dff8b;box-shadow:0 0 8px #3dff8b}
+#live.off i{background:#ffb84d;box-shadow:0 0 8px #ffb84d}
+/* ---- readable overlay ---- */
+#ov{position:fixed;inset:4vh 3.5vw;z-index:12;background:#090a12f6;border:1px solid #22e6ff66;border-radius:18px;box-shadow:0 0 70px #22e6ff30,0 30px 80px #000c;display:none;flex-direction:column;overflow:hidden}
+#ov.on{display:flex;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+#ov header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #ffffff1a;flex:none}
+#ov header h2{font:800 20px "Segoe UI",sans-serif;letter-spacing:1px;flex:1}
+#ov header small{color:var(--amber);font-size:11px;letter-spacing:1.5px}
+#ov .body{flex:1;overflow:auto;padding:18px;touch-action:pan-y}
+#ov footer{display:flex;gap:8px;padding:12px 18px;border-top:1px solid #ffffff1a;flex:none;justify-content:space-between;align-items:center}
+.k4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;padding:14px 16px}
+.stat b{display:block;font:800 36px/1.1 "Segoe UI",sans-serif;color:var(--cy)}
+.stat span{font-size:12px;letter-spacing:1.5px;color:#b8b4c6;text-transform:uppercase}
+.big{font:800 clamp(28px,4.5vw,54px)/1.05 "Segoe UI",sans-serif;margin:6px 0 14px}
+.big em{font-style:normal;color:var(--amber)}
+.row{display:grid;grid-template-columns:150px 1fr 90px;gap:12px;align-items:center;margin:7px 0;font-size:14px}
+.row .bar{height:14px;background:#ffffff14;border-radius:99px;overflow:hidden}
+.row .bar i{display:block;height:100%;border-radius:99px}
+.row .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;border-radius:99px;padding:2px 9px;background:#3dff8b22;color:#3dff8b;border:1px solid #3dff8b66}
+.chip.n{background:#ffb84d1a;color:#ffb84d;border-color:#ffb84d66}
+.cta{display:inline-block;background:var(--amber);color:#1b1206;font-weight:800;padding:12px 20px;border-radius:12px;text-decoration:none;margin:6px 8px 6px 0}
+.cta.alt{background:#ffffff14;color:var(--ink);border:1px solid #ffffff30}
+.cta:hover{filter:brightness(1.15)}
+.note{color:#b8b4c6;font-size:13px;line-height:1.5;margin:10px 0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.steps div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;padding:16px}
+.steps b{color:var(--cy);font-size:12px;letter-spacing:2px}
+.steps h4{font-size:18px;margin:6px 0}
+.car{display:flex;flex-direction:column;gap:12px;height:100%}
+.car .stage{flex:1;min-height:0;display:grid;place-items:center;background:#000;border-radius:12px;overflow:hidden;position:relative}
+.car .stage img{width:100%;height:100%;object-fit:contain}.car .stage{overflow:hidden}
+.car .nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid #ffffff40;background:#000a;color:#fff;font-size:22px;cursor:pointer}
+.car .nav.l{left:10px}.car .nav.r{right:10px}
+.car .strip{display:flex;gap:8px;overflow-x:auto;flex:none;padding-bottom:4px}
+.car .strip img{height:64px;border-radius:6px;border:2px solid transparent;cursor:pointer;opacity:.7}
+.car .strip img.on{border-color:var(--amber);opacity:1}
+.spark{width:100%;height:170px;display:block}
+@media(max-width:640px){.row{grid-template-columns:100px 1fr 60px;font-size:12px}#ov{inset:2vh 2vw}.btn{padding:8px 12px}}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="load"><div><h1>ELETTRO SOCIAL ROOM</h1><p>POWERING UP THE VIDEO WALL…</p></div></div>
+<div class="top">
+  <div class="brand">ELETTRO OS<small>SOCIAL MEDIA ROOM</small></div>
+  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://elettro.com/dash/" target="_blank" rel="noopener">Live dash ↗</a></div>
+</div>
+<div id="hint">Scroll or ↑ ↓ to walk · drag to look · click any screen on the wall to fly up to it · Esc to come back · red EXIT top-right to leave</div>
+<div id="tip"></div>
+<div id="live" class="off"><i></i><span id="liveTxt">CONNECTING…</span></div>
+<div id="ov"><header><h2 id="ovT"></h2><small id="ovS"></small><button class="btn" id="ovX">✕ Back to the room</button></header><div class="body" id="ovB"></div><footer><button class="btn" id="ovP">‹ Previous screen</button><span class="note" id="ovN"></span><button class="btn" id="ovNx">Next screen ›</button></footer></div>
+<div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+/* ============ DATA (live from the same Elettro OS feeds as elettro.com/dash) ============ */
+const FEED="https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/";
+const BRAND="stashbox";
+const NETS=[
+ {n:"YouTube",d:"youtube",c:"#ff3b3b"},{n:"Instagram",d:"instagram",c:"#ff5fd2"},{n:"Facebook",d:"facebook",c:"#3b8bff"},
+ {n:"TikTok",d:"tiktok",c:"#22e6ff"},{n:"LinkedIn",d:"linkedin",c:"#4fb3ff"},{n:"Threads",d:"threads",c:"#c9c4ff"},
+ {n:"Pinterest",d:"pinterest",c:"#ff4f6b"},{n:"Bluesky",d:"bluesky",c:"#4da3ff"},{n:"Mastodon",d:"mastodon",c:"#a98bff"},
+ {n:"X",d:"x",c:"#e7e7ee"},{n:"Snapchat",d:"snapchat",c:"#fffc00"},{n:"Substack",d:"substack",c:"#ff6719"},{n:"Google Business",d:"gmb",c:"#ffc83d"}
+];
+const D={live:false,at:null,posts:{total:{published:2756,scheduled:1185},days:[],upcoming:[],destinations:[],brands:[],goal:1000},assets:{total:{images:1986,videos:1990,audio:1177,total:5153}},conn:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>Number(n||0).toLocaleString("en-US");
+const pubOf=d=>{const x=D.posts.destinations.find(y=>y.destination===d);return x?x.published:0};
+const schOf=d=>{const x=D.posts.destinations.find(y=>y.destination===d);return x?x.scheduled:0};
+function netRows(){
+  const prof={};if(D.conn){const b=(D.conn.brands||[]).find(x=>x.slug===BRAND);if(b)(b.profiles||[]).forEach(p=>prof[p.destination]=p)}
+  const cps=(D.conn&&D.conn.checkpoints)||[];
+  return NETS.map(n=>{const p=prof[n.d];let pct=0,next="";
+    if(p&&cps.length){pct=Math.round(cps.reduce((s,c)=>s+c.w*((p.done||{})[c.key]||0),0));const nx=cps.find(c=>((p.done||{})[c.key]||0)<1);next=nx?nx.label:""}
+    const pub=pubOf(n.d),live=pub>0;if(live)pct=100;
+    return Object.assign({},n,{pct,pub,sch:schOf(n.d),live,next})}).sort((a,b)=>b.pub-a.pub||b.pct-a.pct);
+}
+const liveCount=()=>netRows().filter(r=>r.live).length;
+const last=(a,n)=>a.slice(Math.max(0,a.length-n));
+async function pull(){
+  try{
+    const [p,a,c]=await Promise.all([fetch(FEED+"posts",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()),fetch(FEED+"assets",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()),fetch(FEED+"connections",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null)]);
+    if(!p.ok||!a.ok)throw 0;D.posts=p;D.assets=a;D.conn=c;D.live=true;D.at=new Date()
+  }catch(e){D.live=false}
+  const el=$("#live");el.classList.toggle("off",!D.live);$("#liveTxt").textContent=D.live?"LIVE · "+D.at.toLocaleTimeString():"SNAPSHOT · live feed unreachable";
+  repaintAll();if(openIdx>=0&&PANELS[openIdx].live)renderOverlay(openIdx,true);
+}
+
+/* ============ THREE SETUP ============ */
+const canvas=$("#gl");
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x07080f);scene.fog=new THREE.Fog(0x07080f,22,46);
+const camera=new THREE.PerspectiveCamera(68,1,.1,120);camera.rotation.order="YXZ";
+function ctex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;draw(c.getContext("2d"),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
+const R=12, EYE=1.7, COLS=7, STEP=22*Math.PI/180;
+const mat=(c,r=.7,m=.2)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+const amberM=mat(0xd69a3a,.35,.8), darkM=mat(0x0c0d16,.6,.3), leather=mat(0x8a4a24,.45,.1);
+
+/* ----- room shell: full dome + wall, floor carpet ----- */
+const WALLR=16;
+const shell=new THREE.Mesh(new THREE.CylinderGeometry(WALLR,WALLR,7,64,1,true),new THREE.MeshStandardMaterial({color:0x14101c,roughness:.9,side:THREE.BackSide}));shell.position.y=3.5;scene.add(shell);
+const dome=new THREE.Mesh(new THREE.SphereGeometry(WALLR,64,24,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:0x120f1c,roughness:1,side:THREE.BackSide}));dome.scale.y=.62;dome.position.y=7;scene.add(dome);
+[.5,.72,.9].forEach((k,i)=>{const t=new THREE.Mesh(new THREE.TorusGeometry(WALLR*k*.98,.07,8,96),new THREE.MeshBasicMaterial({color:[0xffb84d,0x22e6ff,0xff5fd2][i]}));t.rotation.x=Math.PI/2;const ang=Math.acos(k);t.position.y=7+Math.sin(ang)*WALLR*.62;scene.add(t)});
+// carpet (amber diamonds on dark)
+const carpetT=ctex(512,512,(g,w,h)=>{g.fillStyle="#1d0f14";g.fillRect(0,0,w,h);g.strokeStyle="#7a4a1c";g.lineWidth=3;for(let i=-1;i<=2;i++)for(let j=-1;j<=2;j++){g.beginPath();g.moveTo(i*256+128,j*256);g.lineTo(i*256+256,j*256+128);g.lineTo(i*256+128,j*256+256);g.lineTo(i*256,j*256+128);g.closePath();g.stroke()}g.fillStyle="#b9822e55";for(let i=0;i<3;i++)for(let j=0;j<3;j++){g.beginPath();g.arc(i*256+128,j*256+128,9,0,7);g.fill()}for(let i=0;i<9000;i++){g.fillStyle="rgba(255,255,255,"+Math.random()*.03+")";g.fillRect(Math.random()*w,Math.random()*h,2,2)}});
+carpetT.wrapS=carpetT.wrapT=THREE.RepeatWrapping;carpetT.repeat.set(9,9);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(WALLR,64),new THREE.MeshStandardMaterial({map:carpetT,roughness:.95}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+// amber floor rings
+[WALLR-.4,9.4,4.6].forEach(r=>{const m=new THREE.Mesh(new THREE.RingGeometry(r,r+.07,96),new THREE.MeshBasicMaterial({color:0xffb84d}));m.rotation.x=-Math.PI/2;m.position.y=.02;scene.add(m)});
+scene.add(new THREE.HemisphereLight(0xffe2b0,0x1a1020,.9));
+[[0,6,0,1.1,0xffd9a0],[-8,5,-3,.8,0x22e6ff],[8,5,-3,.8,0xff5fd2]].forEach(l=>{const p=new THREE.PointLight(l[4],l[3],26,1.5);p.position.set(l[0],l[1],l[2]);scene.add(p)});
+
+/* ----- curved backdrop + ticker ----- */
+const ARC=(COLS*STEP)/2+.18, tS=Math.PI-ARC, tL=ARC*2;
+const bd=ctex(1024,256,(g,w,h)=>{g.fillStyle="#0b0d1a";g.fillRect(0,0,w,h);g.strokeStyle="#ffffff0f";g.lineWidth=2;for(let x=0;x<w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}for(let y=0;y<h;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke()}});
+bd.wrapS=THREE.RepeatWrapping;bd.repeat.set(4,1);
+const back=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,8.4,64,1,true,tS,tL),new THREE.MeshStandardMaterial({map:bd,roughness:.6,metalness:.3,side:THREE.BackSide}));back.position.y=4.2;scene.add(back);
+[0,8.4].forEach(y=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(R+.3,R+.3,.1,64,1,true,tS,tL),new THREE.MeshBasicMaterial({color:y?0x22e6ff:0xffb84d,side:THREE.DoubleSide}));t.position.y=y+.05;scene.add(t)});
+const tk=ctex(4096,128,()=>{});tk.wrapS=THREE.RepeatWrapping;tk.repeat.x=-1;
+const tickerMesh=new THREE.Mesh(new THREE.CylinderGeometry(R+.2,R+.2,.5,96,1,true,tS,tL),new THREE.MeshBasicMaterial({map:tk,side:THREE.BackSide}));tickerMesh.position.y=1.05;scene.add(tickerMesh);
+function paintTicker(){
+  const items=[D.posts.total.published+" POSTS PUBLISHED",D.posts.total.scheduled+" SCHEDULED",liveCount()+" NETWORKS LIVE","ELETTRO OS: CONSISTENT DAILY POSTS ACROSS EVERY NETWORK",fmt(D.assets.total.total)+" ASSETS IN THE LIBRARY","AUTO-PUBLISHING EVERY 15 MINUTES","PER-BRAND PLANS · APPROVED · ON AUTOPILOT"];
+  const c=tk.image,g=c.getContext("2d");g.clearRect(0,0,c.width,c.height);g.fillStyle="#05060c";g.fillRect(0,0,c.width,c.height);
+  const msg=items.map(s=>s.replace(/^(\d+)/,m=>fmt(m))).join("   ◆   ")+"   ◆   ";g.font="800 70px 'Segoe UI',sans-serif";const w=g.measureText(msg).width;
+  g.save();g.scale(2048/w,1);g.fillStyle="#ffb84d";g.textBaseline="middle";g.fillText(msg,0,66);g.fillText(msg,w,66);g.restore();tk.needsUpdate=true}
+
+/* ============ PANELS ============ */
+function frame(g,w,h,title,accent,sub){
+  const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,"#10122a");gr.addColorStop(1,"#080912");g.fillStyle=gr;g.fillRect(0,0,w,h);
+  g.strokeStyle="#ffffff0d";g.lineWidth=1;for(let x=0;x<w;x+=64){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}
+  g.fillStyle=accent;g.fillRect(0,0,w,6);
+  g.fillStyle="#e9e6f5";g.font="800 34px 'Segoe UI',sans-serif";g.textAlign="left";g.fillText(title,34,62);
+  if(sub){g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(sub,34,92)}
+  g.fillStyle=D.live?"#3dff8b":"#ffb84d";g.beginPath();g.arc(w-46,50,8,0,7);g.fill();g.fillStyle="#9b97b4";g.font="700 16px 'Segoe UI',sans-serif";g.textAlign="right";g.fillText(D.live?"LIVE":"SNAPSHOT",w-62,56);g.textAlign="left"}
+function bars(g,rows,x,y,w,rh,valMax,fmtv){rows.forEach((r,i)=>{const yy=y+i*rh;g.fillStyle="#d8d4ea";g.font="700 21px 'Segoe UI',sans-serif";g.fillText(r.l,x,yy+rh*.62);const bx=x+210,bw=w-210-110;g.fillStyle="#ffffff14";g.fillRect(bx,yy+rh*.25,bw,rh*.4);g.fillStyle=r.c||"#22e6ff";g.fillRect(bx,yy+rh*.25,Math.max(3,bw*(r.v/valMax)),rh*.4);g.fillStyle="#fff";g.textAlign="right";g.fillText((fmtv||fmt)(r.v),x+w,yy+rh*.62);g.textAlign="left"})}
+function bigNum(g,v,l,x,y,c){g.fillStyle=c;g.font="800 96px 'Segoe UI',sans-serif";g.fillText(v,x,y);g.fillStyle="#b8b4c6";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(l,x,y+34)}
+const dayLabel=d=>{const p=d.split("-");return +p[1]+"/"+ +p[2]};
+const days30=()=>last(D.posts.days||[],30);
+
+const CAR=[];let carIdx=0,carAuto=true;
+fetch("sheets.json").then(r=>r.json()).then(j=>{j.forEach(s=>{const im=new Image();im.src="img/"+s.f;CAR.push({s,im})})}).catch(()=>{});
+function sheetsMeta(){return CAR.map(c=>c.s)}
+
+const PANELS=[
+ {id:"assets",row:0,col:0,t:"ASSET LIBRARY",accent:"#ff5fd2",live:1,
+  paint(g,w,h){frame(g,w,h,"ASSET LIBRARY","#ff5fd2","tagged, windowed, ready to publish");const a=D.assets.total;bigNum(g,fmt(a.total),"TOTAL ASSETS",40,230,"#ff5fd2");bigNum(g,fmt(a.images),"IMAGES",40,400,"#22e6ff");bigNum(g,fmt(a.videos),"VIDEOS",360,400,"#ffc83d");bigNum(g,fmt(a.audio),"AUDIO",680,400,"#3dff8b")},
+  html(){const a=D.assets.total;return `<div class="k4"><div class="stat"><b>${fmt(a.total)}</b><span>Total assets</span></div><div class="stat"><b>${fmt(a.images)}</b><span>Images</span></div><div class="stat"><b>${fmt(a.videos)}</b><span>Videos</span></div><div class="stat"><b>${fmt(a.audio)}</b><span>Audio</span></div></div><p class="note">Every asset is registered, tagged and windowed once, then Elettro OS pulls from the library for every post on every network. More assets in means more days of fresh content out.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">See the live dash ↗</a>`}},
+ {id:"daily",row:0,col:1,t:"POSTS PER DAY",accent:"#22e6ff",live:1,
+  paint(g,w,h){frame(g,w,h,"POSTS PER DAY","#22e6ff","last 30 days · published by Elettro OS");const d=days30(),mx=Math.max(1,...d.map(x=>x.posts)),bw=(w-80)/Math.max(1,d.length);d.forEach((x,i)=>{const bh=(x.posts/mx)*(h-210);g.fillStyle="#22e6ff";g.globalAlpha=.4+.6*(i/d.length);g.fillRect(40+i*bw,h-60-bh,bw-5,bh);g.globalAlpha=1});g.fillStyle="#fff";g.font="800 44px 'Segoe UI',sans-serif";g.fillText("PEAK "+mx+" / DAY",40,160)},
+  html(){const d=days30(),mx=Math.max(1,...d.map(x=>x.posts));const bw=100/Math.max(1,d.length);return `<div class="big"><em>${mx}</em> posts in the busiest day</div><svg class="spark" viewBox="0 0 100 40" preserveAspectRatio="none">${d.map((x,i)=>`<rect x="${i*bw+.3}" y="${40-(x.posts/mx)*38}" width="${bw-.6}" height="${(x.posts/mx)*38}" fill="#22e6ff" opacity="${.4+.6*i/d.length}"><title>${esc(x.d)}: ${x.posts}</title></rect>`).join("")}</svg><p class="note">Last ${d.length} days, one bar per day. Hover a bar for the date. Same ledger as the 5000 Post Race on elettro.com/dash.</p>`}},
+ {id:"lanes",row:0,col:2,t:"NETWORK LANES",accent:"#ffc83d",live:1,
+  paint(g,w,h){frame(g,w,h,"NETWORK LANES","#ffc83d","Elettro OS connection progress");const r=netRows().slice(0,12);r.forEach((n,i)=>{const col=i<6?0:1,rr=i%6,x=34+col*486,y=120+rr*68;g.fillStyle="#d8d4ea";g.font="700 20px 'Segoe UI',sans-serif";g.fillText(n.n,x,y+22);g.fillStyle="#ffffff14";g.fillRect(x,y+32,430,16);g.fillStyle=n.c;g.fillRect(x,y+32,430*n.pct/100,16);g.fillStyle=n.live?"#3dff8b":"#ffb84d";g.textAlign="right";g.fillText(n.live?"LIVE":n.pct+"%",x+430,y+22);g.textAlign="left"})},
+  html(){return netRows().map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.live?'<span class="chip">LIVE</span>':n.pct+"%"}</span></div>`).join("")+`<p class="note">LIVE means Elettro OS has already published to that network. Others show how far through the connection checklist they are.</p>`}},
+ {id:"hero",row:0,col:3,t:"ELETTRO OS",accent:"#ffb84d",live:1,
+  paint(g,w,h){frame(g,w,h,"ELETTRO OS","#ffb84d");g.fillStyle="#fff";g.font="800 58px 'Segoe UI',sans-serif";g.fillText("CONSISTENT DAILY POSTS",34,170);g.fillStyle="#ffb84d";g.fillText("ACROSS EVERY NETWORK",34,236);g.fillStyle="#22e6ff";g.font="800 150px 'Segoe UI',sans-serif";g.fillText(fmt(D.posts.total.published),30,390);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";g.fillText("POSTS PUBLISHED  ·  "+fmt(D.posts.total.scheduled)+" SCHEDULED  ·  "+liveCount()+" NETWORKS LIVE",34,450)},
+  html(){return `<div class="big">Elettro OS is how you get <em>consistent daily posts</em> across every network.</div><div class="k4"><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Posts published</span></div><div class="stat"><b>${fmt(D.posts.total.scheduled)}</b><span>Scheduled next</span></div><div class="stat"><b>${liveCount()}</b><span>Networks live</span></div><div class="stat"><b>${fmt(D.assets.total.total)}</b><span>Assets ready</span></div></div><p class="note">Plan a month, approve it once, and Elettro OS publishes to every connected network on its own, every 15 minutes, per brand.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">Open the live dash ↗</a><a class="cta alt" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a>`}},
+ {id:"race",row:0,col:4,t:"RACE TO GOAL",accent:"#3dff8b",live:1,
+  paint(g,w,h){frame(g,w,h,"RACE TO GOAL","#3dff8b","posts published vs goal");const p=D.posts.total.published,gl=D.posts.goal||1000,k=Math.min(1,p/gl);g.lineWidth=34;g.strokeStyle="#ffffff14";g.beginPath();g.arc(300,330,150,0,7);g.stroke();g.strokeStyle="#3dff8b";g.beginPath();g.arc(300,330,150,-Math.PI/2,-Math.PI/2+k*Math.PI*2);g.stroke();g.fillStyle="#fff";g.font="800 60px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText(Math.round(p/gl*100)+"%",300,350);g.textAlign="left";g.fillStyle="#3dff8b";g.font="800 70px 'Segoe UI',sans-serif";g.fillText(fmt(p),560,300);g.fillStyle="#b8b4c6";g.font="700 24px 'Segoe UI',sans-serif";g.fillText("of a "+fmt(gl)+" post goal",560,345);g.fillText(p>=gl?"GOAL CLEARED":"KEEP POSTING",560,385)},
+  html(){const p=D.posts.total.published,gl=D.posts.goal||1000;return `<div class="big"><em>${fmt(p)}</em> of ${fmt(gl)}</div><div class="row" style="grid-template-columns:1fr"><div class="bar" style="height:26px"><i style="width:${Math.min(100,p/gl*100)}%;background:#3dff8b"></i></div></div><p class="note">${p>=gl?"Goal cleared "+(p/gl).toFixed(1)+"x over.":"Still racing."} Started ${esc((D.posts.raceStart||"").slice(0,10))}.</p>`}},
+ {id:"brands",row:0,col:5,t:"BRAND LEADERBOARD",accent:"#4fb3ff",live:1,
+  paint(g,w,h){frame(g,w,h,"BRAND LEADERBOARD","#4fb3ff","posts published per brand");const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published).slice(0,6);bars(g,b.map((x,i)=>({l:x.name,v:x.published,c:["#ffc83d","#22e6ff","#ff5fd2","#d7ff1f","#4fb3ff","#ff4f6b"][i]})),34,120,w-68,62,Math.max(1,b[0]?b[0].published:1))},
+  html(){const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published);const mx=Math.max(1,b[0]?b[0].published:1);return b.map(x=>`<div class="row"><span>${esc(x.name)}</span><div class="bar"><i style="width:${x.published/mx*100}%;background:#4fb3ff"></i></div><span class="v">${fmt(x.published)}</span></div>`).join("")+`<p class="note">Every brand has its own plan and its own pillars. Published counts only.</p>`}},
+ {id:"upcoming",row:0,col:6,t:"UP NEXT",accent:"#ff9f43",live:1,
+  paint(g,w,h){frame(g,w,h,"UP NEXT","#ff9f43","scheduled posts, next days");const u=last(D.posts.upcoming||[],7);bigNum(g,fmt(D.posts.total.scheduled),"SCHEDULED",40,230,"#ff9f43");bars(g,u.map(x=>({l:dayLabel(x.d),v:x.posts,c:"#ff9f43"})),40,300,w-80,34,Math.max(1,...u.map(x=>x.posts)))},
+  html(){const u=D.posts.upcoming||[];const mx=Math.max(1,...u.map(x=>x.posts));return `<div class="big"><em>${fmt(D.posts.total.scheduled)}</em> posts lined up</div>`+u.map(x=>`<div class="row"><span>${esc(x.d)}</span><div class="bar"><i style="width:${x.posts/mx*100}%;background:#ff9f43"></i></div><span class="v">${x.posts}</span></div>`).join("")}},
+ {id:"bynet",row:1,col:0,t:"POSTS BY NETWORK",accent:"#22e6ff",live:1,
+  paint(g,w,h){frame(g,w,h,"POSTS BY NETWORK","#22e6ff","published so far");const r=netRows().filter(x=>x.pub>0).slice(0,8);bars(g,r.map(x=>({l:x.n,v:x.pub,c:x.c})),34,110,w-68,50,Math.max(1,r[0]?r[0].pub:1))},
+  html(){const r=netRows().filter(x=>x.pub>0);const mx=Math.max(1,r[0]?r[0].pub:1);return r.map(x=>`<div class="row"><span>${esc(x.n)}</span><div class="bar"><i style="width:${x.pub/mx*100}%;background:${x.c}"></i></div><span class="v">${fmt(x.pub)} <small style="color:#9b97b4">+${x.sch}</small></span></div>`).join("")+`<p class="note">Bold number: published. Small number: scheduled.</p>`}},
+ {id:"how",row:1,col:1,t:"HOW IT WORKS",accent:"#ffb84d",
+  paint(g,w,h){frame(g,w,h,"HOW IT WORKS","#ffb84d","four steps, then autopilot");["1  TAG THE ASSETS","2  PLAN THE MONTH","3  APPROVE ONCE","4  AUTO-PUBLISH"].forEach((s,i)=>{g.fillStyle=i%2?"#ffffff0d":"#ffffff16";g.fillRect(34,120+i*92,w-68,80);g.fillStyle=["#22e6ff","#ffc83d","#ff5fd2","#3dff8b"][i];g.fillRect(34,120+i*92,10,80);g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText(s,66,172+i*92)})},
+  html(){return `<div class="steps"><div><b>STEP 1</b><h4>Tag the assets</h4><p class="note">Photos, video and audio get registered and tagged once.</p></div><div><b>STEP 2</b><h4>Plan the month</h4><p class="note">Per-brand pillars and a posting mix fill the calendar.</p></div><div><b>STEP 3</b><h4>Approve once</h4><p class="note">Review the plan, swap or pause anything you do not like.</p></div><div><b>STEP 4</b><h4>Auto-publish</h4><p class="note">Elettro OS posts to every connected network, every 15 minutes, on its own.</p></div></div>`}},
+ {id:"gates",row:1,col:2,t:"NEXT GATES",accent:"#ff4f6b",live:1,
+  paint(g,w,h){frame(g,w,h,"NEXT GATES","#ff4f6b","what unlocks each network");const r=netRows().filter(x=>!x.live).slice(0,6);if(!r.length){g.fillStyle="#3dff8b";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("EVERY NETWORK LIVE",40,260)}r.forEach((n,i)=>{g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n.n+"  "+n.pct+"%",40,150+i*70);g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(n.next||"waiting",40,178+i*70)})},
+  html(){const r=netRows().filter(x=>!x.live);return r.length?r.map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.pct}%</span></div><p class="note" style="margin:-2px 0 8px 162px">Next: ${esc(n.next||"waiting")}</p>`).join(""):`<div class="big"><em>Every</em> network is live.</div>`}},
+ {id:"sheets",row:1,col:3,t:"ONE-SHEET CAROUSEL",accent:"#ff5fd2",custom:"carousel",
+  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const c=CAR[carIdx];if(c&&c.im.complete&&c.im.naturalWidth){const s=Math.min(w/c.im.naturalWidth,(h-40)/c.im.naturalHeight);const iw=c.im.naturalWidth*s,ih=c.im.naturalHeight*s;g.drawImage(c.im,(w-iw)/2,0,iw,ih)}g.fillStyle="#ff5fd2";g.fillRect(0,0,w,6);g.fillStyle="#000b";g.fillRect(0,h-44,w,44);g.fillStyle="#fff";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(CAR[carIdx]?CAR[carIdx].s.t:"Loading one-sheets…",20,h-14);g.textAlign="right";g.fillStyle="#ffb84d";g.fillText("CLICK TO OPEN ▸",w-20,h-14);g.textAlign="left"}},
+ {id:"pace",row:1,col:4,t:"DAILY PACE",accent:"#d7ff1f",live:1,
+  paint(g,w,h){frame(g,w,h,"DAILY PACE","#d7ff1f","how consistent is the posting");const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;bigNum(g,avg,"POSTS PER DAY, 30-DAY AVERAGE",40,230,"#d7ff1f");bigNum(g,act+"/"+d.length,"DAYS WITH POSTS",40,400,"#22e6ff")},
+  html(){const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;return `<div class="k4"><div class="stat"><b>${avg}</b><span>Posts / day (avg)</span></div><div class="stat"><b>${act}/${d.length}</b><span>Days with posts</span></div><div class="stat"><b>${fmt(sum)}</b><span>Last ${d.length} days</span></div></div><p class="note">Consistency beats bursts. Elettro OS keeps the cadence going even when nobody is at the keyboard.</p>`}},
+ {id:"links",row:1,col:5,t:"EXPLORE",accent:"#4fb3ff",
+  paint(g,w,h){frame(g,w,h,"EXPLORE","#4fb3ff","click to open the links");["elettro.com/dash","elettro.com/dash/social","elettro.com","Back to the Street"].forEach((s,i)=>{g.fillStyle="#ffffff14";g.fillRect(34,120+i*92,w-68,76);g.fillStyle="#fff";g.font="800 32px 'Segoe UI',sans-serif";g.fillText(s+"  ↗",64,170+i*92)})},
+  html(){return `<p class="note">Everything on these screens is live from the same Elettro OS data.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">elettro.com/dash ↗</a><a class="cta" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a><a class="cta alt" href="../../index.html">Back to the Street</a>`}},
+ {id:"cta",row:1,col:6,t:"GET ELETTRO OS",accent:"#ffb84d",
+  paint(g,w,h){frame(g,w,h,"GET ELETTRO OS","#ffb84d");g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("YOUR BRAND ON",34,200);g.fillText("THIS WALL.",34,265);g.fillStyle="#ffb84d";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("elettro.com  ·  contact@elettro.com",34,350)},
+  html(){return `<div class="big">Put <em>your brand</em> on this wall.</div><p class="note">Consistent daily posts on every network, planned once, published on autopilot.</p><a class="cta" href="mailto:contact@elettro.com">contact@elettro.com</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a>`}}
+];
+
+/* build wall meshes */
+const pickables=[];
+const W=4.2,H=W*9/16;
+PANELS.forEach((p,i)=>{
+  p.cv=document.createElement("canvas");p.cv.width=1024;p.cv.height=576;p.g=p.cv.getContext("2d");
+  p.tex=new THREE.CanvasTexture(p.cv);p.tex.encoding=THREE.sRGBEncoding;p.tex.anisotropy=8;
+  const th=(p.col-3)*STEP, y=p.row===0?5.3:2.75;
+  const grp=new THREE.Group();grp.position.set(Math.sin(th)*R,y,-Math.cos(th)*R);grp.rotation.y=-th;
+  const bez=new THREE.Mesh(new THREE.BoxGeometry(W+.22,H+.22,.14),darkM);grp.add(bez);
+  const edge=new THREE.Mesh(new THREE.BoxGeometry(W+.3,H+.3,.08),new THREE.MeshBasicMaterial({color:new THREE.Color(p.accent)}));edge.position.z=-.06;grp.add(edge);
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(W,H),new THREE.MeshBasicMaterial({map:p.tex}));m.position.z=.08;m.userData.pid=i;grp.add(m);pickables.push(m);
+  scene.add(grp);p.pos=new THREE.Vector3(grp.position.x,y,grp.position.z);p.th=th;p.mesh=m;
+});
+function paintPanel(p){if(p.paint){p.g.clearRect(0,0,1024,576);p.paint(p.g,1024,576)}p.tex.needsUpdate=true}
+function repaintAll(){PANELS.forEach(paintPanel);paintTicker()}
+
+/* carousel rotation */
+setInterval(()=>{if(!CAR.length||!carAuto)return;carIdx=(carIdx+1)%CAR.length;paintPanel(PANELS.find(p=>p.id==="sheets"));if(openIdx>=0&&PANELS[openIdx].custom==="carousel")showCar()},6000);
+
+/* ----- operator desk (curved) with monitors, chairs ----- */
+const DR=8.4,dA=(COLS*STEP)/2-.12;
+const desk=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,.95,64,1,true,Math.PI-dA,dA*2),new THREE.MeshStandardMaterial({color:0x15161f,roughness:.5,metalness:.4,side:THREE.DoubleSide}));desk.position.y=.475;scene.add(desk);
+const deskTop=new THREE.Mesh(new THREE.RingGeometry(DR-.5,DR+.55,64,1,Math.PI/2-dA,dA*2),new THREE.MeshStandardMaterial({color:0x2a1a12,roughness:.35,metalness:.2,side:THREE.DoubleSide}));deskTop.rotation.x=-Math.PI/2;deskTop.position.y=.96;scene.add(deskTop);
+const deskEdge=new THREE.Mesh(new THREE.CylinderGeometry(DR+.55,DR+.55,.06,64,1,true,Math.PI-dA,dA*2),new THREE.MeshBasicMaterial({color:0xffb84d,side:THREE.DoubleSide}));deskEdge.position.y=.95;scene.add(deskEdge);
+const monIdx=[1,0,2,3,4,6,5,7,9];
+for(let k=0;k<9;k++){const a=(k-4)*.17;const x=Math.sin(a)*(DR-.1),z=-Math.cos(a)*(DR-.1);
+  const mm=new THREE.Mesh(new THREE.PlaneGeometry(1.15,.65),new THREE.MeshBasicMaterial({map:PANELS[monIdx[k]%PANELS.length].tex}));mm.position.set(x,1.4,z);mm.rotation.y=-a;mm.rotation.x=-.18;scene.add(mm);
+  const fr=new THREE.Mesh(new THREE.BoxGeometry(1.25,.75,.06),darkM);fr.position.copy(mm.position);fr.position.z+=0;fr.rotation.copy(mm.rotation);fr.translateZ(-.05);scene.add(fr);
+  const st=new THREE.Mesh(new THREE.BoxGeometry(.1,.4,.1),darkM);st.position.set(x,1.1,z);scene.add(st)}
+function chair(r,a){const g=new THREE.Group();const seat=new THREE.Mesh(new THREE.BoxGeometry(.9,.18,.85),leather);seat.position.y=.52;g.add(seat);
+  const back=new THREE.Mesh(new THREE.BoxGeometry(.9,.95,.16),leather);back.position.set(0,1.05,.42);back.rotation.x=.08;g.add(back);
+  [-.5,.5].forEach(x=>{const arm=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.7),amberM);arm.position.set(x,.8,0);g.add(arm)});
+  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.45,8),darkM);stem.position.y=.25;g.add(stem);
+  const foot=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,.05,16),darkM);foot.position.y=.03;g.add(foot);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
+for(let k=-3;k<=3;k++)chair(7.0,k*.2);
+for(let k=-2;k<=3;k++)chair(5.6,(k-.5)*.22);
+// foreground consoles: low angled desks with glowing screens
+function console_(r,a){const g=new THREE.Group();const b=new THREE.Mesh(new THREE.BoxGeometry(1.4,.8,.9),new THREE.MeshStandardMaterial({color:0x1c1520,roughness:.5,metalness:.4}));b.position.y=.4;g.add(b);
+  const s=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.5),new THREE.MeshBasicMaterial({map:PANELS[(Math.abs(Math.round(a*10)))%PANELS.length].tex}));s.position.set(0,.85,-.12);s.rotation.x=-.9;g.add(s);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
+[-.55,-.28,0,.28,.55].forEach(a=>console_(4.2,a));
+
+/* exit door (behind the starting position) */
+const doorTex=ctex(512,1024,(g,w,h)=>{g.fillStyle="#2b1d14";g.fillRect(0,0,w,h);g.strokeStyle="#d69a3a";g.lineWidth=8;g.strokeRect(10,10,w-20,h-20);g.fillStyle="#0f7a3a";g.fillRect(110,50,w-220,110);g.fillStyle="#fff";g.font="800 90px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText("EXIT",w/2,135);g.fillStyle="#d69a3a";g.beginPath();g.arc(w-70,640,16,0,7);g.fill()});
+const door=new THREE.Mesh(new THREE.PlaneGeometry(2.1,4.2),new THREE.MeshBasicMaterial({map:doorTex}));door.position.set(0,2.1,WALLR-.08);door.rotation.y=Math.PI;door.userData.exit=true;scene.add(door);
+const dgl=new THREE.PointLight(0x35d07f,.8,9,2);dgl.position.set(0,4.2,WALLR-1.2);scene.add(dgl);
+pickables.push(door);
+
+/* ============ CAMERA / CONTROLS (museum pattern) ============ */
+const st={x:0,z:3.4,y:EYE,yaw:0,pitch:0,gx:0,gz:3.4,gy:EYE,gyaw:0,gpitch:0,autoPos:false,autoLook:false,focus:-1,bx:0,bz:3.4};
+const keys={};
+const maxR=7.6;
+function clampPos(){const r=Math.hypot(st.x,st.z);if(r>maxR){st.x*=maxR/r;st.z*=maxR/r}}
+function angDelta(a,b){let d=b-a;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+addEventListener("resize",resize);resize();
+const hint=$("#hint");const hideHint=()=>hint.classList.add("off");
+
+let openIdx=-1;
+function focusOn(i){
+  const p=PANELS[i];if(st.focus<0){st.bx=st.x;st.bz=st.z}
+  st.focus=i;const dist=3.7;
+  st.gx=p.pos.x-Math.sin(p.th)*dist;st.gz=p.pos.z+Math.cos(p.th)*dist;st.gy=Math.max(1.9,p.pos.y-.7);
+  st.gyaw=-p.th;const dh=Math.hypot(st.gx-p.pos.x,st.gz-p.pos.z);st.gpitch=Math.atan((p.pos.y-st.gy)/dh);
+  st.autoPos=true;st.autoLook=true;hideHint();
+  openIdx=i;clearTimeout(ovT);ovT=setTimeout(()=>{if(openIdx===i)renderOverlay(i)},850);
+}
+let ovT=0;
+function unfocus(){
+  $("#ov").classList.remove("on");openIdx=-1;clearTimeout(ovT);
+  if(st.focus>=0){st.focus=-1;st.gx=st.bx;st.gz=st.bz;st.gy=EYE;st.gpitch=0;st.gyaw=0;st.autoPos=true;st.autoLook=true}
+}
+function renderOverlay(i,refresh){
+  const p=PANELS[i];$("#ovT").textContent=p.t;$("#ovS").textContent=p.live?(D.live?"LIVE FROM ELETTRO OS":"SNAPSHOT"):"";
+  $("#ovN").textContent=(i+1)+" of "+PANELS.length;
+  if(p.custom==="carousel"){if(!refresh)buildCar();else showCar()}else{$("#ovB").innerHTML=p.html()}
+  $("#ov").classList.add("on");
+}
+function buildCar(){
+  $("#ovB").innerHTML=`<div class="car"><div class="stage"><button class="nav l" id="cL">‹</button><img id="cI" alt=""><button class="nav r" id="cR">›</button></div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b id="cT" style="flex:1"></b><button class="btn" id="cA"></button><a class="btn pri" id="cO" target="_blank" rel="noopener">Open full size ↗</a></div><div class="strip" id="cS"></div></div>`;
+  $("#cS").innerHTML=sheetsMeta().map((s,k)=>`<img src="img/${s.f}" data-k="${k}" alt="${esc(s.t)}" loading="lazy">`).join("");
+  $("#cL").onclick=()=>{carAuto=false;stepCar(-1)};$("#cR").onclick=()=>{carAuto=false;stepCar(1)};
+  $("#cA").onclick=()=>{carAuto=!carAuto;showCar()};
+  $("#cS").onclick=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k!=null){carAuto=false;carIdx=+k;paintPanel(PANELS.find(p=>p.id==="sheets"));showCar()}};
+  showCar();
+}
+function stepCar(d){if(!CAR.length)return;carIdx=(carIdx+d+CAR.length)%CAR.length;paintPanel(PANELS.find(p=>p.id==="sheets"));showCar()}
+function showCar(){const s=CAR[carIdx]&&CAR[carIdx].s;if(!s||!$("#cI"))return;$("#cI").src="img/"+s.f;$("#cT").textContent=s.t;$("#cO").href="img/"+s.f;$("#cA").textContent=carAuto?"⏸ Pause":"▶ Auto-play";
+  document.querySelectorAll("#cS img").forEach(im=>{const on=+im.dataset.k===carIdx;im.classList.toggle("on",on);if(on&&carAuto)im.scrollIntoView({block:"nearest",inline:"center"})})}
+$("#ovX").onclick=unfocus;
+$("#ovP").onclick=()=>focusOn((openIdx-1+PANELS.length)%PANELS.length);
+$("#ovNx").onclick=()=>focusOn((openIdx+1)%PANELS.length);
+addEventListener("keydown",e=>{keys[e.code]=true;
+  if(e.code==="Escape")unfocus();
+  if(openIdx>=0&&e.code==="ArrowRight"){focusOn((openIdx+1)%PANELS.length);e.preventDefault()}
+  if(openIdx>=0&&e.code==="ArrowLeft"){focusOn((openIdx-1+PANELS.length)%PANELS.length);e.preventDefault()}
+  if(["KeyW","KeyA","KeyS","KeyD","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code))hideHint()});
+addEventListener("keyup",e=>{keys[e.code]=false});
+let drag=null;const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+canvas.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{
+  if(drag){const dx=e.clientX-drag.lx,dy=e.clientY-drag.ly;drag.lx=e.clientX;drag.ly=e.clientY;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;
+    if(drag.moved){tour=false;st.yaw+=dx*.0042;st.pitch=Math.max(-1.1,Math.min(1.1,st.pitch+dy*.0035));st.gyaw=st.yaw;st.gpitch=st.pitch;st.autoLook=false;hideHint()}}
+  else hover(e)});
+canvas.addEventListener("pointerup",e=>{if(drag&&!drag.moved)click(e);drag=null});
+function pick(e){mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(mouse,camera);return ray.intersectObjects(pickables.concat([floor]),false)[0]||null}
+const tip=$("#tip");
+function hover(e){const h=pick(e);const o=h&&h.object;
+  if(o&&o.userData.exit){canvas.classList.add("hover");tip.textContent="Exit to the Street";tip.style.opacity=1}
+  else if(o&&o.userData.pid!==undefined){canvas.classList.add("hover");tip.textContent=PANELS[o.userData.pid].t+"  ·  click to open";tip.style.opacity=1}
+  else{canvas.classList.remove("hover");tip.style.opacity=0;return}
+  tip.style.left=e.clientX+"px";tip.style.top=e.clientY+"px"}
+function click(e){const h=pick(e);if(!h)return;hideHint();tour=false;
+  if(h.object.userData.exit){location.href="../../index.html";return}
+  if(h.object.userData.pid!==undefined){focusOn(h.object.userData.pid);return}
+  if(h.object===floor){if(st.focus>=0)unfocus();st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;st.autoPos=true;clampTarget();const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=0}}
+function clampTarget(){const r=Math.hypot(st.gx,st.gz);if(r>maxR){st.gx*=maxR/r;st.gz*=maxR/r}}
+canvas.addEventListener("wheel",e=>{e.preventDefault();hideHint();tour=false;let dy=e.deltaY;if(e.deltaMode===1)dy*=30;const amt=Math.max(-2.5,Math.min(2.5,-dy*.012));
+  if(st.focus>=0)unfocus();st.autoPos=false;st.autoLook=false;st.x+=-Math.sin(st.yaw)*amt;st.z+=-Math.cos(st.yaw)*amt;clampPos();st.gx=st.x;st.gz=st.z},{passive:false});
+let padDir=0;[["padF",1],["padB",-1]].forEach(([id,d])=>{const b=$("#"+id);b.addEventListener("pointerdown",e=>{padDir=d;hideHint();tour=false;e.stopPropagation()});["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev,()=>{padDir=0}))});
+
+/* guided wall tour */
+let tour=false,tourT=0,tourI=0;
+$("#tourBtn").onclick=()=>{tour=!tour;tourI=0;tourT=0;$("#tourBtn").textContent=tour?"■ Stop tour":"▶ Wall tour";if(!tour)unfocus();else{unfocus();hideHint()}};
+
+let lastT=performance.now();
+function loop(now){
+  const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
+  if(tour){tourT-=dt;if(tourT<=0){tourT=7;const order=[3,0,1,2,4,5,6,10,7,9,8,11,12,13];focusOn(order[tourI%order.length]);tourI++}}
+  let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f++;if(keys.KeyS||keys.ArrowDown)f--;if(keys.KeyD)s++;if(keys.KeyA)s--;f+=padDir;
+  if(openIdx<0){if(keys.ArrowLeft)st.yaw+=1.7*dt,st.gyaw=st.yaw;if(keys.ArrowRight)st.yaw-=1.7*dt,st.gyaw=st.yaw}
+  if(f||s){tour=false;st.autoPos=false;st.autoLook=false;if(st.focus>=0||openIdx>=0)unfocus();
+    const sp=(keys.ShiftLeft?6:3.4)*dt;st.x+=(-Math.sin(st.yaw)*f+Math.cos(st.yaw)*s)*sp;st.z+=(-Math.cos(st.yaw)*f-Math.sin(st.yaw)*s)*sp;clampPos();st.gx=st.x;st.gz=st.z}
+  const k=1-Math.exp(-dt*3.6);
+  if(st.autoPos){st.x+=(st.gx-st.x)*k;st.z+=(st.gz-st.z)*k;if(Math.hypot(st.gx-st.x,st.gz-st.z)<.02)st.autoPos=false}
+  st.y+=(st.gy-st.y)*k;
+  if(st.autoLook){st.yaw+=angDelta(st.yaw,st.gyaw)*k;st.pitch+=(st.gpitch-st.pitch)*k;if(Math.abs(angDelta(st.yaw,st.gyaw))<.003&&Math.abs(st.gpitch-st.pitch)<.003)st.autoLook=false}
+  const bob=(f||s)?Math.sin(now/170)*.03:0;camera.position.set(st.x,st.y+bob,st.z);camera.rotation.set(st.pitch,st.yaw,0);
+  tk.offset.x=-(now/1000*.012)%1;
+  renderer.render(scene,camera);requestAnimationFrame(loop)}
+repaintAll();pull();setInterval(pull,60000);
+// re-paint once the one-sheet images have loaded
+setTimeout(()=>paintPanel(PANELS.find(p=>p.id==="sheets")),1500);
+const hash=location.hash.slice(1);const hi=PANELS.findIndex(p=>p.id===hash);if(hi>=0)setTimeout(()=>focusOn(hi),900);
+requestAnimationFrame(t=>{lastT=t;loop(t)});
+setTimeout(()=>$("#load").classList.add("off"),700);
+window.__room={st,PANELS,focusOn,camera,renderer,scene};
+})();
+</script>
+</body>
+</html>
