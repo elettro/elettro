@@ -119,17 +119,15 @@ canvas#gl.hover{cursor:pointer}
 <div id="load"><div><h1>ELETTRO AR ROOM</h1><p>WAKING UP THE SCANNERS…</p></div></div>
 <div class="top">
   <div class="brand">ELETTRO AR<small>AR CONTROL ROOM</small></div>
-  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn go" id="learnBtn">★ How it works</button><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://ar.elettro.com" target="_blank" rel="noopener">Try AR ↗</a></div>
+  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn go" id="learnBtn">★ How it works</button><button class="btn go" id="scanBtn">📱 Scan to try</button><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://ar.elettro.com" target="_blank" rel="noopener">Try AR ↗</a></div>
 </div>
-<div id="hint">Scroll or ↑ ↓ to walk · drag to look up at the wall · click any screen to fly up to it · Esc to come back · <b>★ How it works</b> for the guided tour · pinch to zoom</div>
+<div id="hint">Scroll or ↑ ↓ to walk · drag to look up at the wall · click any screen to fly up to it · Esc to come back · <b>★ How it works</b> for the guided tour · <b>📱 Scan to try</b> shows the big QR · pinch to zoom</div>
 <div id="tip"></div>
 
 <div id="ov"><header><h2 id="ovT"></h2><small id="ovS"></small><button class="btn" id="ovExp">⤢</button><button class="btn" id="ovX">✕ Back to the room</button></header><div class="body" id="ovB"></div><footer><button class="btn" id="ovP">‹ Previous screen</button><span class="note" id="ovN" style="margin:0;font-size:13px"></span><button class="btn" id="ovNx">Next screen ›</button></footer></div>
 <div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function(){
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
@@ -365,6 +363,53 @@ const doorTex=ctex(512,1024,(g,w,h)=>{g.fillStyle="#2b1d14";g.fillRect(0,0,w,h);
 const door=new THREE.Mesh(new THREE.PlaneGeometry(2.1,4.2),new THREE.MeshBasicMaterial({map:doorTex}));door.position.set(0,2.1,WALLR-.08);door.rotation.y=Math.PI;door.userData.exit=true;scene.add(door);
 const dgl=new THREE.PointLight(0x35d07f,.8,9,2);dgl.position.set(0,4.2,WALLR-1.2);scene.add(dgl);pickables.push(door);
 
+/* ============ BIG QR (back wall) + LAST-3-SCANNED LEADERBOARD ============ */
+const QR_URL="https://ar.elettro.com";
+function onBack(phi,y,w,h,tex){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,fog:false}));
+  m.position.set(Math.sin(phi)*(WALLR-.7),y,Math.cos(phi)*(WALLR-.7));m.rotation.y=Math.PI+phi;scene.add(m);
+  const fr=new THREE.Mesh(new THREE.PlaneGeometry(w+.35,h+.35),new THREE.MeshBasicMaterial({color:0x22e6ff,fog:false}));
+  fr.position.set(Math.sin(phi)*(WALLR-.66),y,Math.cos(phi)*(WALLR-.66));fr.rotation.y=Math.PI+phi;scene.add(fr);return m}
+(function(){
+  const tex=ctex(1024,1280,(g,w,h)=>{
+    g.fillStyle="#07090f";g.fillRect(0,0,w,h);
+    g.fillStyle="#22e6ff";g.textAlign="center";g.font="800 64px 'Segoe UI',sans-serif";g.fillText("SCAN WITH YOUR PHONE",w/2,100);
+    g.fillStyle="#fff";g.font="700 34px 'Segoe UI',sans-serif";g.fillText("Point your camera at the code. No app to install.",w/2,160);
+    let ok=false;
+    try{const qr=qrcode(0,"M");qr.addData(QR_URL);qr.make();const n=qr.getModuleCount(),box=800,cell=Math.floor(box/(n+8)),size=cell*(n+8),ox=(w-size)/2,oy=205;
+      g.fillStyle="#fff";g.fillRect(ox,oy,size,size);g.fillStyle="#000";
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))g.fillRect(ox+(c+4)*cell,oy+(r+4)*cell,cell,cell);ok=true}catch(e){}
+    if(!ok){g.fillStyle="#fff";g.font="700 60px sans-serif";g.fillText("QR unavailable",w/2,600)}
+    g.fillStyle="#ff5fd2";g.font="800 92px 'Segoe UI',sans-serif";g.fillText("ar.elettro.com",w/2,1130);
+    g.fillStyle="#9fe8ff";g.font="600 38px 'Segoe UI',sans-serif";g.fillText("Scan any of the covers on the wall too",w/2,1200)});
+  onBack(0,7.45,5,6.25,tex);
+})();
+const LB={cv:document.createElement("canvas")};LB.cv.width=1024;LB.cv.height=640;LB.g=LB.cv.getContext("2d");
+LB.tex=new THREE.CanvasTexture(LB.cv);LB.tex.encoding=THREE.sRGBEncoding;LB.tex.anisotropy=8;
+const BRANDC={elettro:"#22e6ff",solarmeister:"#ffc83d","neckermann-strom":"#ff5fd2",stashbox:"#8f7bff"};
+function ago(t){const s=Math.max(0,(Date.now()-t)/1000);if(s<90)return"just now";if(s<3600)return Math.round(s/60)+" min ago";if(s<86400)return Math.round(s/3600)+" h ago";return Math.round(s/86400)+" d ago"}
+function paintLB(d){
+  const g=LB.g,w=1024,h=640;g.clearRect(0,0,w,h);g.fillStyle="#07090f";g.fillRect(0,0,w,h);
+  g.fillStyle="#22e6ff";g.fillRect(0,0,w,10);
+  g.textAlign="left";g.fillStyle="#fff";g.font="800 52px 'Segoe UI',sans-serif";g.fillText("LAST 3 SCANNED",36,92);
+  g.fillStyle="#3dff8b";g.beginPath();g.arc(w-250,70,9,0,7);g.fill();g.fillStyle="#9fe8ff";g.font="700 28px 'Segoe UI',sans-serif";g.fillText(d?"LIVE FROM /DASH":"OFFLINE",w-232,80);
+  if(!d){g.fillStyle="#9b97b4";g.font="600 34px 'Segoe UI',sans-serif";g.fillText("Scan feed unreachable right now.",36,200)}
+  else{
+    d.rows.forEach((m,i)=>{const y=130+i*150;g.fillStyle="#ffffff10";g.fillRect(30,y,w-60,130);
+      g.fillStyle=BRANDC[m.brand]||"#22e6ff";g.fillRect(30,y,10,130);
+      g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText("#"+(i+1),60,y+50);
+      g.font="800 40px 'Segoe UI',sans-serif";let t=m.name||m.id;while(g.measureText(t).width>520&&t.length>6)t=t.slice(0,-2);if(t!==(m.name||m.id))t=t.trim()+"…";g.fillText(t,130,y+54);
+      g.fillStyle=BRANDC[m.brand]||"#9fe8ff";g.font="700 26px 'Segoe UI',sans-serif";g.fillText(String(m.brand).toUpperCase()+"  ·  "+ago(Date.parse(m.last)),130,y+98);
+      g.textAlign="right";g.fillStyle="#d7ff1f";g.font="800 72px 'Segoe UI',sans-serif";g.fillText(String(m.scans),w-100,y+78);
+      g.fillStyle="#9b97b4";g.font="700 22px 'Segoe UI',sans-serif";g.fillText("SCANS",w-100,y+112);g.textAlign="left"});
+    g.fillStyle="#9fe8ff";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("All time: "+d.total+" scans  ·  elettro.com/dash",36,610)}
+  LB.tex.needsUpdate=true}
+onBack(-.5,4.3,5.2,3.25,LB.tex);paintLB(null);
+const SCAN_API="https://77vr7dbzgn733xvyqcs32lllvu0tqoph.lambda-url.us-east-1.on.aws/ar/stats";
+function pollScans(){fetch(SCAN_API,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{
+  const rows=(j.markers||[]).filter(m=>m.last).sort((a,b)=>Date.parse(b.last)-Date.parse(a.last)).slice(0,3);
+  paintLB({rows,total:(j.total&&j.total.scans)||0})}).catch(()=>{})}
+pollScans();setInterval(pollScans,30000);
+
 /* ============ CAMERA / CONTROLS (museum pattern) ============ */
 const START_Z=3.6;
 const st={x:0,z:START_Z,y:EYE,yaw:0,pitch:.1,gx:0,gz:START_Z,gy:EYE,gyaw:0,gpitch:.1,autoPos:false,autoLook:false,focus:-1,bx:0,bz:START_Z};
@@ -452,6 +497,7 @@ let tour=false,tourT=0,tourI=0,tourOrder=[];
 function startTour(ids,btnEl){tour=true;tourOrder=ids.map(byId);tourI=0;tourT=0;unfocus();hideHint();btnEl.textContent="■ Stop tour"}
 function stopTour(){tour=false;$("#tourBtn").textContent="▶ Wall tour";$("#learnBtn").textContent="★ How it works";unfocus()}
 $("#learnBtn").onclick=()=>{if(tour){stopTour();return}startTour(["hero","steps","video","link","shop","gallery","obj3d","solar","brandscan","neck","os","where","try"],$("#learnBtn"))};
+$("#scanBtn").onclick=()=>{if(tour)stopTour();unfocus();hideHint();setFov(FOV0);st.gx=0;st.gz=4;st.autoPos=true;st.gyaw=st.yaw+angDelta(st.yaw,Math.PI);st.gpitch=.18;st.autoLook=true};
 $("#tourBtn").onclick=()=>{if(tour){stopTour();return}startTour(["stats","covers","hero","sheets","solar","calc","neck","scratch","contact","os","qrs","where","noapp","try","cta"],$("#tourBtn"))};
 
 let lastT=performance.now();
