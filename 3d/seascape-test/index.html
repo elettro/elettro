@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Room 14 Walkthrough</title>
+<style>
+  :root{--ink:#10324a;--sea:#2a86a8;--foam:#e8f6f6;--sand:#f3e8cf;--glass:rgba(255,255,255,.86)}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:#cfe9ff;font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink)}
+  canvas{display:block;width:100vw;height:100vh;cursor:grab}
+  .card{position:fixed;background:var(--glass);backdrop-filter:blur(8px);border-radius:14px;box-shadow:0 6px 24px rgba(10,50,80,.22)}
+  #title{left:16px;top:16px;padding:12px 16px;max-width:330px}
+  #title b{font-size:17px;display:block;letter-spacing:.2px}
+  #title span{font-size:12.5px;opacity:.75;line-height:1.35;display:block;margin-top:3px}
+  #mini{right:16px;top:16px;padding:8px}
+  #mini canvas{width:200px;height:180px;cursor:default;border-radius:8px;display:block}
+  #tod{right:16px;top:222px;padding:6px;display:flex;gap:4px}
+  button{font:inherit;font-size:12.5px;border:0;background:transparent;color:var(--ink);padding:7px 11px;border-radius:9px;cursor:pointer}
+  button:hover{background:rgba(42,134,168,.14)}
+  button.on{background:var(--sea);color:#fff}
+  #views{left:50%;transform:translateX(-50%);bottom:16px;padding:6px;display:flex;gap:2px;flex-wrap:wrap;justify-content:center;max-width:94vw}
+  #photos{left:16px;bottom:16px;padding:8px;width:176px;display:none}
+  #photos h4{margin:0 0 6px;font-size:12px;opacity:.7;font-weight:600}
+  #photos div{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  #photos img{width:100%;border-radius:5px;cursor:pointer;display:block;aspect-ratio:16/10;object-fit:cover;outline:2px solid transparent}
+  #photos img:hover{outline-color:var(--sea)}
+  #prompt{left:50%;top:60%;transform:translateX(-50%);padding:8px 16px;font-size:14px;display:none}
+  #start{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(16,50,74,.45);z-index:5}
+  #start .box{background:#fff;border-radius:18px;padding:26px 30px;max-width:460px;box-shadow:0 12px 50px rgba(0,0,0,.35)}
+  #start h1{margin:0 0 4px;font-size:22px}
+  #start p{margin:6px 0;font-size:14px;line-height:1.45}
+  #start kbd{background:#eef3f6;border:1px solid #c9d6de;border-radius:5px;padding:1px 6px;font-size:12px}
+  #go{background:var(--sea);color:#fff;font-size:15px;padding:10px 22px;margin-top:10px;border-radius:11px}
+  #go:hover{background:#1f7595}
+  #note{right:16px;bottom:16px;padding:7px 12px;font-size:11.5px;opacity:.85;max-width:300px;line-height:1.35}
+  @media(max-width:700px){#mini,#photos,#note{display:none!important}#title{max-width:230px}}
+</style>
+<script type="importmap">
+{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}
+</script>
+</head>
+<body>
+<div id="title" class="card"><b>Room 14 · "Beach House"</b><span>Seascape Marina &amp; Resort, Marathon FL<br>3D walk-through concept built from 9 listing photos</span></div>
+<div id="mini" class="card"><canvas id="mc" width="400" height="360"></canvas></div>
+<div id="tod" class="card"><button data-t="day" class="on">Day</button><button data-t="sunset">Sunset</button><button data-t="night">Night</button></div>
+<div id="views" class="card"></div>
+<div id="photos" class="card"><h4>Source photos (click to jump)</h4><div id="pgrid"></div></div>
+<div id="prompt" class="card"></div>
+<div id="note" class="card">Layout inferred from the photos: dimensions are estimates until we have a floor plan or measurements.</div>
+<div id="start"><div class="box">
+  <h1>Walk through Room 14</h1>
+  <p>Two queen beds, coffered ceiling, kitchenette nook, en-suite bath, and the patio out front, rebuilt in 3D from the listing photos.</p>
+  <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows to walk, mouse to look (drag, or click to lock the cursor), <kbd>Shift</kbd> to run, <kbd>E</kbd> to open a door, <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> for day / sunset / night, <kbd>Esc</kbd> to release the mouse.</p>
+  <button id="go">Step inside</button>
+</div></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
