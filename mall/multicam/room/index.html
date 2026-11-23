@@ -78,6 +78,37 @@ canvas#gl.hover{cursor:pointer}
 #plist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}#plist button{border:2px solid transparent;background:#0f1a33;color:var(--ink);border-radius:12px;padding:0;overflow:hidden;text-align:left;font:600 12.5px "Segoe UI",sans-serif}#plist button.on{border-color:var(--cy)}#plist img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;display:block}#plist span{display:block;padding:7px 9px}
 html.phone canvas#gl,html.phone .top,html.phone #chips,html.phone #panel,html.phone #hint,html.phone #joy,html.phone #tip,html.phone #rpill,html.phone #rcard,html.phone #load,html.phone #onair,html.phone #tl{display:none!important}
 html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
+
+/* ---- mobile: collapsible info sheet, compact header ---- */
+#pgrab{display:none}
+@media(max-width:820px){
+  .top{top:8px;left:10px;right:10px;gap:6px}
+  .brand{font-size:11px;letter-spacing:2px}.brand small{display:none}
+  .top .btn{padding:7px 12px;font-size:12px}
+  .top a.btn:not(.exit){display:none}
+  #chips{top:52px;left:10px;right:10px;flex-wrap:nowrap;overflow-x:auto;pointer-events:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:2px}
+  #chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;padding:6px 12px;font-size:12px}
+  #onair{display:none}
+  #panel{top:auto;left:10px;right:10px;width:auto;bottom:156px;height:auto;max-height:58px;overflow:hidden;padding:0;border-radius:14px;transition:max-height .3s ease}
+  #panel>*:not(#pgrab){display:none}
+  #pgrab{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:8px 14px;background:none;border:0;color:var(--ink);font:700 14px "Segoe UI",sans-serif;text-align:left;cursor:pointer}
+  #pgrab .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #pgrab .t small{display:block;font:600 11px "Segoe UI",sans-serif;color:var(--cy);letter-spacing:1px;text-transform:uppercase}
+  #pgrab .a{flex:none;width:34px;height:34px;border-radius:50%;background:#ffffff1c;display:grid;place-items:center;font-size:14px;transition:transform .3s}
+  #panel.open{max-height:min(62vh,calc(100vh - 230px));overflow:auto;padding:0 0 12px}
+  #panel.open>*:not(#pgrab){display:revert}
+  #panel.open>.row1,#panel.open>p.pitch,#panel.open>ol,#panel.open>.close,#panel.open>.acts,#panel.open>#nav{margin-left:14px;margin-right:14px}
+  #panel.open>#pgrab{position:sticky;top:0;background:#0a1020;z-index:1}
+  #panel.open #pgrab .a{transform:rotate(180deg)}
+  #panel.open #sthumb{width:72px}
+  #tl{bottom:10px}#tl .lb{display:none}
+  #rpill,#rpill.hasjoy{left:auto;right:10px;bottom:56px}
+  #rcard{left:auto;right:10px;bottom:104px}
+  #joy{bottom:44px}
+  .top>div:last-child{flex-wrap:nowrap!important;flex:none}
+  .brand{flex:1;min-width:0;font-size:10px;letter-spacing:1.5px;line-height:1.3}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}</script>
@@ -91,6 +122,7 @@ html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
 <div id="chips"></div>
 <div id="onair"><i></i><div><span id="oaname">WIDE</span><small id="oasec">Intro</small></div></div>
 <div id="panel">
+  <button id="pgrab" type="button" aria-expanded="false"><span class="t"><small id="pgc"></small><span id="pgt"></span></span><span class="a">▲</span></button>
   <div class="row1"><img id="sthumb" alt="One-sheet"><div><div class="k" id="sk"></div><h2 id="st"></h2><span id="sst"></span></div></div>
   <p class="pitch" id="sp"></p>
   <ol id="sb"></ol>
@@ -117,6 +149,17 @@ html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
   <div class="prow"><button class="btn" id="pprev">‹ Prev</button><button class="btn" id="pnext">Next ›</button></div>
   <div id="plist"></div>
 </div>
+<script>
+(function(){
+  var pn=document.getElementById('panel'),gb=document.getElementById('pgrab');
+  if(!pn||!gb)return;
+  gb.addEventListener('click',function(){var o=pn.classList.toggle('open');gb.setAttribute('aria-expanded',o)});
+  function sync(){document.getElementById('pgt').textContent=document.getElementById('st').textContent;document.getElementById('pgc').textContent=document.getElementById('cnt').textContent}
+  ['st','cnt'].forEach(function(id){new MutationObserver(sync).observe(document.getElementById(id),{childList:true,characterData:true,subtree:true})});
+  sync();
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')pn.classList.remove('open')});
+})();
+</script>
 <script type="module" src="room.js"></script>
 </body>
 </html>
