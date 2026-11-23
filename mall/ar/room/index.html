@@ -106,7 +106,8 @@ canvas#gl.hover{cursor:pointer}
 @media(max-width:760px),(max-aspect-ratio:1/1){#ovExp{display:inline-block}}
 .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
 .gal figure{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;overflow:hidden}
-.gal img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+.gal img{width:100%;height:auto;display:block;object-fit:contain;background:#0a0c18}
+.gal figure:only-child{max-width:min(560px,100%);margin:0 auto}
 .gal figcaption{padding:8px 10px;font-size:13px;color:#c4c0d2}
 .gal figcaption b{display:block;color:#fff}
 .mock{background:#10122a;border:1px solid #7fe9ff55;border-radius:14px;padding:16px;margin:10px 0}
@@ -208,7 +209,7 @@ function bigNum(g,v,l,x,y,c){g.fillStyle=c;g.font="800 96px 'Segoe UI',sans-seri
 function lines(g,arr,x,y,lh,font,color){g.font=font;g.fillStyle=color;arr.forEach((s,i)=>g.fillText(s,x,y+i*lh))}
 
 function pic(g,key,x,y,w,h,mode){const im=IM[key];g.fillStyle="#0a0c18";g.fillRect(x,y,w,h);if(!(im&&im.complete&&im.naturalWidth))return;
-  const iw=im.naturalWidth,ih=im.naturalHeight;let s=(mode==="fit")?Math.min(w/iw,h/ih):Math.max(w/iw,h/ih);const dw=iw*s,dh=ih*s;
+  const iw=im.naturalWidth,ih=im.naturalHeight;let s=(mode==="fill")?Math.max(w/iw,h/ih):Math.min(w/iw,h/ih);const dw=iw*s,dh=ih*s;
   g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.drawImage(im,x+(w-dw)/2,y+(h-dh)/2,dw,dh);g.restore()}
 function tag(g,t,x,y,c){g.font="800 22px 'Segoe UI',sans-serif";const w=g.measureText(t).width+28;g.fillStyle=c;g.fillRect(x,y,w,36);g.fillStyle="#04141a";g.fillText(t,x+14,y+26)}
 const fig=(k,t,d)=>`<figure><img src="${IMG}${k}.jpg" alt="${esc(t)}"><figcaption><b>${esc(t)}</b>${esc(d||"")}</figcaption></figure>`;
