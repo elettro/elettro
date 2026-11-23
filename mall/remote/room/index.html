@@ -47,6 +47,25 @@ canvas#gl.hover{cursor:pointer}
 #joy{position:fixed;left:22px;bottom:30px;width:110px;height:110px;border-radius:50%;border:2px solid #ffffff30;background:#06201c66;z-index:5;display:none;touch-action:none}
 #joy b{position:absolute;left:35px;top:35px;width:40px;height:40px;border-radius:50%;background:#ffffff55}
 @media(pointer:coarse){#joy{display:block}#hint{display:none}}
+html.phone canvas#gl,html.phone .top,html.phone #chips,html.phone #panel,html.phone #hint,html.phone #joy,html.phone #tip,html.phone #rpill,html.phone #rcard,html.phone #load{display:none!important}
+html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
+#rpill{position:fixed;left:14px;bottom:14px;z-index:8}
+#rpill.hasjoy{bottom:160px}
+#rcard{position:fixed;left:14px;bottom:60px;z-index:9;background:#fff;color:#06201c;border-radius:14px;padding:12px;width:190px;display:none;box-shadow:0 10px 40px #000a;text-align:center;font-size:12.5px;font-weight:700}
+#rcard.on{display:block}#rcard canvas{width:166px;height:166px}#rcard small{display:block;font-weight:500;color:#4d6a63;margin-top:4px}
+#rstat{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e0a030;margin-right:7px}#rstat.on{background:#3ddc84}
+#phoneui{display:none;padding:14px 14px 40px;max-width:520px;margin:0 auto}
+#phoneui .hd{display:flex;justify-content:space-between;align-items:center;font-weight:800;letter-spacing:2px;font-size:12px}
+#pstat{font-size:11px;color:#e0a030;letter-spacing:1px}#pstat.ok{color:#3ddc84}
+#pimg{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px;margin-top:12px;background:#0a2a25}
+#ptitle{font-size:20px;margin:10px 0 4px}#psub{font-size:13px;color:#bfe3d8;line-height:1.45}
+#pcnt{font-size:11px;color:var(--g);letter-spacing:1.4px;text-transform:uppercase;margin-top:12px;font-weight:700}
+.prow{display:flex;gap:8px;margin-top:12px}.prow .btn{flex:1;text-align:center;padding:13px 8px;font-size:14px}
+#pcats{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}#pcats button{border:1px solid #ffffff30;background:#ffffff10;color:var(--ink);border-radius:999px;padding:8px 14px;font:600 13px "Segoe UI",sans-serif}#pcats button.on{background:var(--g);color:#032019}
+#plist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}#plist button{border:2px solid transparent;background:#0a2a25;color:var(--ink);border-radius:12px;padding:0;overflow:hidden;text-align:left;font:600 12.5px "Segoe UI",sans-serif}#plist button.on{border-color:var(--g)}#plist img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}#plist span{display:block;padding:7px 9px}
+#ppad{margin-top:14px;height:130px;border-radius:14px;border:1px dashed #ffffff40;display:grid;place-items:center;color:#9cc5b9;font-size:12.5px;touch-action:none;user-select:none}
+#pjoy{margin:14px auto 0;width:130px;height:130px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0c;position:relative;touch-action:none}#pjoy b{position:absolute;left:41px;top:41px;width:44px;height:44px;border-radius:50%;background:#ffffff66}
+.pl{text-align:center;font-size:11px;color:#9cc5b9;margin-top:6px;letter-spacing:1px}
 @media(max-width:700px){#panel{bottom:150px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
@@ -66,6 +85,17 @@ canvas#gl.hover{cursor:pointer}
   <div id="nav"><button id="prev">‹</button><span id="cnt"></span><button id="next">›</button></div>
 </div>
 <div id="tip"></div>
+<button class="btn go" id="rpill"><span id="rstat"></span>Phone remote</button>
+<div id="rcard"><canvas id="rqc" width="332" height="332"></canvas><div>Scan to take over this room</div><small id="rsid"></small></div>
+<div id="phoneui">
+  <div class="hd"><span>ELETTRO REMOTE</span><span id="pstat">Connecting…</span></div>
+  <img id="pimg" alt=""><div id="pcnt"></div><h2 id="ptitle"></h2><p id="psub"></p>
+  <div class="prow"><button class="btn" id="pprev">‹ Prev</button><button class="btn go" id="pauto">▶ Auto-present</button><button class="btn" id="pnext">Next ›</button></div>
+  <div class="prow"><a class="btn go" id="plive" href="#" target="_blank" rel="noopener">Open this experience on my phone ↗</a></div>
+  <div id="pcats"></div><div id="plist"></div>
+  <div id="ppad">Drag here to look around the room</div>
+  <div id="pjoy"><b></b></div><div class="pl">DRAG TO WALK</div>
+</div>
 <div id="hint">Click a phone to put it on the big screen · ← → to browse · drag to look · W A S D to walk</div>
 <div id="joy"><b></b></div>
 <div id="load"><div><h1>REMOTE MOBILE</h1><p>CHARGING THE PHONES…</p></div></div>
