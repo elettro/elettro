@@ -165,7 +165,7 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THR
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x0a0608);scene.fog=new THREE.Fog(0x0a0608,26,60);
 const camera=new THREE.PerspectiveCamera(74,1,.1,140);camera.rotation.order="YXZ";
 function ctex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;draw(c.getContext("2d"),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
-const R=12.4, EYE=1.7, COLS=7, STEP=22*Math.PI/180;
+const R=13, EYE=1.7, COLS=9, STEP=20*Math.PI/180;
 const ROWY=[8.0,5.45,2.9];
 const mat=(c,r=.7,m=.2)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
 const brass=mat(0xd69a3a,.3,.9), dark=mat(0x0c0d16,.6,.3), leather=mat(0x8f2f1c,.4,.15), leatherT=mat(0xa4592b,.45,.12);
@@ -241,38 +241,38 @@ const PANELS=[
  {id:"race",row:0,col:2,t:"RACE TO GOAL",accent:"#3dff8b",live:1,
   paint(g,w,h){frame(g,w,h,"RACE TO GOAL","#3dff8b","posts published vs goal");const p=D.posts.total.published,gl=D.posts.goal||1000,k=Math.min(1,p/gl);g.lineWidth=34;g.strokeStyle="#ffffff14";g.beginPath();g.arc(300,330,150,0,7);g.stroke();g.strokeStyle="#3dff8b";g.beginPath();g.arc(300,330,150,-Math.PI/2,-Math.PI/2+k*Math.PI*2);g.stroke();g.fillStyle="#fff";g.font="800 60px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText(Math.round(p/gl*100)+"%",300,350);g.textAlign="left";g.fillStyle="#3dff8b";g.font="800 70px 'Segoe UI',sans-serif";g.fillText(fmt(p),560,300);g.fillStyle="#b8b4c6";g.font="700 24px 'Segoe UI',sans-serif";g.fillText("of a "+fmt(gl)+" post goal",560,345);g.fillText(p>=gl?"GOAL CLEARED":"KEEP POSTING",560,385)},
   html(){const p=D.posts.total.published,gl=D.posts.goal||1000;return `<div class="big"><em>${fmt(p)}</em> of ${fmt(gl)}</div><div class="row" style="grid-template-columns:1fr"><div class="bar" style="height:26px"><i style="width:${Math.min(100,p/gl*100)}%;background:#3dff8b"></i></div></div><p class="note">${p>=gl?"Goal cleared "+(p/gl).toFixed(1)+"x over.":"Still racing."} Started ${esc((D.posts.raceStart||"").slice(0,10))}.</p>`}},
- {id:"two",row:0,col:3,t:"2 BUTTONS · A WEEK OF POSTS",accent:"#ffb84d",edu:1,
+ {id:"two",row:0,col:4,t:"2 BUTTONS · A WEEK OF POSTS",accent:"#ffb84d",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#ffb84d");g.fillStyle="#fff";g.font="800 66px 'Segoe UI',sans-serif";g.fillText("A WEEK OF SOCIAL.",34,128);g.fillStyle="#ffb84d";g.fillText("2 BUTTON PUSHES.",34,200);btn(g,40,250,430,190,"#22e6ff","#0f9bb8","① CREATE","build the week");g.fillStyle="#ffb84d";g.font="800 70px 'Segoe UI',sans-serif";g.fillText("➜",492,370);btn(g,560,250,430,190,"#3dff8b","#1aa655","② APPROVE","lock it in");g.fillStyle="#fff";g.font="800 30px 'Segoe UI',sans-serif";g.fillText("= "+PER_WEEK+" POSTS LOCKED AND LOADED, ACROSS 11 PLATFORMS",40,505)},
   html(){return `<div class="big">A week of social media in <em>2 button pushes</em>.</div>${STEPS_HTML}<div class="k4"><div class="stat"><b>${PER_DAY} × 7</b><span>posts per day × days</span></div><div class="stat"><b>${PER_WEEK}</b><span>posts locked and loaded a week</span></div><div class="stat"><b>11</b><span>social platforms</span></div></div><p class="note">Elettro OS curates your best content and schedules it across 11 social platforms. You create the week, you approve it, and it publishes itself.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">See it running live ↗</a>`}},
- {id:"brands",row:0,col:4,t:"BRAND LEADERBOARD",accent:"#4fb3ff",live:1,
+ {id:"brands",row:0,col:6,t:"BRAND LEADERBOARD",accent:"#4fb3ff",live:1,
   paint(g,w,h){frame(g,w,h,"BRAND LEADERBOARD","#4fb3ff","posts published per brand");const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published).slice(0,6);bars(g,b.map((x,i)=>({l:x.name,v:x.published,c:["#ffc83d","#22e6ff","#ff5fd2","#d7ff1f","#4fb3ff","#ff4f6b"][i]})),34,120,w-68,62,Math.max(1,b[0]?b[0].published:1))},
   html(){const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published);const mx=Math.max(1,b[0]?b[0].published:1);return b.map(x=>`<div class="row"><span>${esc(x.name)}</span><div class="bar"><i style="width:${x.published/mx*100}%;background:#4fb3ff"></i></div><span class="v">${fmt(x.published)}</span></div>`).join("")+`<p class="note">Every brand has its own plan and its own pillars. Published counts only.</p>`}},
- {id:"upcoming",row:0,col:5,t:"UP NEXT",accent:"#ff9f43",live:1,
+ {id:"upcoming",row:0,col:7,t:"UP NEXT",accent:"#ff9f43",live:1,
   paint(g,w,h){frame(g,w,h,"UP NEXT","#ff9f43","scheduled posts, next days");const u=last(D.posts.upcoming||[],7);bigNum(g,fmt(D.posts.total.scheduled),"SCHEDULED",40,230,"#ff9f43");bars(g,u.map(x=>({l:dayLabel(x.d),v:x.posts,c:"#ff9f43"})),40,300,w-80,34,Math.max(1,...u.map(x=>x.posts)))},
   html(){const u=D.posts.upcoming||[];const mx=Math.max(1,...u.map(x=>x.posts));return `<div class="big"><em>${fmt(D.posts.total.scheduled)}</em> posts lined up</div>`+u.map(x=>`<div class="row"><span>${esc(x.d)}</span><div class="bar"><i style="width:${x.posts/mx*100}%;background:#ff9f43"></i></div><span class="v">${x.posts}</span></div>`).join("")}},
- {id:"pace",row:0,col:6,t:"DAILY PACE",accent:"#d7ff1f",live:1,
+ {id:"pace",row:0,col:8,t:"DAILY PACE",accent:"#d7ff1f",live:1,
   paint(g,w,h){frame(g,w,h,"DAILY PACE","#d7ff1f","how consistent is the posting");const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;bigNum(g,avg,"POSTS PER DAY, 30-DAY AVERAGE",40,230,"#d7ff1f");bigNum(g,act+"/"+d.length,"DAYS WITH POSTS",40,400,"#22e6ff")},
   html(){const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;return `<div class="k4"><div class="stat"><b>${avg}</b><span>Posts / day (avg)</span></div><div class="stat"><b>${act}/${d.length}</b><span>Days with posts</span></div><div class="stat"><b>${fmt(sum)}</b><span>Last ${d.length} days</span></div></div><p class="note">Consistency beats bursts. Elettro OS keeps the cadence going even when nobody is at the keyboard.</p>`}},
 /* ---------- MIDDLE ROW (education) ---------- */
  {id:"platforms",row:1,col:0,t:"11 SOCIAL PLATFORMS",accent:"#ff5fd2",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#ff5fd2");g.fillStyle="#fff";g.font="800 58px 'Segoe UI',sans-serif";g.fillText("ONE PLAN.",34,120);g.fillStyle="#ff5fd2";g.fillText("11 PLATFORMS.",34,184);ELEVEN.forEach((n,i)=>{const col=i%3,row=Math.floor(i/3),x=34+col*320,y=228+row*80;const c=(NETS.find(z=>z.n===n)||{}).c||"#fff";g.fillStyle="#ffffff12";g.fillRect(x,y,296,62);g.fillStyle=c;g.fillRect(x,y,8,62);g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n,x+24,y+40)})},
   html(){return `<div class="big">One plan, <em>11 platforms</em>.</div><div class="pl">${ELEVEN.map(n=>`<span style="border-color:${(NETS.find(z=>z.n===n)||{}).c}88">${n}</span>`).join("")}</div><p class="note">You do not make 11 different calendars. Elettro OS fits each post to the right platform, with the right format and caption length, then schedules it.</p><p class="note"><b>Live right now:</b> ${liveCount()} networks have already published through Elettro OS.</p>`}},
- {id:"create",row:1,col:1,t:"STEP 1 · CREATE",accent:"#22e6ff",edu:1,
+ {id:"create",row:0,col:3,t:"STEP 1 · CREATE",accent:"#22e6ff",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#22e6ff");g.fillStyle="#22e6ff";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("① CREATE",34,150);lines(g,["Picks the best assets","from your tagged library","Builds the captions","Fits every post to its platform","Schedules the whole week"],40,230,64,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
   html(){return `<div class="big">Step 1: <em>Create</em></div><div class="steps"><div><b>PICK</b><h4>Your best assets</h4><p>Elettro OS draws from your tagged photos, video and audio library, per brand and per content pillar.</p></div><div><b>WRITE</b><h4>Captions</h4><p>Each post gets a caption built for its platform.</p></div><div><b>FIT</b><h4>Every platform</h4><p>Right size, right format, right length: vertical video, carousels, 4:3 photos for Google Business, text posts.</p></div><div><b>SCHEDULE</b><h4>The whole week</h4><p>Every post lands on the calendar at its time. One push builds all of it.</p></div></div>`}},
- {id:"math",row:1,col:2,t:"75 × 7 = 525",accent:"#ffb84d",edu:1,
+ {id:"math",row:1,col:1,t:"75 × 7 = 525",accent:"#ffb84d",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#ffb84d");g.fillStyle="#ffb84d";g.font="800 130px 'Segoe UI',sans-serif";g.fillText(PER_DAY+" × 7",34,160);g.fillStyle="#fff";g.fillText("= "+PER_WEEK,34,300);g.fillStyle="#b8b4c6";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("POSTS A WEEK, LOCKED AND LOADED",40,345);["MON","TUE","WED","THU","FRI","SAT","SUN"].forEach((d,i)=>{const x=40+i*138;g.fillStyle="#ffffff14";g.fillRect(x,380,124,150);g.fillStyle="#ffb84d";g.font="800 56px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText(PER_DAY,x+62,462);g.fillStyle="#9b97b4";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(d,x+62,505);g.textAlign="left"})},
   html(){return `<div class="big"><em>${PER_DAY}</em> posts a day × 7 days = <em>${PER_WEEK}</em> a week</div><div class="dots">${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<div><b>${PER_DAY}</b>${d}</div>`).join("")}</div><p class="note">After you approve, the whole week is locked and loaded. Nobody has to open 11 apps every morning.</p><p class="note">For scale, the live ledger has published <b>${fmt(D.posts.total.published)}</b> posts so far and has <b>${fmt(D.posts.total.scheduled)}</b> scheduled.</p>`}},
- {id:"hero",row:1,col:3,t:"ELETTRO OS · LIVE",accent:"#ffb84d",live:1,
+ {id:"hero",row:1,col:2,t:"ELETTRO OS · LIVE",accent:"#ffb84d",live:1,
   paint(g,w,h){frame(g,w,h,"ELETTRO OS","#ffb84d","live from the Elettro OS ledger");g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("CONSISTENT DAILY POSTS",34,170);g.fillStyle="#ffb84d";g.fillText("ACROSS EVERY NETWORK",34,232);g.fillStyle="#22e6ff";g.font="800 150px 'Segoe UI',sans-serif";g.fillText(fmt(D.posts.total.published),30,390);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";g.fillText("POSTS PUBLISHED  ·  "+fmt(D.posts.total.scheduled)+" SCHEDULED  ·  "+liveCount()+" NETWORKS LIVE",34,450)},
   html(){return `<div class="big">Elettro OS is how you get <em>consistent daily posts</em> across every network.</div><div class="k4"><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Posts published</span></div><div class="stat"><b>${fmt(D.posts.total.scheduled)}</b><span>Scheduled next</span></div><div class="stat"><b>${liveCount()}</b><span>Networks live</span></div><div class="stat"><b>${fmt(D.assets.total.total)}</b><span>Assets ready</span></div></div><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">Open the live dash ↗</a><a class="cta alt" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a>`}},
- {id:"approve",row:1,col:4,t:"STEP 2 · APPROVE",accent:"#3dff8b",edu:1,
+ {id:"approve",row:0,col:5,t:"STEP 2 · APPROVE",accent:"#3dff8b",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#3dff8b");g.fillStyle="#3dff8b";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("② APPROVE",34,150);lines(g,["Review the week at a glance","Swap, pause or remove any post","One click approves the week","Locked and loaded"],40,236,70,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
   html(){return `<div class="big">Step 2: <em>Approve</em></div><div class="steps"><div><b>REVIEW</b><h4>See the whole week</h4><p>Every post is laid out on the calendar for you to look over.</p></div><div><b>TWEAK</b><h4>Swap, pause, remove</h4><p>Do not like one post? Change just that one, the rest of the week stays put.</p></div><div><b>APPROVE</b><h4>One click</h4><p>Approve the week and the posts are locked and loaded.</p></div><div><b>DONE</b><h4>Walk away</h4><p>Elettro OS takes it from here.</p></div></div>`}},
- {id:"auto",row:1,col:5,t:"AUTOPILOT",accent:"#ff9f43",edu:1,
+ {id:"auto",row:1,col:6,t:"AUTOPILOT",accent:"#ff9f43",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#ff9f43");g.fillStyle="#ff9f43";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("AUTOPILOT",34,150);lines(g,["Publishes every 15 minutes","Per brand, on its own plan","Connections renew themselves","Pause or swap any time"],40,236,70,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
   html(){return `<div class="big">Then it runs on <em>autopilot</em>.</div><div class="steps"><div><b>EVERY 15 MIN</b><h4>Publishing tick</h4><p>Elettro OS checks the schedule every 15 minutes and publishes whatever is due.</p></div><div><b>PER BRAND</b><h4>Its own plan</h4><p>Each brand has its own pillars, mix and calendar.</p></div><div><b>SELF-RENEWING</b><h4>Connections</h4><p>Account tokens renew automatically.</p></div><div><b>YOU STAY IN CONTROL</b><h4>Calendar</h4><p>Pause, edit, swap or remove any scheduled post any time.</p></div></div>`}},
- {id:"formats",row:1,col:6,t:"WHAT GETS POSTED",accent:"#c9c4ff",edu:1,
+ {id:"formats",row:1,col:7,t:"WHAT GETS POSTED",accent:"#c9c4ff",edu:1,
   paint(g,w,h){frameEdu(g,w,h,"#c9c4ff");g.fillStyle="#c9c4ff";g.font="800 68px 'Segoe UI',sans-serif";g.fillText("WHAT GETS POSTED",34,140);lines(g,["Photos","Videos and Reels","Carousels","Text posts","Google Business updates"],40,226,66,"700 42px 'Segoe UI',sans-serif","#e9e6f5")},
   html(){return `<div class="big">Every format, <em>fitted per platform</em>.</div><div class="pl"><span>Photos</span><span>Vertical video</span><span>16:9 video</span><span>Carousels</span><span>Text posts</span><span>Google Business updates</span></div><p class="note">The same asset library feeds all of it. Elettro OS picks the right shape for each platform instead of you resizing everything by hand.</p>`}},
 /* ---------- BOTTOM ROW ---------- */
@@ -285,17 +285,20 @@ const PANELS=[
  {id:"gates",row:2,col:2,t:"NEXT GATES",accent:"#ff4f6b",live:1,
   paint(g,w,h){frame(g,w,h,"NEXT GATES","#ff4f6b","what unlocks each network");const r=netRows().filter(x=>!x.live).slice(0,6);if(!r.length){g.fillStyle="#3dff8b";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("EVERY NETWORK LIVE",40,260)}r.forEach((n,i)=>{g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n.n+"  "+n.pct+"%",40,150+i*70);g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(n.next||"waiting",40,178+i*70)})},
   html(){const r=netRows().filter(x=>!x.live);return r.length?r.map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.pct}%</span></div><p class="note" style="margin:-2px 0 8px 162px">Next: ${esc(n.next||"waiting")}</p>`).join(""):`<div class="big"><em>Every</em> network is live.</div>`}},
- {id:"sheets",row:2,col:3,t:"ONE-SHEET CAROUSEL",accent:"#ff5fd2",custom:"carousel",
-  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const n=CAR.length,sl=w/3,ph=h-46;
-  for(let k=0;k<3&&n;k++){const c=CAR[(carIdx+k)%n];if(!(c&&c.im.complete&&c.im.naturalWidth))continue;const s=Math.min((sl-16)/c.im.naturalWidth,ph/c.im.naturalHeight);const iw=c.im.naturalWidth*s,ih=c.im.naturalHeight*s;g.drawImage(c.im,k*sl+(sl-iw)/2,(ph-ih)/2+4,iw,ih);if(k===0){g.strokeStyle="#ffb84d";g.lineWidth=4;g.strokeRect(k*sl+(sl-iw)/2,(ph-ih)/2+4,iw,ih)}}
-  g.fillStyle="#ff5fd2";g.fillRect(0,0,w,6);g.fillStyle="#000c";g.fillRect(0,h-44,w,44);g.fillStyle="#fff";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(CAR[carIdx]?CAR[carIdx].s.t:"Loading one-sheets…",20,h-14);g.textAlign="right";g.fillStyle="#ffb84d";g.fillText("CLICK TO OPEN ▸",w-20,h-14);g.textAlign="left"}},
- {id:"why",row:2,col:4,t:"WHY DAILY WINS",accent:"#d7ff1f",edu:1,live:1,
+ {id:"sheets",row:1,col:4,big:1,cw:2560,ch:900,t:"ONE-SHEET CAROUSEL",accent:"#ff5fd2",custom:"carousel",
+  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const n=CAR.length,N=5,sl=w/N,ph=h-70;
+  for(let k=0;k<N&&n;k++){const c=CAR[(carIdx+k)%n];if(!(c&&c.im.complete&&c.im.naturalWidth))continue;const sc=Math.min((sl-20)/c.im.naturalWidth,ph/c.im.naturalHeight);const iw=c.im.naturalWidth*sc,ih=c.im.naturalHeight*sc,x=k*sl+(sl-iw)/2,y=(ph-ih)/2+10;g.drawImage(c.im,x,y,iw,ih);if(k===0){g.strokeStyle="#ffb84d";g.lineWidth=6;g.strokeRect(x,y,iw,ih)}}
+  g.fillStyle="#ff5fd2";g.fillRect(0,0,w,8);g.fillStyle="#000d";g.fillRect(0,h-58,w,58);g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("ELETTRO OS ONE-SHEETS  ·  "+(CAR[carIdx]?CAR[carIdx].s.t:"loading…"),30,h-18);g.textAlign="right";g.fillStyle="#ffb84d";g.fillText("CLICK ANY SHEET TO OPEN IT FULL SIZE ▸",w-30,h-18);g.textAlign="left"}},
+ {id:"welcome",row:1,col:8,t:"WELCOME",accent:"#ffb84d",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#ffb84d");g.fillStyle="#fff";g.font="800 62px 'Segoe UI',sans-serif";g.fillText("WELCOME TO THE",34,140);g.fillStyle="#ffb84d";g.fillText("SOCIAL ROOM",34,210);lines(g,["Click any screen to fly up to it","Press ★ How it works for the tour","Everything here is live"],40,300,60,"700 36px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Welcome to the <em>Social Room</em>.</div><p class="note">Click any screen on the wall and the camera flies up to it. Tap <b>★ How it works</b> for the guided tour of the 2-button week: Create, then Approve.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">Live dash ↗</a>`}},
+ {id:"why",row:2,col:6,t:"WHY DAILY WINS",accent:"#d7ff1f",edu:1,live:1,
   paint(g,w,h){frameEdu(g,w,h,"#d7ff1f");g.fillStyle="#d7ff1f";g.font="800 70px 'Segoe UI',sans-serif";g.fillText("SHOW UP DAILY",34,140);lines(g,["Every post is another chance","to be seen","Fresh content on every network","No more scrambling each morning"],40,226,62,"700 38px 'Segoe UI',sans-serif","#e9e6f5");const d=days30(),act=d.filter(x=>x.posts>0).length;g.fillStyle="#22e6ff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("LAST "+d.length+" DAYS: POSTED ON "+act+" OF THEM",40,520)},
   html(){const d=days30(),act=d.filter(x=>x.posts>0).length;return `<div class="big">Daily presence <em>compounds</em>.</div><p class="note">Every post is another chance to be seen. Elettro OS keeps every network fed, so the schedule never goes quiet because someone was busy.</p><div class="k4"><div class="stat"><b>${act}/${d.length}</b><span>Days with posts, last ${d.length}</span></div><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Total published</span></div></div>`}},
- {id:"links",row:2,col:5,t:"EXPLORE",accent:"#4fb3ff",
+ {id:"links",row:2,col:7,t:"EXPLORE",accent:"#4fb3ff",
   paint(g,w,h){frame(g,w,h,"EXPLORE","#4fb3ff","click to open the links");["elettro.com/dash","elettro.com/dash/social","elettro.com","Back to the Street"].forEach((s,i)=>{g.fillStyle="#ffffff14";g.fillRect(34,120+i*92,w-68,76);g.fillStyle="#fff";g.font="800 32px 'Segoe UI',sans-serif";g.fillText(s+"  ↗",64,170+i*92)})},
   html(){return `<p class="note">Everything on these screens is live from the same Elettro OS data.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">elettro.com/dash ↗</a><a class="cta" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a><a class="cta alt" href="../../index.html">Back to the Street</a>`}},
- {id:"cta",row:2,col:6,t:"GET ELETTRO OS",accent:"#ffb84d",
+ {id:"cta",row:2,col:8,t:"GET ELETTRO OS",accent:"#ffb84d",
   paint(g,w,h){frame(g,w,h,"GET ELETTRO OS","#ffb84d");g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("YOUR BRAND ON",34,200);g.fillText("THIS WALL.",34,265);g.fillStyle="#ffb84d";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("elettro.com  ·  contact@elettro.com",34,350)},
   html(){return `<div class="big">Put <em>your brand</em> on this wall.</div><p class="note">A week of posts in 2 button pushes: Create, then Approve.</p><a class="cta" href="mailto:contact@elettro.com">contact@elettro.com</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a>`}}
 ];
@@ -305,16 +308,20 @@ const byId=id=>PANELS.findIndex(p=>p.id===id);
 const pickables=[];
 const W=4.4,H=W*9/16;
 PANELS.forEach((p,i)=>{
-  p.cv=document.createElement("canvas");p.cv.width=1024;p.cv.height=576;p.g=p.cv.getContext("2d");
+  p.cv=document.createElement("canvas");p.cv.width=p.cw||1024;p.cv.height=p.ch||576;p.g=p.cv.getContext("2d");
   p.tex=new THREE.CanvasTexture(p.cv);p.tex.encoding=THREE.sRGBEncoding;p.tex.anisotropy=8;
-  const th=(p.col-3)*STEP,y=ROWY[p.row];
+  const th=(p.col-4)*STEP,y=p.big?(ROWY[1]+ROWY[2])/2:ROWY[p.row];
+  if(p.big){const hh=ROWY[1]-ROWY[2]+H+.06;p.tex.wrapS=THREE.RepeatWrapping;p.tex.repeat.x=-1;
+    const bz=new THREE.Mesh(new THREE.CylinderGeometry(R+.02,R+.02,hh,64,1,true,Math.PI-1.5*STEP,3*STEP),new THREE.MeshBasicMaterial({map:p.tex,side:THREE.BackSide}));bz.position.y=y;bz.userData.pid=i;scene.add(bz);pickables.push(bz);
+    const fr=new THREE.Mesh(new THREE.CylinderGeometry(R+.08,R+.08,hh+.14,64,1,true,Math.PI-1.5*STEP-.01,3*STEP+.02),new THREE.MeshBasicMaterial({color:0xff5fd2,side:THREE.BackSide}));fr.position.y=y;scene.add(fr);
+    p.pos=new THREE.Vector3(0,y,-R);p.th=0;p.mesh=bz;return}
   const grp=new THREE.Group();grp.position.set(Math.sin(th)*R,y,-Math.cos(th)*R);grp.rotation.y=-th;
   grp.add(new THREE.Mesh(new THREE.BoxGeometry(W+.08,H+.08,.16),dark));
   const m=new THREE.Mesh(new THREE.PlaneGeometry(W-.04,H-.04),new THREE.MeshBasicMaterial({map:p.tex}));m.position.z=.09;m.userData.pid=i;grp.add(m);pickables.push(m);
   const lip=new THREE.Mesh(new THREE.BoxGeometry(W+.08,.03,.04),new THREE.MeshBasicMaterial({color:new THREE.Color(p.accent)}));lip.position.set(0,-(H+.08)/2,.1);grp.add(lip);
   scene.add(grp);p.pos=new THREE.Vector3(grp.position.x,y,grp.position.z);p.th=th;p.mesh=m;
 });
-function paintPanel(p){p.g.clearRect(0,0,1024,576);p.paint(p.g,1024,576);p.tex.needsUpdate=true}
+function paintPanel(p){const w=p.cw||1024,h=p.ch||576;p.g.clearRect(0,0,w,h);p.paint(p.g,w,h);p.tex.needsUpdate=true}
 function repaintAll(){PANELS.forEach(paintPanel);paintTicker()}
 setInterval(()=>{if(!CAR.length||!carAuto)return;carIdx=(carIdx+1)%CAR.length;paintPanel(PANELS[byId("sheets")]);if(openIdx>=0&&PANELS[openIdx].custom==="carousel")showCar()},6000);
 
@@ -368,7 +375,7 @@ const hint=$("#hint");const hideHint=()=>hint.classList.add("off");
 let openIdx=-1,ovT=0;
 function focusOn(i){setFov(FOV0);
   const p=PANELS[i];if(st.focus<0){st.bx=st.x;st.bz=st.z}
-  st.focus=i;const port=innerWidth/innerHeight<1;const dist=port?6.6:3.9;
+  st.focus=i;const port=innerWidth/innerHeight<1;const dist=p.big?(port?9:7.5):(port?6.6:3.9);
   st.gx=p.pos.x-Math.sin(p.th)*dist;st.gz=p.pos.z+Math.cos(p.th)*dist;st.gy=Math.max(port?2.4:1.9,p.pos.y-.6);
   st.gyaw=-p.th;const dh=Math.hypot(st.gx-p.pos.x,st.gz-p.pos.z);st.gpitch=Math.atan((p.pos.y-st.gy)/dh)-(port?.2:0);
   st.autoPos=true;st.autoLook=true;hideHint();
