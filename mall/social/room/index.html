@@ -20,6 +20,7 @@ canvas#gl.hover{cursor:pointer}
 .btn:hover{background:#ffffff22}
 .btn.pri{background:#1b6cff;border-color:#1b6cff}
 .btn.exit{background:#b3261e;border-color:#b3261e}
+.btn.go{background:var(--amber);border-color:var(--amber);color:#1b1206;font-weight:800}
 #hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:9px 18px;font-size:13px;color:#d8d3c8;backdrop-filter:blur(8px);transition:opacity .6s;text-align:center;max-width:calc(100% - 28px)}
 #hint.off{opacity:0;pointer-events:none}
 #tip{position:fixed;z-index:6;pointer-events:none;background:#07080fee;border:1px solid var(--amber);padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translate(14px,14px);transition:opacity .15s;white-space:nowrap}
@@ -33,8 +34,7 @@ canvas#gl.hover{cursor:pointer}
 #live{position:fixed;left:14px;bottom:18px;z-index:5;font-size:11px;letter-spacing:1.5px;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:6px 12px;display:flex;gap:7px;align-items:center}
 #live i{width:8px;height:8px;border-radius:50%;background:#3dff8b;box-shadow:0 0 8px #3dff8b}
 #live.off i{background:#ffb84d;box-shadow:0 0 8px #ffb84d}
-/* ---- readable overlay ---- */
-#ov{position:fixed;inset:4vh 3.5vw;z-index:12;background:#090a12f6;border:1px solid #22e6ff66;border-radius:18px;box-shadow:0 0 70px #22e6ff30,0 30px 80px #000c;display:none;flex-direction:column;overflow:hidden}
+#ov{position:fixed;inset:4vh 3.5vw;z-index:12;background:#090a12f6;border:1px solid #ffb84d66;border-radius:18px;box-shadow:0 0 70px #ffb84d30,0 30px 80px #000c;display:none;flex-direction:column;overflow:hidden}
 #ov.on{display:flex;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
 @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 #ov header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #ffffff1a;flex:none}
@@ -46,25 +46,37 @@ canvas#gl.hover{cursor:pointer}
 .stat{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;padding:14px 16px}
 .stat b{display:block;font:800 36px/1.1 "Segoe UI",sans-serif;color:var(--cy)}
 .stat span{font-size:12px;letter-spacing:1.5px;color:#b8b4c6;text-transform:uppercase}
-.big{font:800 clamp(28px,4.5vw,54px)/1.05 "Segoe UI",sans-serif;margin:6px 0 14px}
+.big{font:800 clamp(26px,4.2vw,50px)/1.08 "Segoe UI",sans-serif;margin:6px 0 14px}
 .big em{font-style:normal;color:var(--amber)}
 .row{display:grid;grid-template-columns:150px 1fr 90px;gap:12px;align-items:center;margin:7px 0;font-size:14px}
 .row .bar{height:14px;background:#ffffff14;border-radius:99px;overflow:hidden}
 .row .bar i{display:block;height:100%;border-radius:99px}
 .row .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .chip{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;border-radius:99px;padding:2px 9px;background:#3dff8b22;color:#3dff8b;border:1px solid #3dff8b66}
-.chip.n{background:#ffb84d1a;color:#ffb84d;border-color:#ffb84d66}
+.pl{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.pl span{font-weight:700;font-size:14px;border-radius:99px;padding:7px 14px;border:1px solid #ffffff30;background:#ffffff0d}
 .cta{display:inline-block;background:var(--amber);color:#1b1206;font-weight:800;padding:12px 20px;border-radius:12px;text-decoration:none;margin:6px 8px 6px 0}
 .cta.alt{background:#ffffff14;color:var(--ink);border:1px solid #ffffff30}
 .cta:hover{filter:brightness(1.15)}
-.note{color:#b8b4c6;font-size:13px;line-height:1.5;margin:10px 0}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.steps div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;padding:16px}
+.note{color:#c4c0d2;font-size:15px;line-height:1.55;margin:10px 0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.steps div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:14px;padding:18px}
 .steps b{color:var(--cy);font-size:12px;letter-spacing:2px}
-.steps h4{font-size:18px;margin:6px 0}
+.steps h4{font-size:20px;margin:6px 0}
+.steps p{color:#c4c0d2;font-size:14px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;margin:6px 0 18px}
+.two .btnbig{border-radius:18px;padding:22px 20px;text-align:center;font:800 28px/1.1 "Segoe UI",sans-serif;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.two .btnbig small{font:600 14px "Segoe UI",sans-serif;opacity:.85}
+.two .arrow{align-self:center;font-size:34px;color:var(--amber)}
+.b1{background:linear-gradient(180deg,#22e6ff,#0f9bb8);color:#001a20}
+.b2{background:linear-gradient(180deg,#3dff8b,#1aa655);color:#03200f}
+@media(max-width:760px){.two{grid-template-columns:1fr}.two .arrow{transform:rotate(90deg);text-align:center}}
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:12px 0}
+.dots div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:10px;padding:8px;text-align:center;font-size:12px;color:#b8b4c6}
+.dots div b{display:block;color:var(--amber);font-size:26px}
 .car{display:flex;flex-direction:column;gap:12px;height:100%}
-.car .stage{flex:1;min-height:0;display:grid;place-items:center;background:#000;border-radius:12px;overflow:hidden;position:relative}
-.car .stage img{width:100%;height:100%;object-fit:contain}.car .stage{overflow:hidden}
+.car .stage{flex:1;min-height:200px;display:block;background:#000;border-radius:12px;overflow:hidden;position:relative}
+.car .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 .car .nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid #ffffff40;background:#000a;color:#fff;font-size:22px;cursor:pointer}
 .car .nav.l{left:10px}.car .nav.r{right:10px}
 .car .strip{display:flex;gap:8px;overflow-x:auto;flex:none;padding-bottom:4px}
@@ -72,6 +84,26 @@ canvas#gl.hover{cursor:pointer}
 .car .strip img.on{border-color:var(--amber);opacity:1}
 .spark{width:100%;height:170px;display:block}
 @media(max-width:640px){.row{grid-template-columns:100px 1fr 60px;font-size:12px}#ov{inset:2vh 2vw}.btn{padding:8px 12px}}
+
+@media(max-width:760px),(max-aspect-ratio:1/1){
+ .top{top:8px;left:8px;right:8px;align-items:flex-start}
+ .brand{font-size:11px;letter-spacing:2px}.brand small{font-size:9px}
+ .btns{gap:6px}.btn{padding:7px 11px;font-size:12px}
+ .btns .pri{display:none}
+ #hint{font-size:11px;padding:7px 12px;bottom:84px;border-radius:14px}
+ #live{bottom:84px;font-size:10px;padding:4px 9px}
+ #pad{bottom:14px;right:12px;flex-direction:row}#pad .btn{width:56px;height:56px}
+ #ov{inset:auto 0 0 0;height:44vh;border-radius:18px 18px 0 0;border-left:0;border-right:0;border-bottom:0;box-shadow:0 -10px 40px #000c;transition:height .3s}
+ #ov.full{height:92vh}
+ #ov header{padding:9px 12px;gap:8px}#ov header h2{font-size:15px}#ov header small{display:none}
+ #ov .body{padding:12px}
+ #ov footer{padding:8px 10px}#ov footer .btn{padding:7px 10px;font-size:12px}
+ .big{font-size:24px}.note{font-size:14px}.stat b{font-size:26px}
+ .steps{grid-template-columns:1fr 1fr;gap:8px}.steps div{padding:12px}.steps h4{font-size:16px}.steps p{font-size:12px}
+ .car .stage{min-height:240px}.car .strip img{height:48px}
+}
+#ovExp{display:none}
+@media(max-width:760px),(max-aspect-ratio:1/1){#ovExp{display:inline-block}}
 </style>
 </head>
 <body>
@@ -79,26 +111,28 @@ canvas#gl.hover{cursor:pointer}
 <div id="load"><div><h1>ELETTRO SOCIAL ROOM</h1><p>POWERING UP THE VIDEO WALL…</p></div></div>
 <div class="top">
   <div class="brand">ELETTRO OS<small>SOCIAL MEDIA ROOM</small></div>
-  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://elettro.com/dash/" target="_blank" rel="noopener">Live dash ↗</a></div>
+  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn go" id="learnBtn">★ How it works</button><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://elettro.com/dash/" target="_blank" rel="noopener">Live dash ↗</a></div>
 </div>
-<div id="hint">Scroll or ↑ ↓ to walk · drag to look · click any screen on the wall to fly up to it · Esc to come back · red EXIT top-right to leave</div>
+<div id="hint">Scroll or ↑ ↓ to walk · drag to look up at the wall · click any screen to fly up to it · Esc to come back · <b>★ How it works</b> for the 2-button tour · pinch to zoom</div>
 <div id="tip"></div>
 <div id="live" class="off"><i></i><span id="liveTxt">CONNECTING…</span></div>
-<div id="ov"><header><h2 id="ovT"></h2><small id="ovS"></small><button class="btn" id="ovX">✕ Back to the room</button></header><div class="body" id="ovB"></div><footer><button class="btn" id="ovP">‹ Previous screen</button><span class="note" id="ovN"></span><button class="btn" id="ovNx">Next screen ›</button></footer></div>
+<div id="ov"><header><h2 id="ovT"></h2><small id="ovS"></small><button class="btn" id="ovExp">⤢</button><button class="btn" id="ovX">✕ Back to the room</button></header><div class="body" id="ovB"></div><footer><button class="btn" id="ovP">‹ Previous screen</button><span class="note" id="ovN" style="margin:0;font-size:13px"></span><button class="btn" id="ovNx">Next screen ›</button></footer></div>
 <div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
-/* ============ DATA (live from the same Elettro OS feeds as elettro.com/dash) ============ */
+/* ============ DATA: live from the same Elettro OS feeds as elettro.com/dash ============ */
 const FEED="https://zkjngy7rdd.execute-api.us-east-1.amazonaws.com/status/";
 const BRAND="stashbox";
 const NETS=[
  {n:"YouTube",d:"youtube",c:"#ff3b3b"},{n:"Instagram",d:"instagram",c:"#ff5fd2"},{n:"Facebook",d:"facebook",c:"#3b8bff"},
  {n:"TikTok",d:"tiktok",c:"#22e6ff"},{n:"LinkedIn",d:"linkedin",c:"#4fb3ff"},{n:"Threads",d:"threads",c:"#c9c4ff"},
  {n:"Pinterest",d:"pinterest",c:"#ff4f6b"},{n:"Bluesky",d:"bluesky",c:"#4da3ff"},{n:"Mastodon",d:"mastodon",c:"#a98bff"},
- {n:"X",d:"x",c:"#e7e7ee"},{n:"Snapchat",d:"snapchat",c:"#fffc00"},{n:"Substack",d:"substack",c:"#ff6719"},{n:"Google Business",d:"gmb",c:"#ffc83d"}
+ {n:"X",d:"x",c:"#e7e7ee"},{n:"Google Business",d:"gmb",c:"#ffc83d"},{n:"Snapchat",d:"snapchat",c:"#fffc00"},{n:"Substack",d:"substack",c:"#ff6719"}
 ];
+const ELEVEN=["YouTube","Instagram","Facebook","TikTok","LinkedIn","Threads","Pinterest","Bluesky","Mastodon","X","Google Business"];
+const PER_DAY=75, PER_WEEK=PER_DAY*7;
 const D={live:false,at:null,posts:{total:{published:2756,scheduled:1185},days:[],upcoming:[],destinations:[],brands:[],goal:1000},assets:{total:{images:1986,videos:1990,audio:1177,total:5153}},conn:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -128,40 +162,52 @@ async function pull(){
 const canvas=$("#gl");
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x07080f);scene.fog=new THREE.Fog(0x07080f,22,46);
-const camera=new THREE.PerspectiveCamera(68,1,.1,120);camera.rotation.order="YXZ";
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0a0608);scene.fog=new THREE.Fog(0x0a0608,26,60);
+const camera=new THREE.PerspectiveCamera(74,1,.1,140);camera.rotation.order="YXZ";
 function ctex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;draw(c.getContext("2d"),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
-const R=12, EYE=1.7, COLS=7, STEP=22*Math.PI/180;
+const R=12.4, EYE=1.7, COLS=7, STEP=22*Math.PI/180;
+const ROWY=[8.0,5.45,2.9];
 const mat=(c,r=.7,m=.2)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
-const amberM=mat(0xd69a3a,.35,.8), darkM=mat(0x0c0d16,.6,.3), leather=mat(0x8a4a24,.45,.1);
+const brass=mat(0xd69a3a,.3,.9), dark=mat(0x0c0d16,.6,.3), leather=mat(0x8f2f1c,.4,.15), leatherT=mat(0xa4592b,.45,.12);
+const WALLR=19, SHELLH=11;
 
-/* ----- room shell: full dome + wall, floor carpet ----- */
-const WALLR=16;
-const shell=new THREE.Mesh(new THREE.CylinderGeometry(WALLR,WALLR,7,64,1,true),new THREE.MeshStandardMaterial({color:0x14101c,roughness:.9,side:THREE.BackSide}));shell.position.y=3.5;scene.add(shell);
-const dome=new THREE.Mesh(new THREE.SphereGeometry(WALLR,64,24,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:0x120f1c,roughness:1,side:THREE.BackSide}));dome.scale.y=.62;dome.position.y=7;scene.add(dome);
-[.5,.72,.9].forEach((k,i)=>{const t=new THREE.Mesh(new THREE.TorusGeometry(WALLR*k*.98,.07,8,96),new THREE.MeshBasicMaterial({color:[0xffb84d,0x22e6ff,0xff5fd2][i]}));t.rotation.x=Math.PI/2;const ang=Math.acos(k);t.position.y=7+Math.sin(ang)*WALLR*.62;scene.add(t)});
-// carpet (amber diamonds on dark)
-const carpetT=ctex(512,512,(g,w,h)=>{g.fillStyle="#1d0f14";g.fillRect(0,0,w,h);g.strokeStyle="#7a4a1c";g.lineWidth=3;for(let i=-1;i<=2;i++)for(let j=-1;j<=2;j++){g.beginPath();g.moveTo(i*256+128,j*256);g.lineTo(i*256+256,j*256+128);g.lineTo(i*256+128,j*256+256);g.lineTo(i*256,j*256+128);g.closePath();g.stroke()}g.fillStyle="#b9822e55";for(let i=0;i<3;i++)for(let j=0;j<3;j++){g.beginPath();g.arc(i*256+128,j*256+128,9,0,7);g.fill()}for(let i=0;i<9000;i++){g.fillStyle="rgba(255,255,255,"+Math.random()*.03+")";g.fillRect(Math.random()*w,Math.random()*h,2,2)}});
-carpetT.wrapS=carpetT.wrapT=THREE.RepeatWrapping;carpetT.repeat.set(9,9);
-const floor=new THREE.Mesh(new THREE.CircleGeometry(WALLR,64),new THREE.MeshStandardMaterial({map:carpetT,roughness:.95}));floor.rotation.x=-Math.PI/2;scene.add(floor);
-// amber floor rings
-[WALLR-.4,9.4,4.6].forEach(r=>{const m=new THREE.Mesh(new THREE.RingGeometry(r,r+.07,96),new THREE.MeshBasicMaterial({color:0xffb84d}));m.rotation.x=-Math.PI/2;m.position.y=.02;scene.add(m)});
-scene.add(new THREE.HemisphereLight(0xffe2b0,0x1a1020,.9));
-[[0,6,0,1.1,0xffd9a0],[-8,5,-3,.8,0x22e6ff],[8,5,-3,.8,0xff5fd2]].forEach(l=>{const p=new THREE.PointLight(l[4],l[3],26,1.5);p.position.set(l[0],l[1],l[2]);scene.add(p)});
+/* ----- wood paneling texture ----- */
+function woodTex(base,rep){const t=ctex(512,512,(g,w,h)=>{g.fillStyle=base;g.fillRect(0,0,w,h);for(let i=0;i<260;i++){g.strokeStyle="rgba("+(Math.random()<.5?"20,8,2":"255,190,120")+","+(.03+Math.random()*.08)+")";g.lineWidth=1+Math.random()*2;const x=Math.random()*w;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+12,h*.3,x-12,h*.6,x+4,h);g.stroke()}});t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep[0],rep[1]);return t}
+const wood=new THREE.MeshStandardMaterial({map:woodTex("#5a2d16",[10,3]),roughness:.4,metalness:.15,side:THREE.DoubleSide});
+const woodDark=new THREE.MeshStandardMaterial({map:woodTex("#3a1a0c",[10,2]),roughness:.4,metalness:.15,side:THREE.DoubleSide});
 
-/* ----- curved backdrop + ticker ----- */
-const ARC=(COLS*STEP)/2+.18, tS=Math.PI-ARC, tL=ARC*2;
-const bd=ctex(1024,256,(g,w,h)=>{g.fillStyle="#0b0d1a";g.fillRect(0,0,w,h);g.strokeStyle="#ffffff0f";g.lineWidth=2;for(let x=0;x<w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}for(let y=0;y<h;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke()}});
-bd.wrapS=THREE.RepeatWrapping;bd.repeat.set(4,1);
-const back=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,8.4,64,1,true,tS,tL),new THREE.MeshStandardMaterial({map:bd,roughness:.6,metalness:.3,side:THREE.BackSide}));back.position.y=4.2;scene.add(back);
-[0,8.4].forEach(y=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(R+.3,R+.3,.1,64,1,true,tS,tL),new THREE.MeshBasicMaterial({color:y?0x22e6ff:0xffb84d,side:THREE.DoubleSide}));t.position.y=y+.05;scene.add(t)});
+/* ----- room shell: wood-paneled wall, lattice ceiling, oculus ----- */
+const shell=new THREE.Mesh(new THREE.CylinderGeometry(WALLR,WALLR,SHELLH,64,1,true),new THREE.MeshStandardMaterial({map:woodTex("#3f1f10",[16,3]),roughness:.55,metalness:.1,side:THREE.BackSide}));shell.position.y=SHELLH/2;scene.add(shell);
+const latT=ctex(512,512,(g,w,h)=>{g.fillStyle="#08080e";g.fillRect(0,0,w,h);g.strokeStyle="#2a2433";g.lineWidth=3;for(let i=-w;i<w*2;i+=32){g.beginPath();g.moveTo(i,0);g.lineTo(i+h,h);g.stroke();g.beginPath();g.moveTo(i,h);g.lineTo(i+h,0);g.stroke()}});latT.wrapS=latT.wrapT=THREE.RepeatWrapping;latT.repeat.set(10,10);
+const dome=new THREE.Mesh(new THREE.SphereGeometry(WALLR,64,24,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({map:latT,roughness:1,side:THREE.BackSide}));dome.scale.y=.3;dome.position.y=SHELLH;scene.add(dome);
+(function(){const n=380,pos=new Float32Array(n*3);for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*(WALLR-1.5),y=SHELLH+Math.sqrt(Math.max(0,1-(r/WALLR)**2))*WALLR*.3-.1;pos.set([Math.cos(a)*r,y,Math.sin(a)*r],i*3)}const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(pos,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xffc977,size:.16,fog:false})))})();
+const glowT=ctex(256,256,(g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,10,w/2,h/2,w/2);gr.addColorStop(0,"#ffe2a8");gr.addColorStop(.55,"#ff9b3c");gr.addColorStop(1,"#a8430f");g.fillStyle=gr;g.fillRect(0,0,w,h)});
+const disc=new THREE.Mesh(new THREE.CircleGeometry(4.6,64),new THREE.MeshBasicMaterial({map:glowT,fog:false}));disc.rotation.x=Math.PI/2;disc.position.y=SHELLH+3.2;scene.add(disc);
+[[7.4,0],[6.4,.55],[5.4,1.1]].forEach(([r,dy],i)=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.55,64,1,true),wood);c.position.y=SHELLH+3.5-dy-.1*i;scene.add(c);const ring=new THREE.Mesh(new THREE.TorusGeometry(r-.03,.05,8,96),new THREE.MeshBasicMaterial({color:0xffb04a,fog:false}));ring.rotation.x=Math.PI/2;ring.position.y=SHELLH+3.25-dy-.1*i;scene.add(ring)});
+const oc=new THREE.PointLight(0xffa850,1.6,40,1.3);oc.position.set(0,SHELLH+1,0);scene.add(oc);
+const carpetT=ctex(512,512,(g,w,h)=>{const cols=["#2a0d12","#5c1219","#8a1f1c","#b9822e","#17090d","#3d1a12"];for(let y=0;y<16;y++)for(let x=0;x<16;x++){g.fillStyle=cols[(x*7+y*13+((x^y)&3))%cols.length];g.fillRect(x*32,y*32,32,32);if((x+y)%3===0){g.fillStyle="rgba(255,190,90,.35)";g.fillRect(x*32+10,y*32+10,12,12)}}for(let i=0;i<9000;i++){g.fillStyle="rgba(0,0,0,"+Math.random()*.12+")";g.fillRect(Math.random()*w,Math.random()*h,2,2)}});
+carpetT.wrapS=carpetT.wrapT=THREE.RepeatWrapping;carpetT.repeat.set(7,7);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(WALLR,64),new THREE.MeshStandardMaterial({map:carpetT,roughness:.9}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+[WALLR-.3,10.6].forEach(r=>{const m=new THREE.Mesh(new THREE.RingGeometry(r,r+.08,96),new THREE.MeshBasicMaterial({color:0xffb84d}));m.rotation.x=-Math.PI/2;m.position.y=.03;scene.add(m)});
+scene.add(new THREE.HemisphereLight(0xffd9a8,0x2a1410,.85));
+[[-9,6,-4,.9,0xffb066],[9,6,-4,.9,0xffb066],[0,5,6,.6,0xffa060],[0,8,-9,.7,0x6cd6ff]].forEach(l=>{const p=new THREE.PointLight(l[4],l[3],30,1.4);p.position.set(l[0],l[1],l[2]);scene.add(p)});
+
+/* ----- curved backdrop, wood soffit, glow strips, tickers ----- */
+const ARC=(COLS*STEP)/2+.2, tS=Math.PI-ARC, tL=ARC*2;
+const back=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,10,64,1,true,tS,tL),new THREE.MeshStandardMaterial({color:0x08090f,roughness:.5,metalness:.4,side:THREE.BackSide}));back.position.y=5;scene.add(back);
+const soffit=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,1.6,64,1,true,tS-.06,tL+.12),woodDark);soffit.position.y=10.4;scene.add(soffit);
+const soffitCap=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,.1,64,1,true,tS-.06,tL+.12),new THREE.MeshBasicMaterial({color:0xffa24a,side:THREE.DoubleSide}));soffitCap.position.y=9.55;scene.add(soffitCap);
+const baseWood=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,1.1,64,1,true,tS-.06,tL+.12),woodDark);baseWood.position.y=.55;scene.add(baseWood);
+const baseGlow=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,.14,64,1,true,tS,tL),new THREE.MeshBasicMaterial({color:0xff9d3f,side:THREE.DoubleSide}));baseGlow.position.y=1.2;scene.add(baseGlow);
 const tk=ctex(4096,128,()=>{});tk.wrapS=THREE.RepeatWrapping;tk.repeat.x=-1;
-const tickerMesh=new THREE.Mesh(new THREE.CylinderGeometry(R+.2,R+.2,.5,96,1,true,tS,tL),new THREE.MeshBasicMaterial({map:tk,side:THREE.BackSide}));tickerMesh.position.y=1.05;scene.add(tickerMesh);
+const tmat=new THREE.MeshBasicMaterial({map:tk,side:THREE.BackSide});
+const tickerA=new THREE.Mesh(new THREE.CylinderGeometry(R+.25,R+.25,.5,96,1,true,tS,tL),tmat);tickerA.position.y=1.55;scene.add(tickerA);
+const tickerB=new THREE.Mesh(new THREE.CylinderGeometry(R+.25,R+.25,.4,96,1,true,tS,tL),tmat);tickerB.position.y=9.3;scene.add(tickerB);
 function paintTicker(){
-  const items=[D.posts.total.published+" POSTS PUBLISHED",D.posts.total.scheduled+" SCHEDULED",liveCount()+" NETWORKS LIVE","ELETTRO OS: CONSISTENT DAILY POSTS ACROSS EVERY NETWORK",fmt(D.assets.total.total)+" ASSETS IN THE LIBRARY","AUTO-PUBLISHING EVERY 15 MINUTES","PER-BRAND PLANS · APPROVED · ON AUTOPILOT"];
-  const c=tk.image,g=c.getContext("2d");g.clearRect(0,0,c.width,c.height);g.fillStyle="#05060c";g.fillRect(0,0,c.width,c.height);
-  const msg=items.map(s=>s.replace(/^(\d+)/,m=>fmt(m))).join("   ◆   ")+"   ◆   ";g.font="800 70px 'Segoe UI',sans-serif";const w=g.measureText(msg).width;
-  g.save();g.scale(2048/w,1);g.fillStyle="#ffb84d";g.textBaseline="middle";g.fillText(msg,0,66);g.fillText(msg,w,66);g.restore();tk.needsUpdate=true}
+  const items=["75 POSTS A DAY × 7 = "+PER_WEEK+" A WEEK","STEP 1: CREATE","STEP 2: APPROVE",fmt(D.posts.total.published)+" POSTS PUBLISHED",fmt(D.posts.total.scheduled)+" SCHEDULED",liveCount()+" NETWORKS LIVE","11 SOCIAL PLATFORMS · ONE PLAN",fmt(D.assets.total.total)+" ASSETS IN THE LIBRARY","AUTO-PUBLISHING EVERY 15 MINUTES"];
+  const c=tk.image,g=c.getContext("2d");g.fillStyle="#04060a";g.fillRect(0,0,c.width,c.height);
+  const msg=items.join("   ◆   ")+"   ◆   ";g.font="800 70px 'Segoe UI',sans-serif";const w=g.measureText(msg).width;
+  g.save();g.scale(2048/w,1);g.fillStyle="#3dff8b";g.textBaseline="middle";g.fillText(msg,0,66);g.fillText(msg,w,66);g.restore();tk.needsUpdate=true}
 
 /* ============ PANELS ============ */
 function frame(g,w,h,title,accent,sub){
@@ -171,136 +217,171 @@ function frame(g,w,h,title,accent,sub){
   g.fillStyle="#e9e6f5";g.font="800 34px 'Segoe UI',sans-serif";g.textAlign="left";g.fillText(title,34,62);
   if(sub){g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(sub,34,92)}
   g.fillStyle=D.live?"#3dff8b":"#ffb84d";g.beginPath();g.arc(w-46,50,8,0,7);g.fill();g.fillStyle="#9b97b4";g.font="700 16px 'Segoe UI',sans-serif";g.textAlign="right";g.fillText(D.live?"LIVE":"SNAPSHOT",w-62,56);g.textAlign="left"}
+function frameEdu(g,w,h,accent){const gr=g.createLinearGradient(0,0,w,h);gr.addColorStop(0,"#1a1206");gr.addColorStop(1,"#0a0805");g.fillStyle=gr;g.fillRect(0,0,w,h);g.fillStyle=accent;g.fillRect(0,0,w,8);g.fillStyle="#9b97b4";g.font="700 18px 'Segoe UI',sans-serif";g.fillText("ELETTRO OS  ·  HOW IT WORKS",34,44)}
+function btn(g,x,y,w,h,c1,c2,t,s){const gr=g.createLinearGradient(0,y,0,y+h);gr.addColorStop(0,c1);gr.addColorStop(1,c2);g.fillStyle=gr;g.fillRect(x,y,w,h);g.fillStyle="#04110a";g.textAlign="center";g.font="800 54px 'Segoe UI',sans-serif";g.fillText(t,x+w/2,y+h/2+6);g.font="700 22px 'Segoe UI',sans-serif";g.fillText(s,x+w/2,y+h/2+44);g.textAlign="left"}
 function bars(g,rows,x,y,w,rh,valMax,fmtv){rows.forEach((r,i)=>{const yy=y+i*rh;g.fillStyle="#d8d4ea";g.font="700 21px 'Segoe UI',sans-serif";g.fillText(r.l,x,yy+rh*.62);const bx=x+210,bw=w-210-110;g.fillStyle="#ffffff14";g.fillRect(bx,yy+rh*.25,bw,rh*.4);g.fillStyle=r.c||"#22e6ff";g.fillRect(bx,yy+rh*.25,Math.max(3,bw*(r.v/valMax)),rh*.4);g.fillStyle="#fff";g.textAlign="right";g.fillText((fmtv||fmt)(r.v),x+w,yy+rh*.62);g.textAlign="left"})}
 function bigNum(g,v,l,x,y,c){g.fillStyle=c;g.font="800 96px 'Segoe UI',sans-serif";g.fillText(v,x,y);g.fillStyle="#b8b4c6";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(l,x,y+34)}
 const dayLabel=d=>{const p=d.split("-");return +p[1]+"/"+ +p[2]};
 const days30=()=>last(D.posts.days||[],30);
+function lines(g,arr,x,y,lh,font,color){g.font=font;g.fillStyle=color;arr.forEach((s,i)=>g.fillText(s,x,y+i*lh))}
 
 const CAR=[];let carIdx=0,carAuto=true;
 fetch("sheets.json").then(r=>r.json()).then(j=>{j.forEach(s=>{const im=new Image();im.src="img/"+s.f;CAR.push({s,im})})}).catch(()=>{});
-function sheetsMeta(){return CAR.map(c=>c.s)}
+const sheetsMeta=()=>CAR.map(c=>c.s);
 
+const STEPS_HTML=`<div class="two"><div class="btnbig b1">① CREATE<small>Elettro OS builds the week</small></div><div class="arrow">➜</div><div class="btnbig b2">② APPROVE<small>one click and it is locked in</small></div></div>`;
 const PANELS=[
+/* ---------- TOP ROW ---------- */
  {id:"assets",row:0,col:0,t:"ASSET LIBRARY",accent:"#ff5fd2",live:1,
   paint(g,w,h){frame(g,w,h,"ASSET LIBRARY","#ff5fd2","tagged, windowed, ready to publish");const a=D.assets.total;bigNum(g,fmt(a.total),"TOTAL ASSETS",40,230,"#ff5fd2");bigNum(g,fmt(a.images),"IMAGES",40,400,"#22e6ff");bigNum(g,fmt(a.videos),"VIDEOS",360,400,"#ffc83d");bigNum(g,fmt(a.audio),"AUDIO",680,400,"#3dff8b")},
-  html(){const a=D.assets.total;return `<div class="k4"><div class="stat"><b>${fmt(a.total)}</b><span>Total assets</span></div><div class="stat"><b>${fmt(a.images)}</b><span>Images</span></div><div class="stat"><b>${fmt(a.videos)}</b><span>Videos</span></div><div class="stat"><b>${fmt(a.audio)}</b><span>Audio</span></div></div><p class="note">Every asset is registered, tagged and windowed once, then Elettro OS pulls from the library for every post on every network. More assets in means more days of fresh content out.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">See the live dash ↗</a>`}},
+  html(){const a=D.assets.total;return `<div class="k4"><div class="stat"><b>${fmt(a.total)}</b><span>Total assets</span></div><div class="stat"><b>${fmt(a.images)}</b><span>Images</span></div><div class="stat"><b>${fmt(a.videos)}</b><span>Videos</span></div><div class="stat"><b>${fmt(a.audio)}</b><span>Audio</span></div></div><p class="note">This is the fuel. Every photo, video and track is registered and tagged once, then Elettro OS pulls from the library when it builds your week.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">See the live dash ↗</a>`}},
  {id:"daily",row:0,col:1,t:"POSTS PER DAY",accent:"#22e6ff",live:1,
   paint(g,w,h){frame(g,w,h,"POSTS PER DAY","#22e6ff","last 30 days · published by Elettro OS");const d=days30(),mx=Math.max(1,...d.map(x=>x.posts)),bw=(w-80)/Math.max(1,d.length);d.forEach((x,i)=>{const bh=(x.posts/mx)*(h-210);g.fillStyle="#22e6ff";g.globalAlpha=.4+.6*(i/d.length);g.fillRect(40+i*bw,h-60-bh,bw-5,bh);g.globalAlpha=1});g.fillStyle="#fff";g.font="800 44px 'Segoe UI',sans-serif";g.fillText("PEAK "+mx+" / DAY",40,160)},
-  html(){const d=days30(),mx=Math.max(1,...d.map(x=>x.posts));const bw=100/Math.max(1,d.length);return `<div class="big"><em>${mx}</em> posts in the busiest day</div><svg class="spark" viewBox="0 0 100 40" preserveAspectRatio="none">${d.map((x,i)=>`<rect x="${i*bw+.3}" y="${40-(x.posts/mx)*38}" width="${bw-.6}" height="${(x.posts/mx)*38}" fill="#22e6ff" opacity="${.4+.6*i/d.length}"><title>${esc(x.d)}: ${x.posts}</title></rect>`).join("")}</svg><p class="note">Last ${d.length} days, one bar per day. Hover a bar for the date. Same ledger as the 5000 Post Race on elettro.com/dash.</p>`}},
- {id:"lanes",row:0,col:2,t:"NETWORK LANES",accent:"#ffc83d",live:1,
-  paint(g,w,h){frame(g,w,h,"NETWORK LANES","#ffc83d","Elettro OS connection progress");const r=netRows().slice(0,12);r.forEach((n,i)=>{const col=i<6?0:1,rr=i%6,x=34+col*486,y=120+rr*68;g.fillStyle="#d8d4ea";g.font="700 20px 'Segoe UI',sans-serif";g.fillText(n.n,x,y+22);g.fillStyle="#ffffff14";g.fillRect(x,y+32,430,16);g.fillStyle=n.c;g.fillRect(x,y+32,430*n.pct/100,16);g.fillStyle=n.live?"#3dff8b":"#ffb84d";g.textAlign="right";g.fillText(n.live?"LIVE":n.pct+"%",x+430,y+22);g.textAlign="left"})},
-  html(){return netRows().map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.live?'<span class="chip">LIVE</span>':n.pct+"%"}</span></div>`).join("")+`<p class="note">LIVE means Elettro OS has already published to that network. Others show how far through the connection checklist they are.</p>`}},
- {id:"hero",row:0,col:3,t:"ELETTRO OS",accent:"#ffb84d",live:1,
-  paint(g,w,h){frame(g,w,h,"ELETTRO OS","#ffb84d");g.fillStyle="#fff";g.font="800 58px 'Segoe UI',sans-serif";g.fillText("CONSISTENT DAILY POSTS",34,170);g.fillStyle="#ffb84d";g.fillText("ACROSS EVERY NETWORK",34,236);g.fillStyle="#22e6ff";g.font="800 150px 'Segoe UI',sans-serif";g.fillText(fmt(D.posts.total.published),30,390);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";g.fillText("POSTS PUBLISHED  ·  "+fmt(D.posts.total.scheduled)+" SCHEDULED  ·  "+liveCount()+" NETWORKS LIVE",34,450)},
-  html(){return `<div class="big">Elettro OS is how you get <em>consistent daily posts</em> across every network.</div><div class="k4"><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Posts published</span></div><div class="stat"><b>${fmt(D.posts.total.scheduled)}</b><span>Scheduled next</span></div><div class="stat"><b>${liveCount()}</b><span>Networks live</span></div><div class="stat"><b>${fmt(D.assets.total.total)}</b><span>Assets ready</span></div></div><p class="note">Plan a month, approve it once, and Elettro OS publishes to every connected network on its own, every 15 minutes, per brand.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">Open the live dash ↗</a><a class="cta alt" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a>`}},
- {id:"race",row:0,col:4,t:"RACE TO GOAL",accent:"#3dff8b",live:1,
+  html(){const d=days30(),mx=Math.max(1,...d.map(x=>x.posts));const bw=100/Math.max(1,d.length);return `<div class="big"><em>${mx}</em> posts in the busiest day</div><svg class="spark" viewBox="0 0 100 40" preserveAspectRatio="none">${d.map((x,i)=>`<rect x="${i*bw+.3}" y="${40-(x.posts/mx)*38}" width="${bw-.6}" height="${(x.posts/mx)*38}" fill="#22e6ff" opacity="${.4+.6*i/d.length}"><title>${esc(x.d)}: ${x.posts}</title></rect>`).join("")}</svg><p class="note">Last ${d.length} days, one bar per day. Hover a bar for the date. Same ledger as the Post Race on elettro.com/dash.</p>`}},
+ {id:"race",row:0,col:2,t:"RACE TO GOAL",accent:"#3dff8b",live:1,
   paint(g,w,h){frame(g,w,h,"RACE TO GOAL","#3dff8b","posts published vs goal");const p=D.posts.total.published,gl=D.posts.goal||1000,k=Math.min(1,p/gl);g.lineWidth=34;g.strokeStyle="#ffffff14";g.beginPath();g.arc(300,330,150,0,7);g.stroke();g.strokeStyle="#3dff8b";g.beginPath();g.arc(300,330,150,-Math.PI/2,-Math.PI/2+k*Math.PI*2);g.stroke();g.fillStyle="#fff";g.font="800 60px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText(Math.round(p/gl*100)+"%",300,350);g.textAlign="left";g.fillStyle="#3dff8b";g.font="800 70px 'Segoe UI',sans-serif";g.fillText(fmt(p),560,300);g.fillStyle="#b8b4c6";g.font="700 24px 'Segoe UI',sans-serif";g.fillText("of a "+fmt(gl)+" post goal",560,345);g.fillText(p>=gl?"GOAL CLEARED":"KEEP POSTING",560,385)},
   html(){const p=D.posts.total.published,gl=D.posts.goal||1000;return `<div class="big"><em>${fmt(p)}</em> of ${fmt(gl)}</div><div class="row" style="grid-template-columns:1fr"><div class="bar" style="height:26px"><i style="width:${Math.min(100,p/gl*100)}%;background:#3dff8b"></i></div></div><p class="note">${p>=gl?"Goal cleared "+(p/gl).toFixed(1)+"x over.":"Still racing."} Started ${esc((D.posts.raceStart||"").slice(0,10))}.</p>`}},
- {id:"brands",row:0,col:5,t:"BRAND LEADERBOARD",accent:"#4fb3ff",live:1,
+ {id:"two",row:0,col:3,t:"2 BUTTONS · A WEEK OF POSTS",accent:"#ffb84d",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#ffb84d");g.fillStyle="#fff";g.font="800 66px 'Segoe UI',sans-serif";g.fillText("A WEEK OF SOCIAL.",34,128);g.fillStyle="#ffb84d";g.fillText("2 BUTTON PUSHES.",34,200);btn(g,40,250,430,190,"#22e6ff","#0f9bb8","① CREATE","build the week");g.fillStyle="#ffb84d";g.font="800 70px 'Segoe UI',sans-serif";g.fillText("➜",492,370);btn(g,560,250,430,190,"#3dff8b","#1aa655","② APPROVE","lock it in");g.fillStyle="#fff";g.font="800 30px 'Segoe UI',sans-serif";g.fillText("= "+PER_WEEK+" POSTS LOCKED AND LOADED, ACROSS 11 PLATFORMS",40,505)},
+  html(){return `<div class="big">A week of social media in <em>2 button pushes</em>.</div>${STEPS_HTML}<div class="k4"><div class="stat"><b>${PER_DAY} × 7</b><span>posts per day × days</span></div><div class="stat"><b>${PER_WEEK}</b><span>posts locked and loaded a week</span></div><div class="stat"><b>11</b><span>social platforms</span></div></div><p class="note">Elettro OS curates your best content and schedules it across 11 social platforms. You create the week, you approve it, and it publishes itself.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">See it running live ↗</a>`}},
+ {id:"brands",row:0,col:4,t:"BRAND LEADERBOARD",accent:"#4fb3ff",live:1,
   paint(g,w,h){frame(g,w,h,"BRAND LEADERBOARD","#4fb3ff","posts published per brand");const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published).slice(0,6);bars(g,b.map((x,i)=>({l:x.name,v:x.published,c:["#ffc83d","#22e6ff","#ff5fd2","#d7ff1f","#4fb3ff","#ff4f6b"][i]})),34,120,w-68,62,Math.max(1,b[0]?b[0].published:1))},
   html(){const b=[...(D.posts.brands||[])].sort((a,c)=>c.published-a.published);const mx=Math.max(1,b[0]?b[0].published:1);return b.map(x=>`<div class="row"><span>${esc(x.name)}</span><div class="bar"><i style="width:${x.published/mx*100}%;background:#4fb3ff"></i></div><span class="v">${fmt(x.published)}</span></div>`).join("")+`<p class="note">Every brand has its own plan and its own pillars. Published counts only.</p>`}},
- {id:"upcoming",row:0,col:6,t:"UP NEXT",accent:"#ff9f43",live:1,
+ {id:"upcoming",row:0,col:5,t:"UP NEXT",accent:"#ff9f43",live:1,
   paint(g,w,h){frame(g,w,h,"UP NEXT","#ff9f43","scheduled posts, next days");const u=last(D.posts.upcoming||[],7);bigNum(g,fmt(D.posts.total.scheduled),"SCHEDULED",40,230,"#ff9f43");bars(g,u.map(x=>({l:dayLabel(x.d),v:x.posts,c:"#ff9f43"})),40,300,w-80,34,Math.max(1,...u.map(x=>x.posts)))},
   html(){const u=D.posts.upcoming||[];const mx=Math.max(1,...u.map(x=>x.posts));return `<div class="big"><em>${fmt(D.posts.total.scheduled)}</em> posts lined up</div>`+u.map(x=>`<div class="row"><span>${esc(x.d)}</span><div class="bar"><i style="width:${x.posts/mx*100}%;background:#ff9f43"></i></div><span class="v">${x.posts}</span></div>`).join("")}},
- {id:"bynet",row:1,col:0,t:"POSTS BY NETWORK",accent:"#22e6ff",live:1,
-  paint(g,w,h){frame(g,w,h,"POSTS BY NETWORK","#22e6ff","published so far");const r=netRows().filter(x=>x.pub>0).slice(0,8);bars(g,r.map(x=>({l:x.n,v:x.pub,c:x.c})),34,110,w-68,50,Math.max(1,r[0]?r[0].pub:1))},
-  html(){const r=netRows().filter(x=>x.pub>0);const mx=Math.max(1,r[0]?r[0].pub:1);return r.map(x=>`<div class="row"><span>${esc(x.n)}</span><div class="bar"><i style="width:${x.pub/mx*100}%;background:${x.c}"></i></div><span class="v">${fmt(x.pub)} <small style="color:#9b97b4">+${x.sch}</small></span></div>`).join("")+`<p class="note">Bold number: published. Small number: scheduled.</p>`}},
- {id:"how",row:1,col:1,t:"HOW IT WORKS",accent:"#ffb84d",
-  paint(g,w,h){frame(g,w,h,"HOW IT WORKS","#ffb84d","four steps, then autopilot");["1  TAG THE ASSETS","2  PLAN THE MONTH","3  APPROVE ONCE","4  AUTO-PUBLISH"].forEach((s,i)=>{g.fillStyle=i%2?"#ffffff0d":"#ffffff16";g.fillRect(34,120+i*92,w-68,80);g.fillStyle=["#22e6ff","#ffc83d","#ff5fd2","#3dff8b"][i];g.fillRect(34,120+i*92,10,80);g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText(s,66,172+i*92)})},
-  html(){return `<div class="steps"><div><b>STEP 1</b><h4>Tag the assets</h4><p class="note">Photos, video and audio get registered and tagged once.</p></div><div><b>STEP 2</b><h4>Plan the month</h4><p class="note">Per-brand pillars and a posting mix fill the calendar.</p></div><div><b>STEP 3</b><h4>Approve once</h4><p class="note">Review the plan, swap or pause anything you do not like.</p></div><div><b>STEP 4</b><h4>Auto-publish</h4><p class="note">Elettro OS posts to every connected network, every 15 minutes, on its own.</p></div></div>`}},
- {id:"gates",row:1,col:2,t:"NEXT GATES",accent:"#ff4f6b",live:1,
-  paint(g,w,h){frame(g,w,h,"NEXT GATES","#ff4f6b","what unlocks each network");const r=netRows().filter(x=>!x.live).slice(0,6);if(!r.length){g.fillStyle="#3dff8b";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("EVERY NETWORK LIVE",40,260)}r.forEach((n,i)=>{g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n.n+"  "+n.pct+"%",40,150+i*70);g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(n.next||"waiting",40,178+i*70)})},
-  html(){const r=netRows().filter(x=>!x.live);return r.length?r.map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.pct}%</span></div><p class="note" style="margin:-2px 0 8px 162px">Next: ${esc(n.next||"waiting")}</p>`).join(""):`<div class="big"><em>Every</em> network is live.</div>`}},
- {id:"sheets",row:1,col:3,t:"ONE-SHEET CAROUSEL",accent:"#ff5fd2",custom:"carousel",
-  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const c=CAR[carIdx];if(c&&c.im.complete&&c.im.naturalWidth){const s=Math.min(w/c.im.naturalWidth,(h-40)/c.im.naturalHeight);const iw=c.im.naturalWidth*s,ih=c.im.naturalHeight*s;g.drawImage(c.im,(w-iw)/2,0,iw,ih)}g.fillStyle="#ff5fd2";g.fillRect(0,0,w,6);g.fillStyle="#000b";g.fillRect(0,h-44,w,44);g.fillStyle="#fff";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(CAR[carIdx]?CAR[carIdx].s.t:"Loading one-sheets…",20,h-14);g.textAlign="right";g.fillStyle="#ffb84d";g.fillText("CLICK TO OPEN ▸",w-20,h-14);g.textAlign="left"}},
- {id:"pace",row:1,col:4,t:"DAILY PACE",accent:"#d7ff1f",live:1,
+ {id:"pace",row:0,col:6,t:"DAILY PACE",accent:"#d7ff1f",live:1,
   paint(g,w,h){frame(g,w,h,"DAILY PACE","#d7ff1f","how consistent is the posting");const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;bigNum(g,avg,"POSTS PER DAY, 30-DAY AVERAGE",40,230,"#d7ff1f");bigNum(g,act+"/"+d.length,"DAYS WITH POSTS",40,400,"#22e6ff")},
   html(){const d=days30(),sum=d.reduce((s,x)=>s+x.posts,0),avg=d.length?Math.round(sum/d.length):0,act=d.filter(x=>x.posts>0).length;return `<div class="k4"><div class="stat"><b>${avg}</b><span>Posts / day (avg)</span></div><div class="stat"><b>${act}/${d.length}</b><span>Days with posts</span></div><div class="stat"><b>${fmt(sum)}</b><span>Last ${d.length} days</span></div></div><p class="note">Consistency beats bursts. Elettro OS keeps the cadence going even when nobody is at the keyboard.</p>`}},
- {id:"links",row:1,col:5,t:"EXPLORE",accent:"#4fb3ff",
+/* ---------- MIDDLE ROW (education) ---------- */
+ {id:"platforms",row:1,col:0,t:"11 SOCIAL PLATFORMS",accent:"#ff5fd2",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#ff5fd2");g.fillStyle="#fff";g.font="800 58px 'Segoe UI',sans-serif";g.fillText("ONE PLAN.",34,120);g.fillStyle="#ff5fd2";g.fillText("11 PLATFORMS.",34,184);ELEVEN.forEach((n,i)=>{const col=i%3,row=Math.floor(i/3),x=34+col*320,y=228+row*80;const c=(NETS.find(z=>z.n===n)||{}).c||"#fff";g.fillStyle="#ffffff12";g.fillRect(x,y,296,62);g.fillStyle=c;g.fillRect(x,y,8,62);g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n,x+24,y+40)})},
+  html(){return `<div class="big">One plan, <em>11 platforms</em>.</div><div class="pl">${ELEVEN.map(n=>`<span style="border-color:${(NETS.find(z=>z.n===n)||{}).c}88">${n}</span>`).join("")}</div><p class="note">You do not make 11 different calendars. Elettro OS fits each post to the right platform, with the right format and caption length, then schedules it.</p><p class="note"><b>Live right now:</b> ${liveCount()} networks have already published through Elettro OS.</p>`}},
+ {id:"create",row:1,col:1,t:"STEP 1 · CREATE",accent:"#22e6ff",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#22e6ff");g.fillStyle="#22e6ff";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("① CREATE",34,150);lines(g,["Picks the best assets","from your tagged library","Builds the captions","Fits every post to its platform","Schedules the whole week"],40,230,64,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Step 1: <em>Create</em></div><div class="steps"><div><b>PICK</b><h4>Your best assets</h4><p>Elettro OS draws from your tagged photos, video and audio library, per brand and per content pillar.</p></div><div><b>WRITE</b><h4>Captions</h4><p>Each post gets a caption built for its platform.</p></div><div><b>FIT</b><h4>Every platform</h4><p>Right size, right format, right length: vertical video, carousels, 4:3 photos for Google Business, text posts.</p></div><div><b>SCHEDULE</b><h4>The whole week</h4><p>Every post lands on the calendar at its time. One push builds all of it.</p></div></div>`}},
+ {id:"math",row:1,col:2,t:"75 × 7 = 525",accent:"#ffb84d",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#ffb84d");g.fillStyle="#ffb84d";g.font="800 130px 'Segoe UI',sans-serif";g.fillText(PER_DAY+" × 7",34,160);g.fillStyle="#fff";g.fillText("= "+PER_WEEK,34,300);g.fillStyle="#b8b4c6";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("POSTS A WEEK, LOCKED AND LOADED",40,345);["MON","TUE","WED","THU","FRI","SAT","SUN"].forEach((d,i)=>{const x=40+i*138;g.fillStyle="#ffffff14";g.fillRect(x,380,124,150);g.fillStyle="#ffb84d";g.font="800 56px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText(PER_DAY,x+62,462);g.fillStyle="#9b97b4";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(d,x+62,505);g.textAlign="left"})},
+  html(){return `<div class="big"><em>${PER_DAY}</em> posts a day × 7 days = <em>${PER_WEEK}</em> a week</div><div class="dots">${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<div><b>${PER_DAY}</b>${d}</div>`).join("")}</div><p class="note">After you approve, the whole week is locked and loaded. Nobody has to open 11 apps every morning.</p><p class="note">For scale, the live ledger has published <b>${fmt(D.posts.total.published)}</b> posts so far and has <b>${fmt(D.posts.total.scheduled)}</b> scheduled.</p>`}},
+ {id:"hero",row:1,col:3,t:"ELETTRO OS · LIVE",accent:"#ffb84d",live:1,
+  paint(g,w,h){frame(g,w,h,"ELETTRO OS","#ffb84d","live from the Elettro OS ledger");g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("CONSISTENT DAILY POSTS",34,170);g.fillStyle="#ffb84d";g.fillText("ACROSS EVERY NETWORK",34,232);g.fillStyle="#22e6ff";g.font="800 150px 'Segoe UI',sans-serif";g.fillText(fmt(D.posts.total.published),30,390);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";g.fillText("POSTS PUBLISHED  ·  "+fmt(D.posts.total.scheduled)+" SCHEDULED  ·  "+liveCount()+" NETWORKS LIVE",34,450)},
+  html(){return `<div class="big">Elettro OS is how you get <em>consistent daily posts</em> across every network.</div><div class="k4"><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Posts published</span></div><div class="stat"><b>${fmt(D.posts.total.scheduled)}</b><span>Scheduled next</span></div><div class="stat"><b>${liveCount()}</b><span>Networks live</span></div><div class="stat"><b>${fmt(D.assets.total.total)}</b><span>Assets ready</span></div></div><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">Open the live dash ↗</a><a class="cta alt" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a>`}},
+ {id:"approve",row:1,col:4,t:"STEP 2 · APPROVE",accent:"#3dff8b",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#3dff8b");g.fillStyle="#3dff8b";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("② APPROVE",34,150);lines(g,["Review the week at a glance","Swap, pause or remove any post","One click approves the week","Locked and loaded"],40,236,70,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Step 2: <em>Approve</em></div><div class="steps"><div><b>REVIEW</b><h4>See the whole week</h4><p>Every post is laid out on the calendar for you to look over.</p></div><div><b>TWEAK</b><h4>Swap, pause, remove</h4><p>Do not like one post? Change just that one, the rest of the week stays put.</p></div><div><b>APPROVE</b><h4>One click</h4><p>Approve the week and the posts are locked and loaded.</p></div><div><b>DONE</b><h4>Walk away</h4><p>Elettro OS takes it from here.</p></div></div>`}},
+ {id:"auto",row:1,col:5,t:"AUTOPILOT",accent:"#ff9f43",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#ff9f43");g.fillStyle="#ff9f43";g.font="800 90px 'Segoe UI',sans-serif";g.fillText("AUTOPILOT",34,150);lines(g,["Publishes every 15 minutes","Per brand, on its own plan","Connections renew themselves","Pause or swap any time"],40,236,70,"700 40px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Then it runs on <em>autopilot</em>.</div><div class="steps"><div><b>EVERY 15 MIN</b><h4>Publishing tick</h4><p>Elettro OS checks the schedule every 15 minutes and publishes whatever is due.</p></div><div><b>PER BRAND</b><h4>Its own plan</h4><p>Each brand has its own pillars, mix and calendar.</p></div><div><b>SELF-RENEWING</b><h4>Connections</h4><p>Account tokens renew automatically.</p></div><div><b>YOU STAY IN CONTROL</b><h4>Calendar</h4><p>Pause, edit, swap or remove any scheduled post any time.</p></div></div>`}},
+ {id:"formats",row:1,col:6,t:"WHAT GETS POSTED",accent:"#c9c4ff",edu:1,
+  paint(g,w,h){frameEdu(g,w,h,"#c9c4ff");g.fillStyle="#c9c4ff";g.font="800 68px 'Segoe UI',sans-serif";g.fillText("WHAT GETS POSTED",34,140);lines(g,["Photos","Videos and Reels","Carousels","Text posts","Google Business updates"],40,226,66,"700 42px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Every format, <em>fitted per platform</em>.</div><div class="pl"><span>Photos</span><span>Vertical video</span><span>16:9 video</span><span>Carousels</span><span>Text posts</span><span>Google Business updates</span></div><p class="note">The same asset library feeds all of it. Elettro OS picks the right shape for each platform instead of you resizing everything by hand.</p>`}},
+/* ---------- BOTTOM ROW ---------- */
+ {id:"lanes",row:2,col:0,t:"NETWORK LANES",accent:"#ffc83d",live:1,
+  paint(g,w,h){frame(g,w,h,"NETWORK LANES","#ffc83d","Elettro OS connection progress");const r=netRows().slice(0,12);r.forEach((n,i)=>{const col=i<6?0:1,rr=i%6,x=34+col*486,y=120+rr*68;g.fillStyle="#d8d4ea";g.font="700 20px 'Segoe UI',sans-serif";g.fillText(n.n,x,y+22);g.fillStyle="#ffffff14";g.fillRect(x,y+32,430,16);g.fillStyle=n.c;g.fillRect(x,y+32,430*n.pct/100,16);g.fillStyle=n.live?"#3dff8b":"#ffb84d";g.textAlign="right";g.fillText(n.live?"LIVE":n.pct+"%",x+430,y+22);g.textAlign="left"})},
+  html(){return netRows().map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.live?'<span class="chip">LIVE</span>':n.pct+"%"}</span></div>`).join("")+`<p class="note">LIVE means Elettro OS has already published to that network. Others show how far through the connection checklist they are.</p>`}},
+ {id:"bynet",row:2,col:1,t:"POSTS BY NETWORK",accent:"#22e6ff",live:1,
+  paint(g,w,h){frame(g,w,h,"POSTS BY NETWORK","#22e6ff","published so far");const r=netRows().filter(x=>x.pub>0).slice(0,8);bars(g,r.map(x=>({l:x.n,v:x.pub,c:x.c})),34,110,w-68,50,Math.max(1,r[0]?r[0].pub:1))},
+  html(){const r=netRows().filter(x=>x.pub>0);const mx=Math.max(1,r[0]?r[0].pub:1);return r.map(x=>`<div class="row"><span>${esc(x.n)}</span><div class="bar"><i style="width:${x.pub/mx*100}%;background:${x.c}"></i></div><span class="v">${fmt(x.pub)} <small style="color:#9b97b4">+${x.sch}</small></span></div>`).join("")+`<p class="note">Bold number: published. Small number: scheduled.</p>`}},
+ {id:"gates",row:2,col:2,t:"NEXT GATES",accent:"#ff4f6b",live:1,
+  paint(g,w,h){frame(g,w,h,"NEXT GATES","#ff4f6b","what unlocks each network");const r=netRows().filter(x=>!x.live).slice(0,6);if(!r.length){g.fillStyle="#3dff8b";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("EVERY NETWORK LIVE",40,260)}r.forEach((n,i)=>{g.fillStyle="#fff";g.font="800 26px 'Segoe UI',sans-serif";g.fillText(n.n+"  "+n.pct+"%",40,150+i*70);g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(n.next||"waiting",40,178+i*70)})},
+  html(){const r=netRows().filter(x=>!x.live);return r.length?r.map(n=>`<div class="row"><span>${esc(n.n)}</span><div class="bar"><i style="width:${n.pct}%;background:${n.c}"></i></div><span class="v">${n.pct}%</span></div><p class="note" style="margin:-2px 0 8px 162px">Next: ${esc(n.next||"waiting")}</p>`).join(""):`<div class="big"><em>Every</em> network is live.</div>`}},
+ {id:"sheets",row:2,col:3,t:"ONE-SHEET CAROUSEL",accent:"#ff5fd2",custom:"carousel",
+  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const n=CAR.length,sl=w/3,ph=h-46;
+  for(let k=0;k<3&&n;k++){const c=CAR[(carIdx+k)%n];if(!(c&&c.im.complete&&c.im.naturalWidth))continue;const s=Math.min((sl-16)/c.im.naturalWidth,ph/c.im.naturalHeight);const iw=c.im.naturalWidth*s,ih=c.im.naturalHeight*s;g.drawImage(c.im,k*sl+(sl-iw)/2,(ph-ih)/2+4,iw,ih);if(k===0){g.strokeStyle="#ffb84d";g.lineWidth=4;g.strokeRect(k*sl+(sl-iw)/2,(ph-ih)/2+4,iw,ih)}}
+  g.fillStyle="#ff5fd2";g.fillRect(0,0,w,6);g.fillStyle="#000c";g.fillRect(0,h-44,w,44);g.fillStyle="#fff";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(CAR[carIdx]?CAR[carIdx].s.t:"Loading one-sheets…",20,h-14);g.textAlign="right";g.fillStyle="#ffb84d";g.fillText("CLICK TO OPEN ▸",w-20,h-14);g.textAlign="left"}},
+ {id:"why",row:2,col:4,t:"WHY DAILY WINS",accent:"#d7ff1f",edu:1,live:1,
+  paint(g,w,h){frameEdu(g,w,h,"#d7ff1f");g.fillStyle="#d7ff1f";g.font="800 70px 'Segoe UI',sans-serif";g.fillText("SHOW UP DAILY",34,140);lines(g,["Every post is another chance","to be seen","Fresh content on every network","No more scrambling each morning"],40,226,62,"700 38px 'Segoe UI',sans-serif","#e9e6f5");const d=days30(),act=d.filter(x=>x.posts>0).length;g.fillStyle="#22e6ff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("LAST "+d.length+" DAYS: POSTED ON "+act+" OF THEM",40,520)},
+  html(){const d=days30(),act=d.filter(x=>x.posts>0).length;return `<div class="big">Daily presence <em>compounds</em>.</div><p class="note">Every post is another chance to be seen. Elettro OS keeps every network fed, so the schedule never goes quiet because someone was busy.</p><div class="k4"><div class="stat"><b>${act}/${d.length}</b><span>Days with posts, last ${d.length}</span></div><div class="stat"><b>${fmt(D.posts.total.published)}</b><span>Total published</span></div></div>`}},
+ {id:"links",row:2,col:5,t:"EXPLORE",accent:"#4fb3ff",
   paint(g,w,h){frame(g,w,h,"EXPLORE","#4fb3ff","click to open the links");["elettro.com/dash","elettro.com/dash/social","elettro.com","Back to the Street"].forEach((s,i)=>{g.fillStyle="#ffffff14";g.fillRect(34,120+i*92,w-68,76);g.fillStyle="#fff";g.font="800 32px 'Segoe UI',sans-serif";g.fillText(s+"  ↗",64,170+i*92)})},
   html(){return `<p class="note">Everything on these screens is live from the same Elettro OS data.</p><a class="cta" href="https://elettro.com/dash/" target="_blank" rel="noopener">elettro.com/dash ↗</a><a class="cta" href="https://elettro.com/dash/social/" target="_blank" rel="noopener">Social dash ↗</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a><a class="cta alt" href="../../index.html">Back to the Street</a>`}},
- {id:"cta",row:1,col:6,t:"GET ELETTRO OS",accent:"#ffb84d",
+ {id:"cta",row:2,col:6,t:"GET ELETTRO OS",accent:"#ffb84d",
   paint(g,w,h){frame(g,w,h,"GET ELETTRO OS","#ffb84d");g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("YOUR BRAND ON",34,200);g.fillText("THIS WALL.",34,265);g.fillStyle="#ffb84d";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("elettro.com  ·  contact@elettro.com",34,350)},
-  html(){return `<div class="big">Put <em>your brand</em> on this wall.</div><p class="note">Consistent daily posts on every network, planned once, published on autopilot.</p><a class="cta" href="mailto:contact@elettro.com">contact@elettro.com</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a>`}}
+  html(){return `<div class="big">Put <em>your brand</em> on this wall.</div><p class="note">A week of posts in 2 button pushes: Create, then Approve.</p><a class="cta" href="mailto:contact@elettro.com">contact@elettro.com</a><a class="cta alt" href="https://elettro.com" target="_blank" rel="noopener">elettro.com ↗</a>`}}
 ];
+const byId=id=>PANELS.findIndex(p=>p.id===id);
 
-/* build wall meshes */
+/* ---- wall: contiguous video-wall tiles with thin bezels ---- */
 const pickables=[];
-const W=4.2,H=W*9/16;
+const W=4.4,H=W*9/16;
 PANELS.forEach((p,i)=>{
   p.cv=document.createElement("canvas");p.cv.width=1024;p.cv.height=576;p.g=p.cv.getContext("2d");
   p.tex=new THREE.CanvasTexture(p.cv);p.tex.encoding=THREE.sRGBEncoding;p.tex.anisotropy=8;
-  const th=(p.col-3)*STEP, y=p.row===0?5.3:2.75;
+  const th=(p.col-3)*STEP,y=ROWY[p.row];
   const grp=new THREE.Group();grp.position.set(Math.sin(th)*R,y,-Math.cos(th)*R);grp.rotation.y=-th;
-  const bez=new THREE.Mesh(new THREE.BoxGeometry(W+.22,H+.22,.14),darkM);grp.add(bez);
-  const edge=new THREE.Mesh(new THREE.BoxGeometry(W+.3,H+.3,.08),new THREE.MeshBasicMaterial({color:new THREE.Color(p.accent)}));edge.position.z=-.06;grp.add(edge);
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(W,H),new THREE.MeshBasicMaterial({map:p.tex}));m.position.z=.08;m.userData.pid=i;grp.add(m);pickables.push(m);
+  grp.add(new THREE.Mesh(new THREE.BoxGeometry(W+.08,H+.08,.16),dark));
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(W-.04,H-.04),new THREE.MeshBasicMaterial({map:p.tex}));m.position.z=.09;m.userData.pid=i;grp.add(m);pickables.push(m);
+  const lip=new THREE.Mesh(new THREE.BoxGeometry(W+.08,.03,.04),new THREE.MeshBasicMaterial({color:new THREE.Color(p.accent)}));lip.position.set(0,-(H+.08)/2,.1);grp.add(lip);
   scene.add(grp);p.pos=new THREE.Vector3(grp.position.x,y,grp.position.z);p.th=th;p.mesh=m;
 });
-function paintPanel(p){if(p.paint){p.g.clearRect(0,0,1024,576);p.paint(p.g,1024,576)}p.tex.needsUpdate=true}
+function paintPanel(p){p.g.clearRect(0,0,1024,576);p.paint(p.g,1024,576);p.tex.needsUpdate=true}
 function repaintAll(){PANELS.forEach(paintPanel);paintTicker()}
+setInterval(()=>{if(!CAR.length||!carAuto)return;carIdx=(carIdx+1)%CAR.length;paintPanel(PANELS[byId("sheets")]);if(openIdx>=0&&PANELS[openIdx].custom==="carousel")showCar()},6000);
 
-/* carousel rotation */
-setInterval(()=>{if(!CAR.length||!carAuto)return;carIdx=(carIdx+1)%CAR.length;paintPanel(PANELS.find(p=>p.id==="sheets"));if(openIdx>=0&&PANELS[openIdx].custom==="carousel")showCar()},6000);
-
-/* ----- operator desk (curved) with monitors, chairs ----- */
-const DR=8.4,dA=(COLS*STEP)/2-.12;
-const desk=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,.95,64,1,true,Math.PI-dA,dA*2),new THREE.MeshStandardMaterial({color:0x15161f,roughness:.5,metalness:.4,side:THREE.DoubleSide}));desk.position.y=.475;scene.add(desk);
-const deskTop=new THREE.Mesh(new THREE.RingGeometry(DR-.5,DR+.55,64,1,Math.PI/2-dA,dA*2),new THREE.MeshStandardMaterial({color:0x2a1a12,roughness:.35,metalness:.2,side:THREE.DoubleSide}));deskTop.rotation.x=-Math.PI/2;deskTop.position.y=.96;scene.add(deskTop);
-const deskEdge=new THREE.Mesh(new THREE.CylinderGeometry(DR+.55,DR+.55,.06,64,1,true,Math.PI-dA,dA*2),new THREE.MeshBasicMaterial({color:0xffb84d,side:THREE.DoubleSide}));deskEdge.position.y=.95;scene.add(deskEdge);
-const monIdx=[1,0,2,3,4,6,5,7,9];
-for(let k=0;k<9;k++){const a=(k-4)*.17;const x=Math.sin(a)*(DR-.1),z=-Math.cos(a)*(DR-.1);
-  const mm=new THREE.Mesh(new THREE.PlaneGeometry(1.15,.65),new THREE.MeshBasicMaterial({map:PANELS[monIdx[k]%PANELS.length].tex}));mm.position.set(x,1.4,z);mm.rotation.y=-a;mm.rotation.x=-.18;scene.add(mm);
-  const fr=new THREE.Mesh(new THREE.BoxGeometry(1.25,.75,.06),darkM);fr.position.copy(mm.position);fr.position.z+=0;fr.rotation.copy(mm.rotation);fr.translateZ(-.05);scene.add(fr);
-  const st=new THREE.Mesh(new THREE.BoxGeometry(.1,.4,.1),darkM);st.position.set(x,1.1,z);scene.add(st)}
-function chair(r,a){const g=new THREE.Group();const seat=new THREE.Mesh(new THREE.BoxGeometry(.9,.18,.85),leather);seat.position.y=.52;g.add(seat);
-  const back=new THREE.Mesh(new THREE.BoxGeometry(.9,.95,.16),leather);back.position.set(0,1.05,.42);back.rotation.x=.08;g.add(back);
-  [-.5,.5].forEach(x=>{const arm=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.7),amberM);arm.position.set(x,.8,0);g.add(arm)});
-  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.45,8),darkM);stem.position.y=.25;g.add(stem);
-  const foot=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,.05,16),darkM);foot.position.y=.03;g.add(foot);
+/* ============ FURNITURE: operator desk, console stations, leather chairs, people ============ */
+const DR=10.0,dA=(COLS*STEP)/2-.1;
+const desk=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,1.0,64,1,true,Math.PI-dA,dA*2),wood);desk.position.y=.5;scene.add(desk);
+const deskTop=new THREE.Mesh(new THREE.RingGeometry(DR-.7,DR+.75,64,1,Math.PI/2-dA,dA*2),new THREE.MeshStandardMaterial({color:0xe6d6bf,roughness:.3,metalness:.1,side:THREE.DoubleSide}));deskTop.rotation.x=-Math.PI/2;deskTop.position.y=1.02;scene.add(deskTop);
+const deskEdge=new THREE.Mesh(new THREE.CylinderGeometry(DR+.75,DR+.75,.07,64,1,true,Math.PI-dA,dA*2),new THREE.MeshBasicMaterial({color:0xffa24a,side:THREE.DoubleSide}));deskEdge.position.y=1.0;scene.add(deskEdge);
+const monMap=["hero","two","daily","math","assets","create","approve","auto","race","brands"];
+for(let k=0;k<11;k++){const a=(k-5)*.14;const x=Math.sin(a)*(DR-.15),z=-Math.cos(a)*(DR-.15);
+  const mm=new THREE.Mesh(new THREE.PlaneGeometry(1.2,.68),new THREE.MeshBasicMaterial({map:PANELS[byId(monMap[k%monMap.length])].tex}));mm.position.set(x,1.55,z);mm.rotation.y=-a;mm.rotation.x=-.18;scene.add(mm);
+  const fr=new THREE.Mesh(new THREE.BoxGeometry(1.3,.78,.06),dark);fr.position.copy(mm.position);fr.rotation.copy(mm.rotation);fr.translateZ(-.05);scene.add(fr);
+  const stand=new THREE.Mesh(new THREE.BoxGeometry(.1,.3,.1),dark);stand.position.set(x,1.2,z);scene.add(stand);
+  const kb=new THREE.Mesh(new THREE.BoxGeometry(.7,.03,.22),dark);kb.position.set(Math.sin(a)*(DR-.65),1.06,-Math.cos(a)*(DR-.65));kb.rotation.y=-a;scene.add(kb)}
+function chair(r,a,m){const g=new THREE.Group();const M=m||leather;const seat=new THREE.Mesh(new THREE.CylinderGeometry(.46,.46,.2,16),M);seat.position.y=.68;g.add(seat);
+  const back=new THREE.Mesh(new THREE.CylinderGeometry(.5,.5,.7,16,1,true,Math.PI*.2,Math.PI*1.6),new THREE.MeshStandardMaterial({color:M.color,roughness:.4,metalness:.1,side:THREE.DoubleSide}));back.position.set(0,1.1,0);g.add(back);
+  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.6,8),brass);stem.position.y=.35;g.add(stem);
+  const foot=new THREE.Mesh(new THREE.TorusGeometry(.32,.03,8,20),brass);foot.rotation.x=Math.PI/2;foot.position.y=.18;g.add(foot);
   g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
-for(let k=-3;k<=3;k++)chair(7.0,k*.2);
-for(let k=-2;k<=3;k++)chair(5.6,(k-.5)*.22);
-// foreground consoles: low angled desks with glowing screens
-function console_(r,a){const g=new THREE.Group();const b=new THREE.Mesh(new THREE.BoxGeometry(1.4,.8,.9),new THREE.MeshStandardMaterial({color:0x1c1520,roughness:.5,metalness:.4}));b.position.y=.4;g.add(b);
-  const s=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.5),new THREE.MeshBasicMaterial({map:PANELS[(Math.abs(Math.round(a*10)))%PANELS.length].tex}));s.position.set(0,.85,-.12);s.rotation.x=-.9;g.add(s);
+function station(r,a,pid){const g=new THREE.Group();
+  const cab=new THREE.Mesh(new THREE.BoxGeometry(1.5,.95,1.0),wood);cab.position.y=.48;g.add(cab);
+  const top=new THREE.Mesh(new THREE.BoxGeometry(1.56,.06,1.06),brass);top.position.y=.98;g.add(top);
+  const hood=new THREE.Mesh(new THREE.BoxGeometry(1.3,1.0,.14),wood);hood.position.set(0,1.5,-.4);hood.rotation.x=-.2;g.add(hood);
+  const scr=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.62),new THREE.MeshBasicMaterial({map:PANELS[byId(pid)].tex}));scr.position.set(0,1.5,-.32);scr.rotation.x=-.2;g.add(scr);
+  const pad=new THREE.Mesh(new THREE.BoxGeometry(.9,.04,.35),new THREE.MeshBasicMaterial({color:0x2a7bff}));pad.position.set(0,1.03,.2);pad.rotation.x=-.18;g.add(pad);
   g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
-[-.55,-.28,0,.28,.55].forEach(a=>console_(4.2,a));
+for(let k=-3;k<=3;k++)chair(9.0,k*.2,leatherT);
+const stIds=["bynet","platforms","create","hero","approve","auto","formats"];
+for(let k=-3;k<=3;k++){station(7.2,k*.24,stIds[k+3]);chair(6.4,k*.24,leather)}
+const skin=mat(0x15100f,.8,.1);
+function person(r,a,h,tilt){const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CylinderGeometry(.19,.26,h*.58,10),mat(0x181420,.9,0));body.position.y=h*.44;g.add(body);
+  const legs=new THREE.Mesh(new THREE.CylinderGeometry(.16,.13,h*.45,8),mat(0x0d0b12,.9,0));legs.position.y=h*.22;g.add(legs);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.15,12,10),skin);head.position.y=h*.9;g.add(head);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a+(tilt||0);scene.add(g)}
+[[5.2,-.5,1.78],[5.0,-.36,1.68],[5.3,-.2,1.82],[5.1,.05,1.74],[5.4,.22,1.7],[5.0,.4,1.86],[5.3,.56,1.65],[4.7,-.62,1.72],[4.8,.68,1.76]].forEach(p=>person(p[0],p[1],p[2],(Math.random()-.5)*.4));
 
-/* exit door (behind the starting position) */
 const doorTex=ctex(512,1024,(g,w,h)=>{g.fillStyle="#2b1d14";g.fillRect(0,0,w,h);g.strokeStyle="#d69a3a";g.lineWidth=8;g.strokeRect(10,10,w-20,h-20);g.fillStyle="#0f7a3a";g.fillRect(110,50,w-220,110);g.fillStyle="#fff";g.font="800 90px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText("EXIT",w/2,135);g.fillStyle="#d69a3a";g.beginPath();g.arc(w-70,640,16,0,7);g.fill()});
 const door=new THREE.Mesh(new THREE.PlaneGeometry(2.1,4.2),new THREE.MeshBasicMaterial({map:doorTex}));door.position.set(0,2.1,WALLR-.08);door.rotation.y=Math.PI;door.userData.exit=true;scene.add(door);
-const dgl=new THREE.PointLight(0x35d07f,.8,9,2);dgl.position.set(0,4.2,WALLR-1.2);scene.add(dgl);
-pickables.push(door);
+const dgl=new THREE.PointLight(0x35d07f,.8,9,2);dgl.position.set(0,4.2,WALLR-1.2);scene.add(dgl);pickables.push(door);
 
 /* ============ CAMERA / CONTROLS (museum pattern) ============ */
-const st={x:0,z:3.4,y:EYE,yaw:0,pitch:0,gx:0,gz:3.4,gy:EYE,gyaw:0,gpitch:0,autoPos:false,autoLook:false,focus:-1,bx:0,bz:3.4};
-const keys={};
-const maxR=7.6;
+const START_Z=3.6;
+const st={x:0,z:START_Z,y:EYE,yaw:0,pitch:.1,gx:0,gz:START_Z,gy:EYE,gyaw:0,gpitch:.1,autoPos:false,autoLook:false,focus:-1,bx:0,bz:START_Z};
+const keys={};const maxR=5.0;
 function clampPos(){const r=Math.hypot(st.x,st.z);if(r>maxR){st.x*=maxR/r;st.z*=maxR/r}}
 function angDelta(a,b){let d=b-a;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
 function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
 addEventListener("resize",resize);resize();
 const hint=$("#hint");const hideHint=()=>hint.classList.add("off");
 
-let openIdx=-1;
-function focusOn(i){
+let openIdx=-1,ovT=0;
+function focusOn(i){setFov(FOV0);
   const p=PANELS[i];if(st.focus<0){st.bx=st.x;st.bz=st.z}
-  st.focus=i;const dist=3.7;
-  st.gx=p.pos.x-Math.sin(p.th)*dist;st.gz=p.pos.z+Math.cos(p.th)*dist;st.gy=Math.max(1.9,p.pos.y-.7);
-  st.gyaw=-p.th;const dh=Math.hypot(st.gx-p.pos.x,st.gz-p.pos.z);st.gpitch=Math.atan((p.pos.y-st.gy)/dh);
+  st.focus=i;const port=innerWidth/innerHeight<1;const dist=port?6.6:3.9;
+  st.gx=p.pos.x-Math.sin(p.th)*dist;st.gz=p.pos.z+Math.cos(p.th)*dist;st.gy=Math.max(port?2.4:1.9,p.pos.y-.6);
+  st.gyaw=-p.th;const dh=Math.hypot(st.gx-p.pos.x,st.gz-p.pos.z);st.gpitch=Math.atan((p.pos.y-st.gy)/dh)-(port?.2:0);
   st.autoPos=true;st.autoLook=true;hideHint();
   openIdx=i;clearTimeout(ovT);ovT=setTimeout(()=>{if(openIdx===i)renderOverlay(i)},850);
 }
-let ovT=0;
 function unfocus(){
-  $("#ov").classList.remove("on");openIdx=-1;clearTimeout(ovT);
-  if(st.focus>=0){st.focus=-1;st.gx=st.bx;st.gz=st.bz;st.gy=EYE;st.gpitch=0;st.gyaw=0;st.autoPos=true;st.autoLook=true}
+  $("#ov").classList.remove("on","full");openIdx=-1;clearTimeout(ovT);
+  if(st.focus>=0){st.focus=-1;st.gx=st.bx;st.gz=st.bz;st.gy=EYE;st.gpitch=.1;st.gyaw=0;st.autoPos=true;st.autoLook=true}
 }
 function renderOverlay(i,refresh){
-  const p=PANELS[i];$("#ovT").textContent=p.t;$("#ovS").textContent=p.live?(D.live?"LIVE FROM ELETTRO OS":"SNAPSHOT"):"";
+  const p=PANELS[i];$("#ovT").textContent=p.t;$("#ovS").textContent=p.live?(D.live?"LIVE FROM ELETTRO OS":"SNAPSHOT"):(p.edu?"HOW ELETTRO OS WORKS":"");
   $("#ovN").textContent=(i+1)+" of "+PANELS.length;
-  if(p.custom==="carousel"){if(!refresh)buildCar();else showCar()}else{$("#ovB").innerHTML=p.html()}
+  if(p.custom==="carousel"){$("#ov").classList.add("full");if(!refresh)buildCar();else showCar()}else{$("#ovB").innerHTML=p.html()}
   $("#ov").classList.add("on");
 }
 function buildCar(){
@@ -308,28 +389,38 @@ function buildCar(){
   $("#cS").innerHTML=sheetsMeta().map((s,k)=>`<img src="img/${s.f}" data-k="${k}" alt="${esc(s.t)}" loading="lazy">`).join("");
   $("#cL").onclick=()=>{carAuto=false;stepCar(-1)};$("#cR").onclick=()=>{carAuto=false;stepCar(1)};
   $("#cA").onclick=()=>{carAuto=!carAuto;showCar()};
-  $("#cS").onclick=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k!=null){carAuto=false;carIdx=+k;paintPanel(PANELS.find(p=>p.id==="sheets"));showCar()}};
+  $("#cS").onclick=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k!=null){carAuto=false;carIdx=+k;paintPanel(PANELS[byId("sheets")]);showCar()}};
   showCar();
 }
-function stepCar(d){if(!CAR.length)return;carIdx=(carIdx+d+CAR.length)%CAR.length;paintPanel(PANELS.find(p=>p.id==="sheets"));showCar()}
+function stepCar(d){if(!CAR.length)return;carIdx=(carIdx+d+CAR.length)%CAR.length;paintPanel(PANELS[byId("sheets")]);showCar()}
 function showCar(){const s=CAR[carIdx]&&CAR[carIdx].s;if(!s||!$("#cI"))return;$("#cI").src="img/"+s.f;$("#cT").textContent=s.t;$("#cO").href="img/"+s.f;$("#cA").textContent=carAuto?"⏸ Pause":"▶ Auto-play";
   document.querySelectorAll("#cS img").forEach(im=>{const on=+im.dataset.k===carIdx;im.classList.toggle("on",on);if(on&&carAuto)im.scrollIntoView({block:"nearest",inline:"center"})})}
-$("#ovX").onclick=unfocus;
+$("#ovX").onclick=unfocus;$("#ovExp").onclick=()=>$("#ov").classList.toggle("full");
 $("#ovP").onclick=()=>focusOn((openIdx-1+PANELS.length)%PANELS.length);
 $("#ovNx").onclick=()=>focusOn((openIdx+1)%PANELS.length);
 addEventListener("keydown",e=>{keys[e.code]=true;
-  if(e.code==="Escape")unfocus();
+  if(e.code==="Escape"){if(tour)stopTour();else unfocus()}
   if(openIdx>=0&&e.code==="ArrowRight"){focusOn((openIdx+1)%PANELS.length);e.preventDefault()}
   if(openIdx>=0&&e.code==="ArrowLeft"){focusOn((openIdx-1+PANELS.length)%PANELS.length);e.preventDefault()}
   if(["KeyW","KeyA","KeyS","KeyD","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code))hideHint()});
 addEventListener("keyup",e=>{keys[e.code]=false});
 let drag=null;const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
-canvas.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)});
+const ptrs=new Map();let pinchD=0;
+const FOV0=74;function setFov(f){camera.fov=Math.max(28,Math.min(96,f));camera.updateProjectionMatrix()}
+const pdist=()=>{const a=[...ptrs.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};
+canvas.addEventListener("pointerdown",e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===2){drag=null;pinchD=pdist();if(tour)stopTour();hideHint();return}
+  drag={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)});
 canvas.addEventListener("pointermove",e=>{
+  if(ptrs.has(e.pointerId))ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size>=2){const d=pdist();if(pinchD>0)setFov(camera.fov*(pinchD/d));pinchD=d;return}
   if(drag){const dx=e.clientX-drag.lx,dy=e.clientY-drag.ly;drag.lx=e.clientX;drag.ly=e.clientY;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;
-    if(drag.moved){tour=false;st.yaw+=dx*.0042;st.pitch=Math.max(-1.1,Math.min(1.1,st.pitch+dy*.0035));st.gyaw=st.yaw;st.gpitch=st.pitch;st.autoLook=false;hideHint()}}
+    if(drag.moved){if(tour)stopTour();st.yaw+=dx*.0042;st.pitch=Math.max(-1.1,Math.min(1.3,st.pitch+dy*.0035));st.gyaw=st.yaw;st.gpitch=st.pitch;st.autoLook=false;hideHint()}}
   else hover(e)});
-canvas.addEventListener("pointerup",e=>{if(drag&&!drag.moved)click(e);drag=null});
+function endPtr(e){ptrs.delete(e.pointerId);if(ptrs.size<2)pinchD=0}
+canvas.addEventListener("pointerup",e=>{const was=ptrs.size;endPtr(e);if(was<2&&drag&&!drag.moved)click(e);drag=null});
+canvas.addEventListener("pointercancel",e=>{endPtr(e);drag=null});
+canvas.addEventListener("dblclick",()=>setFov(FOV0));
 function pick(e){mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(mouse,camera);return ray.intersectObjects(pickables.concat([floor]),false)[0]||null}
 const tip=$("#tip");
 function hover(e){const h=pick(e);const o=h&&h.object;
@@ -337,26 +428,29 @@ function hover(e){const h=pick(e);const o=h&&h.object;
   else if(o&&o.userData.pid!==undefined){canvas.classList.add("hover");tip.textContent=PANELS[o.userData.pid].t+"  ·  click to open";tip.style.opacity=1}
   else{canvas.classList.remove("hover");tip.style.opacity=0;return}
   tip.style.left=e.clientX+"px";tip.style.top=e.clientY+"px"}
-function click(e){const h=pick(e);if(!h)return;hideHint();tour=false;
+function clampTarget(){const r=Math.hypot(st.gx,st.gz);if(r>maxR){st.gx*=maxR/r;st.gz*=maxR/r}}
+function click(e){const h=pick(e);if(!h)return;hideHint();if(tour)stopTour();
   if(h.object.userData.exit){location.href="../../index.html";return}
   if(h.object.userData.pid!==undefined){focusOn(h.object.userData.pid);return}
-  if(h.object===floor){if(st.focus>=0)unfocus();st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;st.autoPos=true;clampTarget();const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=0}}
-function clampTarget(){const r=Math.hypot(st.gx,st.gz);if(r>maxR){st.gx*=maxR/r;st.gz*=maxR/r}}
-canvas.addEventListener("wheel",e=>{e.preventDefault();hideHint();tour=false;let dy=e.deltaY;if(e.deltaMode===1)dy*=30;const amt=Math.max(-2.5,Math.min(2.5,-dy*.012));
+  if(h.object===floor){if(st.focus>=0)unfocus();st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;clampTarget();st.autoPos=true;const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=.1}}
+canvas.addEventListener("wheel",e=>{e.preventDefault();hideHint();if(e.ctrlKey){setFov(camera.fov*Math.exp(e.deltaY*.01));return}if(tour)stopTour();let dy=e.deltaY;if(e.deltaMode===1)dy*=30;const amt=Math.max(-2.5,Math.min(2.5,-dy*.012));
   if(st.focus>=0)unfocus();st.autoPos=false;st.autoLook=false;st.x+=-Math.sin(st.yaw)*amt;st.z+=-Math.cos(st.yaw)*amt;clampPos();st.gx=st.x;st.gz=st.z},{passive:false});
-let padDir=0;[["padF",1],["padB",-1]].forEach(([id,d])=>{const b=$("#"+id);b.addEventListener("pointerdown",e=>{padDir=d;hideHint();tour=false;e.stopPropagation()});["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev,()=>{padDir=0}))});
+let padDir=0;[["padF",1],["padB",-1]].forEach(([id,d])=>{const b=$("#"+id);b.addEventListener("pointerdown",e=>{padDir=d;hideHint();if(tour)stopTour();e.stopPropagation()});["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev,()=>{padDir=0}))});
 
-/* guided wall tour */
-let tour=false,tourT=0,tourI=0;
-$("#tourBtn").onclick=()=>{tour=!tour;tourI=0;tourT=0;$("#tourBtn").textContent=tour?"■ Stop tour":"▶ Wall tour";if(!tour)unfocus();else{unfocus();hideHint()}};
+/* guided tours: "How it works" (education) and "Wall tour" (everything) */
+let tour=false,tourT=0,tourI=0,tourOrder=[];
+function startTour(ids,btnEl){tour=true;tourOrder=ids.map(byId);tourI=0;tourT=0;unfocus();hideHint();btnEl.textContent="■ Stop tour"}
+function stopTour(){tour=false;$("#tourBtn").textContent="▶ Wall tour";$("#learnBtn").textContent="★ How it works";unfocus()}
+$("#learnBtn").onclick=()=>{if(tour){stopTour();return}startTour(["two","create","approve","math","platforms","auto","formats","hero","why"],$("#learnBtn"))};
+$("#tourBtn").onclick=()=>{if(tour){stopTour();return}startTour(["hero","assets","daily","race","brands","upcoming","pace","bynet","lanes","gates","sheets","links","cta"],$("#tourBtn"))};
 
 let lastT=performance.now();
 function loop(now){
   const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
-  if(tour){tourT-=dt;if(tourT<=0){tourT=7;const order=[3,0,1,2,4,5,6,10,7,9,8,11,12,13];focusOn(order[tourI%order.length]);tourI++}}
+  if(tour){tourT-=dt;if(tourT<=0){tourT=8;if(tourI>=tourOrder.length){stopTour()}else{focusOn(tourOrder[tourI]);tourI++}}}
   let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f++;if(keys.KeyS||keys.ArrowDown)f--;if(keys.KeyD)s++;if(keys.KeyA)s--;f+=padDir;
   if(openIdx<0){if(keys.ArrowLeft)st.yaw+=1.7*dt,st.gyaw=st.yaw;if(keys.ArrowRight)st.yaw-=1.7*dt,st.gyaw=st.yaw}
-  if(f||s){tour=false;st.autoPos=false;st.autoLook=false;if(st.focus>=0||openIdx>=0)unfocus();
+  if(f||s){if(tour)stopTour();st.autoPos=false;st.autoLook=false;if(st.focus>=0||openIdx>=0)unfocus();
     const sp=(keys.ShiftLeft?6:3.4)*dt;st.x+=(-Math.sin(st.yaw)*f+Math.cos(st.yaw)*s)*sp;st.z+=(-Math.cos(st.yaw)*f-Math.sin(st.yaw)*s)*sp;clampPos();st.gx=st.x;st.gz=st.z}
   const k=1-Math.exp(-dt*3.6);
   if(st.autoPos){st.x+=(st.gx-st.x)*k;st.z+=(st.gz-st.z)*k;if(Math.hypot(st.gx-st.x,st.gz-st.z)<.02)st.autoPos=false}
@@ -366,9 +460,9 @@ function loop(now){
   tk.offset.x=-(now/1000*.012)%1;
   renderer.render(scene,camera);requestAnimationFrame(loop)}
 repaintAll();pull();setInterval(pull,60000);
-// re-paint once the one-sheet images have loaded
-setTimeout(()=>paintPanel(PANELS.find(p=>p.id==="sheets")),1500);
-const hash=location.hash.slice(1);const hi=PANELS.findIndex(p=>p.id===hash);if(hi>=0)setTimeout(()=>focusOn(hi),900);
+setTimeout(()=>paintPanel(PANELS[byId("sheets")]),1500);
+const hash=location.hash.slice(1);const hi=byId(hash);if(hi>=0)setTimeout(()=>focusOn(hi),900);
+if(hash==="tour")setTimeout(()=>$("#learnBtn").click(),900);
 requestAnimationFrame(t=>{lastT=t;loop(t)});
 setTimeout(()=>$("#load").classList.add("off"),700);
 window.__room={st,PANELS,focusOn,camera,renderer,scene};

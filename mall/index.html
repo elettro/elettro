@@ -39,7 +39,7 @@ html,body{height:100%;overflow:hidden;background:var(--ink);font-family:"Segoe U
 .num{position:absolute;top:calc(38% + 74px);left:50%;transform:translate(-50%,0) translateZ(30px);background:#0008;border:1px solid #fff4;border-radius:4px;padding:1px 8px;font-size:12px;color:#ffd98a}
 .shopwin{position:absolute;bottom:0;width:30%;height:34%;background:linear-gradient(#202a52,#141a38);border:6px solid #2a2230;transform:translateZ(14px);display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:8px;overflow:hidden}
 .shopwin span{display:block;width:22%;background:#ffffff1a;border-radius:3px 3px 0 0}
-.door{position:absolute;bottom:0;left:50%;width:30%;aspect-ratio:1/1.75;margin-left:-15%;background:#1a1626;border:6px solid #2a2230;border-bottom:0;transform:translateZ(16px);perspective:500px;cursor:pointer}
+.door{position:absolute;bottom:0;left:50%;height:min(34%,21vh);width:min(12vh,14vw);aspect-ratio:auto;margin-left:calc(min(12vh,14vw) / -2);background:#1a1626;border:6px solid #2a2230;border-bottom:0;transform:translateZ(16px);perspective:500px;cursor:pointer}
 .door.open{background:radial-gradient(circle at 50% 60%,#fff6d0,#ffb04c 70%);box-shadow:0 0 90px 20px #ffb04c}
 .leaf{position:absolute;inset:0;background:linear-gradient(90deg,#3a2c44,#2b2236);transform-origin:left center;transition:transform .9s cubic-bezier(.5,0,.2,1),background .3s;box-shadow:inset 0 0 0 5px #0003,inset 0 0 0 14px #ffffff0d}
 .leaf:after{content:"";position:absolute;right:8px;top:52%;width:8px;height:8px;border-radius:50%;background:#e8c46a}
@@ -85,7 +85,19 @@ html,body{height:100%;overflow:hidden;background:var(--ink);font-family:"Segoe U
 #inside .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 #inside a,#inside button{border:0;background:#111;color:#fff;text-decoration:none;font:700 14px "Segoe UI",sans-serif;padding:12px 20px;border-radius:10px;cursor:pointer}
 #inside button{background:#e9e9ef;color:#111}
-@media(max-width:700px){#panel{flex-wrap:wrap}#panel a{width:100%;text-align:center}.hint{display:none}.nav{top:36%}}
+@media(max-width:700px){
+ #panel{left:8px;right:8px;width:auto;transform:none;bottom:10px;padding:8px 10px;gap:10px;flex-wrap:nowrap;border-radius:12px}
+ #panel .big{width:40px;height:40px;font-size:22px;border-radius:9px}
+ #panel h2{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #panel p{display:none}
+ #panel .tag{font-size:10px}
+ #panel a{width:auto;padding:10px 14px;font-size:13px}
+ .hint{display:none}.nav{top:34%;width:44px;height:44px}
+ .dots{bottom:76px}
+ .sign{font-size:17px;height:54px}
+ #inside .card{padding:16px 18px;max-height:62vh;overflow:auto}#inside h1{font-size:22px}#inside .ico{font-size:38px}#inside p{font-size:14px;margin:6px 0 12px}
+}
+@media(max-height:520px){#panel p{display:none}#panel{padding:6px 10px}.dots{bottom:64px}}
 </style>
 </head>
 <body>
