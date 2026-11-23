@@ -277,7 +277,7 @@ add(box(8.8, .28, 7.4, [M.slate, M.slate, M.stucco, M.stucco, M.slate, M.slate],
   const sm = new THREE.Mesh(new THREE.PlaneGeometry(.75, 2.2), M.mosaic); sm.rotation.x = -Math.PI / 2; sm.position.set(7.22, .006, 3.7); scene.add(sm);
   mosaicTex.repeat.set(3, 8);
   // ceilings
-  const ceil = (x0, x1, z0, z1, m) => { const c = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), m); c.rotation.x = Math.PI / 2; c.position.set((x0 + x1) / 2, H, (z0 + z1) / 2); scene.add(c); };
+  const ceil = (x0, x1, z0, z1, m) => { const c = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), m); c.rotation.x = Math.PI / 2; c.position.set((x0 + x1) / 2, H - .006, (z0 + z1) / 2); scene.add(c); };
   ceil(0, 5.2, 0, 6.2, M.ceilBlue); ceil(5.2, 6.6, 5.0, 6.2, M.ceilBlue); ceil(5.4, 7.6, 2.6, 4.8, mat('#f4f6f6', .9, 0, { emissive: '#dfe7ea', emissiveIntensity: .55 }));
 }
 
@@ -788,6 +788,45 @@ function drawMap() {
   mg.strokeStyle = '#e0572a'; mg.lineWidth = 3; mg.beginPath(); mg.moveTo(tx(P.x), tz(P.z)); mg.lineTo(tx(P.x - Math.sin(P.yaw) * .9), tz(P.z - Math.cos(P.yaw) * .9)); mg.stroke();
 }
 
+
+/* ---------- scripted tour (used for video: ?tour) ---------- */
+const TOUR = new URLSearchParams(location.search).has('tour');
+if (TOUR) {
+  document.querySelectorAll('.card,#start').forEach(e => e.style.display = 'none');
+  document.body.style.background = '#0b2a3d'; started = true; renderer.setPixelRatio(1); renderer.setSize(innerWidth, innerHeight);
+  const cap = document.createElement('div');
+  cap.style.cssText = 'position:fixed;left:0;right:0;bottom:7%;text-align:center;font:600 34px "Segoe UI",system-ui,sans-serif;color:#fff;text-shadow:0 2px 14px rgba(0,30,50,.75),0 0 3px rgba(0,30,50,.8);letter-spacing:.3px;transition:none';
+  document.body.appendChild(cap);
+  const KF = [ // t, x, z, yaw, pitch
+    [0, 2.45, 10.5, 0, -.02], [5, 2.45, 7.6, 0, -.02], [7, 2.45, 6.6, .02, -.02], [9, 2.45, 5.6, .1, -.03],
+    [12, 2.2, 4.4, -.9, -.03], [16, 1.3, 3.4, -1.45, -.02], [20, .9, 2.2, -1.57, -.02],
+    [24, 2.6, 1.4, .6, 0], [28, 3.0, 1.15, 1.85, -.02], [31, 2.8, 1.8, 1.85, -.02],
+    [34, 2.5, 3.6, .4, -.02], [36, 2.5, 3.6, 0, 0], [38.5, 2.5, 3.6, 0, .5], [40.5, 2.5, 3.8, 0, 0],
+    [43, 3.0, 4.9, -1.7, -.03], [46.5, 4.6, 5.5, -1.57, -.03], [49.5, 5.9, 5.5, 0, -.03], [52.5, 6.0, 4.4, -.1, -.1], [56, 6.2, 4.3, -.35, -.1],
+  ];
+  const DUR = KF[KF.length - 1][0];
+  // unwrap yaw
+  for (let i = 1; i < KF.length; i++) { while (KF[i][3] - KF[i - 1][3] > Math.PI) KF[i][3] -= 2 * Math.PI; while (KF[i][3] - KF[i - 1][3] < -Math.PI) KF[i][3] += 2 * Math.PI; }
+  const CAPS = [[0.3, 'Seascape Marina & Resort · Room 14 "Beach House"'], [9.5, 'Walk in: two queen beds, coffered ceiling'], [27, 'Seafoam dresser & TV wall'], [34.5, 'Ocean-view windows'], [42, 'Kitchenette nook'], [50, 'En-suite bath with walk-in shower'], [54, '3D concept built from listing photos · Elettro']];
+  const cr = (p0, p1, p2, p3, u) => .5 * ((2 * p1) + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (-p0 + 3 * p1 - 3 * p2 + p3) * u * u * u);
+  window.__tourDur = DUR;
+  window.__renderAt = (t) => {
+    t = Math.min(t, DUR);
+    let i = 0; while (i < KF.length - 2 && t > KF[i + 1][0]) i++;
+    const u0 = (t - KF[i][0]) / (KF[i + 1][0] - KF[i][0]), u = u0 * u0 * (3 - 2 * u0) * .5 + u0 * .5;   // gentle ease
+    const g = k => cr(KF[Math.max(0, i - 1)][k], KF[i][k], KF[i + 1][k], KF[Math.min(KF.length - 1, i + 2)][k], u);
+    P.x = g(1); P.z = g(2); P.yaw = g(3); P.pitch = g(4);
+    entry.t = Math.max(0, Math.min(1, (t - 3) / 2.5)); entry.pivot.rotation.y = entry.rotClosed + (entry.rotOpen - entry.rotClosed) * entry.t;
+    fan.userData.blades.rotation.y = -t * 2.2;
+    camera.position.set(P.x, 1.55, P.z); camera.rotation.set(P.pitch, P.yaw, 0);
+    sky.position.copy(camera.position); stars.position.copy(camera.position);
+    let txt = ''; for (const c of CAPS) if (t >= c[0]) txt = c[1];
+    cap.textContent = txt;
+    const fade = Math.min(1, t / .6, (DUR - t) / .8); cv.style.opacity = fade;
+    renderer.render(scene, camera);
+  };
+}
+
 /* ---------- loop ---------- */
 const clock = new THREE.Clock();
 const prompt = document.getElementById('prompt');
@@ -824,5 +863,5 @@ function frame() {
 }
 addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
 setTOD('day'); goto(...VIEWS[0].slice(1));
-requestAnimationFrame(frame);
+if (!TOUR) requestAnimationFrame(frame);
 window.__room = { P, goto, setTOD, doors, camera };
