@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elettro AR Control Room</title>
+<style>
+:root{--ink:#f4efe6;--amber:#7fe9ff;--cy:#22e6ff;--pk:#ff5fd2;--bg:#07080f}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas#gl{position:fixed;inset:0;display:block;width:100%;height:100%;cursor:grab}
+canvas#gl.hover{cursor:pointer}
+.top{position:fixed;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:5;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{font-weight:800;letter-spacing:3px;font-size:13px;text-shadow:0 2px 10px #000}
+.brand small{display:block;font-weight:500;letter-spacing:1.5px;color:var(--amber);font-size:10px;margin-top:2px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{background:#07080fcc;color:var(--ink);border:1px solid #ffffff30;border-radius:999px;padding:9px 16px;font:600 13px "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;backdrop-filter:blur(8px)}
+.btn:hover{background:#ffffff22}
+.btn.pri{background:#1b6cff;border-color:#1b6cff}
+.btn.exit{background:#b3261e;border-color:#b3261e}
+.btn.go{background:var(--amber);border-color:var(--amber);color:#04202a;font-weight:800}
+#hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:9px 18px;font-size:13px;color:#d8d3c8;backdrop-filter:blur(8px);transition:opacity .6s;text-align:center;max-width:calc(100% - 28px)}
+#hint.off{opacity:0;pointer-events:none}
+#tip{position:fixed;z-index:6;pointer-events:none;background:#07080fee;border:1px solid var(--amber);padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translate(14px,14px);transition:opacity .15s;white-space:nowrap}
+#pad{position:fixed;right:16px;bottom:18px;z-index:5;display:none;flex-direction:column;gap:8px}
+#pad .btn{width:52px;height:52px;padding:0;font-size:20px}
+@media(pointer:coarse){#pad{display:flex}#hint{bottom:90px}}
+#load{position:fixed;inset:0;z-index:30;background:var(--bg);display:grid;place-items:center;text-align:center;transition:opacity .8s}
+#load.off{opacity:0;pointer-events:none}
+#load h1{font:800 30px "Segoe UI",sans-serif;letter-spacing:4px}
+#load p{color:var(--amber);letter-spacing:3px;font-size:11px;margin-top:10px}
+#live{position:fixed;left:14px;bottom:18px;z-index:5;font-size:11px;letter-spacing:1.5px;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:6px 12px;display:flex;gap:7px;align-items:center}
+#live i{width:8px;height:8px;border-radius:50%;background:#3dff8b;box-shadow:0 0 8px #3dff8b}
+#live.off i{background:#ffb84d;box-shadow:0 0 8px #ffb84d}
+#ov{position:fixed;inset:4vh 3.5vw;z-index:12;background:#090a12f6;border:1px solid #7fe9ff66;border-radius:18px;box-shadow:0 0 70px #7fe9ff30,0 30px 80px #000c;display:none;flex-direction:column;overflow:hidden}
+#ov.on{display:flex;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+#ov header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #ffffff1a;flex:none}
+#ov header h2{font:800 20px "Segoe UI",sans-serif;letter-spacing:1px;flex:1}
+#ov header small{color:var(--amber);font-size:11px;letter-spacing:1.5px}
+#ov .body{flex:1;overflow:auto;padding:18px;touch-action:pan-y}
+#ov footer{display:flex;gap:8px;padding:12px 18px;border-top:1px solid #ffffff1a;flex:none;justify-content:space-between;align-items:center}
+.k4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;padding:14px 16px}
+.stat b{display:block;font:800 36px/1.1 "Segoe UI",sans-serif;color:var(--cy)}
+.stat span{font-size:12px;letter-spacing:1.5px;color:#b8b4c6;text-transform:uppercase}
+.big{font:800 clamp(26px,4.2vw,50px)/1.08 "Segoe UI",sans-serif;margin:6px 0 14px}
+.big em{font-style:normal;color:var(--amber)}
+.row{display:grid;grid-template-columns:150px 1fr 90px;gap:12px;align-items:center;margin:7px 0;font-size:14px}
+.row .bar{height:14px;background:#ffffff14;border-radius:99px;overflow:hidden}
+.row .bar i{display:block;height:100%;border-radius:99px}
+.row .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;border-radius:99px;padding:2px 9px;background:#3dff8b22;color:#3dff8b;border:1px solid #3dff8b66}
+.pl{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.pl span{font-weight:700;font-size:14px;border-radius:99px;padding:7px 14px;border:1px solid #ffffff30;background:#ffffff0d}
+.cta{display:inline-block;background:var(--amber);color:#04202a;font-weight:800;padding:12px 20px;border-radius:12px;text-decoration:none;margin:6px 8px 6px 0}
+.cta.alt{background:#ffffff14;color:var(--ink);border:1px solid #ffffff30}
+.cta:hover{filter:brightness(1.15)}
+.note{color:#c4c0d2;font-size:15px;line-height:1.55;margin:10px 0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.steps div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:14px;padding:18px}
+.steps b{color:var(--cy);font-size:12px;letter-spacing:2px}
+.steps h4{font-size:20px;margin:6px 0}
+.steps p{color:#c4c0d2;font-size:14px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;margin:6px 0 18px}
+.two .btnbig{border-radius:18px;padding:22px 20px;text-align:center;font:800 28px/1.1 "Segoe UI",sans-serif;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.two .btnbig small{font:600 14px "Segoe UI",sans-serif;opacity:.85}
+.two .arrow{align-self:center;font-size:34px;color:var(--amber)}
+.b1{background:linear-gradient(180deg,#22e6ff,#0f9bb8);color:#001a20}
+.b2{background:linear-gradient(180deg,#3dff8b,#1aa655);color:#03200f}
+@media(max-width:760px){.two{grid-template-columns:1fr}.two .arrow{transform:rotate(90deg);text-align:center}}
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:12px 0}
+.dots div{background:#ffffff0c;border:1px solid #ffffff18;border-radius:10px;padding:8px;text-align:center;font-size:12px;color:#b8b4c6}
+.dots div b{display:block;color:var(--amber);font-size:26px}
+.car{display:flex;flex-direction:column;gap:12px;height:100%}
+.car .stage{flex:1;min-height:200px;display:block;background:#000;border-radius:12px;overflow:hidden;position:relative}
+.car .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.car .nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid #ffffff40;background:#000a;color:#fff;font-size:22px;cursor:pointer}
+.car .nav.l{left:10px}.car .nav.r{right:10px}
+.car .strip{display:flex;gap:8px;overflow-x:auto;flex:none;padding-bottom:4px}
+.car .strip img{height:64px;border-radius:6px;border:2px solid transparent;cursor:pointer;opacity:.7}
+.car .strip img.on{border-color:var(--amber);opacity:1}
+.spark{width:100%;height:170px;display:block}
+@media(max-width:640px){.row{grid-template-columns:100px 1fr 60px;font-size:12px}#ov{inset:2vh 2vw}.btn{padding:8px 12px}}
+
+@media(max-width:760px),(max-aspect-ratio:1/1){
+ .top{top:8px;left:8px;right:8px;align-items:flex-start}
+ .brand{font-size:11px;letter-spacing:2px}.brand small{font-size:9px}
+ .btns{gap:6px}.btn{padding:7px 11px;font-size:12px}
+ .btns .pri{display:none}
+ #hint{font-size:11px;padding:7px 12px;bottom:84px;border-radius:14px}
+ #live{bottom:84px;font-size:10px;padding:4px 9px}
+ #pad{bottom:14px;right:12px;flex-direction:row}#pad .btn{width:56px;height:56px}
+ #ov{inset:auto 0 0 0;height:44vh;border-radius:18px 18px 0 0;border-left:0;border-right:0;border-bottom:0;box-shadow:0 -10px 40px #000c;transition:height .3s}
+ #ov.full{height:92vh}
+ #ov header{padding:9px 12px;gap:8px}#ov header h2{font-size:15px}#ov header small{display:none}
+ #ov .body{padding:12px}
+ #ov footer{padding:8px 10px}#ov footer .btn{padding:7px 10px;font-size:12px}
+ .big{font-size:24px}.note{font-size:14px}.stat b{font-size:26px}
+ .steps{grid-template-columns:1fr 1fr;gap:8px}.steps div{padding:12px}.steps h4{font-size:16px}.steps p{font-size:12px}
+ .car .stage{min-height:240px}.car .strip img{height:48px}
+}
+#ovExp{display:none}
+@media(max-width:760px),(max-aspect-ratio:1/1){#ovExp{display:inline-block}}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.gal figure{background:#ffffff0c;border:1px solid #ffffff18;border-radius:12px;overflow:hidden}
+.gal img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+.gal figcaption{padding:8px 10px;font-size:13px;color:#c4c0d2}
+.gal figcaption b{display:block;color:#fff}
+.mock{background:#10122a;border:1px solid #7fe9ff55;border-radius:14px;padding:16px;margin:10px 0}
+.mock h5{font-size:18px;margin-bottom:6px}
+.mock p{font-size:14px;color:#c4c0d2;line-height:1.5}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="load"><div><h1>ELETTRO AR ROOM</h1><p>WAKING UP THE SCANNERS…</p></div></div>
+<div class="top">
+  <div class="brand">ELETTRO AR<small>AR CONTROL ROOM</small></div>
+  <div class="btns"><a class="btn exit" href="../../index.html">⏏ Exit to the Street</a><button class="btn go" id="learnBtn">★ How it works</button><button class="btn" id="tourBtn">▶ Wall tour</button><a class="btn pri" href="https://ar.elettro.com" target="_blank" rel="noopener">Try AR ↗</a></div>
+</div>
+<div id="hint">Scroll or ↑ ↓ to walk · drag to look up at the wall · click any screen to fly up to it · Esc to come back · <b>★ How it works</b> for the guided tour · pinch to zoom</div>
+<div id="tip"></div>
+
+<div id="ov"><header><h2 id="ovT"></h2><small id="ovS"></small><button class="btn" id="ovExp">⤢</button><button class="btn" id="ovX">✕ Back to the room</button></header><div class="body" id="ovB"></div><footer><button class="btn" id="ovP">‹ Previous screen</button><span class="note" id="ovN" style="margin:0;font-size:13px"></span><button class="btn" id="ovNx">Next screen ›</button></footer></div>
+<div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+/* ============ DATA: facts straight from elettro.com/ar ============ */
+const D={live:true,at:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const IMG="/ar/img/";
+const IM={};let imT=0;
+["im-waiting","let-me-down","freedom-street","hold-jamaica","marie-claude","dirty-bird","super-funk",
+ "sm-roof-poster","sm-montage","sm-lieferung","sm-system","sm-bifazial","sm-fassade","sm-card-kontakt","sm-card-film","sm-card-rechner","sm-card-rubbeln",
+ "ns-crema","ns-buero","ns-privatlabel","ns-hausmischung","ns-espresso","ns-logo"].forEach(k=>{const im=new Image();im.onload=()=>{clearTimeout(imT);imT=setTimeout(()=>{if(typeof repaintAll==="function")repaintAll()},120)};im.src=IMG+k+".jpg";IM[k]=im});
+const fmt=n=>Number(n||0).toLocaleString("en-US");const last=(a,n)=>a.slice(Math.max(0,a.length-n));
+async function pull(){}
+/* ============ THREE SETUP ============ */
+const canvas=$("#gl");
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x060812);scene.fog=new THREE.Fog(0x060812,26,60);
+const camera=new THREE.PerspectiveCamera(74,1,.1,140);camera.rotation.order="YXZ";
+function ctex(w,h,draw){const c=document.createElement("canvas");c.width=w;c.height=h;draw(c.getContext("2d"),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
+const R=13, EYE=1.7, COLS=9, STEP=20*Math.PI/180;
+const ROWY=[8.0,5.45,2.9];
+const mat=(c,r=.7,m=.2)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+const brass=mat(0x6fd8ff,.3,.9), dark=mat(0x0c0d16,.6,.3), leather=mat(0x2a3aa8,.4,.15), leatherT=mat(0x5a3ad0,.45,.12);
+const WALLR=19, SHELLH=11;
+
+/* ----- wood paneling texture ----- */
+function woodTex(base,rep){const t=ctex(512,512,(g,w,h)=>{g.fillStyle=base;g.fillRect(0,0,w,h);for(let i=0;i<260;i++){g.strokeStyle="rgba("+(Math.random()<.5?"20,8,2":"255,190,120")+","+(.03+Math.random()*.08)+")";g.lineWidth=1+Math.random()*2;const x=Math.random()*w;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+12,h*.3,x-12,h*.6,x+4,h);g.stroke()}});t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep[0],rep[1]);return t}
+const wood=new THREE.MeshStandardMaterial({map:woodTex("#1d2144",[10,3]),roughness:.4,metalness:.15,side:THREE.DoubleSide});
+const woodDark=new THREE.MeshStandardMaterial({map:woodTex("#12142c",[10,2]),roughness:.4,metalness:.15,side:THREE.DoubleSide});
+
+/* ----- room shell: wood-paneled wall, lattice ceiling, oculus ----- */
+const shell=new THREE.Mesh(new THREE.CylinderGeometry(WALLR,WALLR,SHELLH,64,1,true),new THREE.MeshStandardMaterial({map:woodTex("#1a1c36",[16,3]),roughness:.55,metalness:.1,side:THREE.BackSide}));shell.position.y=SHELLH/2;scene.add(shell);
+const latT=ctex(512,512,(g,w,h)=>{g.fillStyle="#08080e";g.fillRect(0,0,w,h);g.strokeStyle="#2a2433";g.lineWidth=3;for(let i=-w;i<w*2;i+=32){g.beginPath();g.moveTo(i,0);g.lineTo(i+h,h);g.stroke();g.beginPath();g.moveTo(i,h);g.lineTo(i+h,0);g.stroke()}});latT.wrapS=latT.wrapT=THREE.RepeatWrapping;latT.repeat.set(10,10);
+const dome=new THREE.Mesh(new THREE.SphereGeometry(WALLR,64,24,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({map:latT,roughness:1,side:THREE.BackSide}));dome.scale.y=.3;dome.position.y=SHELLH;scene.add(dome);
+(function(){const n=380,pos=new Float32Array(n*3);for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*(WALLR-1.5),y=SHELLH+Math.sqrt(Math.max(0,1-(r/WALLR)**2))*WALLR*.3-.1;pos.set([Math.cos(a)*r,y,Math.sin(a)*r],i*3)}const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(pos,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xffc977,size:.16,fog:false})))})();
+const glowT=ctex(256,256,(g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,10,w/2,h/2,w/2);gr.addColorStop(0,"#e8f8ff");gr.addColorStop(.55,"#6a8cff");gr.addColorStop(1,"#1a1060");g.fillStyle=gr;g.fillRect(0,0,w,h)});
+const disc=new THREE.Mesh(new THREE.CircleGeometry(4.6,64),new THREE.MeshBasicMaterial({map:glowT,fog:false}));disc.rotation.x=Math.PI/2;disc.position.y=SHELLH+3.2;scene.add(disc);
+[[7.4,0],[6.4,.55],[5.4,1.1]].forEach(([r,dy],i)=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.55,64,1,true),wood);c.position.y=SHELLH+3.5-dy-.1*i;scene.add(c);const ring=new THREE.Mesh(new THREE.TorusGeometry(r-.03,.05,8,96),new THREE.MeshBasicMaterial({color:0x22e6ff,fog:false}));ring.rotation.x=Math.PI/2;ring.position.y=SHELLH+3.25-dy-.1*i;scene.add(ring)});
+const oc=new THREE.PointLight(0x8f7bff,1.6,40,1.3);oc.position.set(0,SHELLH+1,0);scene.add(oc);
+const carpetT=ctex(512,512,(g,w,h)=>{const cols=["#0c1230","#16206a","#2a2b9a","#1fb6d8","#080b1c","#1c1450"];for(let y=0;y<16;y++)for(let x=0;x<16;x++){g.fillStyle=cols[(x*7+y*13+((x^y)&3))%cols.length];g.fillRect(x*32,y*32,32,32);if((x+y)%3===0){g.fillStyle="rgba(120,230,255,.35)";g.fillRect(x*32+10,y*32+10,12,12)}}for(let i=0;i<9000;i++){g.fillStyle="rgba(0,0,0,"+Math.random()*.12+")";g.fillRect(Math.random()*w,Math.random()*h,2,2)}});
+carpetT.wrapS=carpetT.wrapT=THREE.RepeatWrapping;carpetT.repeat.set(7,7);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(WALLR,64),new THREE.MeshStandardMaterial({map:carpetT,roughness:.9}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+[WALLR-.3,10.6].forEach(r=>{const m=new THREE.Mesh(new THREE.RingGeometry(r,r+.08,96),new THREE.MeshBasicMaterial({color:0x22e6ff}));m.rotation.x=-Math.PI/2;m.position.y=.03;scene.add(m)});
+scene.add(new THREE.HemisphereLight(0xb8c8ff,0x14142a,.9));
+[[-9,6,-4,.9,0x7a8cff],[9,6,-4,.9,0xc07aff],[0,5,6,.6,0x6aa8ff],[0,8,-9,.7,0x6cd6ff]].forEach(l=>{const p=new THREE.PointLight(l[4],l[3],30,1.4);p.position.set(l[0],l[1],l[2]);scene.add(p)});
+
+/* ----- curved backdrop, wood soffit, glow strips, tickers ----- */
+const ARC=(COLS*STEP)/2+.2, tS=Math.PI-ARC, tL=ARC*2;
+const back=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,10,64,1,true,tS,tL),new THREE.MeshStandardMaterial({color:0x08090f,roughness:.5,metalness:.4,side:THREE.BackSide}));back.position.y=5;scene.add(back);
+const soffit=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,1.6,64,1,true,tS-.06,tL+.12),woodDark);soffit.position.y=10.4;scene.add(soffit);
+const soffitCap=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,.1,64,1,true,tS-.06,tL+.12),new THREE.MeshBasicMaterial({color:0x7a6bff,side:THREE.DoubleSide}));soffitCap.position.y=9.55;scene.add(soffitCap);
+const baseWood=new THREE.Mesh(new THREE.CylinderGeometry(R+.9,R+.9,1.1,64,1,true,tS-.06,tL+.12),woodDark);baseWood.position.y=.55;scene.add(baseWood);
+const baseGlow=new THREE.Mesh(new THREE.CylinderGeometry(R+.35,R+.35,.14,64,1,true,tS,tL),new THREE.MeshBasicMaterial({color:0x22e6ff,side:THREE.DoubleSide}));baseGlow.position.y=1.2;scene.add(baseGlow);
+const tk=ctex(4096,128,()=>{});tk.wrapS=THREE.RepeatWrapping;tk.repeat.x=-1;
+const tmat=new THREE.MeshBasicMaterial({map:tk,side:THREE.BackSide});
+const tickerA=new THREE.Mesh(new THREE.CylinderGeometry(R+.25,R+.25,.5,96,1,true,tS,tL),tmat);tickerA.position.y=1.55;scene.add(tickerA);
+const tickerB=new THREE.Mesh(new THREE.CylinderGeometry(R+.25,R+.25,.4,96,1,true,tS,tL),tmat);tickerB.position.y=9.3;scene.add(tickerB);
+function paintTicker(){
+  const items=["POINT. SCAN. IT PLAYS.","NO APP TO INSTALL","0 APPS · 5 EXPERIENCES · 1 QR CODE","AR.ELETTRO.COM","VIDEO · SHOP · LINK PAGE · GALLERY · 3D OBJECT","IF IT CAN BE PRINTED, IT CAN BE SCANNED","EVERY BRAND GETS ITS OWN AR","YOUR CAMERA PICTURE STAYS ON YOUR PHONE"];
+  const c=tk.image,g=c.getContext("2d");g.fillStyle="#04060a";g.fillRect(0,0,c.width,c.height);
+  const msg=items.join("   ◆   ")+"   ◆   ";g.font="800 70px 'Segoe UI',sans-serif";const w=g.measureText(msg).width;
+  g.save();g.scale(2048/w,1);g.fillStyle="#22e6ff";g.textBaseline="middle";g.fillText(msg,0,66);g.fillText(msg,w,66);g.restore();tk.needsUpdate=true}
+
+/* ============ PANELS ============ */
+function frame(g,w,h,title,accent,sub){
+  const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,"#10122a");gr.addColorStop(1,"#080912");g.fillStyle=gr;g.fillRect(0,0,w,h);
+  g.strokeStyle="#ffffff0d";g.lineWidth=1;for(let x=0;x<w;x+=64){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}
+  g.fillStyle=accent;g.fillRect(0,0,w,6);
+  g.fillStyle="#e9e6f5";g.font="800 34px 'Segoe UI',sans-serif";g.textAlign="left";g.fillText(title,34,62);
+  if(sub){g.fillStyle="#9b97b4";g.font="600 20px 'Segoe UI',sans-serif";g.fillText(sub,34,92)}
+  g.fillStyle="#22e6ff";g.beginPath();g.arc(w-46,50,8,0,7);g.fill();g.fillStyle="#9b97b4";g.font="700 16px 'Segoe UI',sans-serif";g.textAlign="right";g.fillText("ELETTRO AR",w-62,56);g.textAlign="left"}
+function frameEdu(g,w,h,accent){const gr=g.createLinearGradient(0,0,w,h);gr.addColorStop(0,"#0b1230");gr.addColorStop(1,"#05060f");g.fillStyle=gr;g.fillRect(0,0,w,h);g.fillStyle=accent;g.fillRect(0,0,w,8);g.fillStyle="#9b97b4";g.font="700 18px 'Segoe UI',sans-serif";g.fillText("ELETTRO AR  ·  POINT. SCAN. IT PLAYS.",34,44)}
+function btn(g,x,y,w,h,c1,c2,t,s){const gr=g.createLinearGradient(0,y,0,y+h);gr.addColorStop(0,c1);gr.addColorStop(1,c2);g.fillStyle=gr;g.fillRect(x,y,w,h);g.fillStyle="#04110a";g.textAlign="center";g.font="800 54px 'Segoe UI',sans-serif";g.fillText(t,x+w/2,y+h/2+6);g.font="700 22px 'Segoe UI',sans-serif";g.fillText(s,x+w/2,y+h/2+44);g.textAlign="left"}
+function bars(g,rows,x,y,w,rh,valMax,fmtv){rows.forEach((r,i)=>{const yy=y+i*rh;g.fillStyle="#d8d4ea";g.font="700 21px 'Segoe UI',sans-serif";g.fillText(r.l,x,yy+rh*.62);const bx=x+210,bw=w-210-110;g.fillStyle="#ffffff14";g.fillRect(bx,yy+rh*.25,bw,rh*.4);g.fillStyle=r.c||"#22e6ff";g.fillRect(bx,yy+rh*.25,Math.max(3,bw*(r.v/valMax)),rh*.4);g.fillStyle="#fff";g.textAlign="right";g.fillText((fmtv||fmt)(r.v),x+w,yy+rh*.62);g.textAlign="left"})}
+function bigNum(g,v,l,x,y,c){g.fillStyle=c;g.font="800 96px 'Segoe UI',sans-serif";g.fillText(v,x,y);g.fillStyle="#b8b4c6";g.font="700 22px 'Segoe UI',sans-serif";g.fillText(l,x,y+34)}
+function lines(g,arr,x,y,lh,font,color){g.font=font;g.fillStyle=color;arr.forEach((s,i)=>g.fillText(s,x,y+i*lh))}
+
+function pic(g,key,x,y,w,h,mode){const im=IM[key];g.fillStyle="#0a0c18";g.fillRect(x,y,w,h);if(!(im&&im.complete&&im.naturalWidth))return;
+  const iw=im.naturalWidth,ih=im.naturalHeight;let s=(mode==="fit")?Math.min(w/iw,h/ih):Math.max(w/iw,h/ih);const dw=iw*s,dh=ih*s;
+  g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.drawImage(im,x+(w-dw)/2,y+(h-dh)/2,dw,dh);g.restore()}
+function tag(g,t,x,y,c){g.font="800 22px 'Segoe UI',sans-serif";const w=g.measureText(t).width+28;g.fillStyle=c;g.fillRect(x,y,w,36);g.fillStyle="#04141a";g.fillText(t,x+14,y+26)}
+const fig=(k,t,d)=>`<figure><img src="${IMG}${k}.jpg" alt="${esc(t)}"><figcaption><b>${esc(t)}</b>${esc(d||"")}</figcaption></figure>`;
+const CAR=[];let carIdx=0,carAuto=true;
+fetch("sheets.json").then(r=>r.json()).then(j=>{j.forEach(s=>{const im=new Image();im.onload=()=>{if(typeof repaintAll==="function")repaintAll()};im.src="img/"+s.f;CAR.push({s,im})})}).catch(()=>{});
+const sheetsMeta=()=>CAR.map(c=>c.s);
+const CY="#22e6ff",PK="#ff5fd2",VI="#9a8bff",YE="#ffc83d",GR="#3dff8b";
+const PANELS=[
+/* ================= TOP ROW ================= */
+ {id:"stats",row:0,col:0,t:"NO APP · 0 INSTALLS",accent:CY,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,CY);bigNum(g,"0","APPS TO INSTALL",40,200,CY);bigNum(g,"5","EXPERIENCES ON THE DEMO PAGE",40,360,PK);bigNum(g,"1","QR CODE STARTS THEM ALL",40,520,YE)},
+  html(){return `<div class="k4"><div class="stat"><b>0</b><span>Apps to install</span></div><div class="stat"><b>5</b><span>Experiences on the demo page</span></div><div class="stat"><b>1</b><span>QR code starts them all</span></div></div><p class="note">Elettro AR runs in the phone's browser. Nothing to download. Your camera picture stays on your phone and is never recorded.</p><a class="cta" href="https://ar.elettro.com" target="_blank" rel="noopener">Open ar.elettro.com ↗</a>`}},
+ {id:"covers",row:0,col:1,t:"THE COVER WALL",accent:PK,
+  paint(g,w,h){frame(g,w,h,"THE COVER WALL",PK,"aim a phone at any of these");const ks=["im-waiting","let-me-down","freedom-street","hold-jamaica","marie-claude"];ks.forEach((k,i)=>{const s=(w-68-4*14)/5;pic(g,k,34+i*(s+14),130,s,s*1.0+80)});g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("5 COVERS · 5 DIFFERENT REACTIONS",34,h-50)},
+  html(){return `<div class="big">Five covers, <em>five different surprises</em>.</div><div class="gal">${fig("im-waiting","I'm Waiting","Video")}${fig("let-me-down","Let Me Down","Link page")}${fig("freedom-street","Freedom Street","Shop")}${fig("hold-jamaica","Hold Jamaica Tonight","Gallery")}${fig("marie-claude","Marie-Claude","3D object")}</div><p class="note">Scan the code, tap Start, then aim your phone at any cover. Each one does something different.</p>`}},
+ {id:"video",row:0,col:2,t:"VIDEO · I'M WAITING",accent:YE,
+  paint(g,w,h){frame(g,w,h,"VIDEO","#ffc83d","I'm Waiting");pic(g,"im-waiting",34,120,380,380);g.fillStyle="#fff";g.font="800 46px 'Segoe UI',sans-serif";lines(g,["The song's video","plays right on","the artwork"],450,190,60,"800 46px 'Segoe UI',sans-serif","#fff");g.fillStyle="#ffc83d";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("Listen button + sound switch",450,420)},
+  html(){return `<div class="big"><em>Video</em> on the artwork.</div><div class="gal">${fig("im-waiting","I'm Waiting","Aim at the cover")}</div><p class="note">The song's video plays right on the artwork, with a Listen button and a sound switch.</p>`}},
+ {id:"link",row:0,col:3,t:"LINK PAGE · LET ME DOWN",accent:VI,
+  paint(g,w,h){frame(g,w,h,"LINK PAGE",VI,"Let Me Down");pic(g,"let-me-down",34,120,380,380);lines(g,["A sheet slides up","with every link","a brand wants","one tap away"],450,190,58,"800 44px 'Segoe UI',sans-serif","#fff")},
+  html(){return `<div class="big">Every link, <em>one tap</em>.</div><div class="gal">${fig("let-me-down","Let Me Down","Aim at the cover")}</div><p class="note">A sheet slides up with every link a brand wants one tap away.</p>`}},
+ {id:"hero",row:0,col:4,t:"POINT. SCAN. IT PLAYS.",accent:CY,
+  paint(g,w,h){frameEdu(g,w,h,CY);g.fillStyle="#fff";g.font="800 92px 'Segoe UI',sans-serif";g.fillText("POINT.",34,170);g.fillStyle=CY;g.fillText("SCAN.",34,265);g.fillStyle=PK;g.fillText("IT PLAYS.",34,360);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";lines(g,["Aim any phone at an album cover, a poster,","a shirt or a box. In the browser.","Nothing to download."],34,420,36,"700 26px 'Segoe UI',sans-serif","#b8b4c6");pic(g,"marie-claude",650,110,340,340);g.strokeStyle=CY;g.lineWidth=6;[[650,110],[990,110],[650,450],[990,450]].forEach(([x,y],i)=>{const sx=i%2?-1:1,sy=i>1?-1:1;g.beginPath();g.moveTo(x,y+sy*50);g.lineTo(x,y);g.lineTo(x+sx*50,y);g.stroke()})},
+  html(){return `<div class="big">Point. Scan. <em>It plays.</em></div><p class="note">Aim any phone at an album cover, a poster, a shirt or a box. A video, a shop or a spinning 3D object comes alive on top of it. In the browser. Nothing to download.</p><div class="k4"><div class="stat"><b>0</b><span>apps to install</span></div><div class="stat"><b>5</b><span>experiences on this page</span></div><div class="stat"><b>1</b><span>QR code to start them all</span></div></div><a class="cta" href="https://ar.elettro.com" target="_blank" rel="noopener">Try it on your phone ↗</a><a class="cta alt" href="https://elettro.com/ar/" target="_blank" rel="noopener">elettro.com/ar ↗</a>`}},
+ {id:"shop",row:0,col:5,t:"SHOP · FREEDOM STREET",accent:GR,
+  paint(g,w,h){frame(g,w,h,"SHOP",GR,"Freedom Street");pic(g,"freedom-street",34,120,380,380);lines(g,["Real products from","the live Stashbox","Shopify store, with","prices and Buy buttons"],450,190,58,"800 42px 'Segoe UI',sans-serif","#fff")},
+  html(){return `<div class="big">A <em>shop</em> on the cover.</div><div class="gal">${fig("freedom-street","Freedom Street","Aim at the cover")}</div><p class="note">Real products from the live Stashbox Shopify store, with prices and Buy buttons.</p>`}},
+ {id:"gallery",row:0,col:6,t:"GALLERY · HOLD JAMAICA",accent:PK,
+  paint(g,w,h){frame(g,w,h,"GALLERY",PK,"Hold Jamaica Tonight");pic(g,"hold-jamaica",34,120,380,380);lines(g,["The artwork turns","into a slideshow","of the whole","cover wall"],450,190,58,"800 44px 'Segoe UI',sans-serif","#fff")},
+  html(){return `<div class="big">A <em>slideshow</em> from one cover.</div><div class="gal">${fig("hold-jamaica","Hold Jamaica Tonight","Aim at the cover")}</div><p class="note">The artwork turns into a slideshow of the whole cover wall.</p>`}},
+ {id:"obj3d",row:0,col:7,t:"3D OBJECT · MARIE-CLAUDE",accent:VI,
+  paint(g,w,h){frame(g,w,h,"3D OBJECT",VI,"Marie-Claude");pic(g,"marie-claude",34,120,380,380);lines(g,["A vinyl record","floats off the cover","and turns in the air","Any product can be","a 3D model"],450,180,56,"800 42px 'Segoe UI',sans-serif","#fff")},
+  html(){return `<div class="big"><em>3D</em> off the cover.</div><div class="gal">${fig("marie-claude","Marie-Claude","Aim at the cover")}</div><p class="note">A vinyl record floats off the cover and turns in the air. Any product can be a 3D model. Turn it with one finger, pinch to resize, drag with two fingers to move it.</p>`}},
+ {id:"steps",row:0,col:8,t:"HOW YOU USE IT",accent:CY,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,CY);["1  SCAN THE CODE","2  TAP START, ALLOW CAMERA","3  AIM AT A COVER, HOLD 1 SEC","4  LOWER IT. TAP X TO CLOSE"].forEach((s,i)=>{g.fillStyle=i%2?"#ffffff0d":"#ffffff16";g.fillRect(34,90+i*108,w-68,92);g.fillStyle=[CY,PK,YE,GR][i];g.fillRect(34,90+i*108,10,92);g.fillStyle="#fff";g.font="800 36px 'Segoe UI',sans-serif";g.fillText(s,66,148+i*108)})},
+  html(){return `<div class="big">Four steps. <em>No app.</em></div><div class="steps"><div><b>1</b><h4>Scan</h4><p>Scan the code, or open ar.elettro.com. Your phone's browser opens it.</p></div><div><b>2</b><h4>Start</h4><p>Tap Start and allow the camera. It stays on your phone.</p></div><div><b>3</b><h4>Aim</h4><p>Aim at a cover. Keep it in the frame for a second.</p></div><div><b>4</b><h4>Lower</h4><p>Lower the phone. It keeps playing until you tap the X.</p></div></div>`}},
+/* ================= MIDDLE ROW ================= */
+ {id:"solar",row:1,col:0,t:"SOLARMEISTER IN AR",accent:YE,
+  paint(g,w,h){frame(g,w,h,"SOLARMEISTER, IN AR",YE,"same engine · a different brand");["sm-roof-poster","sm-montage","sm-system","sm-fassade"].forEach((k,i)=>pic(g,k,34+i*243,120,229,300));lines(g,["Real photos, products and prices","from the SolarMeister shop","Video · Link page · Shop · Gallery · 3D"],34,470,40,"700 30px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big"><em>SolarMeister</em>, in AR.</div><p class="note">Real photos, products and prices from the SolarMeister shop (solarmeister-shop.de). Five more reactions on a brand that has nothing to do with music.</p><div class="gal">${fig("sm-roof-poster","Delivery","A solar-roof video plays on the photo, with a button straight to the shop.")}${fig("sm-montage","Mounting system","A sheet slides up with mounting, storage and accessory links.")}${fig("sm-system","Balcony power plant","Real systems and prices from the live shop, one tap from each product.")}${fig("sm-fassade","Facade","The photo turns into a slideshow of systems, mounting options and the app.")}${fig("sm-bifazial","Solar modules","A solar panel floats off the picture in 3D.")}</div><p class="note">Scan it: ar.elettro.com/solarmeister</p><a class="cta" href="https://ar.elettro.com/solarmeister" target="_blank" rel="noopener">ar.elettro.com/solarmeister ↗</a>`}},
+ {id:"brandscan",row:1,col:1,t:"BRAND SCAN · THE LOGO",accent:PK,
+  paint(g,w,h){frame(g,w,h,"BRAND SCAN",PK,"the logo itself does four things");["sm-card-kontakt","sm-card-film","sm-card-rechner","sm-card-rubbeln"].forEach((k,i)=>{pic(g,k,34+i*243,120,229,229);g.fillStyle="#fff";g.font="800 24px 'Segoe UI',sans-serif";g.fillText(["Contact hub","Brand film","Savings calculator","Scratch card"][i],34+i*243,385)});g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";g.fillText("On the van, the box, the shirt, the invoice.",34,470);g.fillText("Aim a phone at it and the brand does its one thing.",34,508)},
+  html(){return `<div class="big">And the <em>logo</em> itself? Four things.</div><p class="note">A logo is on the van, the box, the shirt and the invoice. Aim a phone at it and the brand can do the one thing it wants most. Each card is a real trigger.</p><div class="gal">${fig("sm-card-kontakt","Option 1 · Contact hub","Call, email, the contact page or the shop, all one tap from the logo.")}${fig("sm-card-film","Option 2 · Brand film","The logo becomes a screen. A short brand film plays with sound.")}${fig("sm-card-rechner","Try it · Savings calculator","Slide your yearly use, pick a system, see what it saves.")}${fig("sm-card-rubbeln","Try it · Scratch card","The prize is a coupon code, and a button takes the winner to the shop.")}</div><p class="note">Also possible: product quiz, life-size panels on your own wall, live energy counter, order tracking, refer a friend, language or region switch.</p>`}},
+ {id:"calc",row:1,col:2,t:"SAVINGS CALCULATOR",accent:GR,
+  paint(g,w,h){frame(g,w,h,"SAVINGS CALCULATOR",GR,"aim at the logo card, get this");pic(g,"sm-card-rechner",34,120,300,300);g.fillStyle="#fff";g.font="800 30px 'Segoe UI',sans-serif";g.fillText("What does a balcony power plant save?",360,170);g.fillStyle=GR;g.font="800 90px 'Segoe UI',sans-serif";g.fillText("≈ €268",360,290);g.fillStyle="#b8b4c6";g.font="700 26px 'Segoe UI',sans-serif";lines(g,["per year, at 3,200 kWh","System costs €1,379","Pays for itself in about 5 years"],360,340,38,"700 26px 'Segoe UI',sans-serif","#b8b4c6");g.fillStyle="#7c7896";g.font="600 18px 'Segoe UI',sans-serif";g.fillText("Example calculation. No guarantee.",360,480)},
+  html(){return `<div class="big">A <em>calculator</em> on the logo.</div><div class="mock"><h5>What does a balcony power plant save?</h5><p>Your electricity use per year: 3,200 kWh</p><p><b>Savings per year ≈ €268</b><br>The system costs €1,379<br>Pays for itself in about 5 years</p><p style="font-size:12px">Example calculation: 900 kWh per kWp, 35 cents per kWh. No guarantee.</p></div><p class="note">Slide your yearly electricity use, pick a system, and see what it saves and when it pays back. It runs on the phone and nothing is sent anywhere. The numbers are examples.</p>`}},
+ {id:"sheets",row:1,col:4,big:1,cw:2560,ch:900,t:"ELETTRO AR ONE-SHEETS",accent:CY,custom:"carousel",
+  paint(g,w,h){g.fillStyle="#05060c";g.fillRect(0,0,w,h);const n=CAR.length,N=Math.max(1,Math.min(n,2)),sl=w/N,ph=h-70;
+  for(let k=0;k<N&&n;k++){const c=CAR[(carIdx+k)%n];if(!(c&&c.im.complete&&c.im.naturalWidth))continue;const sc=Math.min((sl-30)/c.im.naturalWidth,ph/c.im.naturalHeight);const iw=c.im.naturalWidth*sc,ih=c.im.naturalHeight*sc,x=k*sl+(sl-iw)/2,y=(ph-ih)/2+10;g.drawImage(c.im,x,y,iw,ih);g.strokeStyle=k===0?"#7fe9ff":"#ffffff40";g.lineWidth=5;g.strokeRect(x,y,iw,ih)}
+  g.fillStyle=CY;g.fillRect(0,0,w,8);g.fillStyle="#000d";g.fillRect(0,h-58,w,58);g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("ELETTRO AR ONE-SHEETS",30,h-18);g.textAlign="right";g.fillStyle=CY;g.fillText("CLICK TO OPEN FULL SIZE ▸",w-30,h-18);g.textAlign="left"}},
+ {id:"neck",row:1,col:6,t:"NECKERMANN STROM",accent:YE,
+  paint(g,w,h){frame(g,w,h,"A COFFEE BAG THAT ASKS",YE,"Neckermann Strom · private-label coffee");["ns-crema","ns-buero","ns-privatlabel","ns-hausmischung"].forEach((k,i)=>pic(g,k,34+i*243,120,229,229));lines(g,["Aim a phone at any bag: a form slides up in German.","Private or business, postal code, yearly kWh,","one big button. A look-only preview."],34,400,40,"700 28px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">A coffee bag that asks for your <em>postcode</em>.</div><p class="note">Private-label coffee for an energy company. Aim a phone at any bag, or at the logo card, and a form slides up in German: private or business customer, postal code, yearly kWh and one big button. It is a look-only preview, so nothing is calculated or sent.</p><div class="gal">${fig("ns-crema","Feine Crema","Aim at the bag and the price form opens over it.")}${fig("ns-buero","Büro Mischung","A different bag, the same form. Ideal for business customers.")}${fig("ns-privatlabel","Privatlabel Kaffee","Any packaging can be the trigger.")}${fig("ns-hausmischung","Hausmischung","Switch between private and business customer right on the screen.")}${fig("ns-espresso","Espresso Mischung","Postcode, yearly kWh, one big button.")}${fig("ns-logo","The logo","Sits on a card with a pattern so the camera can grip it.")}</div><a class="cta" href="https://ar.elettro.com/neckermann-strom" target="_blank" rel="noopener">ar.elettro.com/neckermann-strom ↗</a>`}},
+ {id:"scratch",row:1,col:7,t:"SCRATCH CARD",accent:PK,
+  paint(g,w,h){frame(g,w,h,"SCRATCH CARD",PK,"a game on the logo");pic(g,"sm-card-rubbeln",34,120,320,320);g.fillStyle="#fff";g.font="800 40px 'Segoe UI',sans-serif";lines(g,["Scratch to reveal","your gift","5% discount","(example code)"],390,190,58,"800 40px 'Segoe UI',sans-serif","#fff");g.fillStyle=PK;g.font="700 26px 'Segoe UI',sans-serif";g.fillText("Redeem in the shop",390,450)},
+  html(){return `<div class="big"><em>Scratch</em> to reveal.</div><div class="gal">${fig("sm-card-rubbeln","Scratch card","Scratch with your finger")}</div><p class="note">A scratch card on the logo. The prize is a coupon code, and a button takes the winner to the shop. It can also collect an email (with the consent box).</p>`}},
+ {id:"contact",row:1,col:8,t:"CONTACT HUB + BRAND FILM",accent:CY,
+  paint(g,w,h){frame(g,w,h,"CONTACT HUB + FILM",CY,"one tap from the logo");pic(g,"sm-card-kontakt",34,120,300,300);pic(g,"sm-card-film",350,120,300,300);lines(g,["Call, email, contact page or shop:","all one tap from the logo.","The logo becomes a screen","and plays a brand film, with sound."],34,470,36,"700 26px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">One tap from the <em>logo</em>.</div><div class="mock"><h5>We're here for you</h5><p>SolarMeister customer service<br>Call now: +49 1525 972 5120<br>Email support@solarmeister-shop.de</p></div><div class="mock"><h5>Your roof makes power.</h5><p>The film plays on the logo, with sound. The speaker button switches it. Then a button goes straight to the shop.</p></div><p class="note">Works on vans, trucks and printed material.</p>`}},
+/* ================= BOTTOM ROW ================= */
+ {id:"os",row:2,col:0,t:"INSIDE ELETTRO OS",accent:CY,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,CY);g.fillStyle="#fff";g.font="800 62px 'Segoe UI',sans-serif";g.fillText("EVERY BRAND",34,130);g.fillStyle=CY;g.fillText("GETS ITS OWN AR",34,200);lines(g,["Many QR codes, one dashboard","Many covers, many reactions","Switched on per brand","Tuned on the real phone"],40,280,64,"700 38px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Every brand gets <em>its own AR</em>.</div><div class="steps"><div><b>QR CODES</b><h4>Many codes, one dashboard</h4><p>Print a code once. Point it at a scanner, a video or a web page later, with no reprint.</p></div><div><b>COVERS</b><h4>Many covers, many reactions</h4><p>Several covers can open the same video. One cover can open a video, a shop and buttons together.</p></div><div><b>PER BRAND</b><h4>Switched on per brand</h4><p>Elettro AR is an add-on that sits next to publishing, planning and analytics in the same login.</p></div><div><b>FINE TUNING</b><h4>Tuned on the real phone</h4><p>Nudge and resize the overlay until it sits flush on your print.</p></div></div><a class="cta" href="https://os.elettro.com/ar" target="_blank" rel="noopener">os.elettro.com/ar ↗</a>`}},
+ {id:"qrs",row:2,col:1,t:"COVERS + QR CODES",accent:VI,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,VI);g.fillStyle="#fff";g.font="800 54px 'Segoe UI',sans-serif";g.fillText("COVERS AND WHAT THEY DO",34,120);[["I'm Waiting","Video · Listen button"],["Freedom Street","Shop · 3 products"],["Marie-Claude","3D vinyl · Listen button"]].forEach((r,i)=>{g.fillStyle="#ffffff12";g.fillRect(34,150+i*70,w-68,58);g.fillStyle="#fff";g.font="800 28px 'Segoe UI',sans-serif";g.fillText(r[0],54,190+i*70);g.fillStyle="#9b97b4";g.font="600 22px 'Segoe UI',sans-serif";g.fillText(r[1],330,190+i*70);g.fillStyle=GR;g.fillText("live",w-120,190+i*70)});g.fillStyle="#fff";g.font="800 34px 'Segoe UI',sans-serif";g.fillText("QR CODES",34,420);g.fillStyle=CY;g.font="700 26px 'Segoe UI',sans-serif";g.fillText("Stashbox Radio · ar.elettro.com/stashbox/main",34,462);g.fillText("Cover scanner · ar.elettro.com/stashbox/covers",34,500)},
+  html(){return `<div class="big">Covers, codes, <em>one dashboard</em>.</div><div class="mock"><h5>Covers and what they do</h5><p>I'm Waiting: Video · Listen button <span class="chip">live</span><br>Freedom Street: Shop · 3 products <span class="chip">live</span><br>Marie-Claude: 3D vinyl · Listen button <span class="chip">live</span></p></div><div class="mock"><h5>QR codes</h5><p>Stashbox Radio: ar.elettro.com/stashbox/main<br>Cover scanner: ar.elettro.com/stashbox/covers</p></div><p class="note">A preview of the AR section inside Elettro OS, which is in build.</p>`}},
+ {id:"where",row:2,col:2,t:"WHERE IT GOES",accent:YE,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,YE);g.fillStyle=YE;g.font="800 58px 'Segoe UI',sans-serif";g.fillText("IF IT CAN BE PRINTED,",34,130);g.fillText("IT CAN BE SCANNED.",34,196);lines(g,["Album and single covers","Merch and shirts","Posters and flyers","Packaging and menus","Signs and storefronts"],40,270,60,"700 38px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">If it can be printed, <em>it can be scanned</em>.</div><div class="steps"><div><b>COVERS</b><h4>Album and single covers</h4><p>Play the video, open the song, sell the vinyl.</p></div><div><b>MERCH</b><h4>Merch and shirts</h4><p>A print on a shirt starts the clip and links to the shop.</p></div><div><b>PAPER</b><h4>Posters and flyers</h4><p>One poster, one code, a ticket link that you can change after printing.</p></div><div><b>PACKAGING</b><h4>Packaging and menus</h4><p>Show the product in 3D, the story behind it, or today's special.</p></div><div><b>STREET</b><h4>Signs and storefronts</h4><p>Open a tour, a booking page or a coupon from the street.</p></div></div>`}},
+ {id:"noapp",row:2,col:6,t:"PRIVATE BY DESIGN",accent:GR,edu:1,
+  paint(g,w,h){frameEdu(g,w,h,GR);g.fillStyle=GR;g.font="800 70px 'Segoe UI',sans-serif";g.fillText("YOUR CAMERA",34,140);g.fillText("STAYS YOURS",34,216);lines(g,["The picture stays on your phone","and is never recorded.","Runs in the browser.","Nothing to download."],40,300,62,"700 38px 'Segoe UI',sans-serif","#e9e6f5")},
+  html(){return `<div class="big">Your camera picture <em>stays on your phone</em>.</div><p class="note">It is never recorded. Elettro AR runs in the phone's browser, so there is nothing to download. Demo artwork and products belong to Stashbox. Products and prices come from the live Stashbox shop.</p>`}},
+ {id:"try",row:2,col:7,t:"TRY IT NOW",accent:PK,
+  paint(g,w,h){frame(g,w,h,"TRY IT NOW",PK,"on your phone, in 10 seconds");g.fillStyle="#fff";g.font="800 52px 'Segoe UI',sans-serif";g.fillText("Open this on your phone:",34,200);g.fillStyle=CY;g.font="800 108px 'Segoe UI',sans-serif";g.fillText("ar.elettro.com",34,330);g.fillStyle="#b8b4c6";g.font="700 28px 'Segoe UI',sans-serif";g.fillText("Tap Start. Allow the camera. Aim at a cover on the wall.",34,410);g.fillText("SolarMeister: ar.elettro.com/solarmeister",34,456);g.fillText("Neckermann Strom: ar.elettro.com/neckermann-strom",34,496)},
+  html(){return `<div class="big">Try it <em>now</em>.</div><p class="note">Open <b>ar.elettro.com</b> on your phone, tap Start, allow the camera, then aim at one of the covers on <b>elettro.com/ar</b> on a computer or a second screen.</p><a class="cta" href="https://ar.elettro.com" target="_blank" rel="noopener">ar.elettro.com ↗</a><a class="cta alt" href="https://ar.elettro.com/solarmeister" target="_blank" rel="noopener">SolarMeister ↗</a><a class="cta alt" href="https://ar.elettro.com/neckermann-strom" target="_blank" rel="noopener">Neckermann Strom ↗</a><a class="cta alt" href="https://elettro.com/ar/" target="_blank" rel="noopener">elettro.com/ar ↗</a>`}},
+ {id:"cta",row:2,col:8,t:"PUT AR ON YOUR BRAND",accent:CY,
+  paint(g,w,h){frame(g,w,h,"PUT AR ON YOUR BRAND",CY);g.fillStyle="#fff";g.font="800 52px 'Segoe UI',sans-serif";g.fillText("Tell us what people",34,190);g.fillText("should point their phones at.",34,254);g.fillStyle=CY;g.font="700 28px 'Segoe UI',sans-serif";lines(g,["We set up the covers, the videos and the","QR codes inside Elettro OS."],34,330,38,"700 28px 'Segoe UI',sans-serif",CY);g.fillStyle="#fff";g.fillText("elettro.com  ·  contact@elettro.com",34,470)},
+  html(){return `<div class="big">Put <em>AR</em> on your brand.</div><p class="note">Tell us what you want people to point their phones at. We set up the covers, the videos and the QR codes inside Elettro OS.</p><a class="cta" href="mailto:contact@elettro.com">contact@elettro.com</a><a class="cta alt" href="https://elettro.com/ar/" target="_blank" rel="noopener">elettro.com/ar ↗</a>`}}
+];
+const byId=id=>PANELS.findIndex(p=>p.id===id);
+
+/* ---- wall: contiguous video-wall tiles with thin bezels ---- */
+const pickables=[];
+const W=4.4,H=W*9/16;
+PANELS.forEach((p,i)=>{
+  p.cv=document.createElement("canvas");p.cv.width=p.cw||1024;p.cv.height=p.ch||576;p.g=p.cv.getContext("2d");
+  p.tex=new THREE.CanvasTexture(p.cv);p.tex.encoding=THREE.sRGBEncoding;p.tex.anisotropy=8;
+  const th=(p.col-4)*STEP,y=p.big?(ROWY[1]+ROWY[2])/2:ROWY[p.row];
+  if(p.big){const hh=ROWY[1]-ROWY[2]+H+.06;p.tex.wrapS=THREE.RepeatWrapping;p.tex.repeat.x=-1;
+    const bz=new THREE.Mesh(new THREE.CylinderGeometry(R+.02,R+.02,hh,64,1,true,Math.PI-1.5*STEP,3*STEP),new THREE.MeshBasicMaterial({map:p.tex,side:THREE.BackSide}));bz.position.y=y;bz.userData.pid=i;scene.add(bz);pickables.push(bz);
+    const fr=new THREE.Mesh(new THREE.CylinderGeometry(R+.08,R+.08,hh+.14,64,1,true,Math.PI-1.5*STEP-.01,3*STEP+.02),new THREE.MeshBasicMaterial({color:0xff5fd2,side:THREE.BackSide}));fr.position.y=y;scene.add(fr);
+    p.pos=new THREE.Vector3(0,y,-R);p.th=0;p.mesh=bz;return}
+  const grp=new THREE.Group();grp.position.set(Math.sin(th)*R,y,-Math.cos(th)*R);grp.rotation.y=-th;
+  grp.add(new THREE.Mesh(new THREE.BoxGeometry(W+.08,H+.08,.16),dark));
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(W-.04,H-.04),new THREE.MeshBasicMaterial({map:p.tex}));m.position.z=.09;m.userData.pid=i;grp.add(m);pickables.push(m);
+  const lip=new THREE.Mesh(new THREE.BoxGeometry(W+.08,.03,.04),new THREE.MeshBasicMaterial({color:new THREE.Color(p.accent)}));lip.position.set(0,-(H+.08)/2,.1);grp.add(lip);
+  scene.add(grp);p.pos=new THREE.Vector3(grp.position.x,y,grp.position.z);p.th=th;p.mesh=m;
+});
+function paintPanel(p){const w=p.cw||1024,h=p.ch||576;p.g.clearRect(0,0,w,h);p.paint(p.g,w,h);p.tex.needsUpdate=true}
+function repaintAll(){PANELS.forEach(paintPanel);paintTicker()}
+setInterval(()=>{if(!CAR.length||!carAuto)return;carIdx=(carIdx+1)%CAR.length;paintPanel(PANELS[byId("sheets")]);if(openIdx>=0&&PANELS[openIdx].custom==="carousel")showCar()},6000);
+
+/* ============ FURNITURE: operator desk, console stations, leather chairs, people ============ */
+const DR=10.0,dA=(COLS*STEP)/2-.1;
+const desk=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,1.0,64,1,true,Math.PI-dA,dA*2),wood);desk.position.y=.5;scene.add(desk);
+const deskTop=new THREE.Mesh(new THREE.RingGeometry(DR-.7,DR+.75,64,1,Math.PI/2-dA,dA*2),new THREE.MeshStandardMaterial({color:0xe6d6bf,roughness:.3,metalness:.1,side:THREE.DoubleSide}));deskTop.rotation.x=-Math.PI/2;deskTop.position.y=1.02;scene.add(deskTop);
+const deskEdge=new THREE.Mesh(new THREE.CylinderGeometry(DR+.75,DR+.75,.07,64,1,true,Math.PI-dA,dA*2),new THREE.MeshBasicMaterial({color:0xffa24a,side:THREE.DoubleSide}));deskEdge.position.y=1.0;scene.add(deskEdge);
+const monMap=["hero","video","link","shop","gallery","obj3d","covers","steps","stats","os"];
+for(let k=0;k<11;k++){const a=(k-5)*.14;const x=Math.sin(a)*(DR-.15),z=-Math.cos(a)*(DR-.15);
+  const mm=new THREE.Mesh(new THREE.PlaneGeometry(1.2,.68),new THREE.MeshBasicMaterial({map:PANELS[byId(monMap[k%monMap.length])].tex}));mm.position.set(x,1.55,z);mm.rotation.y=-a;mm.rotation.x=-.18;scene.add(mm);
+  const fr=new THREE.Mesh(new THREE.BoxGeometry(1.3,.78,.06),dark);fr.position.copy(mm.position);fr.rotation.copy(mm.rotation);fr.translateZ(-.05);scene.add(fr);
+  const stand=new THREE.Mesh(new THREE.BoxGeometry(.1,.3,.1),dark);stand.position.set(x,1.2,z);scene.add(stand);
+  const kb=new THREE.Mesh(new THREE.BoxGeometry(.7,.03,.22),dark);kb.position.set(Math.sin(a)*(DR-.65),1.06,-Math.cos(a)*(DR-.65));kb.rotation.y=-a;scene.add(kb)}
+function chair(r,a,m){const g=new THREE.Group();const M=m||leather;const seat=new THREE.Mesh(new THREE.CylinderGeometry(.46,.46,.2,16),M);seat.position.y=.68;g.add(seat);
+  const back=new THREE.Mesh(new THREE.CylinderGeometry(.5,.5,.7,16,1,true,Math.PI*.2,Math.PI*1.6),new THREE.MeshStandardMaterial({color:M.color,roughness:.4,metalness:.1,side:THREE.DoubleSide}));back.position.set(0,1.1,0);g.add(back);
+  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.6,8),brass);stem.position.y=.35;g.add(stem);
+  const foot=new THREE.Mesh(new THREE.TorusGeometry(.32,.03,8,20),brass);foot.rotation.x=Math.PI/2;foot.position.y=.18;g.add(foot);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
+function station(r,a,pid){const g=new THREE.Group();
+  const cab=new THREE.Mesh(new THREE.BoxGeometry(1.5,.95,1.0),wood);cab.position.y=.48;g.add(cab);
+  const top=new THREE.Mesh(new THREE.BoxGeometry(1.56,.06,1.06),brass);top.position.y=.98;g.add(top);
+  const hood=new THREE.Mesh(new THREE.BoxGeometry(1.3,1.0,.14),wood);hood.position.set(0,1.5,-.4);hood.rotation.x=-.2;g.add(hood);
+  const scr=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.62),new THREE.MeshBasicMaterial({map:PANELS[byId(pid)].tex}));scr.position.set(0,1.5,-.32);scr.rotation.x=-.2;g.add(scr);
+  const pad=new THREE.Mesh(new THREE.BoxGeometry(.9,.04,.35),new THREE.MeshBasicMaterial({color:0x2a7bff}));pad.position.set(0,1.03,.2);pad.rotation.x=-.18;g.add(pad);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a;scene.add(g)}
+for(let k=-3;k<=3;k++)chair(9.0,k*.2,leatherT);
+const stIds=["covers","solar","brandscan","hero","calc","scratch","neck"];
+for(let k=-3;k<=3;k++){station(7.2,k*.24,stIds[k+3]);chair(6.4,k*.24,leather)}
+const skin=mat(0x15100f,.8,.1);
+function person(r,a,h,tilt){const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CylinderGeometry(.19,.26,h*.58,10),mat(0x181420,.9,0));body.position.y=h*.44;g.add(body);
+  const legs=new THREE.Mesh(new THREE.CylinderGeometry(.16,.13,h*.45,8),mat(0x0d0b12,.9,0));legs.position.y=h*.22;g.add(legs);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.15,12,10),skin);head.position.y=h*.9;g.add(head);
+  g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r);g.rotation.y=-a+(tilt||0);scene.add(g)}
+[[5.2,-.5,1.78],[5.0,-.36,1.68],[5.3,-.2,1.82],[5.1,.05,1.74],[5.4,.22,1.7],[5.0,.4,1.86],[5.3,.56,1.65],[4.7,-.62,1.72],[4.8,.68,1.76]].forEach(p=>person(p[0],p[1],p[2],(Math.random()-.5)*.4));
+
+
+const HOLO=[];
+(function(){
+ const g1=new THREE.Group();
+ const disc=new THREE.Mesh(new THREE.CylinderGeometry(.62,.62,.03,48),new THREE.MeshStandardMaterial({color:0x0b0b12,roughness:.3,metalness:.6,emissive:0x1a2a66,emissiveIntensity:.6}));g1.add(disc);
+ const lab=new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,.04,32),new THREE.MeshBasicMaterial({color:0xff5fd2}));g1.add(lab);
+ [.3,.42,.54].forEach(r=>{const t=new THREE.Mesh(new THREE.TorusGeometry(r,.004,6,64),new THREE.MeshBasicMaterial({color:0x22e6ff}));t.rotation.x=Math.PI/2;t.position.y=.02;g1.add(t)});
+ const halo=new THREE.Mesh(new THREE.TorusGeometry(.85,.012,8,64),new THREE.MeshBasicMaterial({color:0x22e6ff}));halo.rotation.x=Math.PI/2;g1.add(halo);
+ const a1=-1.0;g1.position.set(Math.sin(a1)*9.6,2.3,-Math.cos(a1)*9.6);g1.rotation.z=.5;scene.add(g1);HOLO.push(g1);
+ const g2=new THREE.Group();
+ const gt=ctex(256,160,(g,w,h)=>{g.fillStyle="#0a2a7a";g.fillRect(0,0,w,h);g.strokeStyle="#6fd8ff";g.lineWidth=2;for(let x=0;x<=w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}for(let y=0;y<=h;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke()}});
+ const pv=new THREE.Mesh(new THREE.BoxGeometry(1.2,.05,.76),[mat(0xcccccc,.4,.8),mat(0xcccccc,.4,.8),new THREE.MeshBasicMaterial({map:gt}),mat(0x222233,.5,.5),mat(0xcccccc,.4,.8),mat(0xcccccc,.4,.8)]);g2.add(pv);
+ const halo2=new THREE.Mesh(new THREE.TorusGeometry(.95,.012,8,64),new THREE.MeshBasicMaterial({color:0xffc83d}));halo2.rotation.x=Math.PI/2;g2.add(halo2);
+ const a2=1.0;g2.position.set(Math.sin(a2)*9.6,2.3,-Math.cos(a2)*9.6);g2.rotation.z=-.4;scene.add(g2);HOLO.push(g2);
+})();
+const doorTex=ctex(512,1024,(g,w,h)=>{g.fillStyle="#2b1d14";g.fillRect(0,0,w,h);g.strokeStyle="#d69a3a";g.lineWidth=8;g.strokeRect(10,10,w-20,h-20);g.fillStyle="#0f7a3a";g.fillRect(110,50,w-220,110);g.fillStyle="#fff";g.font="800 90px 'Segoe UI',sans-serif";g.textAlign="center";g.fillText("EXIT",w/2,135);g.fillStyle="#d69a3a";g.beginPath();g.arc(w-70,640,16,0,7);g.fill()});
+const door=new THREE.Mesh(new THREE.PlaneGeometry(2.1,4.2),new THREE.MeshBasicMaterial({map:doorTex}));door.position.set(0,2.1,WALLR-.08);door.rotation.y=Math.PI;door.userData.exit=true;scene.add(door);
+const dgl=new THREE.PointLight(0x35d07f,.8,9,2);dgl.position.set(0,4.2,WALLR-1.2);scene.add(dgl);pickables.push(door);
+
+/* ============ CAMERA / CONTROLS (museum pattern) ============ */
+const START_Z=3.6;
+const st={x:0,z:START_Z,y:EYE,yaw:0,pitch:.1,gx:0,gz:START_Z,gy:EYE,gyaw:0,gpitch:.1,autoPos:false,autoLook:false,focus:-1,bx:0,bz:START_Z};
+const keys={};const maxR=5.0;
+function clampPos(){const r=Math.hypot(st.x,st.z);if(r>maxR){st.x*=maxR/r;st.z*=maxR/r}}
+function angDelta(a,b){let d=b-a;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+addEventListener("resize",resize);resize();
+const hint=$("#hint");const hideHint=()=>hint.classList.add("off");
+
+let openIdx=-1,ovT=0;
+function focusOn(i){setFov(FOV0);
+  const p=PANELS[i];if(st.focus<0){st.bx=st.x;st.bz=st.z}
+  st.focus=i;const port=innerWidth/innerHeight<1;const dist=p.big?(port?9:7.5):(port?6.6:3.9);
+  st.gx=p.pos.x-Math.sin(p.th)*dist;st.gz=p.pos.z+Math.cos(p.th)*dist;st.gy=Math.max(port?2.4:1.9,p.pos.y-.6);
+  st.gyaw=-p.th;const dh=Math.hypot(st.gx-p.pos.x,st.gz-p.pos.z);st.gpitch=Math.atan((p.pos.y-st.gy)/dh)-(port?.2:0);
+  st.autoPos=true;st.autoLook=true;hideHint();
+  openIdx=i;clearTimeout(ovT);ovT=setTimeout(()=>{if(openIdx===i)renderOverlay(i)},850);
+}
+function unfocus(){
+  $("#ov").classList.remove("on","full");openIdx=-1;clearTimeout(ovT);
+  if(st.focus>=0){st.focus=-1;st.gx=st.bx;st.gz=st.bz;st.gy=EYE;st.gpitch=.1;st.gyaw=0;st.autoPos=true;st.autoLook=true}
+}
+function renderOverlay(i,refresh){
+  const p=PANELS[i];$("#ovT").textContent=p.t;$("#ovS").textContent=p.live?(D.live?"LIVE FROM ELETTRO OS":"SNAPSHOT"):(p.edu?"HOW ELETTRO OS WORKS":"");
+  $("#ovN").textContent=(i+1)+" of "+PANELS.length;
+  if(p.custom==="carousel"){$("#ov").classList.add("full");if(!refresh)buildCar();else showCar()}else{$("#ovB").innerHTML=p.html()}
+  $("#ov").classList.add("on");
+}
+function buildCar(){
+  $("#ovB").innerHTML=`<div class="car"><div class="stage"><button class="nav l" id="cL">‹</button><img id="cI" alt=""><button class="nav r" id="cR">›</button></div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b id="cT" style="flex:1"></b><button class="btn" id="cA"></button><a class="btn pri" id="cO" target="_blank" rel="noopener">Open full size ↗</a></div><div class="strip" id="cS"></div></div>`;
+  $("#cS").innerHTML=sheetsMeta().map((s,k)=>`<img src="img/${s.f}" data-k="${k}" alt="${esc(s.t)}" loading="lazy">`).join("");
+  $("#cL").onclick=()=>{carAuto=false;stepCar(-1)};$("#cR").onclick=()=>{carAuto=false;stepCar(1)};
+  $("#cA").onclick=()=>{carAuto=!carAuto;showCar()};
+  $("#cS").onclick=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k!=null){carAuto=false;carIdx=+k;paintPanel(PANELS[byId("sheets")]);showCar()}};
+  showCar();
+}
+function stepCar(d){if(!CAR.length)return;carIdx=(carIdx+d+CAR.length)%CAR.length;paintPanel(PANELS[byId("sheets")]);showCar()}
+function showCar(){const s=CAR[carIdx]&&CAR[carIdx].s;if(!s||!$("#cI"))return;$("#cI").src="img/"+s.f;$("#cT").textContent=s.t;$("#cO").href="img/"+s.f;$("#cA").textContent=carAuto?"⏸ Pause":"▶ Auto-play";
+  document.querySelectorAll("#cS img").forEach(im=>{const on=+im.dataset.k===carIdx;im.classList.toggle("on",on);if(on&&carAuto)im.scrollIntoView({block:"nearest",inline:"center"})})}
+$("#ovX").onclick=unfocus;$("#ovExp").onclick=()=>$("#ov").classList.toggle("full");
+$("#ovP").onclick=()=>focusOn((openIdx-1+PANELS.length)%PANELS.length);
+$("#ovNx").onclick=()=>focusOn((openIdx+1)%PANELS.length);
+addEventListener("keydown",e=>{keys[e.code]=true;
+  if(e.code==="Escape"){if(tour)stopTour();else unfocus()}
+  if(openIdx>=0&&e.code==="ArrowRight"){focusOn((openIdx+1)%PANELS.length);e.preventDefault()}
+  if(openIdx>=0&&e.code==="ArrowLeft"){focusOn((openIdx-1+PANELS.length)%PANELS.length);e.preventDefault()}
+  if(["KeyW","KeyA","KeyS","KeyD","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code))hideHint()});
+addEventListener("keyup",e=>{keys[e.code]=false});
+let drag=null;const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+const ptrs=new Map();let pinchD=0;
+const FOV0=74;function setFov(f){camera.fov=Math.max(28,Math.min(96,f));camera.updateProjectionMatrix()}
+const pdist=()=>{const a=[...ptrs.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};
+canvas.addEventListener("pointerdown",e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===2){drag=null;pinchD=pdist();if(tour)stopTour();hideHint();return}
+  drag={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{
+  if(ptrs.has(e.pointerId))ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size>=2){const d=pdist();if(pinchD>0)setFov(camera.fov*(pinchD/d));pinchD=d;return}
+  if(drag){const dx=e.clientX-drag.lx,dy=e.clientY-drag.ly;drag.lx=e.clientX;drag.ly=e.clientY;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;
+    if(drag.moved){if(tour)stopTour();st.yaw+=dx*.0042;st.pitch=Math.max(-1.1,Math.min(1.3,st.pitch+dy*.0035));st.gyaw=st.yaw;st.gpitch=st.pitch;st.autoLook=false;hideHint()}}
+  else hover(e)});
+function endPtr(e){ptrs.delete(e.pointerId);if(ptrs.size<2)pinchD=0}
+canvas.addEventListener("pointerup",e=>{const was=ptrs.size;endPtr(e);if(was<2&&drag&&!drag.moved)click(e);drag=null});
+canvas.addEventListener("pointercancel",e=>{endPtr(e);drag=null});
+canvas.addEventListener("dblclick",()=>setFov(FOV0));
+function pick(e){mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(mouse,camera);return ray.intersectObjects(pickables.concat([floor]),false)[0]||null}
+const tip=$("#tip");
+function hover(e){const h=pick(e);const o=h&&h.object;
+  if(o&&o.userData.exit){canvas.classList.add("hover");tip.textContent="Exit to the Street";tip.style.opacity=1}
+  else if(o&&o.userData.pid!==undefined){canvas.classList.add("hover");tip.textContent=PANELS[o.userData.pid].t+"  ·  click to open";tip.style.opacity=1}
+  else{canvas.classList.remove("hover");tip.style.opacity=0;return}
+  tip.style.left=e.clientX+"px";tip.style.top=e.clientY+"px"}
+function clampTarget(){const r=Math.hypot(st.gx,st.gz);if(r>maxR){st.gx*=maxR/r;st.gz*=maxR/r}}
+function click(e){const h=pick(e);if(!h)return;hideHint();if(tour)stopTour();
+  if(h.object.userData.exit){location.href="../../index.html";return}
+  if(h.object.userData.pid!==undefined){focusOn(h.object.userData.pid);return}
+  if(h.object===floor){if(st.focus>=0)unfocus();st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;clampTarget();st.autoPos=true;const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=.1}}
+canvas.addEventListener("wheel",e=>{e.preventDefault();hideHint();if(e.ctrlKey){setFov(camera.fov*Math.exp(e.deltaY*.01));return}if(tour)stopTour();let dy=e.deltaY;if(e.deltaMode===1)dy*=30;const amt=Math.max(-2.5,Math.min(2.5,-dy*.012));
+  if(st.focus>=0)unfocus();st.autoPos=false;st.autoLook=false;st.x+=-Math.sin(st.yaw)*amt;st.z+=-Math.cos(st.yaw)*amt;clampPos();st.gx=st.x;st.gz=st.z},{passive:false});
+let padDir=0;[["padF",1],["padB",-1]].forEach(([id,d])=>{const b=$("#"+id);b.addEventListener("pointerdown",e=>{padDir=d;hideHint();if(tour)stopTour();e.stopPropagation()});["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev,()=>{padDir=0}))});
+
+/* guided tours: "How it works" (education) and "Wall tour" (everything) */
+let tour=false,tourT=0,tourI=0,tourOrder=[];
+function startTour(ids,btnEl){tour=true;tourOrder=ids.map(byId);tourI=0;tourT=0;unfocus();hideHint();btnEl.textContent="■ Stop tour"}
+function stopTour(){tour=false;$("#tourBtn").textContent="▶ Wall tour";$("#learnBtn").textContent="★ How it works";unfocus()}
+$("#learnBtn").onclick=()=>{if(tour){stopTour();return}startTour(["hero","steps","video","link","shop","gallery","obj3d","solar","brandscan","neck","os","where","try"],$("#learnBtn"))};
+$("#tourBtn").onclick=()=>{if(tour){stopTour();return}startTour(["stats","covers","hero","sheets","solar","calc","neck","scratch","contact","os","qrs","where","noapp","try","cta"],$("#tourBtn"))};
+
+let lastT=performance.now();
+function loop(now){
+  const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
+  if(tour){tourT-=dt;if(tourT<=0){tourT=8;if(tourI>=tourOrder.length){stopTour()}else{focusOn(tourOrder[tourI]);tourI++}}}
+  let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f++;if(keys.KeyS||keys.ArrowDown)f--;if(keys.KeyD)s++;if(keys.KeyA)s--;f+=padDir;
+  if(openIdx<0){if(keys.ArrowLeft)st.yaw+=1.7*dt,st.gyaw=st.yaw;if(keys.ArrowRight)st.yaw-=1.7*dt,st.gyaw=st.yaw}
+  if(f||s){if(tour)stopTour();st.autoPos=false;st.autoLook=false;if(st.focus>=0||openIdx>=0)unfocus();
+    const sp=(keys.ShiftLeft?6:3.4)*dt;st.x+=(-Math.sin(st.yaw)*f+Math.cos(st.yaw)*s)*sp;st.z+=(-Math.cos(st.yaw)*f-Math.sin(st.yaw)*s)*sp;clampPos();st.gx=st.x;st.gz=st.z}
+  const k=1-Math.exp(-dt*3.6);
+  if(st.autoPos){st.x+=(st.gx-st.x)*k;st.z+=(st.gz-st.z)*k;if(Math.hypot(st.gx-st.x,st.gz-st.z)<.02)st.autoPos=false}
+  st.y+=(st.gy-st.y)*k;
+  if(st.autoLook){st.yaw+=angDelta(st.yaw,st.gyaw)*k;st.pitch+=(st.gpitch-st.pitch)*k;if(Math.abs(angDelta(st.yaw,st.gyaw))<.003&&Math.abs(st.gpitch-st.pitch)<.003)st.autoLook=false}
+  const bob=(f||s)?Math.sin(now/170)*.03:0;camera.position.set(st.x,st.y+bob,st.z);camera.rotation.set(st.pitch,st.yaw,0);
+  tk.offset.x=-(now/1000*.012)%1;HOLO.forEach((h,i)=>{h.rotation.y=now/1500*(i?-1:1);h.position.y=2.3+Math.sin(now/700+i)*.08});
+  renderer.render(scene,camera);requestAnimationFrame(loop)}
+repaintAll();
+setTimeout(()=>paintPanel(PANELS[byId("sheets")]),1500);
+const hash=location.hash.slice(1);const hi=byId(hash);if(hi>=0)setTimeout(()=>focusOn(hi),900);
+if(hash==="tour")setTimeout(()=>$("#learnBtn").click(),900);
+requestAnimationFrame(t=>{lastT=t;loop(t)});
+setTimeout(()=>$("#load").classList.add("off"),700);
+window.__room={st,PANELS,focusOn,camera,renderer,scene};
+})();
+</script>
+</body>
+</html>
