@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stashbox Radio Room · Elettro Mall</title>
+<style>
+:root{--ink:#f4efe6;--amber:#ffb02e;--cy:#22e6ff;--pk:#ff5fd2;--bg:#07080f}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas#gl{position:fixed;inset:0;display:block;width:100%;height:100%;cursor:grab}
+canvas#gl.hover{cursor:pointer}
+.top{position:fixed;top:12px;left:14px;right:14px;z-index:5;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{font-weight:800;letter-spacing:3px;font-size:13px;text-shadow:0 2px 10px #000}
+.brand small{display:block;font-weight:500;letter-spacing:1.4px;color:var(--amber);font-size:10px;margin-top:3px}
+.btn{background:#07080fcc;color:var(--ink);border:1px solid #ffffff30;border-radius:999px;padding:8px 15px;font:600 13px "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;backdrop-filter:blur(8px);display:inline-block}
+.btn:hover{background:#ffffff22}
+.btn.exit{background:#b3261e;border-color:#b3261e}
+#chips{position:fixed;left:14px;right:14px;top:58px;z-index:5;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.row{display:flex;gap:6px;flex-wrap:wrap;pointer-events:auto}
+.chip{border:1px solid #ffffff30;background:#07080fc8;color:var(--ink);border-radius:999px;padding:6px 13px;font:600 12.5px "Segoe UI",sans-serif;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap}
+.chip i{font-style:normal;opacity:.6;margin-left:5px;font-weight:500}
+.chip:hover{background:#ffffff22}
+.chip.on{color:#07080f;border-color:transparent}
+.chip.sub{font-size:12px;padding:5px 11px}
+#q{background:#07080fc8;border:1px solid #ffffff30;color:var(--ink);border-radius:999px;padding:6px 14px;font:600 12.5px "Segoe UI",sans-serif;width:190px;outline:none;backdrop-filter:blur(8px)}
+#q:focus{border-color:var(--amber)}
+#np{position:fixed;right:14px;bottom:14px;width:min(340px,calc(100vw - 28px));z-index:6;background:#0b0d1ae6;border:1px solid #ffffff26;border-radius:16px;padding:12px;backdrop-filter:blur(10px);display:none;box-shadow:0 10px 40px #000a}
+#np .hd{display:flex;gap:12px;align-items:center}
+#np img{width:78px;height:78px;border-radius:10px;object-fit:cover;flex:none;box-shadow:0 4px 18px #0008}
+#np .t{font-weight:800;font-size:15px;line-height:1.2}
+#np .a{font-size:12.5px;color:#bfb9ad;margin-top:3px}
+#np .g{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;color:#07080f}
+.bar{height:6px;background:#ffffff22;border-radius:6px;margin:11px 0 4px;cursor:pointer;position:relative}
+.bar b{position:absolute;left:0;top:0;bottom:0;background:var(--amber);border-radius:6px;width:0}
+.tm{display:flex;justify-content:space-between;font-size:11px;color:#9a958a}
+.ctl{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:6px}
+.ctl button{background:#ffffff14;border:0;color:var(--ink);width:40px;height:40px;border-radius:50%;font-size:17px;cursor:pointer}
+.ctl button:hover{background:#ffffff2e}
+.ctl button.big{width:50px;height:50px;background:var(--amber);color:#1a1000;font-size:20px}
+.ctl button.sw.on{background:var(--cy);color:#00222a}
+.ctl input[type=range]{width:72px;accent-color:var(--amber)}
+.lnk{display:flex;gap:8px;margin-top:9px}
+.lnk a{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--ink);border:1px solid #ffffff30;border-radius:9px;padding:7px 4px;text-decoration:none}
+.lnk a:hover{background:#ffffff1c}
+#tip{position:fixed;z-index:7;pointer-events:none;background:#07080ff2;border:1px solid var(--amber);padding:7px 11px;border-radius:9px;font-size:13px;opacity:0;transform:translate(16px,16px);transition:opacity .12s;max-width:260px}
+#tip b{display:block;font-size:13.5px}
+#tip span{color:#bfb9ad;font-size:12px}
+#hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;background:#07080fbb;border:1px solid #ffffff22;border-radius:999px;padding:9px 18px;font-size:13px;color:#d8d3c8;backdrop-filter:blur(8px);transition:opacity .6s;text-align:center;max-width:calc(100% - 28px)}
+#hint.off{opacity:0;pointer-events:none}
+#load{position:fixed;inset:0;z-index:30;background:var(--bg);display:grid;place-items:center;text-align:center;transition:opacity .8s}
+#load.off{opacity:0;pointer-events:none}
+#load h1{font-size:22px;letter-spacing:4px;font-weight:800}
+#load p{color:var(--amber);margin-top:8px;letter-spacing:2px;font-size:12px}
+#lb{width:220px;height:4px;background:#ffffff22;border-radius:4px;margin:16px auto 0;overflow:hidden}
+#lb b{display:block;height:100%;width:0;background:var(--amber)}
+#joy{position:fixed;left:22px;bottom:30px;width:110px;height:110px;border-radius:50%;border:2px solid #ffffff30;background:#07080f66;z-index:5;display:none;touch-action:none}
+#joy b{position:absolute;left:35px;top:35px;width:40px;height:40px;border-radius:50%;background:#ffffff55}
+@media(pointer:coarse){#joy{display:block}#hint{bottom:150px}}
+@media(max-width:700px){#q{width:130px}#np{bottom:150px}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="top">
+  <div class="brand">STASHBOX RADIO · SPATIAL ROOM<small id="stats">LOADING THE CATALOG…</small></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+    <a class="btn" href="https://stashbox.com/radio/" target="_blank" rel="noopener">Open the real radio ↗</a>
+    <a class="btn exit" href="/mall/">← Mall street</a>
+  </div>
+</div>
+<div id="chips"><div class="row" id="fam"></div><div class="row" id="sub"></div></div>
+<div id="np">
+  <div class="hd"><img id="npImg" alt=""><div><div class="t" id="npT"></div><div class="a" id="npA"></div><span class="g" id="npG"></span></div></div>
+  <div class="bar" id="bar"><b id="barF"></b></div>
+  <div class="tm"><span id="tc">0:00</span><span id="td">0:00</span></div>
+  <div class="ctl"><button id="bShuf" class="sw" title="Shuffle">🔀</button><button id="bPrev" title="Previous">⏮</button><button id="bPlay" class="big" title="Play / pause">⏸</button><button id="bNext" title="Next">⏭</button><input id="vol" type="range" min="0" max="1" step="0.01" value="0.9" title="Volume"></div>
+  <div class="lnk"><a id="lnkRadio" href="https://stashbox.com/radio/" target="_blank" rel="noopener">Stashbox Radio ↗</a><a id="lnkShop" href="#" target="_blank" rel="noopener">Shop this song ↗</a></div>
+</div>
+<div id="tip"></div>
+<div id="hint">Click any album cover to play it · pick a genre to pull its tracks into the ring around the turntable · drag to look, W A S D to walk</div>
+<div id="joy"><b></b></div>
+<div id="load"><div><h1>STASHBOX RADIO ROOM</h1><p>HANGING THE ARTWORK…</p><div id="lb"><b></b></div></div></div>
+<script type="module" src="room.js"></script>
+</body>
+</html>
