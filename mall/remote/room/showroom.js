@@ -5,6 +5,9 @@ import * as THREE from 'three';
    Pick a phone: its experience goes on the big screen, with a real QR code to open it. */
 
 const ORIGIN = location.origin;
+let SID = null; try { SID = sessionStorage.getItem('elrm_id'); } catch (e) { }
+if (!SID) { SID = (Math.random().toString(36) + '000000').slice(2, 8); try { sessionStorage.setItem('elrm_id', SID); } catch (e) { } }
+const PAIR_URL = location.origin + location.pathname + '?c=' + SID;
 const EXP = [
   { id: 'reef', cat: 'Games', name: 'The Reef', kicker: 'Many phones · kids’ game', title: 'The Reef in the Atrium', sub: 'A giant living aquarium on the big screen. Every child steers their own sea creature from a phone. No app, many players at once.', img: '/remote/img/reef-hero.jpg', url: '/remote/?scene=reef' },
   { id: 'reef2', cat: 'Games', name: 'Deep Reef', kicker: 'Many phones · teens + adults', title: 'Deep Reef', sub: 'Scan, pick a real reef fish and survive the food chain. Eat plankton, dodge barracuda and sharks, hide in the anemones, climb the leaderboard.', img: '/remote/img/reef2-hero.jpg', url: '/remote/?scene=reef2' },
@@ -101,17 +104,17 @@ function drawScreen(i) {
   g.fillStyle = '#fff'; g.font = '800 80px "Segoe UI",Arial'; const n = wrap(g, e.title, 1380, 250, 900, 92, 3);
   g.fillStyle = '#bfe3d8'; g.font = '500 36px "Segoe UI",Arial'; wrap(g, e.sub, 1380, 250 + n * 92 + 30, 880, 48, 5);
   // QR
-  const q = qrcode(0, 'M'); q.addData(expUrl(e)); q.make(); const m = q.getModuleCount(), cs = Math.floor(190 / m);
+  const q = qrcode(0, 'M'); q.addData(PAIR_URL); q.make(); const m = q.getModuleCount(), cs = Math.floor(190 / m);
   g.fillStyle = '#fff'; g.fillRect(1380, 640, m * cs + 24, m * cs + 24); g.fillStyle = '#06201c';
   for (let r = 0; r < m; r++) for (let c = 0; c < m; c++) if (q.isDark(r, c)) g.fillRect(1392 + c * cs, 652 + r * cs, cs, cs);
-  g.fillStyle = '#fff'; g.font = '800 34px "Segoe UI",Arial'; g.fillText('SCAN WITH YOUR PHONE', 1380 + m * cs + 48, 700); g.font = '500 28px "Segoe UI",Arial'; g.fillStyle = '#9cc5b9'; g.fillText('No app, no account', 1380 + m * cs + 48, 744);
+  g.fillStyle = '#fff'; g.font = '800 34px "Segoe UI",Arial'; g.fillText('SCAN TO CONTROL THIS SCREEN', 1380 + m * cs + 48, 700); g.font = '500 28px "Segoe UI",Arial'; g.fillStyle = '#9cc5b9'; g.fillText('No app, no account', 1380 + m * cs + 48, 744);
   screen.t.needsUpdate = true;
 }
 function drawQR(e) {
-  const c = $('qrc'), g = c.getContext('2d'); const q = qrcode(0, 'M'); q.addData(expUrl(e)); q.make(); const m = q.getModuleCount(), cs = Math.floor(208 / (m + 2));
+  const c = $('qrc'), g = c.getContext('2d'); const q = qrcode(0, 'M'); q.addData(PAIR_URL); q.make(); const m = q.getModuleCount(), cs = Math.floor(208 / (m + 2));
   g.fillStyle = '#fff'; g.fillRect(0, 0, 208, 208); g.fillStyle = '#06201c'; const off = Math.floor((208 - m * cs) / 2);
   for (let r = 0; r < m; r++) for (let cc = 0; cc < m; cc++) if (q.isDark(r, cc)) g.fillRect(off + cc * cs, off + r * cs, cs, cs);
-  $('qrurl').textContent = expUrl(e).replace(/^https?:\/\//, '');
+  $('qrurl').textContent = 'Session ' + SID;
 }
 function select(i) {
   S.sel = i; const e = EXP[i];
@@ -185,18 +188,13 @@ Promise.all(EXP.map(e => new Promise(res => { const im = new Image(); im.onload 
 /* ---------- phone remote (display side) ---------- */
 import { RelayLink } from './relay.js';
 {
-  let sid = null; try { sid = sessionStorage.getItem('elrm_id'); } catch (e) { }
-  if (!sid) { sid = (Math.random().toString(36) + '000000').slice(2, 8); try { sessionStorage.setItem('elrm_id', sid); } catch (e) { } }
-  const url = location.origin + location.pathname + '?c=' + sid;
-  { const qq = qrcode(0, 'M'); qq.addData(url); qq.make(); const c = $('rqc'), g = c.getContext('2d'), m = qq.getModuleCount(), cs = Math.floor(332 / (m + 2)), off = Math.floor((332 - m * cs) / 2); g.fillStyle = '#fff'; g.fillRect(0, 0, 332, 332); g.fillStyle = '#06201c'; for (let r = 0; r < m; r++) for (let cc = 0; cc < m; cc++) if (qq.isDark(r, cc)) g.fillRect(off + cc * cs, off + r * cs, cs, cs); $('rsid').textContent = 'SESSION ' + sid; }
-  if (matchMedia('(pointer:coarse)').matches) $('rpill').classList.add('hasjoy');
-  $('rpill').onclick = () => $('rcard').classList.toggle('on');
+  const sid = SID;
   let last = '';
   const stateMsg = () => { const e = EXP[S.sel], v = visible(); return { t: 'state', sel: S.sel, cat: S.cat, auto: S.auto, name: e.name, title: e.title, sub: e.sub, img: e.img, url: expUrl(e), pos: v.indexOf(S.sel) + 1, total: v.length, cats: CATS.map(n => ({ n, c: n === 'All' ? EXP.length : EXP.filter(x => x.cat === n).length })), list: v.map(i => ({ i, name: EXP[i].name, img: EXP[i].img })) }; };
   const push = force => { const m = stateMsg(), j = JSON.stringify(m); if (force || j !== last) { if (rl.send(m)) last = j; } };
   const rl = RelayLink('display', sid, m => {
-    if (m.t === '_join' || m.t === 'hello') { $('rstat').classList.add('on'); push(true); $('hint').classList.add('off'); $('rcard').classList.remove('on'); }
-    else if (m.t === '_leave') { $('rstat').classList.remove('on'); joy.x = joy.y = 0; }
+    if (m.t === '_join' || m.t === 'hello') { push(true); $('hint').classList.add('off'); $('qrbox').classList.remove('on'); }
+    else if (m.t === '_leave') {  }
     else if (m.t === 'sel') { S.auto = false; syncAuto(); select(m.i | 0); }
     else if (m.t === 'next') { S.auto = false; syncAuto(); step(1); } else if (m.t === 'prev') { S.auto = false; syncAuto(); step(-1); }
     else if (m.t === 'auto') { S.auto = !S.auto; syncAuto(); if (S.auto) step(1); }
