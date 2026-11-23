@@ -17,7 +17,7 @@ window.MUSEUM_WORKS = [
   "title": "Tahiti - SPM Hotels",
   "cats": "SEO, AIO",
   "year": "2026",
-  "url": "https://www.spmhotels.com/",
+  "url": "https://elettro.com/clients/spmhotels/",
   "blurb": "Starting with SEO & AIO Audit - Opportunity to Improve",
   "role": "SEO + AIO",
   "stack": "HTML",
