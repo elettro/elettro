@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elettro Web Dev Museum</title>
+<style>
+:root{--ink:#f4efe6;--gold:#d9b46a;--bg:#0b0e18;--blue:#2f7bff}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas#gl{position:fixed;inset:0;display:block;width:100%;height:100%;cursor:grab}
+canvas#gl.hover{cursor:pointer}
+.top{position:fixed;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:5;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{font-weight:800;letter-spacing:3px;font-size:13px;text-shadow:0 2px 10px #000}
+.brand small{display:block;font-weight:500;letter-spacing:1.5px;color:var(--gold);font-size:10px;margin-top:2px}
+.btns{display:flex;gap:8px}
+.btn{background:#0b0e18cc;color:var(--ink);border:1px solid #ffffff30;border-radius:999px;padding:9px 16px;font:600 13px "Segoe UI",sans-serif;text-decoration:none;cursor:pointer;backdrop-filter:blur(8px)}
+.btn:hover{background:#ffffff22}
+.btn.pri{background:var(--blue);border-color:var(--blue)}
+#hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;background:#0b0e18bb;border:1px solid #ffffff22;border-radius:999px;padding:9px 18px;font-size:13px;color:#d8d3c8;backdrop-filter:blur(8px);transition:opacity .6s;text-align:center;max-width:calc(100% - 28px)}
+#hint.off{opacity:0;pointer-events:none}
+#tip{position:fixed;z-index:6;pointer-events:none;background:#0b0e18ee;border:1px solid var(--gold);padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translate(14px,14px);transition:opacity .15s;white-space:nowrap}
+#card{position:fixed;left:18px;bottom:18px;width:min(400px,calc(100% - 36px));background:#f7f3ea;color:#16130e;border-radius:14px;padding:18px 20px 16px;z-index:7;box-shadow:0 18px 60px #000b;transform:translateY(130%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+#card.on{transform:none}
+#card .k{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8a6d2f;font-weight:700}
+#card h2{font:400 26px/1.1 "Georgia",serif;margin:5px 0 8px}
+#card p{font-size:14px;line-height:1.5;color:#3b362c;margin-bottom:10px}
+#card .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+#card .chips span{font-size:11px;background:#16130e12;border-radius:99px;padding:3px 10px;font-weight:600}
+#card .row{display:flex;gap:8px;align-items:center}
+#card a.go{background:#16130e;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:11px 18px;border-radius:10px;flex:1;text-align:center}
+#card a.go:hover{background:var(--blue)}
+#card button{border:0;background:#16130e14;color:#16130e;width:42px;height:42px;border-radius:10px;font-size:18px;cursor:pointer}
+#card button:hover{background:#16130e26}
+#index{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#0b0e18f2;z-index:9;transform:translateX(100%);transition:transform .4s;padding:64px 16px 16px;overflow:auto;border-left:1px solid #ffffff22;touch-action:pan-y}
+#index.on{transform:none}
+#index h3{font-size:12px;letter-spacing:2px;color:var(--gold);margin:0 4px 12px}
+#index .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#index .it{background:#ffffff0d;border:1px solid #ffffff18;border-radius:10px;overflow:hidden;cursor:pointer;text-align:left;color:var(--ink);padding:0;font:inherit}
+#index .it:hover{border-color:var(--gold)}
+#index .it img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#222}
+#index .it b{display:block;font-size:12px;padding:7px 9px 8px;line-height:1.25}
+#pad{position:fixed;right:16px;bottom:18px;z-index:5;display:none;flex-direction:column;gap:8px}
+#pad .btn{width:52px;height:52px;padding:0;font-size:20px}
+@media(pointer:coarse){#pad{display:flex}#hint{bottom:90px}}
+@media(max-width:640px){#card{left:10px;bottom:10px;width:calc(100% - 20px)}.btn{padding:8px 12px}}
+#load{position:fixed;inset:0;z-index:20;background:var(--bg);display:grid;place-items:center;text-align:center;transition:opacity .8s}
+#load.off{opacity:0;pointer-events:none}
+#load h1{font:400 34px "Georgia",serif;letter-spacing:1px}
+#load p{color:var(--gold);letter-spacing:3px;font-size:11px;margin-top:10px}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="load"><div><h1>The Elettro Web Dev Museum</h1><p>OPENING THE DOORS…</p></div></div>
+<div class="top">
+  <div class="brand">ELETTRO<small>WEB DEV MUSEUM</small></div>
+  <div class="btns"><a class="btn" href="../index.html">← Street</a><button class="btn" id="idxBtn">☰ All works</button><a class="btn pri" href="https://elettro.com/portfolio/" target="_blank" rel="noopener">Portfolio ↗</a></div>
+</div>
+<div id="hint">Drag to look · W A S D / arrows to walk · click the floor to stroll · click a painting to step up to it</div>
+<div id="tip"></div>
+<div id="card"></div>
+<div id="index"><h3>THE COLLECTION</h3><div class="grid" id="grid"></div></div>
+<div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="works.js"></script>
+<script>
+(function(){
+const W = window.MUSEUM_WORKS || [];
+const N = W.length;
+const SIDE_X = 7, HALL_HALF = 7, SPACING = 6.4, FIRST_Z = -9;
+const ROWS = Math.ceil(N/2);
+const HALL_END = FIRST_Z - (ROWS-1)*SPACING - 9;
+const PW = 4.2, PH = PW*9/16, PY = 2.7;
+const EYE = 1.7;
+
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0e18);
+scene.fog = new THREE.Fog(0x0b0e18, 18, 70);
+const camera = new THREE.PerspectiveCamera(70, 1, .1, 200);
+camera.rotation.order = 'YXZ';
+
+// ---------- helpers
+function canvasTex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
+function wrap(ctx,text,x,y,maxW,lh,maxLines){const words=text.split(' ');let line='',n=0;for(const w of words){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,x,y);y+=lh;line=w;if(++n>=maxLines-1)break}else line=t}ctx.fillText(line,x,y)}
+
+// ---------- materials
+const wallTex = canvasTex(512,512,(g,w,h)=>{g.fillStyle='#232a40';g.fillRect(0,0,w,h);for(let i=0;i<9000;i++){g.fillStyle='rgba(255,255,255,'+Math.random()*.025+')';g.fillRect(Math.random()*w,Math.random()*h,2,2)}});
+wallTex.wrapS=wallTex.wrapT=THREE.RepeatWrapping;wallTex.repeat.set(10,2);
+const wallMat = new THREE.MeshStandardMaterial({map:wallTex,roughness:.95,metalness:0});
+const trimMat = new THREE.MeshStandardMaterial({color:0x0d0f18,roughness:.6,metalness:.3});
+const goldMat = new THREE.MeshStandardMaterial({color:0xc9a44f,roughness:.35,metalness:.85});
+const frameMat = new THREE.MeshStandardMaterial({color:0x14110c,roughness:.5,metalness:.4});
+const floorTex = canvasTex(512,512,(g,w,h)=>{for(let y=0;y<2;y++)for(let x=0;x<2;x++){g.fillStyle=(x+y)%2?'#c9c2b4':'#8c8578';g.fillRect(x*256,y*256,256,256);for(let i=0;i<1400;i++){g.fillStyle='rgba(0,0,0,'+Math.random()*.05+')';g.fillRect(x*256+Math.random()*256,y*256+Math.random()*256,3,1)}}});
+floorTex.wrapS=floorTex.wrapT=THREE.RepeatWrapping;floorTex.repeat.set(HALL_HALF*2/3.2, Math.abs(HALL_END-12)/3.2);
+const floorMat = new THREE.MeshStandardMaterial({map:floorTex,roughness:.28,metalness:.05});
+
+// ---------- hall shell
+const hallLen = 12 - HALL_END, hallMidZ = (12 + HALL_END)/2;
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(HALL_HALF*2, hallLen), floorMat);
+floor.rotation.x=-Math.PI/2;floor.position.set(0,0,hallMidZ);scene.add(floor);
+const ceil = new THREE.Mesh(new THREE.PlaneGeometry(HALL_HALF*2, hallLen), new THREE.MeshStandardMaterial({color:0x10131f,roughness:1}));
+ceil.rotation.x=Math.PI/2;ceil.position.set(0,6,hallMidZ);scene.add(ceil);
+function wall(x,rotY){const m=new THREE.Mesh(new THREE.PlaneGeometry(hallLen,6),wallMat);m.position.set(x,3,hallMidZ);m.rotation.y=rotY;scene.add(m);return m}
+wall(-SIDE_X,Math.PI/2); wall(SIDE_X,-Math.PI/2);
+wallTex.repeat.set(hallLen/6,1);
+function endWall(z,rotY){const m=new THREE.Mesh(new THREE.PlaneGeometry(HALL_HALF*2,6),wallMat);m.position.set(0,3,z);m.rotation.y=rotY;scene.add(m)}
+endWall(12,Math.PI); endWall(HALL_END,0);
+// runner carpet
+const runner = new THREE.Mesh(new THREE.PlaneGeometry(3.2,hallLen-2),new THREE.MeshStandardMaterial({color:0x6b1624,roughness:.95}));
+runner.rotation.x=-Math.PI/2;runner.position.set(0,.01,hallMidZ);scene.add(runner);
+[-1.5,1.5].forEach(x=>{const e=new THREE.Mesh(new THREE.PlaneGeometry(.08,hallLen-2),new THREE.MeshBasicMaterial({color:0xc9a44f}));e.rotation.x=-Math.PI/2;e.position.set(x,.02,hallMidZ);scene.add(e)});
+// baseboard + crown + wainscot rail
+[-1,1].forEach(s=>{
+  const base=new THREE.Mesh(new THREE.BoxGeometry(.18,.5,hallLen),trimMat);base.position.set(s*(SIDE_X-.09),.25,hallMidZ);scene.add(base);
+  const rail=new THREE.Mesh(new THREE.BoxGeometry(.1,.07,hallLen),goldMat);rail.position.set(s*(SIDE_X-.05),.8,hallMidZ);scene.add(rail);
+  const crown=new THREE.Mesh(new THREE.BoxGeometry(.4,.35,hallLen),trimMat);crown.position.set(s*(SIDE_X-.2),5.82,hallMidZ);scene.add(crown);
+});
+// ceiling light strips + pilasters between paintings
+const lightMat = new THREE.MeshBasicMaterial({color:0xfff1cf});
+for(let r=0;r<ROWS+1;r++){
+  const z=FIRST_Z - r*SPACING + SPACING/2;
+  const strip=new THREE.Mesh(new THREE.BoxGeometry(3.6,.06,.7),lightMat);strip.position.set(0,5.96,z);scene.add(strip);
+  [-1,1].forEach(s=>{const p=new THREE.Mesh(new THREE.BoxGeometry(.3,6,.45),trimMat);p.position.set(s*(SIDE_X-.15),3,z);scene.add(p);
+    const cap=new THREE.Mesh(new THREE.BoxGeometry(.36,.1,.52),goldMat);cap.position.set(s*(SIDE_X-.16),4.6,z);scene.add(cap)});
+}
+// benches down the middle
+for(let r=0;r<ROWS;r+=2){
+  const z=FIRST_Z - r*SPACING;
+  const b=new THREE.Group();
+  const seat=new THREE.Mesh(new THREE.BoxGeometry(2.2,.12,.8),new THREE.MeshStandardMaterial({color:0x2b1d14,roughness:.5}));seat.position.y=.5;b.add(seat);
+  [-.9,.9].forEach(x=>{const l=new THREE.Mesh(new THREE.BoxGeometry(.1,.5,.7),goldMat);l.position.set(x,.25,0);b.add(l)});
+  b.position.set(0,0,z);b.rotation.y=Math.PI/2;scene.add(b);
+}
+// lights
+scene.add(new THREE.HemisphereLight(0xdfe7ff,0x2a2230,.75));
+const lamp = new THREE.PointLight(0xfff0d6,.9,26,1.6); scene.add(lamp);
+
+// ---------- entrance sign + end sign
+function sign(text,sub,z,rotY,hang){
+  const t=canvasTex(2048,512,(g,w,h)=>{g.fillStyle='#0b0e18';g.fillRect(0,0,w,h);g.strokeStyle='#d9b46a';g.lineWidth=10;g.strokeRect(14,14,w-28,h-28);g.fillStyle='#f4efe6';g.textAlign='center';g.font='400 150px Georgia,serif';g.fillText(text,w/2,260);g.fillStyle='#d9b46a';g.font='600 48px Segoe UI,sans-serif';g.fillText(sub,w/2,380)});
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(9,2.25),new THREE.MeshBasicMaterial({map:t}));
+  m.position.set(0,hang,z);m.rotation.y=rotY;scene.add(m);
+  [-4,4].forEach(x=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.015,.015,6-hang,6),goldMat);c.position.set(x*Math.cos(rotY),(hang+6)/2+0.55,z);scene.add(c)});
+}
+sign('The Elettro Web Dev Museum',N+' works · Davie, Florida',2,0,3.7);
+sign('Thank you for visiting','elettro.com/portfolio',HALL_END+1.5,Math.PI,3.2);
+// end wall: invitation
+(function(){
+  const t=canvasTex(1024,512,(g,w,h)=>{g.fillStyle='#f4efe6';g.textAlign='center';g.font='400 80px Georgia,serif';g.fillText('Your site could hang here.',w/2,200);g.fillStyle='#d9b46a';g.font='600 38px Segoe UI,sans-serif';g.fillText('elettro.com  ·  contact@elettro.com',w/2,300)});
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(6,3),new THREE.MeshBasicMaterial({map:t,transparent:true}));m.position.set(0,2.8,HALL_END+.05);scene.add(m);
+})();
+
+// ---------- paintings
+const loader = new THREE.TextureLoader();
+const paintings = [];  // {idx, mesh, mat, pos, normalX, tex, loading}
+const pickables = [];
+const placeholderMat = ()=>new THREE.MeshBasicMaterial({color:0x1b2036});
+const glowTex = canvasTex(256,256,(g,w,h)=>{const gr=g.createRadialGradient(w/2,0,5,w/2,0,w*.75);gr.addColorStop(0,'rgba(255,230,170,.55)');gr.addColorStop(1,'rgba(255,230,170,0)');g.fillStyle=gr;g.fillRect(0,0,w,h)});
+W.forEach((w,i)=>{
+  const side = i%2===0 ? -1 : 1;           // -1 left wall, +1 right wall
+  const row = Math.floor(i/2);
+  const z = FIRST_Z - row*SPACING;
+  const x = side*(SIDE_X-.1);
+  const g = new THREE.Group(); g.position.set(x,PY,z); g.rotation.y = side<0 ? Math.PI/2 : -Math.PI/2;
+  const ar = w.w&&w.h ? w.w/w.h : 16/9;
+  const pw = PW, ph = PW/ar;
+  // frame
+  const fr = new THREE.Mesh(new THREE.BoxGeometry(pw+.34,ph+.34,.14),frameMat); fr.position.z=.03; g.add(fr);
+  const inner = new THREE.Mesh(new THREE.BoxGeometry(pw+.14,ph+.14,.16),goldMat); inner.position.z=.025; g.add(inner);
+  const mat = placeholderMat();
+  const art = new THREE.Mesh(new THREE.PlaneGeometry(pw,ph),mat); art.position.z=.115; g.add(art);
+  art.userData.idx=i; pickables.push(art);
+  // picture lamp + glow wash
+  const bar = new THREE.Mesh(new THREE.BoxGeometry(pw*.55,.06,.12),goldMat); bar.position.set(0,ph/2+.42,.22); g.add(bar);
+  const glow = new THREE.Mesh(new THREE.PlaneGeometry(pw*1.9,ph*1.9),new THREE.MeshBasicMaterial({map:glowTex,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));
+  glow.position.set(0,ph/2+.4,.02); g.add(glow);
+  // plaque
+  const pt = canvasTex(1024,256,(c,cw,ch)=>{c.fillStyle='#f1ecdf';c.fillRect(0,0,cw,ch);c.strokeStyle='#b9954a';c.lineWidth=6;c.strokeRect(8,8,cw-16,ch-16);c.fillStyle='#16130e';c.textAlign='left';c.font='700 64px Georgia,serif';let s=w.title;while(c.measureText(s).width>cw-70&&s.length>6){s=s.slice(0,-2)}if(s!==w.title)s=s.trim()+'…';c.fillText(s,36,100);c.fillStyle='#6d5a2e';c.font='600 38px Segoe UI,sans-serif';c.fillText((w.cats||'').split(/[;,]/).map(x=>x.trim()).filter(Boolean).slice(0,3).join(' · ')+'  ·  '+w.year,36,168);c.fillStyle='#3b362c';c.font='400 32px Segoe UI,sans-serif';c.fillText(w.role||'',36,222)});
+  const pl = new THREE.Mesh(new THREE.PlaneGeometry(1.7,.425),new THREE.MeshBasicMaterial({map:pt})); pl.position.set(0,-(ph/2+.55),.06); g.add(pl);
+  scene.add(g);
+  paintings.push({idx:i,mat,pos:new THREE.Vector3(x,PY,z),side,tex:null,loading:false,url:w.art,mesh:art});
+});
+// lazy texture streaming
+function streamTextures(){
+  const p=camera.position;
+  paintings.forEach(pt=>{
+    if(!pt.url)return;
+    const d=Math.hypot(p.x-pt.pos.x,p.z-pt.pos.z);
+    if(d<34 && !pt.tex && !pt.loading){
+      pt.loading=true;
+      loader.load(pt.url,t=>{t.encoding=THREE.sRGBEncoding;t.anisotropy=8;pt.tex=t;pt.loading=false;
+        if(d>=0){pt.mat.map=t;pt.mat.color.set(0xffffff);pt.mat.needsUpdate=true}},undefined,()=>{pt.loading=false});
+    }else if(d>70 && pt.tex){
+      pt.mat.map=null;pt.mat.color.set(0x1b2036);pt.mat.needsUpdate=true;pt.tex.dispose();pt.tex=null;
+    }
+  });
+}
+
+// ---------- camera state
+const st={x:0,z:9,y:EYE,yaw:0,pitch:0, gx:0,gz:9,gy:EYE,gyaw:0,gpitch:0, autoPos:false, autoLook:false, focus:-1};
+const keys={};
+function clampPos(){st.x=Math.max(-HALL_HALF+1.3,Math.min(HALL_HALF-1.3,st.x));st.z=Math.max(HALL_END+2,Math.min(11,st.z))}
+function angDelta(a,b){let d=b-a;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+addEventListener('resize',resize);resize();
+
+// ---------- focus on a painting
+const card=document.getElementById('card');
+function showCard(i){
+  const w=W[i];
+  const chips=(w.cats||'').split(/[;,]/).concat((w.stack||'').split(/[;,]/)).map(s=>s.trim()).filter(Boolean).slice(0,6);
+  const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  card.innerHTML=`<div class="k">${i+1} of ${N} · ${esc(w.role)}</div><h2>${esc(w.title)}</h2><p>${esc(w.blurb)}</p><div class="chips">${chips.map(c=>`<span>${esc(c)}</span>`).join('')}</div><div class="row"><button id="pv" aria-label="Previous">‹</button><a class="go" href="${esc(w.url)}" target="_blank" rel="noopener">Visit the project ↗</a><button id="nx" aria-label="Next">›</button><button id="cl" aria-label="Close">✕</button></div>`;
+  card.classList.add('on');
+  document.getElementById('pv').onclick=()=>focusOn((i-1+N)%N);
+  document.getElementById('nx').onclick=()=>focusOn((i+1)%N);
+  document.getElementById('cl').onclick=unfocus;
+}
+function focusOn(i){
+  const p=paintings[i];st.focus=i;
+  const dist=2.9;
+  st.gx=p.pos.x - p.side*dist; st.gz=p.pos.z; st.gy=1.9;
+  st.gyaw = p.side<0 ? Math.PI/2 : -Math.PI/2;   // look toward wall
+  st.gpitch=Math.atan((PY-1.9)/dist)*.9;
+  st.autoPos=true;st.autoLook=true;
+  showCard(i);hideHint();closeIndex();
+}
+function unfocus(){card.classList.remove('on');st.focus=-1;st.gy=EYE;st.gx=Math.max(-3,Math.min(3,st.x));st.gpitch=0;st.autoPos=true;st.autoLook=true}
+
+// ---------- input
+const hint=document.getElementById('hint');function hideHint(){hint.classList.add('off')}
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='Escape'){unfocus();closeIndex()}
+  if(st.focus>=0){if(e.code==='ArrowRight')focusOn((st.focus+1)%N);if(e.code==='ArrowLeft')focusOn((st.focus-1+N)%N);}
+  if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)){hideHint()}});
+addEventListener('keyup',e=>{keys[e.code]=false});
+let drag=null;const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{
+  if(drag){const dx=e.clientX-drag.lx,dy=e.clientY-drag.ly;drag.lx=e.clientX;drag.ly=e.clientY;
+    if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;
+    if(drag.moved){st.yaw+=dx*.0042;st.pitch=Math.max(-1.1,Math.min(1.1,st.pitch+dy*.0035));st.gyaw=st.yaw;st.gpitch=st.pitch;st.autoLook=false;hideHint()}
+  }else hover(e);
+});
+canvas.addEventListener('pointerup',e=>{
+  if(drag&&!drag.moved)click(e);drag=null;});
+function pick(e){mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects(pickables.concat([floor]),false);return hits[0]||null}
+const tip=document.getElementById('tip');
+function hover(e){const h=pick(e);if(h&&h.object.userData.idx!==undefined){canvas.classList.add('hover');tip.textContent=W[h.object.userData.idx].title;tip.style.opacity=1;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px'}else{canvas.classList.remove('hover');tip.style.opacity=0}}
+function click(e){
+  const h=pick(e);if(!h)return;hideHint();
+  if(h.object.userData.idx!==undefined){focusOn(h.object.userData.idx)}
+  else if(h.object===floor){if(st.focus>=0){card.classList.remove('on');st.focus=-1;st.gy=EYE;st.gpitch=0}
+    st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;st.autoPos=true;
+    const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=0}
+}
+// on-screen pad
+let padDir=0;
+[['padF',1],['padB',-1]].forEach(([id,d])=>{const b=document.getElementById(id);
+  b.addEventListener('pointerdown',e=>{padDir=d;hideHint();e.stopPropagation()});
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>{padDir=0}))});
+
+// index panel
+const idx=document.getElementById('index'),grid=document.getElementById('grid');
+W.forEach((w,i)=>{const b=document.createElement('button');b.className='it';b.innerHTML=`<img loading="lazy" src="${w.art||''}" alt=""><b>${w.title.replace(/</g,'&lt;')}</b>`;b.onclick=()=>focusOn(i);grid.appendChild(b)});
+function closeIndex(){idx.classList.remove('on')}
+document.getElementById('idxBtn').onclick=()=>{idx.classList.toggle('on')};
+canvas.addEventListener('pointerdown',closeIndex);
+
+// ---------- loop
+let last=performance.now(), streamT=0;
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  // keyboard walking
+  let f=0,s=0;
+  if(keys.KeyW||keys.ArrowUp)f+=1; if(keys.KeyS||keys.ArrowDown)f-=1;
+  if(keys.KeyD)s+=1; if(keys.KeyA)s-=1;
+  f+=padDir;
+  if(st.focus<0){ if(keys.ArrowLeft)st.yaw+=1.7*dt,st.gyaw=st.yaw; if(keys.ArrowRight)st.yaw-=1.7*dt,st.gyaw=st.yaw; }
+  if(f||s){
+    st.autoPos=false;st.autoLook=false;
+    if(st.focus>=0){card.classList.remove('on');st.focus=-1;st.gy=EYE;st.gpitch=0;st.pitch*=.5}
+    const sp=(keys.ShiftLeft?6:3.4)*dt;
+    st.x+=(-Math.sin(st.yaw)*f+Math.cos(st.yaw)*s)*sp;
+    st.z+=(-Math.cos(st.yaw)*f-Math.sin(st.yaw)*s)*sp;
+    clampPos();st.gx=st.x;st.gz=st.z;
+  }
+  const k=1-Math.exp(-dt*4.2);
+  if(st.autoPos){st.x+=(st.gx-st.x)*k;st.z+=(st.gz-st.z)*k;if(Math.hypot(st.gx-st.x,st.gz-st.z)<.02)st.autoPos=false}
+  st.y+=(st.gy-st.y)*k;
+  if(st.autoLook){st.yaw+=angDelta(st.yaw,st.gyaw)*k;st.pitch+=(st.gpitch-st.pitch)*k;if(Math.abs(angDelta(st.yaw,st.gyaw))<.003&&Math.abs(st.gpitch-st.pitch)<.003)st.autoLook=false}
+  // gentle head bob while walking
+  const bob=(f||s)?Math.sin(now/170)*.03:0;
+  camera.position.set(st.x,st.y+bob,st.z);camera.rotation.set(st.pitch,st.yaw,0);
+  lamp.position.set(st.x,4.3,st.z-1);
+  streamT-=dt;if(streamT<=0){streamT=.4;streamTextures()}
+  renderer.render(scene,camera);
+  requestAnimationFrame(frame);
+}
+streamTextures();
+// jump straight to a work via #hash, e.g. museum/#bluecard
+const hash=location.hash.slice(1);const hi=W.findIndex(w=>w.id===hash);
+if(hi>=0){const p=paintings[hi];st.z=p.pos.z+8;st.gz=st.z;st.x=0;st.gx=0;setTimeout(()=>focusOn(hi),900)}
+requestAnimationFrame(t=>{last=t;frame(t)});
+setTimeout(()=>document.getElementById('load').classList.add('off'),700);
+window.__museum={st,focusOn,paintings,camera,renderer};
+})();
+</script>
+</body>
+</html>
