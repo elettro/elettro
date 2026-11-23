@@ -67,6 +67,30 @@ html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
 #pjoy{margin:14px auto 0;width:130px;height:130px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0c;position:relative;touch-action:none}#pjoy b{position:absolute;left:41px;top:41px;width:44px;height:44px;border-radius:50%;background:#ffffff66}
 .pl{text-align:center;font-size:11px;color:#9cc5b9;margin-top:6px;letter-spacing:1px}
 @media(max-width:700px){#panel{bottom:150px}}
+/* ---- mobile: collapsible info sheet, compact header ---- */
+#pgrab{display:none}
+@media(max-width:820px){
+  .top{top:8px;left:10px;right:10px;gap:6px}
+  .brand{flex:1;min-width:0;font-size:10px;letter-spacing:1.5px;line-height:1.3}.brand small{display:none}
+  .top>div:last-child{flex-wrap:nowrap!important;flex:none}
+  .top .btn{padding:7px 12px;font-size:12px}
+  .top a.btn:not(.exit){display:none}
+  #chips{top:52px;left:10px;right:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:2px}
+  #chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;white-space:nowrap;padding:6px 12px;font-size:12px}
+  #panel{left:10px;right:10px;width:auto;bottom:156px;max-height:58px;overflow:hidden;padding:0;border-radius:14px;transition:max-height .3s ease}
+  #pgrab{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:8px 14px;background:none;border:0;color:var(--ink);font:700 14px "Segoe UI",sans-serif;text-align:left;cursor:pointer}
+  #pgrab .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #pgrab .t small{display:block;font:600 11px "Segoe UI",sans-serif;color:var(--g);letter-spacing:1px;text-transform:uppercase}
+  #pgrab .a{flex:none;width:34px;height:34px;border-radius:50%;background:#ffffff1c;display:grid;place-items:center;font-size:14px;transition:transform .3s}
+  #panel.open{max-height:min(62vh,calc(100vh - 230px));overflow:auto;padding:0 0 12px}
+  #panel.open>*:not(#pgrab){margin-left:14px;margin-right:14px}
+  #panel.open>#pgrab{position:sticky;top:0;background:#06201c;z-index:1;margin:0}
+  #panel.open #pgrab .a{transform:rotate(180deg)}
+  #rpill,#rpill.hasjoy{left:auto;right:10px;bottom:56px}
+  #rcard{left:auto;right:10px;bottom:104px}
+  #joy{bottom:44px}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}</script>
@@ -79,6 +103,7 @@ html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
 </div>
 <div id="chips"></div>
 <div id="panel">
+  <button id="pgrab" type="button" aria-expanded="false"><span class="t"><small id="pgc"></small><span id="pgt"></span></span><span class="a">▲</span></button>
   <div class="k" id="pk"></div><h2 id="pt"></h2><p id="pp"></p>
   <div class="row"><a class="btn go" id="pgo" href="#" target="_blank" rel="noopener">Try it live ↗</a><button class="btn" id="pqr">Scan with my phone</button></div>
   <div id="qrbox"><canvas id="qrc" width="208" height="208"></canvas><div>Scan with your phone camera. It becomes the remote: tap an item to feature it here.<small id="qrurl"></small></div></div>
@@ -94,6 +119,17 @@ html.phone,html.phone body{overflow:auto;touch-action:pan-y;height:auto}
 <div id="hint">Click a phone to feature it on the big screen · ← → to browse · drag to look · W A S D to walk</div>
 <div id="joy"><b></b></div>
 <div id="load"><div><h1>REMOTE MOBILE</h1><p>CHARGING THE PHONES…</p></div></div>
+<script>
+(function(){
+  var pn=document.getElementById('panel'),gb=document.getElementById('pgrab');
+  if(!pn||!gb)return;
+  gb.addEventListener('click',function(){var o=pn.classList.toggle('open');gb.setAttribute('aria-expanded',o)});
+  function sync(){document.getElementById('pgt').textContent=document.getElementById('pt').textContent;document.getElementById('pgc').textContent=document.getElementById('cnt').textContent}
+  ['pt','cnt'].forEach(function(id){new MutationObserver(sync).observe(document.getElementById(id),{childList:true,characterData:true,subtree:true})});
+  sync();
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')pn.classList.remove('open')});
+})();
+</script>
 <script type="module" src="room.js"></script>
 </body>
 </html>

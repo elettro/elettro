@@ -54,6 +54,15 @@ canvas#gl.hover{cursor:pointer}
 #load.off{opacity:0;pointer-events:none}
 #load h1{font:400 34px "Georgia",serif;letter-spacing:1px}
 #load p{color:var(--gold);letter-spacing:3px;font-size:11px;margin-top:10px}
+
+/* ---- mobile ---- */
+@media(max-width:820px){
+  .top{top:8px;left:10px;right:10px}
+  .brand{font-size:11px;letter-spacing:2px}.brand small{display:none}
+  .btns{gap:6px}
+  .btn{padding:7px 12px;font-size:12px;white-space:nowrap}
+}
+@media(pointer:coarse){#hint{left:12px;transform:none;bottom:20px;max-width:calc(100% - 100px);border-radius:16px;text-align:left;font-size:11.5px;padding:8px 12px;line-height:1.35}}
 </style>
 </head>
 <body>
@@ -149,11 +158,15 @@ scene.add(new THREE.HemisphereLight(0xdfe7ff,0x2a2230,.75));
 const lamp = new THREE.PointLight(0xfff0d6,.9,26,1.6); scene.add(lamp);
 
 // ---------- entrance sign + end sign
+const SIGNS=[];
+function fitSigns(){const k=camera.aspect<1?Math.max(.4,camera.aspect*1.1):1;SIGNS.forEach(s=>{s.m.scale.set(k,k,1);s.wires.forEach(([c,x])=>c.position.x=x*k*Math.cos(s.rotY))})}
 function sign(text,sub,z,rotY,hang){
   const t=canvasTex(2048,512,(g,w,h)=>{g.fillStyle='#0b0e18';g.fillRect(0,0,w,h);g.strokeStyle='#d9b46a';g.lineWidth=10;g.strokeRect(14,14,w-28,h-28);g.fillStyle='#f4efe6';g.textAlign='center';g.font='400 150px Georgia,serif';g.fillText(text,w/2,260);g.fillStyle='#d9b46a';g.font='600 48px Segoe UI,sans-serif';g.fillText(sub,w/2,380)});
   const m=new THREE.Mesh(new THREE.PlaneGeometry(9,2.25),new THREE.MeshBasicMaterial({map:t}));
   m.position.set(0,hang,z);m.rotation.y=rotY;scene.add(m);
-  [-4,4].forEach(x=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.015,.015,6-hang,6),goldMat);c.position.set(x*Math.cos(rotY),(hang+6)/2+0.55,z);scene.add(c)});
+  const wires=[];
+  [-4,4].forEach(x=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.015,.015,6-hang,6),goldMat);c.position.set(x*Math.cos(rotY),(hang+6)/2+0.55,z);scene.add(c);wires.push([c,x])});
+  SIGNS.push({m,wires,rotY,z});
 }
 sign('The Elettro Web Dev Museum',N+' works · Davie, Florida',2,0,3.7);
 sign('Thank you for visiting','elettro.com/portfolio',HALL_END+1.5,Math.PI,3.2);
@@ -225,7 +238,7 @@ const st={x:0,z:9,y:EYE,yaw:0,pitch:0, gx:0,gz:9,gy:EYE,gyaw:0,gpitch:0, autoPos
 const keys={};
 function clampPos(){st.x=Math.max(-HALL_HALF+1.3,Math.min(HALL_HALF-1.3,st.x));st.z=Math.max(HALL_END+2,Math.min(11,st.z))}
 function angDelta(a,b){let d=b-a;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
-function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();if(typeof fitSigns==='function')fitSigns()}
 addEventListener('resize',resize);resize();
 
 // ---------- focus on a painting
