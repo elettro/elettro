@@ -126,7 +126,9 @@ const SHOPS=[
   d:'Shopify stores set up, themed and loaded with products, collections and content.',link:'https://elettro.com',cta:'Browse stores'},
  {n:'5',name:'Stashbox Radio',sub:'stashbox.com',ic:'📻',c:'#ffb02e',bg:'#4a2c05',fg:'#fff',door:'4105',
   d:'Live band videos, music and the Stashbox radio, all in one place.',link:'https://stashbox.com',cta:'Go to Stashbox.com'},
- {n:'6',name:'Remote Mobile',sub:'Phone as controller',ic:'📱',c:'#18c29c',bg:'#0b3d36',fg:'#fff',door:'4106',
+ {n:'6',name:'MultiCam',sub:'Every phone, one video',ic:'🎬',c:'#ff4f9a',bg:'#4d1233',fg:'#fff',door:'4106',
+  d:'Every phone in the room becomes a camera angle. Watch a live band shot from six angles and cut into one video.',link:'https://elettro.com/multi-cam/',cta:'See MultiCam'},
+ {n:'7',name:'Remote Mobile',sub:'Phone as controller',ic:'📱',c:'#18c29c',bg:'#0b3d36',fg:'#fff',door:'4107',
   d:'Turn any phone into a remote: scroll, control and capture with a quick QR scan.',link:'https://elettro.com/remote/',cta:'Try the remote'}
 ];
 const track=document.getElementById('track'),far=document.getElementById('far'),fore=document.getElementById('fore'),world=document.getElementById('world');
@@ -191,7 +193,7 @@ function enter(i){if(entering)return;entering=true;go(i);target=trackCenter(i);
   setTimeout(()=>{door.classList.add('open');
    const r=door.getBoundingClientRect();world.style.transformOrigin=(r.left+r.width/2)+'px '+(r.top+r.height*0.6)+'px';
    setTimeout(()=>{zt=9;},650);
-   setTimeout(()=>{if(i===0){location.href='museum/index.html';return}if(i===1){location.href='social/room/index.html';return}if(i===2){location.href='ar/room/index.html';return}if(i===4){location.href='radio/room/index.html';return}if(i===5){location.href='remote/room/index.html';return}if(i===3){location.href='shopify/room/index.html';return}const s=SHOPS[i];inside.style.setProperty('--bg',`linear-gradient(${s.bg},${s.c}55)`);
+   setTimeout(()=>{if(i===0){location.href='museum/index.html';return}if(i===1){location.href='social/room/index.html';return}if(i===2){location.href='ar/room/index.html';return}if(i===4){location.href='radio/room/index.html';return}if(i===5){location.href='multicam/room/index.html';return}if(i===6){location.href='remote/room/index.html';return}if(i===3){location.href='shopify/room/index.html';return}const s=SHOPS[i];inside.style.setProperty('--bg',`linear-gradient(${s.bg},${s.c}55)`);
     inside.querySelector('.card').innerHTML=`<div class="ico">${s.ic}</div><div class="tag" style="font-size:11px;letter-spacing:1.4px;color:#777;text-transform:uppercase;font-weight:700">Pillar #${s.n}</div><h1>${s.name}</h1><div style="font-weight:600;color:#666">${s.sub}</div><p>${s.d}</p><div class="row"><a href="${s.link}" target="_blank" rel="noopener">${s.cta} →</a><button id="back">← Back to the street</button></div>`;
     inside.classList.add('on');document.getElementById('back').onclick=leave},1500)
   },750)}
