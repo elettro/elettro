@@ -42,6 +42,10 @@ canvas#gl.hover{cursor:pointer}
 #index .it:hover{border-color:var(--gold)}
 #index .it img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#222}
 #index .it b{display:block;font-size:12px;padding:7px 9px 8px;line-height:1.25}
+#visit{position:fixed;left:50%;bottom:64px;transform:translate(-50%,20px);z-index:6;background:var(--gold);color:#16130e;font-weight:800;font-size:15px;text-decoration:none;padding:13px 24px;border-radius:999px;box-shadow:0 10px 30px #000a;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;max-width:calc(100% - 28px);overflow:hidden;text-overflow:ellipsis}
+#visit.on{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+#visit:hover{background:#fff}
+.btn.exit{background:#b3261e;border-color:#b3261e}
 #pad{position:fixed;right:16px;bottom:18px;z-index:5;display:none;flex-direction:column;gap:8px}
 #pad .btn{width:52px;height:52px;padding:0;font-size:20px}
 @media(pointer:coarse){#pad{display:flex}#hint{bottom:90px}}
@@ -57,10 +61,11 @@ canvas#gl.hover{cursor:pointer}
 <div id="load"><div><h1>The Elettro Web Dev Museum</h1><p>OPENING THE DOORS…</p></div></div>
 <div class="top">
   <div class="brand">ELETTRO<small>WEB DEV MUSEUM</small></div>
-  <div class="btns"><a class="btn" href="../index.html">← Street</a><button class="btn" id="idxBtn">☰ All works</button><a class="btn pri" href="https://elettro.com/portfolio/" target="_blank" rel="noopener">Portfolio ↗</a></div>
+  <div class="btns"><a class="btn exit" href="../index.html">⏏ Exit museum</a><button class="btn" id="idxBtn">☰ All works</button><a class="btn pri" href="https://elettro.com/portfolio/" target="_blank" rel="noopener">Portfolio ↗</a></div>
 </div>
-<div id="hint">Drag to look · W A S D / arrows to walk · click the floor to stroll · click a painting to step up to it</div>
+<div id="hint">Scroll or ↑ ↓ to walk the hallway · drag to look · click a painting to step up to it · red EXIT button top-right to leave</div>
 <div id="tip"></div>
+<a id="visit" target="_blank" rel="noopener"></a>
 <div id="card"></div>
 <div id="index"><h3>THE COLLECTION</h3><div class="grid" id="grid"></div></div>
 <div id="pad"><button class="btn" id="padF">▲</button><button class="btn" id="padB">▼</button></div>
@@ -158,6 +163,17 @@ sign('Thank you for visiting','elettro.com/portfolio',HALL_END+1.5,Math.PI,3.2);
   const m=new THREE.Mesh(new THREE.PlaneGeometry(6,3),new THREE.MeshBasicMaterial({map:t,transparent:true}));m.position.set(0,2.8,HALL_END+.05);scene.add(m);
 })();
 
+// exit doors (start wall and end wall)
+const doorTex=canvasTex(512,1024,(g,w,h)=>{g.fillStyle='#2b1d14';g.fillRect(0,0,w,h);g.strokeStyle='#c9a44f';g.lineWidth=8;g.strokeRect(10,10,w-20,h-20);g.strokeStyle='#150e09';g.lineWidth=6;g.strokeRect(60,200,w-120,320);g.strokeRect(60,570,w-120,360);g.fillStyle='#c9a44f';g.beginPath();g.arc(w-70,640,16,0,7);g.fill();g.fillStyle='#0f7a3a';g.fillRect(110,50,w-220,110);g.fillStyle='#fff';g.font='800 90px Segoe UI,sans-serif';g.textAlign='center';g.fillText('EXIT',w/2,135)});
+const exits=[];
+function exitDoor(x,z,rotY){
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(2.1,4.2),new THREE.MeshBasicMaterial({map:doorTex}));
+  m.position.set(x,2.1,z);m.rotation.y=rotY;m.userData.exit=true;scene.add(m);exits.push(m);
+  const gl=new THREE.PointLight(0x35d07f,.8,9,2);gl.position.set(x,4.3,z+(rotY?-1:1));scene.add(gl);
+}
+exitDoor(0,11.95,Math.PI);
+exitDoor(5,HALL_END+.06,0);
+
 // ---------- paintings
 const loader = new THREE.TextureLoader();
 const paintings = [];  // {idx, mesh, mat, pos, normalX, tex, loading}
@@ -252,16 +268,27 @@ canvas.addEventListener('pointermove',e=>{
 canvas.addEventListener('pointerup',e=>{
   if(drag&&!drag.moved)click(e);drag=null;});
 function pick(e){mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(mouse,camera);
-  const hits=ray.intersectObjects(pickables.concat([floor]),false);return hits[0]||null}
+  const hits=ray.intersectObjects(pickables.concat(exits,[floor]),false);return hits[0]||null}
 const tip=document.getElementById('tip');
-function hover(e){const h=pick(e);if(h&&h.object.userData.idx!==undefined){canvas.classList.add('hover');tip.textContent=W[h.object.userData.idx].title;tip.style.opacity=1;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px'}else{canvas.classList.remove('hover');tip.style.opacity=0}}
+function hover(e){const h=pick(e);if(h&&h.object.userData.exit){canvas.classList.add('hover');tip.textContent='Exit to the Street';tip.style.opacity=1;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px'}else if(h&&h.object.userData.idx!==undefined){canvas.classList.add('hover');tip.textContent=W[h.object.userData.idx].title+'  —  click to open';tip.style.opacity=1;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px'}else{canvas.classList.remove('hover');tip.style.opacity=0}}
 function click(e){
   const h=pick(e);if(!h)return;hideHint();
+  if(h.object.userData.exit){location.href='../index.html';return}
   if(h.object.userData.idx!==undefined){focusOn(h.object.userData.idx)}
   else if(h.object===floor){if(st.focus>=0){card.classList.remove('on');st.focus=-1;st.gy=EYE;st.gpitch=0}
     st.gx=h.point.x;st.gz=h.point.z;st.gy=EYE;st.autoPos=true;
     const ty=Math.atan2(-(h.point.x-st.x),-(h.point.z-st.z));st.gyaw=st.yaw+angDelta(st.yaw,ty);st.autoLook=true;st.gpitch=0}
 }
+// mouse wheel / trackpad: scroll up walks forward, scroll down walks back
+canvas.addEventListener('wheel',e=>{
+  e.preventDefault();hideHint();
+  let dy=e.deltaY;if(e.deltaMode===1)dy*=30;
+  const amt=Math.max(-2.5,Math.min(2.5,-dy*.012));
+  if(st.focus>=0){card.classList.remove('on');st.focus=-1;st.gy=EYE;st.gpitch=0;st.pitch*=.5}
+  st.autoPos=false;st.autoLook=false;
+  st.x+=-Math.sin(st.yaw)*amt;st.z+=-Math.cos(st.yaw)*amt;
+  clampPos();st.gx=st.x;st.gz=st.z;
+},{passive:false});
 // on-screen pad
 let padDir=0;
 [['padF',1],['padB',-1]].forEach(([id,d])=>{const b=document.getElementById(id);
@@ -275,6 +302,14 @@ function closeIndex(){idx.classList.remove('on')}
 document.getElementById('idxBtn').onclick=()=>{idx.classList.toggle('on')};
 canvas.addEventListener('pointerdown',closeIndex);
 
+// ---------- "Visit" call to action for the nearest painting
+const visit=document.getElementById('visit');let visitIdx=-1;
+function updateVisit(){
+  let best=-1,bd=5.5;
+  if(st.focus<0)paintings.forEach(pt=>{const d=Math.hypot(st.x-pt.pos.x,st.z-pt.pos.z);if(d<bd){bd=d;best=pt.idx}});
+  if(best!==visitIdx){visitIdx=best;
+    if(best>=0){visit.textContent='Open '+W[best].title+' ↗';visit.href=W[best].url;visit.classList.add('on')}else visit.classList.remove('on')}
+}
 // ---------- loop
 let last=performance.now(), streamT=0;
 function frame(now){
@@ -301,7 +336,7 @@ function frame(now){
   const bob=(f||s)?Math.sin(now/170)*.03:0;
   camera.position.set(st.x,st.y+bob,st.z);camera.rotation.set(st.pitch,st.yaw,0);
   lamp.position.set(st.x,4.3,st.z-1);
-  streamT-=dt;if(streamT<=0){streamT=.4;streamTextures()}
+  streamT-=dt;if(streamT<=0){streamT=.4;streamTextures();updateVisit()}
   renderer.render(scene,camera);
   requestAnimationFrame(frame);
 }
