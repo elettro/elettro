@@ -61,7 +61,7 @@ html,body{height:100%;overflow:hidden;background:var(--ink);font-family:"Segoe U
 .tree .crown{position:absolute;left:50%;bottom:110px;width:110px;height:120px;margin-left:-55px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#17234a,#0a0e24 70%);box-shadow:-26px 22px 0 -10px #0c1330,26px 16px 0 -10px #0c1330}
 /* ui */
 .top{position:fixed;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;z-index:5;pointer-events:none}
-.brand{background:#fff;color:#111;font-weight:900;letter-spacing:2px;padding:9px 16px;border-radius:10px;pointer-events:auto}
+.brand{background:#fff;color:#111;font-weight:900;letter-spacing:2px;padding:9px 16px;border-radius:10px;pointer-events:auto;text-decoration:none;cursor:pointer}
 .hint{background:#0007;border:1px solid #fff3;padding:8px 14px;border-radius:99px;font-size:13px;backdrop-filter:blur(6px)}
 .nav{position:fixed;top:44%;z-index:5;width:52px;height:52px;border-radius:50%;border:0;background:#fffe;color:#111;font-size:24px;font-weight:700;cursor:pointer}
 #prev{left:14px}#next{right:14px}
@@ -108,7 +108,7 @@ html,body{height:100%;overflow:hidden;background:var(--ink);font-family:"Segoe U
   <div id="street"></div>
   <div class="layer" id="fore"></div>
 </div></div>
-<div class="top"><div class="brand">ELETTRO</div><div class="hint">Move the mouse · drag, scroll or use ← → to walk the street</div></div>
+<div class="top"><a class="brand" href="https://elettro.com" target="_blank" rel="noopener">ELETTRO</a><div class="hint">Move the mouse · drag, scroll or use ← → to walk the street</div></div>
 <button class="nav" id="prev" aria-label="Previous">‹</button><button class="nav" id="next" aria-label="Next">›</button>
 <div class="dots" id="dots"></div>
 <div id="panel"></div>
