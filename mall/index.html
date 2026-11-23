@@ -179,7 +179,7 @@ function enter(i){if(entering)return;entering=true;go(i);target=trackCenter(i);
   setTimeout(()=>{door.classList.add('open');
    const r=door.getBoundingClientRect();world.style.transformOrigin=(r.left+r.width/2)+'px '+(r.top+r.height*0.6)+'px';
    setTimeout(()=>{zt=9;},650);
-   setTimeout(()=>{if(i===0){location.href='museum/index.html';return}if(i===1){location.href='social/index.html';return}const s=SHOPS[i];inside.style.setProperty('--bg',`linear-gradient(${s.bg},${s.c}55)`);
+   setTimeout(()=>{if(i===0){location.href='museum/index.html';return}if(i===1){location.href='social/room/index.html';return}const s=SHOPS[i];inside.style.setProperty('--bg',`linear-gradient(${s.bg},${s.c}55)`);
     inside.querySelector('.card').innerHTML=`<div class="ico">${s.ic}</div><div class="tag" style="font-size:11px;letter-spacing:1.4px;color:#777;text-transform:uppercase;font-weight:700">Pillar #${s.n}</div><h1>${s.name}</h1><div style="font-weight:600;color:#666">${s.sub}</div><p>${s.d}</p><div class="row"><a href="${s.link}" target="_blank" rel="noopener">${s.cta} →</a><button id="back">← Back to the street</button></div>`;
     inside.classList.add('on');document.getElementById('back').onclick=leave},1500)
   },750)}
