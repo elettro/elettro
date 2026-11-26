@@ -379,8 +379,26 @@ function startDisplay(){
     st.overlay='menu';st.menuIdx=st.scene;renderMenu();$('ov').classList.add('show');pushState();
   }
   function renderMenu(){
-    $('ov').innerHTML='<div class="menu">'+SCENES.map(function(s,i){return '<div class="it'+(i===st.menuIdx?' focus':'')+'">'+s.name+'</div>'}).join('')+'</div>';
+    $('ov').innerHTML='<div class="menu">'+SCENES.map(function(s,i){return '<div class="it'+(i===st.menuIdx?' focus':'')+'" data-i="'+i+'">'+s.name+'</div>'}).join('')+'</div>';
   }
+  /* menu is a 2-column grid: left/right move sideways, up/down move a row; click an item to pick it */
+  function menuCols(){
+    var its=$('ov').querySelectorAll('.it');
+    if(its.length>1&&its[0].offsetTop===its[1].offsetTop){var n=1;while(n<its.length&&its[n].offsetTop===its[0].offsetTop)n++;return n}
+    return 1;
+  }
+  function menuMove(k){
+    var n=SCENES.length,c=menuCols(),i=st.menuIdx;
+    if(k==='left')i=(i+n-1)%n;
+    else if(k==='right')i=(i+1)%n;
+    else if(k==='up')i=i-c>=0?i-c:Math.min(n-1,i+c*Math.floor((n-1-i)/c));
+    else if(k==='down')i=i+c<n?i+c:i%c;
+    st.menuIdx=i;
+  }
+  $('ov').addEventListener('click',function(e){
+    var it=e.target.closest&&e.target.closest('.it');
+    if(it&&st.overlay==='menu'){st.menuIdx=Number(it.dataset.i);key('select')}
+  });
   function send(){
     var f=focused();
     if(conn&&conn.open){conn.send({t:'saved',name:f.name,price:f.price||'',scene:sc().name});toast('Sent to your phone: '+f.name)}
@@ -637,8 +655,7 @@ function startDisplay(){
       pushState();return;
     }
     if(st.overlay==='menu'){
-      if(k==='up'||k==='left')st.menuIdx=(st.menuIdx+SCENES.length-1)%SCENES.length;
-      else if(k==='down'||k==='right')st.menuIdx=(st.menuIdx+1)%SCENES.length;
+      if(k==='up'||k==='left'||k==='down'||k==='right')menuMove(k);
       else if(k==='select'){st.scene=st.menuIdx;closeOv();renderScene();toast(sc().name);return}
       else if(k==='back'||k==='menu'){closeOv()}
       renderMenu();pushState();return;
@@ -871,15 +888,26 @@ function startPlayer(){
       view('<div class="pbig">Connecting\u2026</div>');connect();
     };
   }
+  var tries=0;
   function connect(){
+    try{if(peer)peer.destroy()}catch(e){}
     peer=new Peer(PEER_OPTS);
+    var settled=false;
+    var wd=setTimeout(function(){
+      if(settled)return;
+      try{peer.destroy()}catch(e){}
+      if(++tries<3){view('<div class="pbig">Connecting…</div><div class="psub">Retrying ('+tries+'/2)</div>');connect();return}
+      tries=0;
+      view('<div class="pbig">Could not connect</div><div class="psub">Try switching between Wi-Fi and mobile data, then tap Retry.</div><button class="send" id="pre" style="width:min(90vw,340px)">Retry</button>');
+      $('pre').onclick=function(){view('<div class="pbig">Connecting…</div>');connect()};
+    },10000);
     peer.on('open',function(){
       conn=peer.connect(PREFIX+target,{reliable:true});
-      conn.on('open',function(){etPhoneHit();conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
+      conn.on('open',function(){settled=true;clearTimeout(wd);tries=0;etPhoneHit();conn.send({t:'hello',role:'player',pid:pid,name:me.name})});
       conn.on('data',onMsg);
       conn.on('close',function(){view('<div class="pbig">Disconnected</div><button class="send" id="pre" style="width:min(90vw,340px)">Rejoin</button>');$('pre').onclick=function(){view('<div class="pbig">Connecting\u2026</div>');connect()}});
     });
-    peer.on('error',function(e){view('<div class="pbig">Could not connect</div><div class="psub">'+(e.type==='peer-unavailable'?'This game has ended. Scan the code on the screen again.':'Error: '+e2(e.type))+'</div>')});
+    peer.on('error',function(e){settled=true;clearTimeout(wd);view('<div class="pbig">Could not connect</div><div class="psub">'+(e.type==='peer-unavailable'?'This game has ended. Scan the code on the screen again.':'Error: '+e2(e.type))+'</div>')});
   }
   function buzz(p){if(navigator.vibrate)navigator.vibrate(p)}
   function onMsg(m){
