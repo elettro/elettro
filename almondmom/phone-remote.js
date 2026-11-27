@@ -3,7 +3,7 @@
   var MODE = window.ALMONDMOM_MODE, PREFIX = "elettro-almondmom-", q = new URLSearchParams(location.search), target = q.get("c");
   function $(id) { return document.getElementById(id); }
   function hit(t) { try { fetch("https://abacus.jasoncameron.dev/hit/elettro-com/remote-almondmom-" + t, { cache: "no-store", keepalive: true }).catch(function () {}); } catch (e) {} }
-  var SECS = [["Home", "#home"], ["Collection", "#collection"], ["Coffee", "#coffee"], ["Our Story", "#about"], ["Affiliate", "#affiliate"], ["Retail", "#retail"], ["End", "footer"]];
+  var SECS = [["Home", "#home"], ["Collection", "#collection"], ["Coffee", "#coffee"], ["Our Story", "#about"], ["Mom Stories", "#community"], ["Affiliate", "#affiliate"], ["Retail", "#retail"], ["End", "footer"]];
   function maxS() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
 
   if (MODE === "display") {
